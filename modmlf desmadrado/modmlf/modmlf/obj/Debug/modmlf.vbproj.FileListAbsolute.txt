@@ -1,0 +1,22 @@
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Interop.SQLDISTXLib.dll
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.config
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.application

@@ -1,0 +1,12 @@
+Tipos de notificacion para nuevo notify de mlf
+
+1 = solicitado (almacen, aplicadores)
+2 = solicitado con corto (almacen, aplicadores)
+3 = confirmado por almacen (corte)
+4 = confirmado por aplicadores (corte)
+5 = listo para entrar (corte)
+6 = hold por almacen (corte, compras)
+7 = hold por aplicadores (corte)
+8 = nueva fecha promesa de compras (almacen)
+9 = Desviacion rechazada (aplicadores)
+10 = Se desvio una terminal con exito (corte, almacen, compras)

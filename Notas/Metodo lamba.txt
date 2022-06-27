@@ -1,0 +1,90 @@
+Func<long, bool> TraiTrai = (n) => n % 2 == 0;
+Action<Long> Trai = null;
+Trai = (n) =>
+{
+Console.WriteLine(n);
+
+if (n != 1)
+   Trai(TraiTrai(n) ? n/2 : (n*3)+1 );
+}
+
+Trai(2);
+
+
+-------Regex implementar
+Public Shared Sub Main()
+    Dim pattern As String = "\b(\w+?)\s\1\b"
+    Dim input As String = "This this is a nice day. What about this? This tastes good. I saw a a dog."
+
+    For Each match As Match In Regex.Matches(input, pattern, RegexOptions.IgnoreCase)
+        Console.WriteLine("{0} (duplicates '{1}') at position {2}", match.Value, match.Groups(1).Value, match.Index)
+    Next
+End Sub
+------------------------------
+
+---- Sumar todos los valores de una lista o datatable
+Public Sub AggregateSample()
+    Dim customers = GetCustomerList()
+
+    Dim customerOrderTotal =
+        From cust In customers
+        Aggregate order In cust.Orders
+        Into Sum(order.Total), MaxOrder = Max(order.Total),
+        MinOrder = Min(order.Total), Avg = Average(order.Total)
+
+    For Each customer In customerOrderTotal
+        Console.WriteLine(customer.cust.CompanyName & vbCrLf &
+                         vbTab & "Sum = " & customer.Sum & vbCrLf &
+                         vbTab & "Min = " & customer.MinOrder & vbCrLf &
+                         vbTab & "Max = " & customer.MaxOrder & vbCrLf &
+                         vbTab & "Avg = " & customer.Avg.ToString("#.##"))
+    Next
+End Sub
+
+---- metodo lambda para buscar dentro de una lista un objeto en particular 
+terminales = Terminales.Where(Function(d) d = aPn)
+
+
+------ Mtodo para hacer join entre dos listas y con where
+     'Dim Resultado = From b In terminales
+            '                Group Join c In TerminalesAux On c Equals b Into g = Group
+            '                From r In g.DefaultIfEmpty()
+            '                Select New With {b, r}
+
+
+------ Hacer query con programacion estructurada para consulta de sql
+ '    Dim obj As IQueryable(Of AfipEscalaSuss)
+    '    Dim query As IQueryable = db.Personas 
+    'query = query.Where(Function(p) p.Edad > 18) 
+    'Dim resultados = query.ToList()
+
+
+------ Agregar elementos a una lista por medio de una clase
+  'If t.Rows.Count > 0 Then
+            '    Dim ls As List(Of PartNumbers) = t.AsEnumerable().[Select](Function(m) New PartNumbers() With {
+            '       .TAG = m.Field(Of String)("TAG"),
+            '       .PN = m.Field(Of String)("PN")
+            '    }).ToList()
+            '    ListPartNumbers.AddRange(ls)
+            'End If
+
+Public Class PartNumbers
+    Public Property TAG As String
+    Public Property PN As String
+End Class
+
+
+---- Crear Action en visual basic, ojo estos no retornan nada
+    'Private aTag As Action(Of String) = Function(a)
+    '                                        Dim i = 0
+    '                                        Dim NumPart As String = "", Tag As String
+    '                                        For i = 0 To tblTempTags.Rows.Count - 1
+    '                                            NumPart = tblTempTags.Rows(i).Item("PN").ToString
+    '                                            If Check(a, NumPart) Then
+    '                                                Tag = tblTempTags.Rows(i).Item("TAG").ToString
+    '                                                GetStatus(Tag)
+    '                                                Exit For
+    '                                            End If
+    '                                        Next
+    '                                        Return Nothing
+    '                                    End Function

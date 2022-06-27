@@ -1,0 +1,11 @@
+Matar todos los servicios de la app, notify icon
+ ' Close
+    Private Sub Form_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        Worker.Dispose() ' Liberar los recursos del BackgroundWorker
+ 
+        ' Eliminar la visibilidad del SysTrayMenu antes de matar la APP, para que no se quede visible en el SystemTray...
+        SystrayMenu.Visible = False
+        SystrayMenu.Dispose()
+ 
+        End ' Matar todo lo relacionado con la APP
+    End Sub

@@ -1,0 +1,179 @@
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Interop.SQLDISTXLib.dll
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.config
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.config
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\bin\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\Interop.SQLDISTXLib.dll
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\modmlf\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.config
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\Interop.SQLDISTXLib.dll
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.CambioMaquina.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.OpcionesExport.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.config
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\Interop.SQLDISTXLib.dll
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.CambioMaquina.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.OpcionesExport.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.config
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\bin\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\Interop.SQLDISTXLib.dll
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.CambioMaquina.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.OpcionesExport.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.Graficas.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Copy\Files\modmlf\obj\Debug\modmlf.HoraXHora.resources
+\\10.17.182.12\Test\CWO\MLF\Marcas, Listos, Fuera.exe.config
+\\10.17.182.12\Test\CWO\MLF\Marcas, Listos, Fuera.exe.manifest
+\\10.17.182.12\Test\CWO\MLF\Marcas, Listos, Fuera.application
+\\10.17.182.12\Test\CWO\MLF\Marcas, Listos, Fuera.exe
+\\10.17.182.12\Test\CWO\MLF\Marcas, Listos, Fuera.pdb
+\\10.17.182.12\Test\CWO\MLF\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Interop.SQLDISTXLib.dll
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.CambioMaquina.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Graficas.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.HoraXHora.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.OpcionesExport.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.OpcionesLog.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.WipIssues.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\bin\debug\Marcas, Listos, Fuera.exe.config
+C:\bin\debug\Marcas, Listos, Fuera.exe.manifest
+C:\bin\debug\Marcas, Listos, Fuera.application
+C:\bin\debug\Marcas, Listos, Fuera.exe
+C:\bin\debug\Marcas, Listos, Fuera.pdb
+C:\bin\debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.CambioMaquina.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Graficas.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.HoraXHora.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.OpcionesLog.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.DesviacionesTerm.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.MensajePN.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.SuggestedBindingRedirects.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.CopyComplete

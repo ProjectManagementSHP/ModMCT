@@ -1,0 +1,16 @@
+NOTA para modPL: menos de 6 semanas al duedate con fecha de materiales y sin semana, a lasemana le pongo el numero de semana del duedate que esten abiertos, solo xp 
+
+
+
+Notas para actualizaciones MLF:
+Juan: 
+1. Exportar informacion contenida en grid PN Cortos, los numeros con corto. Listo
+2. Agregar AU, y semana, en grid PN Cortos.
+
+Mespi:
+1. Sin ser necesario poner nota en el campo de fecha prom para compras. Listo
+2. Sin agregar el cwo en la nota. Listo
+3. Columna check box para compras agregar fecha prom en la tabla PN Cortos. Listo
+4. Lo mismo del punto 3 en Grid Detalle de afectacion. 
+5. Hacer desviaciones de terminales desde MLF en la parte de PN cortos.
+6. Cuando esten en cortos, que envie notificacion para los criticos como cortos.

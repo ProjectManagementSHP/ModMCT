@@ -1,0 +1,8 @@
+Actualizaciones de HoraXHora.
+1. Cuando lo saques de almacen, sera cuando se pinte el PN de la vista de horaxhora (Font Azul). Listo
+
+2. Cuando surta en parciales, que (*se reste de la parte de qty*) se subraye de las maquinas de horaxhora
+(Font Gris en la Cantidad (Ver punto 1)). Listo
+
+3. Cuando se siga buscando por consulta de horas, que si se vuelve a pedir un PN igual 
+que ya esta surtido entonces que se reste igual y que se ponga que ya esta surtido. Listo

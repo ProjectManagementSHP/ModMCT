@@ -1,0 +1,13 @@
+Sucecion numerica automatica por CWO (ordenamiento automatico)
+
+En ver prox hrs seria sortear por orden seteado asc
+
+(Prioridad)Detener CWO
+
+Al momento de reactivar un cwo, ponerle prioridad 2 y reordenar todo
+
+
+*****
+Para cuando se cierre un CWO, se le resta 1 a todos los CWO pertenecientes a esa maquina
+*****
+Para cuando se detenga un CWO, a los mayores a ese CWO se les resta 1

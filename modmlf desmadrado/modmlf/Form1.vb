@@ -1,0 +1,1870 @@
+﻿Imports System.Data.SqlClient
+Imports System.Data.OleDb
+Imports System.Data
+Imports System.IO
+Imports System.Windows.Forms
+Imports Telerik.WinControls.UI
+Imports Telerik.WinControls
+Imports System.Net
+Imports System.DirectoryServices
+Imports System.ComponentModel
+Public Class Principal
+    Public tblasig As New DataTable
+    Private tblUsersPriv As New DataTable
+    Dim oh, alm, piso, rework As Decimal
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If opcion = 1 Then
+            pnluserandtitle.BackColor = Color.LightGreen
+            lblwelcome.Text = "Bienvenido: " & cargausername(UserName.ToString)
+            dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            lbldept.Text = "Corte"
+            rbsolicitar.Checked = True
+            Button2.BackColor = Color.LightGreen
+            cargachart()
+            ocultacosasdecorte()
+        ElseIf opcion = 2 Then
+            pnluserandtitle.BackColor = Color.LightBlue
+            lblwelcome.Text = "Bienvenido: " & cargausername(UserName.ToString)
+            dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
+            dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
+            lbldept.Text = "Almacen"
+            rbSolicitado.Checked = True
+            Button2.BackColor = Color.LightBlue
+            ocultacosasdecorte()
+        ElseIf opcion = 3 Then
+            pnluserandtitle.BackColor = Color.LightGray
+            lblwelcome.Text = "Bienvenido: " & cargausername(UserName.ToString)
+            dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
+            dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
+            lbldept.Text = "Aplicadores"
+            rbSolicitado.Checked = True
+            Button2.BackColor = Color.LightGray
+            ocultacosasdecorte()
+        ElseIf opcion = 4 Then
+            pnluserandtitle.BackColor = Color.LightGreen
+            lblwelcome.Text = "Bienvenido: " & cargausername(UserName.ToString)
+            dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            lbldept.Text = "XP"
+            rbsolicitar.Checked = True
+            Button2.BackColor = Color.LightGreen
+            cargachart()
+            ocultacosasdecorte()
+        ElseIf opcion = 5 Then
+            pnluserandtitle.BackColor = Color.Bisque
+            lblwelcome.Text = "Bienvenido: " & cargausername(UserName.ToString)
+            dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
+            dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
+            lbldept.Text = "Compras"
+            dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
+            dgvMatSinStockCompras.Visible = True
+            rdbOnHold.Checked = True
+            Button2.BackColor = Color.Bisque
+            ocultacosasdecorte()
+        End If
+        GroupBox2.Visible = False
+        GroupBox3.Visible = False
+        Timer1.Enabled = True
+        Timer1.Interval = 3000
+    End Sub
+    Private Function cargausername(user As String) As String
+        Try
+            Dim uname As String
+            uname = LTrim(RTrim(user))
+            uname = uname.Replace(".", " ")
+            Return uname
+        Catch ex As Exception
+            CorreoFalla.EnviaCorreoFalla("cargausername", host, UserName)
+            Return Nothing
+        End Try
+    End Function
+    Private Sub ocultacosasdecorte()
+        If opcion = 2 Or opcion = 3 Or opcion = 5 Then
+            Chart1.Visible = False
+            btnpasarseporlosbuebostodoelsistem.Visible = False
+        ElseIf opcion = 1 Or opcion = 4 Then
+            Chart1.Visible = True
+            If UserName = "kevin.gomez" Or UserName = "rdm" Or UserName = "samuel.gomez" Or UserName = "It" Then
+                btnpasarseporlosbuebostodoelsistem.Visible = True
+            Else
+                btnpasarseporlosbuebostodoelsistem.Visible = False
+            End If
+        End If
+    End Sub
+    Private Sub llenagrid()
+        Dim tabla As New DataTable
+        Try
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            tabla.Load(dr)
+            edo = cnn.State.ToString
+            If edo = "Open" Then cnn.Close()
+            With dgvWips
+                .DataSource = tabla
+                .AutoResizeColumns()
+                .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                '.Columns("Fecha de solicitud").DefaultCellStyle.Format = ("dd-MMM-yy")
+                .Columns("DueDateProcess").DefaultCellStyle.Format = ("dd-MMM-yy")
+                .Columns("DateCretedWIP").DefaultCellStyle.Format = ("dd-MMM-yy")
+                If opcion = 5 Then
+                    .Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    .Columns("Fecha Materiales").DefaultCellStyle.Format = ("dd-MMM-yy")
+                End If
+                Label3.Text = "Items: " & dgvWips.Rows.Count
+            End With
+            pintaceldas()
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("llenagrid", host, UserName)
+        End Try
+    End Sub
+    Private Sub cargadatosCompras()
+        btnpasarseporlosbuebostodoelsistem.Visible = False
+        GroupBox3.Visible = False
+        GroupBox2.Visible = False
+        Dim i As Integer
+        Dim Cuenta As Integer = 1
+        Dim QtyTerm, QtySello, QtyWire As Integer
+        Dim Allocated, InTransit, AllocatedFiltro As Decimal
+        Dim termBuscar As String
+        Dim wip As String = "(select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold'))"
+        Dim Query As String = "(SELECT TermA AS ComponentPN, 0 AS QTY, 0 AS OH, '' AS ' ', 0 AS ALM, 0 AS PISO, 0 AS [Re-Work], '' AS ' ', 0 AS 'Allocated', 0 AS Diff, 0 AS DifIncComp, 
+                               (SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblWipDet.TermA AND A.QtyBalance > 0 AND B.Status = 'OPEN' AND A.Confirmed = 1) AS InTransit,
+                               (SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblWipDet.TermA AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) AS NextFReciboMat, WIP 
+                               FROM tblWipDet WHERE (WIP IN " & wip & ") AND TermA <> '' AND TABalance > 0) 
+                               UNION (SELECT TermB AS ComponentPN, 0 AS QTY, 0 AS OH, '' AS ' ', 0 AS ALM, 0 AS PISO, 0 AS [Re-Work], '' AS ' ', 0 AS 'Allocated', 0 AS Diff, 0 AS DifIncComp, (SELECT SUM(QtyBalance) 
+                               FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblWipDet.TermB AND A.QtyBalance > 0 AND B.Status = 'OPEN' AND A.Confirmed = 1) AS InTransit, (SELECT TOP(1) JuarezDueDate 
+                               FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblWipDet.TermB AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) AS NextFReciboMat, WIP FROM tblWipDet 
+                               WHERE (WIP IN " & wip & ") AND TermB <> '' AND TBBalance > 0) UNION (SELECT Wire  AS ComponentPN, 0 AS QTY, 0 AS OH, '' AS ' ', 0 AS ALM, 0 AS PISO, 0 AS [Re-Work], '' AS ' ', 0 AS 'Allocated', 0 AS Diff, 0 AS DifIncComp, 
+                               (SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblWipDet.Wire AND A.QtyBalance > 0 AND B.Status = 'OPEN' AND A.Confirmed = 1) AS InTransit, (SELECT TOP(1) JuarezDueDate 
+                               FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblWipDet.Wire AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) AS NextFReciboMat, WIP  FROM tblWipDet WHERE (WIP IN " & wip & ") AND WireBalance > 0) ORDER BY ComponentPN"
+
+        Using DTtermDist As New DataTable
+            Try
+                cmd = New SqlCommand(Query, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                DTtermDist.Load(dr)
+                edo = cnn.State.ToString
+                If edo = "Open" Then cnn.Close()
+                Try
+                    Dim diff As Integer = 0
+                    wip = "(WIP in " & wip & ")"
+                    ProgressBar1.Maximum = DTtermDist.Rows.Count
+                    ProgressBar1.Visible = True
+                    ProgressBar1.BringToFront()
+                    For i = 0 To DTtermDist.Rows.Count - 1
+                        QtyTerm = 0
+                        QtySello = 0
+                        QtyWire = 0
+                        oh = 0
+                        alm = 0
+                        piso = 0
+                        rework = 0
+                        Allocated = 0
+                        AllocatedFiltro = 0
+                        InTransit = 0
+                        diff = 0
+                        termBuscar = ""
+                        termBuscar = DTtermDist.Rows(i).Item("ComponentPN").ToString
+                        InTransit = CDec(Val(DTtermDist.Rows(i).Item("InTransit").ToString))
+                        If Microsoft.VisualBasic.Left(termBuscar, 1) <> "W" Then
+                            QtyTerm += TermAQty(termBuscar, wip)
+                            QtyTerm += TermBQty(termBuscar, wip)
+                            Allocated = AllocatedAQty("select SUM(TABalance) AS QTY from tblWipDet where WIP in (select WIP from tblwip where Status = 'Open' and wSort IN (12,13,14) and ProcFDispMat IS NOT NULL) AND TABalance > 0  AND TermA = '" & termBuscar & "'")
+                            Allocated += AllocatedAQty("select SUM(TBBalance) AS QTY from tblWipDet where WIP in (select WIP from tblwip where Status = 'Open' and wSort IN (12,13,14) and ProcFDispMat IS NOT NULL) AND TBBalance > 0  AND TermB = '" & termBuscar & "'")
+                            AllocatedFiltro = AllocatedAQty("select SUM(TABalance) AS QTY from tblWipDet where WIP in (select WIP from tblwip where Status = 'Open' and wSort IN (12,13,14) and ProcFDispMat IS NOT NULL) AND " & wip & " AND TABalance > 0  AND TermA = '" & termBuscar & "'")
+                            AllocatedFiltro += AllocatedAQty("select SUM(TBBalance) AS QTY from tblWipDet where WIP in (select WIP from tblwip where Status = 'Open' and wSort IN (12,13,14) and ProcFDispMat IS NOT NULL) AND " & wip & " AND TBBalance > 0  AND TermB = '" & termBuscar & "'")
+                        End If
+                        If Microsoft.VisualBasic.Left(termBuscar, 1) = "W" Then
+                            QtyWire += WireQty(termBuscar, wip)
+                            Allocated = AllocatedAQty("select SUM(WireBalance * LengthWire) * 0.0032808 AS QTY from tblWipDet where WIP in (select WIP from tblwip where Status = 'Open' and wSort IN (12,13,14) and ProcFDispMat IS NOT NULL) AND WireBalance > 0  AND Wire =  '" & termBuscar & "'")
+                            AllocatedFiltro = AllocatedAQty("select SUM(WireBalance * LengthWire) * 0.0032808 AS QTY from tblWipDet where WIP in (select WIP from tblwip where Status = 'Open' and wSort IN (12,13,14) and ProcFDispMat IS NOT NULL) AND " & wip & " AND WireBalance > 0  AND Wire =  '" & termBuscar & "'")
+                        End If
+                        oHQty(termBuscar)
+                        diff = (oh - (QtyTerm + QtyWire) - Allocated) + AllocatedFiltro
+                        DTtermDist.Columns(1).ReadOnly = False
+                        DTtermDist.Rows(i).Item(1) = QtyTerm + QtyWire
+                        DTtermDist.Columns(2).ReadOnly = False
+                        DTtermDist.Rows(i).Item(2) = oh
+                        DTtermDist.Columns(4).ReadOnly = False
+                        DTtermDist.Rows(i).Item(4) = alm
+                        DTtermDist.Columns(5).ReadOnly = False
+                        DTtermDist.Rows(i).Item(5) = piso
+                        DTtermDist.Columns(6).ReadOnly = False
+                        DTtermDist.Rows(i).Item(6) = rework
+                        DTtermDist.Columns(8).ReadOnly = False
+                        DTtermDist.Rows(i).Item(8) = Allocated
+                        DTtermDist.Columns(9).ReadOnly = False
+                        DTtermDist.Rows(i).Item(9) = diff
+                        DTtermDist.Columns(10).ReadOnly = False
+                        DTtermDist.Rows(i).Item(10) = diff + InTransit
+                        If diff >= 0 Then
+                            DTtermDist.Rows(i).Delete()
+                        End If
+                        ProgressBar1.Value = Cuenta
+                        Application.DoEvents()
+                        Cuenta += 1
+                    Next
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                End Try
+                dgvMatSinStockCompras.DataSource = DTtermDist
+                If dgvMatSinStockCompras.RowCount > 0 Then
+                    dgvMatSinStockCompras.Columns("NextFReciboMat").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    dgvMatSinStockCompras.AutoResizeColumns() 'ajustamos el tamaño de las columnas
+                    dgvMatSinStockCompras.Columns(3).Width = 5
+                    dgvMatSinStockCompras.Columns(7).Width = 5
+                    dgvMatSinStockCompras.Sort(dgvMatSinStockCompras.Columns(0), ListSortDirection.Descending)
+                    PintarMateriales()
+                Else
+                    dgvMatSinStockCompras.DataSource = Nothing
+                    MessageBox.Show("No hay materiales con faltantes", "Materiales sin stock")
+                End If
+                ProgressBar1.Visible = False
+            Catch ex As Exception
+                MessageBox.Show(ex.Message, "Error Loading Terminales")
+                CorreoFalla.EnviaCorreoFalla("cargadatosCompras", host, UserName)
+            End Try
+            edo = cnn.State.ToString
+            If edo = "Open" Then cnn.Close()
+        End Using
+    End Sub
+    Private Function TermAQty(TermA As String, subQuery As String) As Integer
+        Dim Qty As Integer = 0
+        Dim Query As String = "SELECT SUM(TABalance) As Qty FROM tblWipDet where TABalance > 0 AND TermA = @TermA AND " & subQuery
+        Try
+            cmd = New SqlCommand(Query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@TermA", SqlDbType.NVarChar).Value = TermA
+            cnn.Open()
+            If IsDBNull(cmd.ExecuteScalar()) Then
+                Qty = 0
+            Else
+                Qty = CInt(Val(cmd.ExecuteScalar()))
+            End If
+            Return Qty
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, "Error Loading TermA")
+            CorreoFalla.EnviaCorreoFalla("TermAQty", host, UserName)
+            Return 0
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+    Private Function TermBQty(TermB As String, subQuery As String) As Integer
+        Dim Qty As Integer = 0
+        Dim Query As String = "SELECT SUM(TBBalance) As Qty FROM tblWipDet where TBBalance > 0 AND TermB = @TermB AND " & subQuery
+        Try
+            cmd = New SqlCommand(Query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@TermB", SqlDbType.NVarChar).Value = TermB
+            cnn.Open()
+            If IsDBNull(cmd.ExecuteScalar()) Then
+                Qty = 0
+            Else
+                Qty = CInt(Val(cmd.ExecuteScalar()))
+            End If
+            Return Qty
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, "Error Loading TermB")
+            CorreoFalla.EnviaCorreoFalla("TermBQty", host, UserName)
+            Return 0
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+    Private Function AllocatedAQty(Query As String) As Integer
+        Dim Qty As Integer = 0
+        Try
+            cmd = New SqlCommand(Query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            If IsDBNull(cmd.ExecuteScalar()) Then
+                Qty = 0
+            Else
+                Qty = CInt(Val(cmd.ExecuteScalar()))
+            End If
+            Return Qty
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, "Error Loading Allocated")
+            CorreoFalla.EnviaCorreoFalla("AllocatedAQty", host, UserName)
+            Return 0
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+    Private Function WireQty(Wire As String, subQuery As String) As Integer
+        Dim Qty As Integer = 0
+        Dim Query As String = "select SUM(WireBalance * LengthWire) * 0.0032808 AS Qty From tblWipDet where WireBalance > 0 AND Wire = @Wire AND " & subQuery
+        Try
+            cmd = New SqlCommand(Query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@Wire", SqlDbType.NVarChar).Value = Wire
+            cnn.Open()
+            If IsDBNull(cmd.ExecuteScalar()) Then
+                Qty = 0
+            Else
+                Qty = CInt(Val(cmd.ExecuteScalar()))
+            End If
+
+            Return Qty
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, "Error Loading WireQty")
+            CorreoFalla.EnviaCorreoFalla("WireQty", host, UserName)
+            Return 0
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+    Private Sub oHQty(PN As String)
+        Dim Qty As Integer = 0
+        Dim dtOH As New DataTable()
+        dtOH.Clear()
+        Dim Query As String = "SELECT DISTINCT Z.PN,
+        (SELECT SUM(M.Balance) FROM tblItemsTags M WHERE M.PN=Z.PN AND M.Status='Available' ) AS QtyWarehouse,
+        (SELECT SUM(N.Balance) FROM tblItemsTags N WHERE N.PN=Z.PN AND N.Status<>'Available' AND N.Status<>'Cancel' AND N.Status<>'Close' AND N.Status<>'Rework') AS QtyEnPiso,
+        (SELECT SUM(O.Balance) FROM tblItemsTags O WHERE O.PN=Z.PN AND O.Status='Rework') AS QtyEnRework,
+        (SELECT SUM(R.Balance) FROM tblItemsTags AS R WHERE R.PN=Z.PN AND (R.Status='NPI' OR R.Status='NoAvailable' OR R.Status='Available' OR R.Status='Rework')) AS QtyOnHand
+        FROM tblItemsTags AS Z WHERE Z.Balance <> 0 AND Z.PN = @PN
+        GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, ContainerName, OutDate, InDate, AssignedTo"
+        Try
+            cmd = New SqlCommand(Query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@PN", SqlDbType.NVarChar).Value = PN
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            dtOH.Load(dr)
+
+            If dtOH.Rows.Count > 0 Then
+                oh = CDec(Val(dtOH.Rows(0).Item("QtyOnHand").ToString()))
+                alm = CDec(Val(dtOH.Rows(0).Item("QtyWarehouse").ToString()))
+                piso = CDec(Val(dtOH.Rows(0).Item("QtyEnPiso").ToString()))
+                rework = CDec(Val(dtOH.Rows(0).Item("QtyEnRework").ToString()))
+            Else
+                oh = 0
+                alm = 0
+                piso = 0
+                rework = 0
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show(ex.ToString, "Error Loading OH")
+            CorreoFalla.EnviaCorreoFalla("oHQty", host, UserName)
+            oh = 0
+            alm = 0
+            piso = 0
+            rework = 0
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+    Private Sub PintarMateriales()
+        Try
+            Dim i As Integer
+            Dim AUant As String = ""
+            Dim PN As String = ""
+            For i = 0 To dgvMatSinStockCompras.RowCount - 1
+                dgvMatSinStockCompras.Rows(i).Cells(3).Style.BackColor = Color.DeepSkyBlue
+                dgvMatSinStockCompras.Rows(i).Cells(7).Style.BackColor = Color.DeepSkyBlue
+                If CDec(Val(dgvMatSinStockCompras.Rows(i).Cells("Diff").Value.ToString)) >= 0 Then
+                    dgvMatSinStockCompras.Rows(i).Cells("Diff").Style.BackColor = Color.Lime
+                    dgvMatSinStockCompras.Rows(i).Cells("Diff").Style.Font = New Font(Font, FontStyle.Bold)
+                Else
+                    dgvMatSinStockCompras.Rows(i).Cells("Diff").Style.BackColor = Color.Red
+                    dgvMatSinStockCompras.Rows(i).Cells("Diff").Style.Font = New Font(Font, FontStyle.Bold)
+                End If
+                If CDec(Val(dgvMatSinStockCompras.Rows(i).Cells("DifIncComp").Value.ToString)) >= 0 Then
+                    dgvMatSinStockCompras.Rows(i).Cells("DifIncComp").Style.BackColor = Color.Lime
+                    dgvMatSinStockCompras.Rows(i).Cells("DifIncComp").Style.Font = New Font(Font, FontStyle.Bold)
+                Else
+                    dgvMatSinStockCompras.Rows(i).Cells("DifIncComp").Style.BackColor = Color.Red
+                    dgvMatSinStockCompras.Rows(i).Cells("DifIncComp").Style.Font = New Font(Font, FontStyle.Bold)
+                End If
+                PN = dgvMatSinStockCompras.Rows(i).Cells("ComponentPN").Value.ToString
+                If Microsoft.VisualBasic.Left(PN, 1) <> "W" Then
+                    If AllocatedAQty("select COUNT(PnOriginal) AS QTY from TblDesviacionesTerm WHERE PnOriginal = '" & PN & "'") > 0 Then
+                        dgvMatSinStockCompras.Rows(i).Cells("ComponentPN").Style.BackColor = Color.MintCream
+                        dgvMatSinStockCompras.Rows(i).Cells("ComponentPN").Style.ForeColor = Color.DodgerBlue
+                        dgvMatSinStockCompras.Rows(i).Cells("ComponentPN").Style.Font = New Font(Font, FontStyle.Bold)
+                    End If
+                End If
+            Next
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("PintarMateriales", host, UserName)
+        End Try
+    End Sub
+    Private Sub cargachart()
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.Clear()
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.Clear()
+        Me.Chart1.Series("Carga Actual").Points.Clear()
+        Dim consulta As String
+        'Dim maquinaLista As ArrayList = New ArrayList()
+        'Dim hrsLista As ArrayList = New ArrayList()
+        'Dim maquinaEnProcess As ArrayList = New ArrayList()
+        'Dim hrsEnProcess As ArrayList = New ArrayList()
+        Dim cero As Integer = 0
+        Dim uno As Integer = 1
+        Dim dos As Integer = 2
+        Dim tres As Integer = 3
+        Dim cuatro As Integer = 4
+        Dim cinco As Integer = 5
+        Dim seis As Integer = 6
+        Dim diez As Integer = 10
+        Dim once As Integer = 11
+        Dim doce As Integer = 12
+        Dim trce As Integer = 13
+        Dim ca14 As Integer = 14
+        Dim Tmaq0 As Integer = 0
+        Dim Tmaq1 As Integer = 0
+        Dim Tmaq2 As Integer = 0
+        Dim Tmaq3 As Integer = 0
+        Dim Tmaq4 As Integer = 0
+        Dim Tmaq5 As Integer = 0
+        Dim Tmaq6 As Integer = 0
+        Dim Tmaq10 As Integer = 0
+        Dim Tmaq11 As Integer = 0
+        Dim Tmaq12 As Integer = 0
+        Dim Tmaq13 As Integer = 0
+        Dim Tmaq14 As Integer = 0
+
+        Dim Tmaq0s As Integer = 0
+        Dim Tmaq1s As Integer = 0
+        Dim Tmaq2s As Integer = 0
+        Dim Tmaq3s As Integer = 0
+        Dim Tmaq4s As Integer = 0
+        Dim Tmaq5s As Integer = 0
+        Dim Tmaq6s As Integer = 0
+        Dim Tmaq10s As Integer = 0
+        Dim Tmaq11s As Integer = 0
+        Dim Tmaq12s As Integer = 0
+        Dim Tmaq13s As Integer = 0
+        Dim Tmaq14s As Integer = 0
+
+        Dim Tmaq0ss As Integer = 0
+        Dim Tmaq1ss As Integer = 0
+        Dim Tmaq2ss As Integer = 0
+        Dim Tmaq3ss As Integer = 0
+        Dim Tmaq4ss As Integer = 0
+        Dim Tmaq5ss As Integer = 0
+        Dim Tmaq6ss As Integer = 0
+        Dim Tmaq10ss As Integer = 0
+        Dim Tmaq11ss As Integer = 0
+        Dim Tmaq12ss As Integer = 0
+        Dim Tmaq13ss As Integer = 0
+        Dim Tmaq14ss As Integer = 0
+        ' Carga de maquinas por entrar
+        consulta = "SELECT MR.Maq, convert(int, (SUM(Tsetup) /60 + sum(TRuntime)/60)) AS 'TotalTime' 
+FROM tblMaqRates AS MR INNER JOIN tblCWO AS E ON MR.Maq = E.Maq INNER JOIN tblCWOSerialNumbers AS D ON E.CWO = D.CWO INNER JOIN tblWipDet as C ON C.WireID = D.WireID INNER JOIN tblWIP AS WP ON C.WIP = WP.WIP
+WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBalance > 0 AND MR.Active = 1 AND D.NumericalPath LIKE '2%' and E.WSort =20 GROUP BY MR.Maq, Cat,Categoria, MaxAWG, MinAWG ORDER BY MR.Maq * 1"
+        Using tabla As New DataTable
+            Try
+                cmd = New SqlCommand(consulta, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                'tabla.Load(dr)
+                edo = cnn.State.ToString
+                'If edo = "Open" Then cnn.Close()
+                If dr.HasRows Then
+                    While dr.Read()
+                        'maquinaLista.Add(dr.GetValue(0))
+                        'hrsLista.Add(dr.GetValue(1))
+                        If cero = dr.GetValue(0) Then
+                            Tmaq0 = dr.GetValue(1)
+                        ElseIf uno = dr.GetValue(0) Then
+                            Tmaq1 = dr.GetValue(1)
+                        ElseIf dos = dr.GetValue(0) Then
+                            Tmaq2 = dr.GetValue(1)
+                        ElseIf tres = dr.GetValue(0) Then
+                            Tmaq3 = dr.GetValue(1)
+                        ElseIf cuatro = dr.GetValue(0) Then
+                            Tmaq4 = dr.GetValue(1)
+                        ElseIf cinco = dr.GetValue(0) Then
+                            Tmaq5 = dr.GetValue(1)
+                        ElseIf seis = dr.GetValue(0) Then
+                            Tmaq6 = dr.GetValue(1)
+                        ElseIf diez = dr.GetValue(0) Then
+                            Tmaq10 = dr.GetValue(1)
+                        ElseIf once = dr.GetValue(0) Then
+                            Tmaq11 = dr.GetValue(1)
+                        ElseIf doce = dr.GetValue(0) Then
+                            Tmaq12 = dr.GetValue(1)
+                        ElseIf trce = dr.GetValue(0) Then
+                            Tmaq13 = dr.GetValue(1)
+                        ElseIf ca14 = dr.GetValue(0) Then
+                            Tmaq14 = dr.GetValue(1)
+                        End If
+                    End While
+                Else
+                    cnn.Close()
+                End If
+                cnn.Close()
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+                CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+            End Try
+        End Using
+        'Carga de maquinas en proceso de corte
+        consulta = "SELECT MR.Maq,ISNULL(convert(int, (SUM(c.TSetup) / 60 + sum(c.TRuntime) / 60)),0) [TotalTime]
+        FROM tblMaqRates AS MR INNER JOIN tblCWO AS E ON MR.Maq = E.Maq INNER JOIN tblCWOSerialNumbers AS D ON E.CWO = D.CWO INNER JOIN tblWipDet as C ON C.WireID = D.WireID INNER JOIN tblWIP AS WP ON C.WIP = WP.WIP
+        WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBalance > 0 AND MR.Active = 1 and E.WSort in (25,29,26) GROUP BY MR.Maq, Cat,Categoria, MaxAWG, MinAWG ORDER BY MR.Maq * 1"
+        Using tabla2 As New DataTable
+            Try
+                cmd = New SqlCommand(consulta, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                'tabla2.Load(dr)
+                edo = cnn.State.ToString
+                'If edo = "Open" Then cnn.Close()
+                If dr.HasRows Then
+                    While dr.Read()
+                        'maquinaEnProcess.Add(dr.GetValue(0))
+                        'hrsEnProcess.Add(dr.GetValue(1))
+                        If cero = dr.GetValue(0) Then
+                            Tmaq0s = dr.GetValue(1)
+                        ElseIf uno = dr.GetValue(0) Then
+                            Tmaq1s = dr.GetValue(1)
+                        ElseIf dos = dr.GetValue(0) Then
+                            Tmaq2s = dr.GetValue(1)
+                        ElseIf tres = dr.GetValue(0) Then
+                            Tmaq3s = dr.GetValue(1)
+                        ElseIf cuatro = dr.GetValue(0) Then
+                            Tmaq4s = dr.GetValue(1)
+                        ElseIf cinco = dr.GetValue(0) Then
+                            Tmaq5s = dr.GetValue(1)
+                        ElseIf seis = dr.GetValue(0) Then
+                            Tmaq6s = dr.GetValue(1)
+                        ElseIf diez = dr.GetValue(0) Then
+                            Tmaq10s = dr.GetValue(1)
+                        ElseIf once = dr.GetValue(0) Then
+                            Tmaq11s = dr.GetValue(1)
+                        ElseIf doce = dr.GetValue(0) Then
+                            Tmaq12s = dr.GetValue(1)
+                        ElseIf trce = dr.GetValue(0) Then
+                            Tmaq13s = dr.GetValue(1)
+                        ElseIf ca14 = dr.GetValue(0) Then
+                            Tmaq14s = dr.GetValue(1)
+                        End If
+                    End While
+                Else
+                    cnn.Close()
+                End If
+                cnn.Close()
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+                CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+            End Try
+        End Using
+        ' Carga de maquinas en proceso de confirmacion
+        consulta = "SELECT MR.Maq,ISNULL(convert(int, (SUM(c.TSetup) / 60 + sum(c.TRuntime) / 60)),0) [TotalTime]
+        FROM tblMaqRates AS MR INNER JOIN tblCWO AS E ON MR.Maq = E.Maq INNER JOIN tblCWOSerialNumbers AS D ON E.CWO = D.CWO INNER JOIN tblWipDet as C ON C.WireID = D.WireID INNER JOIN tblWIP AS WP ON C.WIP = WP.WIP
+        WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBalance > 0 AND MR.Active = 1 and E.WSort in (3,9,11,12,13,14,27) GROUP BY MR.Maq, Cat,Categoria, MaxAWG, MinAWG ORDER BY MR.Maq * 1"
+        Using tabla As New DataTable
+            Try
+                cmd = New SqlCommand(consulta, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                'tabla2.Load(dr)
+                edo = cnn.State.ToString
+                'If edo = "Open" Then cnn.Close()
+                If dr.HasRows Then
+                    While dr.Read()
+                        'maquinaEnProcess.Add(dr.GetValue(0))
+                        'hrsEnProcess.Add(dr.GetValue(1))
+                        If cero = dr.GetValue(0) Then
+                            Tmaq0ss = dr.GetValue(1)
+                        ElseIf uno = dr.GetValue(0) Then
+                            Tmaq1ss = dr.GetValue(1)
+                        ElseIf dos = dr.GetValue(0) Then
+                            Tmaq2ss = dr.GetValue(1)
+                        ElseIf tres = dr.GetValue(0) Then
+                            Tmaq3ss = dr.GetValue(1)
+                        ElseIf cuatro = dr.GetValue(0) Then
+                            Tmaq4ss = dr.GetValue(1)
+                        ElseIf cinco = dr.GetValue(0) Then
+                            Tmaq5ss = dr.GetValue(1)
+                        ElseIf seis = dr.GetValue(0) Then
+                            Tmaq6ss = dr.GetValue(1)
+                        ElseIf diez = dr.GetValue(0) Then
+                            Tmaq10ss = dr.GetValue(1)
+                        ElseIf once = dr.GetValue(0) Then
+                            Tmaq11ss = dr.GetValue(1)
+                        ElseIf doce = dr.GetValue(0) Then
+                            Tmaq12ss = dr.GetValue(1)
+                        ElseIf trce = dr.GetValue(0) Then
+                            Tmaq13ss = dr.GetValue(1)
+                        ElseIf ca14 = dr.GetValue(0) Then
+                            Tmaq14ss = dr.GetValue(1)
+                        End If
+                    End While
+                Else
+                    cnn.Close()
+                End If
+                cnn.Close()
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+                CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+            End Try
+        End Using
+        '-------------------------------------------------------------------------
+        Me.Chart1.ChartAreas(0).AxisX.MajorGrid.LineWidth = 0
+        Me.Chart1.Series("Carga Maquinas por entrar").IsValueShownAsLabel = True
+        Me.Chart1.Series("Carga Maquinas por entrar").IsVisibleInLegend = True
+        Me.Chart1.Series("Carga Actual").IsValueShownAsLabel = True
+        Me.Chart1.Series("Carga en proceso de confirmacion").IsValueShownAsLabel = True
+        'Me.Chart1.ChartAreas(0).AxisY.MajorGrid.LineWidth = 0
+        Me.Chart1.Titles.Clear()
+        Me.Chart1.Titles.Add("Grafico Carga de Maquinas").Font = New System.Drawing.Font("Arial", 12, System.Drawing.FontStyle.Bold)
+        '--------------------------------------------------------------------------
+        'Me.Chart1.Series("Carga Maquinas por entrar").Points.DataBindXY(maquinaLista, hrsLista)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("1", Tmaq0)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("1", Tmaq1)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("2", Tmaq2)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("3", Tmaq3)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("4", Tmaq4)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("5", Tmaq5)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("6", Tmaq6)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("10", Tmaq10)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("11", Tmaq11)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("12", Tmaq12)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("13", Tmaq13)
+        Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("14", Tmaq14)
+        '-------------------------------------------------------------------------
+        'Me.Chart1.Series("Carga Actual").Points.DataBindXY(maquinaEnProcess, hrsEnProcess)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("1", Tmaq0s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("1", Tmaq1s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("2", Tmaq2s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("3", Tmaq3s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("4", Tmaq4s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("5", Tmaq5s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("6", Tmaq6s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("10", Tmaq10s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("11", Tmaq11s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("12", Tmaq12s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("13", Tmaq13s)
+        Me.Chart1.Series("Carga Actual").Points.AddXY("14", Tmaq14s)
+        ' -------------------------------------------------------------------
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("1", Tmaq0ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("1", Tmaq1ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("2", Tmaq2ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("3", Tmaq3ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("4", Tmaq4ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("5", Tmaq5ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("6", Tmaq6ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("10", Tmaq10ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("11", Tmaq11ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("12", Tmaq12ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("13", Tmaq13ss)
+        Me.Chart1.Series("Carga en proceso de confirmacion").Points.AddXY("14", Tmaq14ss)
+
+        Timer2.Enabled = True
+        Timer2.Interval = 60000
+    End Sub
+    Private Sub pintaceldas()
+        For i As Integer = 0 To dgvWips.Rows.Count - 1
+            If dgvWips.Rows(i).Cells("Fecha de solicitud").Value.ToString <> "" Then
+                dgvWips.Rows(i).Cells("Fecha de solicitud").Style.ForeColor = Color.BlueViolet
+                dgvWips.Rows(i).Cells("CWO").Style.ForeColor = Color.BlueViolet
+            End If
+            If dgvWips.Rows(i).Cells("Confirmacion de Almacen").Value.ToString <> "" Then
+                dgvWips.Rows(i).Cells("Confirmacion de Almacen").Style.ForeColor = Color.BlueViolet
+                dgvWips.Rows(i).Cells("CWO").Style.ForeColor = Color.BlueViolet
+            End If
+            If dgvWips.Rows(i).Cells("Confirmacion Aplicadores").Value.ToString <> "" Then
+                dgvWips.Rows(i).Cells("Confirmacion Aplicadores").Style.ForeColor = Color.BlueViolet
+                dgvWips.Rows(i).Cells("CWO").Style.ForeColor = Color.BlueViolet
+            End If
+        Next
+        If rbSolicitado.Checked = True Then
+            For Each row As DataGridViewRow In dgvWips.Rows
+                If row.Cells(2).Value.ToString <= Now() And (row.Cells(6).Value = 12 Or row.Cells(6).Value = 14) Then
+                    row.DefaultCellStyle.BackColor = Color.Red
+                    row.DefaultCellStyle.ForeColor = Color.White
+                ElseIf row.Cells(6).Value = 12 Or row.Cells(6).Value = 14 Then
+                    row.DefaultCellStyle.BackColor = Color.Red
+                    row.DefaultCellStyle.ForeColor = Color.White
+                ElseIf row.Cells(5).Value = 27 Or row.Cells(6).Value = 27 Then
+                    row.DefaultCellStyle.BackColor = Color.Orange
+                    row.DefaultCellStyle.ForeColor = Color.White
+                End If
+            Next
+        ElseIf rbsolicitar.Checked = True Or rdbOnHold.Checked = True Then
+            For Each linea As DataGridViewRow In dgvWips.Rows
+                If linea.Cells(5).Value = 27 Or linea.Cells(6).Value = 27 Then
+                    linea.DefaultCellStyle.BackColor = Color.Orange
+                    linea.DefaultCellStyle.ForeColor = Color.White
+                End If
+            Next
+        End If
+        For i As Integer = 0 To dgvWips.Rows.Count - 1
+            If dgvWips.Rows(i).Cells("wSort CWO").Value.ToString = 27 Then
+                dgvWips.Rows(i).Cells("wSort WIP").Style.BackColor = Color.Red
+                dgvWips.Rows(i).Cells("wSort WIP").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort WIP").Style.Font = New Font(Font, FontStyle.Bold)
+                '------------------------------------------------------------------
+                dgvWips.Rows(i).Cells("wSort CWO").Style.BackColor = Color.Red
+                dgvWips.Rows(i).Cells("wSort CWO").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort CWO").Style.Font = New Font(Font, FontStyle.Bold)
+            ElseIf dgvWips.Rows(i).Cells("wSort CWO").Value.ToString = 12 Then
+                dgvWips.Rows(i).Cells("wSort CWO").Style.BackColor = Color.Red
+                dgvWips.Rows(i).Cells("wSort CWO").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort CWO").Style.Font = New Font(Font, FontStyle.Bold)
+                '------------------------------------------------------------------
+                dgvWips.Rows(i).Cells("wSort WIP").Style.BackColor = Color.Red
+                dgvWips.Rows(i).Cells("wSort WIP").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort WIP").Style.Font = New Font(Font, FontStyle.Bold)
+            ElseIf dgvWips.Rows(i).Cells("wSort CWO").Value.ToString = 14 Then
+                dgvWips.Rows(i).Cells("wSort CWO").Style.BackColor = Color.Red
+                dgvWips.Rows(i).Cells("wSort CWO").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort CWO").Style.Font = New Font(Font, FontStyle.Bold)
+                '------------------------------------------------------------------
+                dgvWips.Rows(i).Cells("wSort WIP").Style.BackColor = Color.Red
+                dgvWips.Rows(i).Cells("wSort WIP").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort WIP").Style.Font = New Font(Font, FontStyle.Bold)
+            ElseIf dgvWips.Rows(i).Cells("wSort CWO").Value.ToString = 3 Then
+                dgvWips.Rows(i).Cells("wSort CWO").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort CWO").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort CWO").Style.Font = New Font(Font, FontStyle.Bold)
+                '------------------------------------------------------------------
+                dgvWips.Rows(i).Cells("wSort WIP").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort WIP").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort WIP").Style.Font = New Font(Font, FontStyle.Bold)
+            ElseIf dgvWips.Rows(i).Cells("wSort CWO").Value.ToString = 9 Then
+                dgvWips.Rows(i).Cells("wSort CWO").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort CWO").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort CWO").Style.Font = New Font(Font, FontStyle.Bold)
+                '------------------------------------------------------------------
+                dgvWips.Rows(i).Cells("wSort WIP").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort WIP").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort WIP").Style.Font = New Font(Font, FontStyle.Bold)
+            ElseIf dgvWips.Rows(i).Cells("wSort CWO").Value.ToString = 11 Then
+                dgvWips.Rows(i).Cells("wSort CWO").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort CWO").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort CWO").Style.Font = New Font(Font, FontStyle.Bold)
+                '------------------------------------------------------------------
+                dgvWips.Rows(i).Cells("wSort WIP").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort WIP").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort WIP").Style.Font = New Font(Font, FontStyle.Bold)
+            ElseIf dgvWips.Rows(i).Cells("wSort CWO").Value.ToString = 13 Then
+                dgvWips.Rows(i).Cells("wSort CWO").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort CWO").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort CWO").Style.Font = New Font(Font, FontStyle.Bold)
+                '------------------------------------------------------------------
+                dgvWips.Rows(i).Cells("wSort WIP").Style.BackColor = Color.Green
+                dgvWips.Rows(i).Cells("wSort WIP").Style.ForeColor = Color.Black
+                dgvWips.Rows(i).Cells("wSort WIP").Style.Font = New Font(Font, FontStyle.Bold)
+            End If
+        Next
+    End Sub
+    Private Sub ToolStripTextBox1_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox1.Click
+        If WIP <> "" And CWO <> "" Then
+            Dim ver As Char = CWO(0)
+            Dim ver2 As Char = WIP(0)
+            If ver = "C" And ver2 = "W" Then
+                If opcion = 1 Or opcion = 4 Then
+                    Asignar.lblcwoporsolicitar.Text = CWO
+                    Asignar.lblwipporsolicitar.Text = WIP
+                    Asignar.Show()
+                End If
+            Else
+                MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
+            End If
+        End If
+        ContextMenuDisponibilidad.Close()
+        filtros(1)
+    End Sub
+    Private Sub dgvWips_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.CellMouseDown
+        If e.RowIndex <> -1 And e.ColumnIndex <> -1 Then
+            If e.Button = MouseButtons.Right Then
+                Try
+                    dgvWips.CurrentCell = dgvWips.Rows(e.RowIndex).Cells(e.ColumnIndex)
+                    dgvWips.Rows(e.RowIndex).Selected = True
+                    WIP = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(0).Value)
+                    CWO = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(1).Value)
+                    ok1 = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(17).Value)
+                    ok2 = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(18).Value)
+                    sort = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(6).Value)
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                    CorreoFalla.EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                End Try
+            End If
+        End If
+    End Sub
+    Private Sub dgvWips_MouseClick(sender As Object, e As MouseEventArgs) Handles dgvWips.MouseClick
+        If dgvWips.RowCount > 0 Then
+            If opcion = 1 Or opcion = 4 Then
+                If rbsolicitar.Checked = True And (sort = 27 Or sort = 3) Then
+                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                        ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                    End If
+                End If
+            ElseIf opcion = 2 Then
+                If rbSolicitado.Checked = True And dgvWips.Rows.Count > 0 Then
+                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                        ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                        ToolStripTextBox5.Visible = True
+                        ToolStripTextBox6.Visible = False
+                    End If
+                    'ElseIf rbsolicitar.Checked = True And sort = 27 Then
+                    '    If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                    '        ContextMenuStrip1.Show(Cursor.Position.X, Cursor.Position.Y)
+                    '    End If
+                End If
+            ElseIf opcion = 3 And sort <> 27 Then
+                If rbSolicitado.Checked = True And dgvWips.Rows.Count > 0 Then
+                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                        ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                        ToolStripTextBox5.Visible = False
+                        ToolStripTextBox6.Visible = True
+                    End If
+                End If
+            ElseIf opcion = 5 Then
+                If rdbOnHold.Checked = True And dgvWips.Rows.Count > 0 Then
+                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                        ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                        ToolStripTextBox2.Visible = False
+                        ToolStripTextBox3.Visible = False
+                        ToolStripTextBox5.Visible = True
+                        ToolStripTextBox6.Visible = False
+                        If sort <> 27 Then
+                            ToolStripTextBox7.Visible = True
+                        Else
+                            ToolStripTextBox7.Visible = False
+                        End If
+                    End If
+                End If
+            End If
+            End If
+    End Sub 'En este poner lo que vaya a ver compras en onhold
+    Public Sub actualizafecharequerimiento(CWO As String, requerimiento As String, wip As String)
+        Dim revisa As Integer
+        query = "select dateSolicitud from tblCWO where CWO=@CWO"
+        Try
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            cnn.Open()
+            edo = cnn.State.ToString
+            If IsDBNull(cmd.ExecuteScalar()) Then
+                revisa = 1
+                cnn.Close()
+            Else
+                revisa = 2
+                cnn.Close()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
+        End Try
+        If revisa = 1 Then
+            If sort = 27 Then
+                Try
+                    Dim query As String = "update tblCWO set FechaSolicitudMat= @requerimiento, dateSolicitud = GETDATE(), Id=1 where CWO= @CWO"
+                    cmd = New SqlCommand(query, cnn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+                    cmd.Parameters.Add("@requerimiento", SqlDbType.DateTime).Value = requerimiento
+                    cnn.Open()
+                    cmd.ExecuteNonQuery()
+                    cnn.Close()
+                    MsgBox("Se ha asignado fecha de requerimiento", MsgBoxStyle.OkOnly)
+
+                    query = "insert into tblXpHist (WIP,Uname,FPromBeforeChange,AreaCreacion,NotasBeforeChange,Fecha)
+                             values (@CWO,@User,@fprom,@Department,'Solicitado por Corte 1era vez',GETDATE())"
+                    cmd = New SqlCommand(query, cnn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+                    cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+                    cmd.Parameters.Add("@fprom", SqlDbType.NVarChar).Value = requerimiento
+                    cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+                    cnn.Open()
+                    cmd.ExecuteNonQuery()
+                    cnn.Close()
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                    CorreoFalla.EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
+                End Try
+            Else
+                Try
+                    Dim query As String = "update tblCWO set FechaSolicitudMat= @requerimiento, Wsort = 9, dateSolicitud = GETDATE(), Id=1 where CWO= @CWO"
+                    cmd = New SqlCommand(query, cnn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+                    cmd.Parameters.Add("@requerimiento", SqlDbType.NVarChar).Value = requerimiento
+                    cnn.Open()
+                    dr = cmd.ExecuteReader
+                    cnn.Close()
+                    MsgBox("Se ha asignado fecha de requerimiento", MsgBoxStyle.OkOnly)
+
+                    'query = "insert into tblMLFhistory (CWO,[Creado Por],[Fecha Prom],Departamento,Nota,Fecha)
+                    '         values (@CWO,@User,@fprom,@Department,'Solicitado por Corte 1era vez',GETDATE())"
+                    query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha)
+                             values (@CWO,@User,@Department,@FProm,'Solicitado por primera vez',GETDATE())"
+                    cmd = New SqlCommand(query, cnn)
+                    cmd.CommandType = CommandType.Text
+                    cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+                    cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+                    cmd.Parameters.Add("@fprom", SqlDbType.NVarChar).Value = requerimiento
+                    cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+                    cnn.Open()
+                    cmd.ExecuteNonQuery()
+                    cnn.Close()
+                Catch ex As Exception
+                    MsgBox(ex.ToString)
+                    CorreoFalla.EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
+                End Try
+            End If
+        Else
+            MsgBox("El CWO: " + CWO.ToString + " ya tiene asignado una fecha de solicitud, debido a esto ya no puede cambiar la fecha, contactelo con el administrador si desea efectuar un cambio.", MsgBoxStyle.OkOnly)
+        End If
+        filtros(1)
+    End Sub
+    Private Function updateacorte(wip As String)
+        Try
+            Dim r As Integer = 0
+            query = "select distinct d.CWO,c.WSort from tblWipDet as d inner join tblCWO as c on c.CWO=d.CWO where WIP=@WIP"
+            Dim table As New DataTable
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = wip
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            table.Load(dr)
+            cnn.Close()
+            Dim c As Integer = table.Rows.Count
+            If c > 0 Then
+                For i As Integer = 0 To table.Rows.Count - 1
+                    If table.Rows(i).Item("WSort").ToString = 20 Then
+                        r += 1
+                    End If
+                Next
+            End If
+            If r = c Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("updateacorte", host, UserName)
+        End Try
+        Return Nothing
+    End Function
+    Public Sub poneokalm_apl(cwo As String, wip As String)
+        Dim queri As String = ""
+        If opcion = 2 Then
+            queri = "update tblCWO set ConfirmacionAlm= 'Confirmado', WSort = 11, dateConfirmaAlm= GETDATE(), Id=2 where CWO =@CWO"
+        ElseIf opcion = 3 Then
+            queri = "update tblCWO set ConfirmacionApl= 'Confirmado', WSort = 13, dateConfirmaApl= GETDATE(), Id=3 where CWO =@CWO"
+        End If
+        cmd = New SqlCommand(queri, cnn)
+        cmd.CommandType = CommandType.Text
+        cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+        cnn.Open()
+        dr = cmd.ExecuteReader
+        cnn.Close()
+        MsgBox("Confirmado", MsgBoxStyle.OkOnly)
+        filtros(2)
+        FUERA(cwo, wip)
+    End Sub
+    Private Sub FUERA(cwo As String, wip As String)
+        query = "select ConfirmacionAlm,ConfirmacionApl from tblCWO where CWO=@CWO and (ConfirmacionAlm <> '' or ConfirmacionApl <> '')"
+        Dim ooo As Integer
+        Using t As New DataTable
+            Try
+                Dim cmd As SqlCommand
+                Dim edo As String
+                cmd = New SqlCommand(query, cnn)
+                cmd.CommandType = CommandType.Text
+                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+                cnn.Open()
+                edo = cnn.State.ToString
+                If IsDBNull(cmd.ExecuteScalar()) Then
+                    ooo = 1
+                    'MsgBox("sin Resultado")
+                    cnn.Close()
+                Else
+                    ooo = 2
+                    'MsgBox("con resultado")
+                    dr = cmd.ExecuteReader
+                    t.Load(dr)
+                    cnn.Close()
+                End If
+                If edo = "Open" Then cnn.Close()
+                If ooo = 2 Then
+                    For i As Integer = 0 To t.Rows.Count - 1
+                        If t.Rows(i).Item("ConfirmacionAlm").ToString = "Confirmado" And t.Rows(i).Item("ConfirmacionApl").ToString = "Confirmado" Then
+                            busca_los_wip_y_los_pone_a_20_y_el_cwo_a_20(wip)
+                        End If
+                    Next
+                    If updateacorte(wip) = True Then
+                        Try
+                            Dim q As String = "update tblWIP set [A.Corte]= Qty where WIP= @WIP"
+                            cmd = New SqlCommand(q, cnn)
+                            cmd.CommandType = CommandType.Text
+                            cmd.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = wip
+                            cnn.Open()
+                            dr = cmd.ExecuteReader
+                            cnn.Close()
+                        Catch ex As Exception
+                            MsgBox(ex.ToString)
+                            CorreoFalla.EnviaCorreoFalla("FUERA", host, UserName)
+                        End Try
+                    End If
+                End If
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+                CorreoFalla.EnviaCorreoFalla("FUERA", host, UserName)
+            End Try
+        End Using
+    End Sub
+    Private Sub busca_los_wip_y_los_pone_a_20_y_el_cwo_a_20(wip As String)
+        Dim queru As String = "select distinct tblCWO.CWO,tblCWO.WSort from tblWipDet inner join tblCWO on tblWipDet.CWO=tblCWO.CWO where WIP=@wip and ConfirmacionAlm='Confirmado' and ConfirmacionApl='Confirmado'"
+        Using tb As New DataTable 'Distintos CWO del WIP
+            Dim aa As Integer = 0
+            Dim cwo As String = ""
+            Try
+                cmd = New SqlCommand(queru, cnn)
+                cmd.CommandType = CommandType.Text
+                cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                tb.Load(dr)
+                edo = cnn.State.ToString
+                cnn.Close()
+                If tb.Rows.Count > 0 Then
+                    For i As Integer = 0 To tb.Rows.Count - 1
+                        If tb.Rows(i).Item("WSort").ToString = 11 Or tb.Rows(i).Item("WSort").ToString = 13 Then
+                            cwo = tb.Rows(i).Item("CWO").ToString
+                            Try
+                                Dim query As String = "update tblCWO set Wsort = 20 where CWO= @CWO" 'Pone a 20 ek cwo
+                                cmd = New SqlCommand(query, cnn)
+                                cmd.CommandType = CommandType.Text
+                                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+                                cnn.Open()
+                                dr = cmd.ExecuteReader
+                                cnn.Close()
+                            Catch ex As Exception
+                                MsgBox(ex.ToString)
+                            End Try
+                        End If
+                    Next
+                End If
+                intentarponerwipawsort20(wip)
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+                CorreoFalla.EnviaCorreoFalla("busca_los_wip_y_los_pone_a_20_y_el_cwo_a_20", host, UserName)
+            End Try
+        End Using
+    End Sub
+    Private Sub intentarponerwipawsort20(wip As String)
+        Dim count As Integer = 0
+        Using t As New DataTable
+            Try
+                Dim query As String = "select distinct c.cwo,c.wsort from tblWipDet as b inner join tblWIP as a on b.wip=a.wip inner join tblCWO as c on c.cwo=b.cwo where a.WIP=@wip"
+                cmd = New SqlCommand(query, cnn)
+                cmd.CommandType = CommandType.Text
+                cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                t.Load(dr)
+                edo = cnn.State.ToString
+                cnn.Close()
+                For i As Integer = 0 To t.Rows.Count - 1
+                    If t.Rows(i).Item("wsort").ToString = 20 Then
+                        count += 1
+                    End If
+                Next
+                If count = t.Rows.Count Then
+                    Try ' Revisar esto para ver si si se seguira poniendo wSort a 20 del WIP, o permanecera en 3
+                        Dim queru As String = "update tblWIP set Wsort = 20 where WIP= @wip"
+                        cmd = New SqlCommand(queru, cnn)
+                        cmd.CommandType = CommandType.Text
+                        cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
+                        cnn.Open()
+                        dr = cmd.ExecuteReader
+                        cnn.Close()
+                    Catch ex As Exception
+                        MsgBox(ex.ToString)
+                        CorreoFalla.EnviaCorreoFalla("intentarponerwipawsort20", host, UserName)
+                    End Try
+                End If
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+                CorreoFalla.EnviaCorreoFalla("intentarponerwipawsort20", host, UserName)
+            End Try
+        End Using
+    End Sub
+    Private Sub dgvWips_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.ColumnHeaderMouseClick
+        pintaceldas()
+    End Sub
+    Private Sub ToolStripTextBox2_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox2.Click 'Confirmar
+        Dim respuesta As String
+        If ok1 = "Confirmado" And opcion = 2 Then
+            respuesta = MessageBox.Show("La celda seleccionada ya fue confirmada, desea ponerlo en status On Hold?", "On Hold", MessageBoxButtons.YesNo)
+            If respuesta = vbYes Then
+                p = 12
+                'Hold.lblcwoporsolicitar.Text = CWO
+                'Hold.lblwipporsolicitar.Text = WIP
+                'Hold.ShowDialog()
+                Materiales.lblcwomat.Text = CWO
+                Materiales.Label4.Text = WIP
+                Materiales.Show()
+            ElseIf respuesta = vbNo Then
+                ContextMenuVerMW.Close()
+            End If
+        ElseIf ok2 = "Confirmado" And opcion = 3 Then
+            respuesta = MessageBox.Show("La celda seleccionada ya fue confirmada, desea ponerlo en status On Hold?", "On Hold", MessageBoxButtons.YesNo)
+            If respuesta = vbYes Then
+                Hold.lblcwoporsolicitar.Text = CWO
+                Hold.lblwipporsolicitar.Text = WIP
+                op = 0
+                Hold.Show()
+            ElseIf respuesta = vbNo Then
+                ContextMenuVerMW.Close()
+            End If
+        ElseIf ok1 = "OnHold" And opcion = 2 Then
+            respuesta = MessageBox.Show("Este CWO esta en Status On Hold, desea confirmalo?", "On Hold", MessageBoxButtons.YesNo)
+            If respuesta = vbYes Then
+                'Hold.lblcwoporsolicitar.Text = CWO
+                'Hold.lblwipporsolicitar.Text = WIP
+                'op = 1
+                'Hold.ShowDialog()
+                p = 1
+                Materiales.lblcwomat.Text = CWO
+                Materiales.Label4.Text = WIP
+                Materiales.Show()
+                flag = 1
+                'notesWIPandCWOquitandoOnHold()
+                'ContextMenuDisponibilidad.Close()
+            ElseIf respuesta = vbNo Then
+                ContextMenuVerMW.Close()
+            End If
+        ElseIf ok2 = "OnHold" And opcion = 3 Then
+            respuesta = MessageBox.Show("Este CWO esta en Status On Hold, desea confirmalo?", "On Hold", MessageBoxButtons.YesNo)
+            If respuesta = vbYes Then
+                'Hold.lblcwoporsolicitar.Text = CWO
+                'Hold.lblwipporsolicitar.Text = WIP
+                'op = 1
+                'Hold.ShowDialog()
+                notesWIPandCWOquitandoOnHold()
+                ContextMenuVerMW.Close()
+            ElseIf respuesta = vbNo Then
+                ContextMenuVerMW.Close()
+            End If
+        Else
+            If WIP <> "" And CWO <> "" Then
+                Dim ver As Char = CWO(0)
+                Dim ver2 As Char = WIP(0)
+                If ver = "C" And ver2 = "W" Then
+                    If opcion = 2 Then
+                        p = 1
+                        Materiales.lblcwomat.Text = CWO
+                        Materiales.Label4.Text = WIP
+                        Materiales.Show()
+                        'poneokalm_apl(CWO, WIP)
+                    ElseIf opcion = 3 Then
+                        query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha)
+                                 values (@CWO,@User,'Aplicadores','Confirmado',GETDATE())"
+                        cmd = New SqlCommand(query, cnn)
+                        cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+                        cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+                        cmd.CommandType = CommandType.Text
+                        cnn.Open()
+                        cmd.ExecuteNonQuery()
+                        cnn.Close()
+                        poneokalm_apl(CWO, WIP)
+                    End If
+                Else
+                    MessageBox.Show("El CWO seleccionado no contiene un CWO o WIP")
+                End If
+            End If
+            ContextMenuVerMW.Close()
+            filtros(2)
+        End If
+    End Sub
+    Private Sub filtros(a As Integer)
+        query = "select distinct w.WIP,c.CWO,Convert(datetime,c.FechaSolicitudMat) [Fecha de solicitud],w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,c.Maq,w.CreatedDate [DateCretedWIP],Sem,c.ConfirmacionAlm [Confirmacion de Almacen],c.ConfirmacionApl [Confirmacion Aplicadores] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+        Dim cmd As String = ""
+        If a = 1 Then
+            If opcion = 1 Then 'Solicitar Mat/Apl
+                cmd = " where (w.WSort = 3 or w.WSort = 27) and (c.Wsort = 3 or c.Wsort = 27)  and c.FechaSolicitudMat is null and w.KindOfAU not like 'XP%' order by c.CWO /*w.CreatedDate*/"
+            ElseIf opcion = 4 Then 'Solicitar Mat/Apl XP
+                cmd = " where (w.WSort = 3 or w.WSort = 27) and (c.Wsort = 3 or c.Wsort = 27) and c.FechaSolicitudMat is null and w.KindOfAU like 'XP%' order by c.CWO /*w.CreatedDate*/"
+            ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Then 'Solicitar Mat/Apl XP and KoA normal
+                cmd = " where (w.WSort = 3 or w.WSort = 27) and (c.Wsort = 3 or c.Wsort = 27) and c.FechaSolicitudMat is null order by w.CreatedDate"
+            End If
+        ElseIf a = 2 Then 'Solicitado
+            cmd = " where (w.WSort = 3 or w.WSort = 27 or w.WSort=12 or w.WSort=14) and (c.Wsort = 9 or c.Wsort = 11 or c.Wsort = 13 or c.Wsort = 14 or c.Wsort = 12 or c.Wsort = 27) and c.FechaSolicitudMat is not null order by c.CWO /*w.CreatedDate*/"
+        ElseIf a = 3 Then 'Listos Para Entrar
+            cmd = " where (w.WSort = 3 or w.WSort = 20) and c.Wsort = 20 order by c.CWO /*w.CreatedDate*/"
+        ElseIf a = 4 Then 'Ya empezados
+            cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 order by c.CWO /*w.CreatedDate*/"
+        ElseIf a = 5 Then 'Empezados y Detenidos
+            cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) order by c.CWO /*w.CreatedDate*/"
+        ElseIf a = 6 Then 'On Hold
+            If opcion = 5 Then
+                cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14) And (c.Wsort in (27,12,13,14)) and (ConfirmacionAlm='OnHold') and (ProcFDispMat2 is null or (ProcFDispMat2 = CONVERT(date,getdate()) or ProcFDispMat2 < CONVERT(date,getdate())) and w.WIP in (select distinct WIP from tblItemsQB as q inner join tblBOMCWO as bc on q.PN=bc.PN where WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14) And (c.Wsort in (27,12,13,14)) and (ConfirmacionAlm='OnHold') and (ProcFDispMat2 is null or (ProcFDispMat2 = CONVERT(date,getdate()) or ProcFDispMat2 < CONVERT(date,getdate())))) and bc.Balance = 0 and q.QtyOnHand = 0))order by c.CWO"
+            Else
+                cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) order by c.CWO /*w.CreatedDate*/"
+            End If
+        End If
+        If opcion = 5 Then
+            query = "select distinct w.WIP,c.CWO,Convert(datetime,c.FechaSolicitudMat) [Fecha de solicitud],w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,c.Maq,w.CreatedDate [DateCretedWIP],Sem,c.ConfirmacionAlm [Confirmacion de Almacen],c.ConfirmacionApl [Confirmacion Aplicadores],ProcFDispMat [Fecha Materiales],ProcNotas [Notas Compras],ProcFDispMat2 [Fecha Materiales despues de Hold] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+            query += cmd
+        Else
+            query += cmd
+        End If
+        llenagrid()
+    End Sub
+    Private Sub rbsolicitar_CheckedChanged(sender As Object, e As EventArgs) Handles rbsolicitar.CheckedChanged
+        If rbsolicitar.Checked = True Then
+            filtros(1)
+            lblwsortasig.Text = "-"
+            lblWIPorCWO.Text = "-"
+        End If
+    End Sub
+    Private Sub rbSolicitado_CheckedChanged(sender As Object, e As EventArgs) Handles rbSolicitado.CheckedChanged
+        If rbSolicitado.Checked = True Then
+            filtros(2)
+            lblwsortasig.Text = "-"
+            lblWIPorCWO.Text = "-"
+            revisaCWOconfechaPromesa()
+        End If
+    End Sub
+    Private Sub rbListosParaEntrar_CheckedChanged(sender As Object, e As EventArgs) Handles rbListosParaEntrar.CheckedChanged
+        If rbListosParaEntrar.Checked = True Then
+            filtros(3)
+            lblwsortasig.Text = "-"
+            lblWIPorCWO.Text = "-"
+        End If
+    End Sub
+    Private Sub rbYaempezados_CheckedChanged(sender As Object, e As EventArgs) Handles rbYaempezados.CheckedChanged
+        If rbYaempezados.Checked = True Then
+            filtros(4)
+            lblwsortasig.Text = "-"
+            lblWIPorCWO.Text = "-"
+        End If
+    End Sub
+    Private Sub rbEmpezadosyDetenidos_CheckedChanged(sender As Object, e As EventArgs) Handles rbEmpezadosyDetenidos.CheckedChanged
+        If rbEmpezadosyDetenidos.Checked = True Then
+            filtros(5)
+            lblwsortasig.Text = "-"
+            lblWIPorCWO.Text = "-"
+        End If
+    End Sub
+    Private Sub rdbOnHold_CheckedChanged(sender As Object, e As EventArgs) Handles rdbOnHold.CheckedChanged
+        If rdbOnHold.Checked = True Then
+            filtros(6)
+            lblwsortasig.Text = "-"
+            lblWIPorCWO.Text = "-"
+            If opcion = 5 Then
+                cargadatosCompras()
+            End If
+        End If
+    End Sub
+    Private Sub wsorts(w As Integer)
+        Try
+            Dim t As New DataTable
+            query = "select Definition from tblWsorts where Wsort=@w"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@w", SqlDbType.NVarChar).Value = w
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            t.Load(dr)
+            edo = cnn.State.ToString
+            cnn.Close()
+            lblwsortasig.Text = t.Rows(0).Item("Definition").ToString
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("wsorts", host, UserName)
+        End Try
+    End Sub
+    Public Sub notesWIPandCWOquitaOnHoldde26(notes As String, cwo As String, wip As String)
+        Try
+            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha)
+                 values (@CWO,@User,@Department,@note,GETDATE())"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            'poneokalm_apl(CWO, WIP)
+
+            query = "update tblCWO set wSort = 3 where CWO=@wo"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@wo", SqlDbType.NVarChar).Value = cwo
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+
+            query = "update tblWIP set wSort= 3 where WIP=@wip"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+
+            filtros(2)
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("notesWIPandCWOquitaOnHoldde26", host, UserName)
+        End Try
+    End Sub
+    Public Sub notesWIPandCWOquitandoOnHold() 'notes As String)
+        Try
+            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,/*NotasBeforeChange,*/Fecha)
+                 values (@CWO,@User,@Department,/*@note,*/GETDATE())"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            'cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            poneokalm_apl(CWO, WIP)
+            query = "update tblWIP set Wsort=3 where WIP in (select distinct WIP from tblWipDet where CWO=@CWO)"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            filtros(2)
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("notesWIPandCWOquitandoOnHold", host, UserName)
+        End Try
+    End Sub
+    Public Sub notesWIPandCWOOnHold(cwo As String, fecha As String, notes As String)
+        Try
+            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha)
+                 values (@CWO,@User,@Department,@FProm,@note,GETDATE())"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = fecha
+            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            If opcion = 2 Then
+                query = "update tblCWO set wSort=12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE(), Id=12 where CWO=@WO"
+            ElseIf opcion = 3 Then
+                query = "update tblCWO set wSort=14,ConfirmacionApl='OnHold', dateConfirmaApl=GETDATE(), Id=14 where CWO=@WO"
+            End If
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@WO", SqlDbType.NVarChar).Value = cwo
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            If opcion = 2 Then
+                query = "update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where CWO=@wo)"
+            ElseIf opcion = 3 Then
+                query = "update tblWIP set wSort=14 where WIP in (select distinct WIP from tblWipDet where CWO=@wo)"
+            End If
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@wo", SqlDbType.NVarChar).Value = cwo
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            filtros(2)
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("notesWIPandCWOOnHold", host, UserName)
+        End Try
+    End Sub
+    Public Sub notas(cwo As String, fecha As String, notes As String)
+        Try
+            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha)
+                 values (@CWO,@User,@Department,@FProm,@note,GETDATE())"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            If fecha = "2021-01-01" Then
+                cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = ""
+            Else
+                cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = fecha
+            End If
+            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            If opcion = 5 Then
+                query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha)
+                 values (@wip,@User,@Department,@FProm,@note,GETDATE())"
+                cmd = New SqlCommand(query, cnn)
+                cmd.CommandType = CommandType.Text
+                cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = lblWIP.Text
+                cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+                cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+                If fecha = "2021-01-01" Then
+                    cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = ""
+                Else
+                    cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = fecha
+                End If
+                cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+                cnn.Open()
+                cmd.ExecuteNonQuery()
+                cnn.Close()
+            End If
+            If lbldept.Text = "Compras" Then
+                ' ----------- Campo nuevo para que no afecte la primera Fecha puesta por compras
+                Dim cambio As String = "update tblWIP set ProcFDispMat2=@fprom, ProcNotas=@note where WIP=@wip"
+                Dim cmdo As SqlCommand = New SqlCommand(cambio, cnn)
+                cmdo.CommandType = CommandType.Text
+                cmdo.Parameters.Add("@fprom", SqlDbType.NVarChar).Value = fecha
+                cmdo.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+                cmdo.Parameters.Add("@wip", SqlDbType.NVarChar).Value = lblWIP.Text
+                cnn.Open()
+                cmdo.ExecuteNonQuery()
+                cnn.Close()
+                ' ----------- Manda alerta al almacen
+                query = "update tblCWO set Id= 44 where CWO=@cwo"
+                cmd = New SqlCommand(query, cnn)
+                cmd.CommandType = CommandType.Text
+                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+                cnn.Open()
+                cmd.ExecuteNonQuery()
+                cnn.Close()
+                ' ----------- Notificacion de que esta listo
+                NotifyIcon1.BalloonTipText = "Se han notificado los cambios"
+                NotifyIcon1.BalloonTipTitle = "Fecha promesa"
+                NotifyIcon1.Visible = True
+                NotifyIcon1.ShowBalloonTip(0)
+                filtros(6)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("notas", host, UserName)
+        End Try
+    End Sub
+    Private Sub ToolStripTextBox3_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox3.Click
+        Dim respuesta As String
+        If opcion = 2 Then
+            respuesta = MessageBox.Show("Seguro que desea poner en Hold este CWO?", "Hold", MessageBoxButtons.YesNo)
+            If respuesta = vbYes Then
+                If WIP <> "" And CWO <> "" Then
+                    Dim ver As Char = CWO(0)
+                    Dim ver2 As Char = WIP(0)
+                    If ver = "C" And ver2 = "W" Then
+                        If opcion = 2 Then
+                            p = 12
+                            'Hold.lblcwoporsolicitar.Text = CWO
+                            'Hold.lblwipporsolicitar.Text = WIP
+                            'Hold.ShowDialog()
+                            Materiales.lblcwomat.Text = CWO
+                            Materiales.Label4.Text = WIP
+                            Materiales.ShowDialog()
+                        End If
+                    Else
+                        MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
+                    End If
+                End If
+            ElseIf respuesta = vbNo Then
+                ContextMenuDisponibilidad.Close()
+            End If
+        ElseIf opcion = 3 Then
+            respuesta = MessageBox.Show("Seguro que desea poner en Hold este CWO?", "Hold", MessageBoxButtons.YesNo)
+            If respuesta = vbYes Then
+                If WIP <> "" And CWO <> "" Then
+                    Dim ver As Char = CWO(0)
+                    Dim ver2 As Char = WIP(0)
+                    If ver = "C" And ver2 = "W" Then
+                        If opcion = 3 Then
+                            Hold.flag = 0
+                            Hold.lblcwoporsolicitar.Text = CWO
+                            Hold.lblwipporsolicitar.Text = WIP
+                            Hold.ShowDialog()
+                        End If
+                    Else
+                        MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
+                    End If
+                End If
+            ElseIf respuesta = vbNo Then
+                ContextMenuDisponibilidad.Close()
+            End If
+        End If
+        ContextMenuDisponibilidad.Close()
+        filtros(2)
+    End Sub
+    Private Sub llenanotas(cwo As String)
+        tb.Clear()
+        DataGridView1.DataSource = Nothing
+        Try
+            query = "select WIP [CWO],Uname [Usuario],AreaCreacion [Departamento],FPromBeforeChange [Fecha Promesa], NotasBeforeChange [Nota], Fecha from tblXpHist where WIP=@cwo order by id desc"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@cwo", SqlDbType.NVarChar).Value = cwo
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            tb.Load(dr)
+            edo = cnn.State.ToString
+            cnn.Close()
+            If tb.Rows.Count > 0 Then
+                With DataGridView1
+                    .DataSource = tb
+                    .AutoResizeColumns()
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .Columns("Fecha Promesa").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    .Columns("Fecha").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    With GroupBox2
+                        .Visible = True
+                        .BringToFront()
+                    End With
+                End With
+            Else
+                GroupBox2.Visible = False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            cnn.Close()
+            CorreoFalla.EnviaCorreoFalla("llenanotas", host, UserName)
+        End Try
+    End Sub
+    Private Sub llenanotasWIP(wip As String)
+        tb.Clear()
+        DataGridView1.DataSource = Nothing
+        Try
+            query = "select WIP [WIP],Uname [Usuario],AreaCreacion [Departamento],FPromBeforeChange [Fecha Promesa], NotasBeforeChange [Nota], Fecha from tblXpHist where WIP=@wip order by id desc"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            tb.Load(dr)
+            edo = cnn.State.ToString
+            cnn.Close()
+            If tb.Rows.Count > 0 Then
+                With DataGridView1
+                    .DataSource = tb
+                    .AutoResizeColumns()
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .Columns("Fecha Promesa").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    .Columns("Fecha").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    With GroupBox2
+                        .Visible = True
+                        .BringToFront()
+                    End With
+                End With
+            Else
+                GroupBox2.Visible = False
+            End If
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            cnn.Close()
+            CorreoFalla.EnviaCorreoFalla("llenanotas", host, UserName)
+        End Try
+    End Sub
+    Private Sub dgvWips_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvWips.CellClick
+        Dim cabecera As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If rdx = -1 Or cdx = -1 Then
+        Else
+            cabecera = Me.dgvWips.Columns(cdx).HeaderText
+        End If
+        If cabecera = "wSort WIP" Then
+            wsorts(dgvWips.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
+        ElseIf cabecera = "wSort CWO" Then
+            wsorts(dgvWips.Rows(e.RowIndex).Cells("wSort CWO").Value.ToString)
+        ElseIf cabecera = "CWO" Then
+            llenanotas(dgvWips.Rows(e.RowIndex).Cells("CWO").Value.ToString)
+            lblWIPorCWO.Text = dgvWips.Rows(e.RowIndex).Cells("CWO").Value.ToString
+            lblWIP.Text = dgvWips.Rows(e.RowIndex).Cells("WIP").Value.ToString
+        ElseIf cabecera = "WIP" Then
+            llenanotasWIP(dgvWips.Rows(e.RowIndex).Cells("WIP").Value.ToString)
+            lblWIPorCWO.Text = dgvWips.Rows(e.RowIndex).Cells("CWO").Value.ToString
+            lblWIP.Text = dgvWips.Rows(e.RowIndex).Cells("WIP").Value.ToString
+        End If
+    End Sub
+    Private Sub dgvWips_CellMouseMove(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.CellMouseMove
+        Dim Encabezado As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If rdx = -1 Or cdx = -1 Then
+
+        Else
+            Encabezado = Me.dgvWips.Columns(cdx).HeaderText
+        End If
+        If Encabezado = "CWO" Or Encabezado = "WIP" Or Encabezado = "wSort WIP" Or Encabezado = "wSort CWO" Then
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Hand
+        End If
+    End Sub
+    Private Sub dgvWips_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dgvWips.CellMouseLeave
+        Dim Encabezado As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If rdx = -1 Or cdx = -1 Then
+
+        Else
+            Encabezado = Me.dgvWips.Columns(cdx).HeaderText
+        End If
+        If Encabezado = "CWO" Or Encabezado = "WIP" Or Encabezado = "wSort WIP" Or Encabezado = "wSort CWO" Then
+            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        End If
+    End Sub
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        GroupBox2.Visible = False
+        DataGridView1.DataSource = Nothing
+    End Sub
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Try
+            Dim t As New DataTable
+            query = "select Wsort,Definition [Definicion] from tblWsorts"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            t.Load(dr)
+            edo = cnn.State.ToString
+            cnn.Close()
+            With dgvwSorts
+                .DataSource = t
+                .AutoResizeColumns()
+                .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            End With
+            GroupBox3.Visible = True
+            GroupBox3.BringToFront() '= True
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("Button2_Click", host, UserName)
+        End Try
+    End Sub
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        GroupBox3.Visible = False
+        dgvwSorts.DataSource = Nothing
+    End Sub
+    Private Sub ToolStripTextBox5_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox5.Click
+        If opcion = 2 Or opcion = 5 Then
+            If WIP <> "" And CWO <> "" Then
+                Dim ver As Char = CWO(0)
+                Dim ver2 As Char = WIP(0)
+                If ver = "C" And ver2 = "W" Then
+                    p = 0
+                    Materiales.lblcwomat.Text = CWO
+                    Materiales.Show()
+                Else
+                    MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
+                    ContextMenuVerMW.Close()
+                End If
+            End If
+        End If
+        ContextMenuVerMW.Close()
+    End Sub
+    Private Sub ToolStripTextBox6_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox6.Click
+        If opcion = 3 Then
+            If WIP <> "" And CWO <> "" Then
+                Dim ver As Char = CWO(0)
+                Dim ver2 As Char = WIP(0)
+                If ver = "C" And ver2 = "W" Then
+                    Materiales.lblcwomat.Text = CWO
+                    Materiales.Show()
+                Else
+                    MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
+                    ContextMenuVerMW.Close()
+                End If
+            End If
+        End If
+        ContextMenuVerMW.Close()
+    End Sub
+    Private Sub MonitorWIPS_Click(sender As Object, e As EventArgs) Handles MonitorWIPS.Click
+        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Try
+            Process.Start("\\10.17.182.22\sea-s\MonitorWips\MonitorWips.application")
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("MonitorWIPS_Click", host, UserName)
+        End Try
+        Cursor.Current = System.Windows.Forms.Cursors.Default
+    End Sub
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Try
+            Process.Start("\\10.17.182.22\sea-s\ModMM\CSHP.application")
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("ToolStripMenuItem1_Click", host, UserName)
+        End Try
+        Cursor.Current = System.Windows.Forms.Cursors.Default
+    End Sub
+    Private Sub NotifyIcon1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
+        Me.Show()
+        Me.WindowState = FormWindowState.Maximized
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Timer1.Stop()
+        If RevisaActividad.ActividadRealizada() = "YES" Then
+            Select Case opcion
+                Case 1
+                    NotifyIcon1.BalloonTipText = "Han sido confirmados CWO ya solicitados"
+                    NotifyIcon1.BalloonTipTitle = "Notificacion de solicitud"
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(0)
+                Case 2
+                    NotifyIcon1.BalloonTipText = "Han sido solicitados CWO"
+                    NotifyIcon1.BalloonTipTitle = "Notificacion de solicitud"
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(0)
+                Case 3
+                    NotifyIcon1.BalloonTipText = "Han sido solicitados CWO"
+                    NotifyIcon1.BalloonTipTitle = "Notificacion de solicitud"
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(0)
+                Case 4
+                    NotifyIcon1.BalloonTipText = "Han sido confirmados CWO ya solicitados"
+                    NotifyIcon1.BalloonTipTitle = "Notificacion de solicitud"
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(0)
+            End Select
+        End If
+        If RevisaActividad.RevisaActividadHold() = "YES" Then
+            Select Case opcion
+                Case 1
+                    NotifyIcon1.BalloonTipText = "Se han puesto en Hold CWO ya solicitados"
+                    NotifyIcon1.BalloonTipTitle = "Notificacion de solicitud"
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(0)
+                Case 4
+                    NotifyIcon1.BalloonTipText = "Se han puesto en Hold CWO ya solicitados"
+                    NotifyIcon1.BalloonTipTitle = "Notificacion de solicitud"
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(0)
+                Case 5
+                    NotifyIcon1.BalloonTipText = "Se han puesto en Hold CWO ya solicitados"
+                    NotifyIcon1.BalloonTipTitle = "Notificacion de solicitud"
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(0)
+            End Select
+        End If
+        If RevisaActividad.revisaFPROM() = "YES" Then
+            If opcion = 1 Or opcion = 2 Or opcion = 4 Then
+                NotifyIcon1.BalloonTipText = "Compras ha asignado fecha promesa a CWO sin materiales, verificalo"
+                NotifyIcon1.BalloonTipTitle = "Asignacion de Fecha"
+                NotifyIcon1.Visible = True
+                NotifyIcon1.ShowBalloonTip(0)
+            End If
+        End If
+        Timer1.Enabled = True
+        Timer1.Interval = 3000
+    End Sub
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        Timer2.Stop()
+        cargachart()
+    End Sub
+    Private Sub revisaCWOconfechaPromesa()
+        Dim valor As String = ""
+        Try
+            If dgvWips.Rows.Count > 0 Then
+                For i As Integer = 0 To dgvWips.Rows.Count - 1
+                    Dim t As New DataTable
+                    Dim query As String = "select top(1) WIP from tblXpHist where WIP = '" + dgvWips.Rows(i).Cells("CWO").Value.ToString + "' and AreaCreacion='Compras' and CONVERT(date,FPromBeforeChange) = CONVERT(date,getdate()) order by id desc"
+                    Dim cmdo As SqlCommand = New SqlCommand(query, cnn)
+                    Dim read As SqlDataReader
+                    cmdo.CommandType = CommandType.Text
+                    cnn.Open()
+                    read = cmdo.ExecuteReader
+                    If read.HasRows Then
+                        While read.Read()
+                            valor = read.GetValue(0)
+                        End While
+                    Else
+                        cnn.Close()
+                        valor = ""
+                    End If
+                    cnn.Close()
+                    If valor <> "" Then
+                        If valor = dgvWips.Rows(i).Cells("CWO").Value.ToString Then
+                            dgvWips.Rows(i).Cells("CWO").Style.BackColor = Color.DarkSeaGreen
+                        End If
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            cnn.Close()
+            MsgBox(ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("revisaCWOconfechaPromesa", host, UserName)
+        End Try
+    End Sub
+    ' ------------------------ 
+    ' Boton temporal solicitado por roberto, durara un mes, este se brincara todo los procesos
+    ' que realiza el programa, autorizados unicamente son ramiro y kevin para utilizarlo
+    Private Sub btnpasarseporlosbuebostodoelsistem_Click(sender As Object, e As EventArgs) Handles btnpasarseporlosbuebostodoelsistem.Click
+        If lblWIPorCWO.Text = "-" Then
+            MsgBox("Selecciona un CWO para proceder")
+        Else
+            Try
+                query = "update tblCWO set FechaSolicitudMat='" + Now + "'," &
+                         "ConfirmacionAlm ='Confirmado', ConfirmacionApl='Confirmado'," &
+                         "dateSolicitud=GETDATE(),dateConfirmaAlm=GETDATE(),dateConfirmaApl=GETDATE()," &
+                         "AsignadoA='Almacen',WSort=20 where CWO= '" + lblWIPorCWO.Text + "'"
+                cmd = New SqlCommand(query, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                cmd.ExecuteNonQuery()
+                cnn.Close()
+                FUERA(lblWIPorCWO.Text, lblWIP.Text)
+                filtros(1)
+            Catch ex As Exception
+                CorreoFalla.EnviaCorreoFalla("btnpasarseporlosbuebostodoelsistem_Click", host, UserName)
+            End Try
+        End If
+    End Sub
+    Private Sub dgvMatSinStockCompras_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvMatSinStockCompras.ColumnHeaderMouseClick
+        PintarMateriales()
+    End Sub
+    Private Sub ToolStripTextBox7_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox7.Click
+        If opcion = 2 Or opcion = 3 Or opcion = 5 Then
+            If WIP <> "" And CWO <> "" Then
+                Dim ver As Char = CWO(0)
+                Dim ver2 As Char = WIP(0)
+                If ver = "C" And ver2 = "W" Then
+                    Hold.lblcwoporsolicitar.Text = CWO
+                    Hold.lblwipporsolicitar.Text = WIP
+                    Hold.Text = "Notas"
+                    Hold.flag = 1
+                    Hold.ShowDialog()
+                Else
+                    MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
+                    ContextMenuVerMW.Close()
+                End If
+            End If
+        End If
+        ContextMenuVerMW.Close()
+    End Sub
+    Private Sub Principal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Login.Close()
+    End Sub
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        MessageBox.Show(vbCrLf + "MLF Software" + vbNewLine + "© SPECIALIZED HARNESS PRODUCTS S DE RL DE CV" + vbCr + "All Rights Reserved" + vbLf + "Software Version " & My.Application.Info.Version.ToString() & "" + vbCr + "Oct/2021", "MLF Software", MessageBoxButtons.OK)
+    End Sub
+End Class

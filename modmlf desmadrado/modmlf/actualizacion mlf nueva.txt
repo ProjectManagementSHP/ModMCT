@@ -1,0 +1,13 @@
+En corto aparezcan los numeros de parte solo sin stock, para que esos le lleguen a compras
+
+Cambiar el nombre de hold a Corto
+
+sin fecha promesa, de 31-diciembre default
+
+crear otro campo de fecha promesa de materiales en corto (ETA) y notas
+
+sistema aparte para compras wsort nuevo
+
+nueva chart para cwo recien creados antes de confirmarse
+
+Pick list para los CWO estilo Ensamble al momento de confirmar

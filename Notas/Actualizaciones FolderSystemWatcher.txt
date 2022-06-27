@@ -1,0 +1,58 @@
+Imports System
+Imports System.IO
+
+ Public WithEvents FSW As New System.IO.FileSystemWatcher
+
+Private Load()
+trai()
+End Sub
+
+ Public Sub trai()
+        FSW.Path = "C:\Trai"
+        FSW.IncludeSubdirectories = True
+        FSW.EnableRaisingEvents = True
+    End Sub
+
+ Private Sub FSW_Created(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Created
+        ver = e.Name
+        ActualizacionRequerida.ShowDialog()
+        ActualizacionRequerida.BringToFront()
+        If flagActualizacion = 1 Then
+            Application.Exit()
+        End If
+    End Sub
+
+********* En forma de Actualizar
+Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click ' Actualizar
+        Try
+            Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+            Dim use As String = Environment.UserName
+            Dim path As String = "C:\Users\" + use.ToString + "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\SEA\MLF.appref-ms"
+            Process.Start(path)
+            flagActualizacion = 1
+            Me.Close()
+            Cursor.Current = System.Windows.Forms.Cursors.Default
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+    End Sub
+
+
+
+---- Extras -----
+    'Private Sub FSW_Changed(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Changed
+    '    MsgBox("Se ha modificado un fichero " & e.Name, MsgBoxStyle.Information)
+    'End Sub
+    'Private Sub FSW_Created(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Created
+    '    MsgBox("Se ha creado un fichero " & e.Name, MsgBoxStyle.Information)
+    'End Sub
+    'Private Sub FSW_Deleted(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Deleted
+    '    MsgBox("Se ha eliminado un fichero " & e.Name, MsgBoxStyle.Information)
+    'End Sub
+    'Private Sub FSW_Renamed(sender As Object, e As IO.RenamedEventArgs) Handles FSW.Renamed
+    '    MsgBox("Se ha Cambiado el nombre de un fichero de " & e.OldName & " a " & e.Name, MsgBoxStyle.Information)
+    'End Sub
+-------------------
+
+
+
