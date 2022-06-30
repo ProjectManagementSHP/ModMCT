@@ -172,6 +172,12 @@
     </Compile>
     <Compile Include="cnnACS.vb" />
     <Compile Include="CorreoFalla.vb" />
+    <Compile Include="CreatePWO.Designer.vb">
+      <DependentUpon>CreatePWO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CreatePWO.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DesviacionesTerm.Designer.vb">
       <DependentUpon>DesviacionesTerm.vb</DependentUpon>
     </Compile>
@@ -255,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CambioMaquina.resx">
       <DependentUpon>CambioMaquina.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreatePWO.resx">
+      <DependentUpon>CreatePWO.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DesviacionesTerm.resx">
       <DependentUpon>DesviacionesTerm.vb</DependentUpon>

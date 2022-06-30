@@ -144,7 +144,7 @@ Partial Class Principal
         Me.dgvWips.BackgroundColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -167,7 +167,7 @@ Partial Class Principal
         Me.dgvWips.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial Unicode MS", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -273,22 +273,22 @@ Partial Class Principal
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(710, 10)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(141, 21)
+        Me.Label4.Size = New System.Drawing.Size(141, 20)
         Me.Label4.TabIndex = 5458
         Me.Label4.Text = "Semana Actual: "
         '
         'lblWIP
         '
         Me.lblWIP.AutoSize = True
-        Me.lblWIP.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblWIP.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblWIP.Location = New System.Drawing.Point(584, 10)
         Me.lblWIP.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblWIP.Name = "lblWIP"
-        Me.lblWIP.Size = New System.Drawing.Size(16, 21)
+        Me.lblWIP.Size = New System.Drawing.Size(15, 20)
         Me.lblWIP.TabIndex = 5457
         Me.lblWIP.Text = "-"
         Me.lblWIP.Visible = False
@@ -296,11 +296,11 @@ Partial Class Principal
         'lblWIPorCWO
         '
         Me.lblWIPorCWO.AutoSize = True
-        Me.lblWIPorCWO.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblWIPorCWO.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblWIPorCWO.Location = New System.Drawing.Point(407, 8)
         Me.lblWIPorCWO.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblWIPorCWO.Name = "lblWIPorCWO"
-        Me.lblWIPorCWO.Size = New System.Drawing.Size(16, 21)
+        Me.lblWIPorCWO.Size = New System.Drawing.Size(15, 20)
         Me.lblWIPorCWO.TabIndex = 2
         Me.lblWIPorCWO.Text = "-"
         '
@@ -308,22 +308,22 @@ Partial Class Principal
         '
         Me.lbldept.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbldept.AutoSize = True
-        Me.lbldept.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbldept.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbldept.Location = New System.Drawing.Point(998, 10)
         Me.lbldept.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbldept.Name = "lbldept"
-        Me.lbldept.Size = New System.Drawing.Size(16, 21)
+        Me.lbldept.Size = New System.Drawing.Size(15, 20)
         Me.lbldept.TabIndex = 1
         Me.lbldept.Text = "-"
         '
         'lblwelcome
         '
         Me.lblwelcome.AutoSize = True
-        Me.lblwelcome.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblwelcome.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblwelcome.Location = New System.Drawing.Point(7, 10)
         Me.lblwelcome.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblwelcome.Name = "lblwelcome"
-        Me.lblwelcome.Size = New System.Drawing.Size(109, 21)
+        Me.lblwelcome.Size = New System.Drawing.Size(107, 20)
         Me.lblwelcome.TabIndex = 0
         Me.lblwelcome.Text = "Bienvenido: "
         '
@@ -374,18 +374,18 @@ Partial Class Principal
         Me.ContextMenuVerMW.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ContextMenuVerMW.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem12, Me.ToolStripMenuItem13, Me.ToolStripTextBox5, Me.ToolStripTextBox6, Me.ToolStripTextBox7, Me.AsignarMaterialToolStripMenuItem, Me.ToolStripMenuItem14, Me.DesviarTerminalToolStripMenuItem})
         Me.ContextMenuVerMW.Name = "ContextMenuDesviacion"
-        Me.ContextMenuVerMW.Size = New System.Drawing.Size(162, 189)
+        Me.ContextMenuVerMW.Size = New System.Drawing.Size(161, 189)
         '
         'ToolStripMenuItem12
         '
         Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(161, 22)
+        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(160, 22)
         Me.ToolStripMenuItem12.Text = "Listo"
         '
         'ToolStripMenuItem13
         '
         Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
-        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(161, 22)
+        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(160, 22)
         Me.ToolStripMenuItem13.Text = "Cortos"
         '
         'ToolStripTextBox5
@@ -412,19 +412,19 @@ Partial Class Principal
         'AsignarMaterialToolStripMenuItem
         '
         Me.AsignarMaterialToolStripMenuItem.Name = "AsignarMaterialToolStripMenuItem"
-        Me.AsignarMaterialToolStripMenuItem.Size = New System.Drawing.Size(161, 22)
+        Me.AsignarMaterialToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.AsignarMaterialToolStripMenuItem.Text = "Asignar material"
         '
         'ToolStripMenuItem14
         '
         Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
-        Me.ToolStripMenuItem14.Size = New System.Drawing.Size(161, 22)
+        Me.ToolStripMenuItem14.Size = New System.Drawing.Size(160, 22)
         Me.ToolStripMenuItem14.Text = "Quitar Corto"
         '
         'DesviarTerminalToolStripMenuItem
         '
         Me.DesviarTerminalToolStripMenuItem.Name = "DesviarTerminalToolStripMenuItem"
-        Me.DesviarTerminalToolStripMenuItem.Size = New System.Drawing.Size(161, 22)
+        Me.DesviarTerminalToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.DesviarTerminalToolStripMenuItem.Text = "Desviar Terminal"
         '
         'GroupBox1
@@ -536,11 +536,11 @@ Partial Class Principal
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(10, 19)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(85, 21)
+        Me.Label1.Size = New System.Drawing.Size(85, 20)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Historial: "
         '
@@ -563,7 +563,7 @@ Partial Class Principal
         Me.DataGridView1.BackgroundColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle4.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -586,7 +586,7 @@ Partial Class Principal
         Me.DataGridView1.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Arial Unicode MS", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -617,7 +617,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.BackgroundColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle7.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -640,7 +640,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.Name = "dgvMatSinStockCompras"
         DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Arial Unicode MS", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -661,7 +661,7 @@ Partial Class Principal
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(243, 69)
+        Me.Button2.Location = New System.Drawing.Point(243, 74)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(50, 29)
         Me.Button2.TabIndex = 5453
@@ -692,11 +692,11 @@ Partial Class Principal
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(5, 19)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(150, 21)
+        Me.Label2.Size = New System.Drawing.Size(150, 20)
         Me.Label2.TabIndex = 5438
         Me.Label2.Text = "Definicion wSort: "
         '
@@ -709,7 +709,7 @@ Partial Class Principal
         Me.dgvwSorts.BackgroundColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle10.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -732,7 +732,7 @@ Partial Class Principal
         Me.dgvwSorts.ReadOnly = True
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Arial Unicode MS", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -994,7 +994,7 @@ Partial Class Principal
         Me.dgvAfectados.BackgroundColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle13.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -1017,7 +1017,7 @@ Partial Class Principal
         Me.dgvAfectados.Name = "dgvAfectados"
         DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle15.Font = New System.Drawing.Font("Arial Unicode MS", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText
