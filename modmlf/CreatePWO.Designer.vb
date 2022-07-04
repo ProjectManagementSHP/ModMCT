@@ -30,7 +30,7 @@ Partial Class CreatePWO
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CreatePWO))
         Me.dgvTerminalesXProcesar = New System.Windows.Forms.DataGridView()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.dgvDetalleTerminales = New System.Windows.Forms.DataGridView()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -43,9 +43,14 @@ Partial Class CreatePWO
         Me.Label7 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         CType(Me.dgvTerminalesXProcesar, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvDetalleTerminales, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgvTerminalesXProcesar
@@ -88,16 +93,16 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar.RowHeadersVisible = False
         Me.dgvTerminalesXProcesar.RowHeadersWidth = 51
         Me.dgvTerminalesXProcesar.RowTemplate.Height = 24
-        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(582, 225)
+        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(676, 225)
         Me.dgvTerminalesXProcesar.TabIndex = 5436
         '
-        'DataGridView1
+        'dgvDetalleTerminales
         '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.dgvDetalleTerminales.AllowUserToAddRows = False
+        Me.dgvDetalleTerminales.AllowUserToDeleteRows = False
+        Me.dgvDetalleTerminales.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        Me.dgvDetalleTerminales.BackgroundColor = System.Drawing.Color.WhiteSmoke
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -105,8 +110,8 @@ Partial Class CreatePWO
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvDetalleTerminales.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.dgvDetalleTerminales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle5.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -114,12 +119,12 @@ Partial Class CreatePWO
         DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle5
-        Me.DataGridView1.EnableHeadersVisualStyles = False
-        Me.DataGridView1.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DataGridView1.Location = New System.Drawing.Point(617, 55)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
+        Me.dgvDetalleTerminales.DefaultCellStyle = DataGridViewCellStyle5
+        Me.dgvDetalleTerminales.EnableHeadersVisualStyles = False
+        Me.dgvDetalleTerminales.GridColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.dgvDetalleTerminales.Location = New System.Drawing.Point(18, 43)
+        Me.dgvDetalleTerminales.Name = "dgvDetalleTerminales"
+        Me.dgvDetalleTerminales.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -127,12 +132,12 @@ Partial Class CreatePWO
         DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.DataGridView1.RowHeadersVisible = False
-        Me.DataGridView1.RowHeadersWidth = 51
-        Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(781, 225)
-        Me.DataGridView1.TabIndex = 5437
+        Me.dgvDetalleTerminales.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.dgvDetalleTerminales.RowHeadersVisible = False
+        Me.dgvDetalleTerminales.RowHeadersWidth = 51
+        Me.dgvDetalleTerminales.RowTemplate.Height = 24
+        Me.dgvDetalleTerminales.Size = New System.Drawing.Size(887, 435)
+        Me.dgvDetalleTerminales.TabIndex = 5437
         '
         'Button1
         '
@@ -146,16 +151,16 @@ Partial Class CreatePWO
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(829, 353)
+        Me.CheckBox1.Location = New System.Drawing.Point(20, 74)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(154, 24)
+        Me.CheckBox1.Size = New System.Drawing.Size(161, 24)
         Me.CheckBox1.TabIndex = 5439
         Me.CheckBox1.Text = "Push to first place"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(829, 314)
+        Me.Button2.Location = New System.Drawing.Point(20, 35)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(122, 32)
         Me.Button2.TabIndex = 5440
@@ -168,7 +173,7 @@ Partial Class CreatePWO
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(990, 299)
+        Me.GroupBox1.Location = New System.Drawing.Point(181, 20)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(226, 117)
         Me.GroupBox1.TabIndex = 5441
@@ -213,7 +218,7 @@ Partial Class CreatePWO
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(402, 32)
+        Me.Label6.Location = New System.Drawing.Point(552, 29)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(73, 20)
         Me.Label6.TabIndex = 5443
@@ -238,42 +243,76 @@ Partial Class CreatePWO
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(1104, 32)
+        Me.Label5.Location = New System.Drawing.Point(761, 19)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(73, 20)
         Me.Label5.TabIndex = 5446
         Me.Label5.Text = "Records:"
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(18, 498)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(122, 53)
+        Me.Button3.TabIndex = 5447
+        Me.Button3.Text = "Remove Selection"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.Button2)
+        Me.GroupBox2.Controls.Add(Me.CheckBox1)
+        Me.GroupBox2.Controls.Add(Me.GroupBox1)
+        Me.GroupBox2.Location = New System.Drawing.Point(1199, 590)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(422, 156)
+        Me.GroupBox2.TabIndex = 5448
+        Me.GroupBox2.TabStop = False
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.dgvDetalleTerminales)
+        Me.GroupBox3.Controls.Add(Me.Label5)
+        Me.GroupBox3.Controls.Add(Me.Button3)
+        Me.GroupBox3.Location = New System.Drawing.Point(699, 12)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(922, 572)
+        Me.GroupBox3.TabIndex = 5449
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Details:"
         '
         'CreatePWO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(1410, 450)
-        Me.Controls.Add(Me.Label5)
+        Me.ClientSize = New System.Drawing.Size(1633, 761)
+        Me.Controls.Add(Me.GroupBox3)
+        Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.dgvTerminalesXProcesar)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "CreatePWO"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Create Press Work Order"
         CType(Me.dgvTerminalesXProcesar, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvDetalleTerminales, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents dgvTerminalesXProcesar As DataGridView
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents dgvDetalleTerminales As DataGridView
     Friend WithEvents Button1 As Button
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents Button2 As Button
@@ -286,4 +325,7 @@ Partial Class CreatePWO
     Friend WithEvents Label7 As Label
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Label5 As Label
+    Friend WithEvents Button3 As Button
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents GroupBox3 As GroupBox
 End Class
