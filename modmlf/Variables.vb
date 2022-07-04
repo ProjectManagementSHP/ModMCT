@@ -1,8 +1,8 @@
 ﻿Imports System.Data.SqlClient
 Module Variables
 
-    Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
-    'Public strconexion As String = "Server=10.17.182.36\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
+    ' Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
+    Public strconexion As String = "Server=10.17.182.36\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
     'Private strconexion As String = "Server=10.17.182.255\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
     'Public strconexion As String = "Server=SHPLAPSIS01\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
     Public cnn As New SqlConnection(strconexion) 'Conexion Principal

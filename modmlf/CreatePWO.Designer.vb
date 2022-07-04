@@ -56,7 +56,7 @@ Partial Class CreatePWO
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvTerminalesXProcesar.BackgroundColor = System.Drawing.Color.WhiteSmoke
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGreen
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightSteelBlue
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
@@ -88,7 +88,7 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar.RowHeadersVisible = False
         Me.dgvTerminalesXProcesar.RowHeadersWidth = 51
         Me.dgvTerminalesXProcesar.RowTemplate.Height = 24
-        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(478, 225)
+        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(582, 225)
         Me.dgvTerminalesXProcesar.TabIndex = 5436
         '
         'DataGridView1
@@ -99,7 +99,7 @@ Partial Class CreatePWO
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.LightGreen
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.LightSteelBlue
         DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
@@ -117,7 +117,7 @@ Partial Class CreatePWO
         Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridView1.EnableHeadersVisualStyles = False
         Me.DataGridView1.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DataGridView1.Location = New System.Drawing.Point(524, 55)
+        Me.DataGridView1.Location = New System.Drawing.Point(617, 55)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -131,7 +131,7 @@ Partial Class CreatePWO
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.RowHeadersWidth = 51
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(638, 225)
+        Me.DataGridView1.Size = New System.Drawing.Size(781, 225)
         Me.DataGridView1.TabIndex = 5437
         '
         'Button1
@@ -146,7 +146,7 @@ Partial Class CreatePWO
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(772, 354)
+        Me.CheckBox1.Location = New System.Drawing.Point(829, 353)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(154, 24)
         Me.CheckBox1.TabIndex = 5439
@@ -155,7 +155,7 @@ Partial Class CreatePWO
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(772, 315)
+        Me.Button2.Location = New System.Drawing.Point(829, 314)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(122, 32)
         Me.Button2.TabIndex = 5440
@@ -168,7 +168,7 @@ Partial Class CreatePWO
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(933, 300)
+        Me.GroupBox1.Location = New System.Drawing.Point(990, 299)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(226, 117)
         Me.GroupBox1.TabIndex = 5441
@@ -238,7 +238,7 @@ Partial Class CreatePWO
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(1059, 32)
+        Me.Label5.Location = New System.Drawing.Point(1104, 32)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(73, 20)
         Me.Label5.TabIndex = 5446
@@ -249,7 +249,7 @@ Partial Class CreatePWO
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(1206, 448)
+        Me.ClientSize = New System.Drawing.Size(1410, 450)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label7)

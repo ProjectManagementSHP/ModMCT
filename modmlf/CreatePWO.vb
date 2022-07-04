@@ -119,6 +119,7 @@ Public Class CreatePWO
                     .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                     .AutoResizeColumns()
                     .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .ClearSelection()
                 End With
             Else
                 dgvTerminalesXProcesar.DataSource = Nothing
@@ -139,5 +140,8 @@ Public Class CreatePWO
                 dgvTerminalesXProcesar.DataSource = Nothing
             End If
         End If
+    End Sub
+    Private Sub dgvTerminalesXProcesar_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTerminalesXProcesar.CellDoubleClick
+
     End Sub
 End Class
