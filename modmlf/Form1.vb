@@ -1701,7 +1701,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                 cmd = New SqlCommand(query, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
-                If IsDBNull(cmd.ExecuteScalar()) Then
+                If IsDBNull(cmd.ExecuteScalar()) Or CStr(cmd.ExecuteScalar) = "" Then
                     query = $"update tblWIP set {Dept} = '{notes}', {FDept}='{FProm}' where WIP='{WIP}'"
                 Else
                     query = $"update tblWIP set {Dept} = {Dept} + '{notes}', {FDept}='{FProm}' where WIP='{WIP}'"
@@ -1715,6 +1715,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             End If
         Catch ex As Exception
             cnn.Close()
+            MsgBox("Ha ocurrido un problema" + vbNewLine + ex.Message + vbNewLine + ", ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("NotesInWIP", host, UserName)
         End Try
     End Sub

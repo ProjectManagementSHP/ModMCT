@@ -167,11 +167,11 @@ Partial Class Materiales
         '
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(1079, 56)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(20, 26)
+        Me.Label4.Size = New System.Drawing.Size(22, 29)
         Me.Label4.TabIndex = 6
         Me.Label4.Text = "-"
         Me.Label4.Visible = False
@@ -181,7 +181,7 @@ Partial Class Materiales
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.Location = New System.Drawing.Point(903, 19)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(32, 17)
+        Me.LinkLabel1.Size = New System.Drawing.Size(38, 22)
         Me.LinkLabel1.TabIndex = 5
         Me.LinkLabel1.TabStop = True
         Me.LinkLabel1.Text = "ACS"
@@ -190,11 +190,11 @@ Partial Class Materiales
         '
         Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(1279, 69)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(55, 20)
+        Me.Label2.Size = New System.Drawing.Size(63, 22)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Items:"
         '
@@ -202,22 +202,22 @@ Partial Class Materiales
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(484, 12)
         Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(0, 26)
+        Me.Label1.Size = New System.Drawing.Size(0, 29)
         Me.Label1.TabIndex = 3
         '
         'lblcwomat
         '
         Me.lblcwomat.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblcwomat.AutoSize = True
-        Me.lblcwomat.Font = New System.Drawing.Font("Arial Unicode MS", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblcwomat.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblcwomat.Location = New System.Drawing.Point(474, 40)
         Me.lblcwomat.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblcwomat.Name = "lblcwomat"
-        Me.lblcwomat.Size = New System.Drawing.Size(20, 26)
+        Me.lblcwomat.Size = New System.Drawing.Size(22, 29)
         Me.lblcwomat.TabIndex = 2
         Me.lblcwomat.Text = "-"
         '
@@ -234,9 +234,9 @@ Partial Class Materiales
         'TextBox1
         '
         Me.TextBox1.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(143, 16)
+        Me.TextBox1.Location = New System.Drawing.Point(278, 13)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(160, 30)
+        Me.TextBox1.Size = New System.Drawing.Size(160, 35)
         Me.TextBox1.TabIndex = 1
         '
         'Label3
@@ -245,7 +245,7 @@ Partial Class Materiales
         Me.Label3.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(6, 19)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(131, 24)
+        Me.Label3.Size = New System.Drawing.Size(156, 29)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "Numero de dias:"
         '
@@ -335,7 +335,7 @@ Partial Class Materiales
         Me.dtpFProm.Margin = New System.Windows.Forms.Padding(2)
         Me.dtpFProm.MinDate = New Date(2021, 1, 1, 0, 0, 0, 0)
         Me.dtpFProm.Name = "dtpFProm"
-        Me.dtpFProm.Size = New System.Drawing.Size(112, 23)
+        Me.dtpFProm.Size = New System.Drawing.Size(112, 26)
         Me.dtpFProm.TabIndex = 20
         '
         'txbNotas
@@ -354,7 +354,7 @@ Partial Class Materiales
         Me.Label5.Location = New System.Drawing.Point(10, 9)
         Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(73, 18)
+        Me.Label5.Size = New System.Drawing.Size(85, 22)
         Me.Label5.TabIndex = 2
         Me.Label5.Text = "FPROM:"
         '
@@ -396,7 +396,7 @@ Partial Class Materiales
         Me.DateTimePicker1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DateTimePicker1.MinDate = New Date(2021, 1, 1, 0, 0, 0, 0)
         Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(148, 23)
+        Me.DateTimePicker1.Size = New System.Drawing.Size(148, 26)
         Me.DateTimePicker1.TabIndex = 20
         '
         'TextBox2
@@ -414,16 +414,16 @@ Partial Class Materiales
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(13, 16)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 18)
+        Me.Label6.Size = New System.Drawing.Size(85, 22)
         Me.Label6.TabIndex = 2
         Me.Label6.Text = "FPROM:"
         '
         'Button3
         '
         Me.Button3.Font = New System.Drawing.Font("Arial Narrow", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.Location = New System.Drawing.Point(1043, 37)
+        Me.Button3.Location = New System.Drawing.Point(1042, 31)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(160, 41)
+        Me.Button3.Size = New System.Drawing.Size(211, 60)
         Me.Button3.TabIndex = 5442
         Me.Button3.Text = "Poner Cortos"
         Me.Button3.UseVisualStyleBackColor = True
@@ -435,7 +435,7 @@ Partial Class Materiales
         Me.CheckBox1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckBox1.Location = New System.Drawing.Point(8, 27)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(169, 23)
+        Me.CheckBox1.Size = New System.Drawing.Size(202, 28)
         Me.CheckBox1.TabIndex = 5444
         Me.CheckBox1.Text = "Reservar material"
         Me.CheckBox1.UseVisualStyleBackColor = True
@@ -451,7 +451,7 @@ Partial Class Materiales
         Me.gbTAGS.Margin = New System.Windows.Forms.Padding(2)
         Me.gbTAGS.Name = "gbTAGS"
         Me.gbTAGS.Padding = New System.Windows.Forms.Padding(2)
-        Me.gbTAGS.Size = New System.Drawing.Size(371, 548)
+        Me.gbTAGS.Size = New System.Drawing.Size(371, 592)
         Me.gbTAGS.TabIndex = 5445
         Me.gbTAGS.TabStop = False
         Me.gbTAGS.Visible = False
@@ -497,7 +497,7 @@ Partial Class Materiales
         Me.DataGridView2.RowHeadersVisible = False
         Me.DataGridView2.RowHeadersWidth = 51
         Me.DataGridView2.RowTemplate.Height = 24
-        Me.DataGridView2.Size = New System.Drawing.Size(363, 403)
+        Me.DataGridView2.Size = New System.Drawing.Size(363, 448)
         Me.DataGridView2.TabIndex = 5444
         '
         'columntag
@@ -520,10 +520,10 @@ Partial Class Materiales
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(87, 18)
+        Me.Label7.Location = New System.Drawing.Point(70, 20)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(167, 19)
+        Me.Label7.Size = New System.Drawing.Size(215, 24)
         Me.Label7.TabIndex = 10
         Me.Label7.Text = "Escaneo de material"
         '
@@ -536,7 +536,7 @@ Partial Class Materiales
         Me.lbltagsescaneados.Location = New System.Drawing.Point(14, 138)
         Me.lbltagsescaneados.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lbltagsescaneados.Name = "lbltagsescaneados"
-        Me.lbltagsescaneados.Size = New System.Drawing.Size(156, 19)
+        Me.lbltagsescaneados.Size = New System.Drawing.Size(201, 24)
         Me.lbltagsescaneados.TabIndex = 5430
         Me.lbltagsescaneados.Text = "Tag's Escaneados:"
         '
@@ -547,7 +547,7 @@ Partial Class Materiales
         Me.btnTerminarescaneo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnTerminarescaneo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnTerminarescaneo.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnTerminarescaneo.Location = New System.Drawing.Point(108, 70)
+        Me.btnTerminarescaneo.Location = New System.Drawing.Point(115, 80)
         Me.btnTerminarescaneo.Margin = New System.Windows.Forms.Padding(2)
         Me.btnTerminarescaneo.Name = "btnTerminarescaneo"
         Me.btnTerminarescaneo.Size = New System.Drawing.Size(125, 33)
@@ -558,10 +558,10 @@ Partial Class Materiales
         'txbTAGSxentrar
         '
         Me.txbTAGSxentrar.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txbTAGSxentrar.Location = New System.Drawing.Point(81, 39)
+        Me.txbTAGSxentrar.Location = New System.Drawing.Point(81, 50)
         Me.txbTAGSxentrar.Margin = New System.Windows.Forms.Padding(2)
         Me.txbTAGSxentrar.Name = "txbTAGSxentrar"
-        Me.txbTAGSxentrar.Size = New System.Drawing.Size(187, 23)
+        Me.txbTAGSxentrar.Size = New System.Drawing.Size(187, 26)
         Me.txbTAGSxentrar.TabIndex = 1
         '
         'DataGridView3
@@ -614,14 +614,14 @@ Partial Class Materiales
         Me.eliminartagmenu.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.eliminartagmenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTextBox1})
         Me.eliminartagmenu.Name = "ContextMenuDesviacion"
-        Me.eliminartagmenu.Size = New System.Drawing.Size(161, 33)
+        Me.eliminartagmenu.Size = New System.Drawing.Size(161, 39)
         '
         'ToolStripTextBox1
         '
         Me.ToolStripTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripTextBox1.Name = "ToolStripTextBox1"
         Me.ToolStripTextBox1.ReadOnly = True
-        Me.ToolStripTextBox1.Size = New System.Drawing.Size(100, 27)
+        Me.ToolStripTextBox1.Size = New System.Drawing.Size(100, 31)
         Me.ToolStripTextBox1.Text = "Eliminar TAG"
         '
         'btnExportar
@@ -655,7 +655,7 @@ Partial Class Materiales
         Me.GroupBox3.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox3.Size = New System.Drawing.Size(370, 607)
+        Me.GroupBox3.Size = New System.Drawing.Size(370, 661)
         Me.GroupBox3.TabIndex = 5446
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Visible = False
@@ -664,9 +664,9 @@ Partial Class Materiales
         '
         Me.CheckBox2.AutoSize = True
         Me.CheckBox2.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox2.Location = New System.Drawing.Point(149, 44)
+        Me.CheckBox2.Location = New System.Drawing.Point(20, 88)
         Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(168, 22)
+        Me.CheckBox2.Size = New System.Drawing.Size(207, 25)
         Me.CheckBox2.TabIndex = 5449
         Me.CheckBox2.Text = "Ver todos los TAG's"
         Me.CheckBox2.UseVisualStyleBackColor = True
@@ -677,10 +677,10 @@ Partial Class Materiales
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(7, 279)
+        Me.Label10.Location = New System.Drawing.Point(4, 340)
         Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(175, 38)
+        Me.Label10.Size = New System.Drawing.Size(223, 48)
         Me.Label10.TabIndex = 5446
         Me.Label10.Text = "Tag's Disponibles " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "para asignar en piso:"
         '
@@ -710,7 +710,7 @@ Partial Class Materiales
         Me.DataGridView5.DefaultCellStyle = DataGridViewCellStyle14
         Me.DataGridView5.EnableHeadersVisualStyles = False
         Me.DataGridView5.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DataGridView5.Location = New System.Drawing.Point(4, 68)
+        Me.DataGridView5.Location = New System.Drawing.Point(0, 118)
         Me.DataGridView5.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView5.Name = "DataGridView5"
         DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -753,7 +753,7 @@ Partial Class Materiales
         Me.DataGridView4.DefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridView4.EnableHeadersVisualStyles = False
         Me.DataGridView4.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DataGridView4.Location = New System.Drawing.Point(4, 319)
+        Me.DataGridView4.Location = New System.Drawing.Point(4, 390)
         Me.DataGridView4.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView4.Name = "DataGridView4"
         DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -777,7 +777,7 @@ Partial Class Materiales
         Me.Label8.Location = New System.Drawing.Point(63, 18)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(176, 19)
+        Me.Label8.Size = New System.Drawing.Size(226, 24)
         Me.Label8.TabIndex = 10
         Me.Label8.Text = "Listado de materiales"
         '
@@ -790,7 +790,7 @@ Partial Class Materiales
         Me.Label9.Location = New System.Drawing.Point(4, 47)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(142, 19)
+        Me.Label9.Size = New System.Drawing.Size(183, 24)
         Me.Label9.TabIndex = 5430
         Me.Label9.Text = "Tag's Asignados:"
         '
@@ -801,7 +801,7 @@ Partial Class Materiales
         Me.TabControl1.Location = New System.Drawing.Point(1076, 104)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(388, 647)
+        Me.TabControl1.Size = New System.Drawing.Size(388, 704)
         Me.TabControl1.TabIndex = 5449
         '
         'TabPage1
@@ -809,10 +809,10 @@ Partial Class Materiales
         Me.TabPage1.Controls.Add(Me.gbTAGS)
         Me.TabPage1.Controls.Add(Me.CheckBox1)
         Me.TabPage1.Font = New System.Drawing.Font("Arial", 10.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TabPage1.Location = New System.Drawing.Point(4, 26)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 31)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(380, 617)
+        Me.TabPage1.Size = New System.Drawing.Size(380, 669)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Reservar Material"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -821,17 +821,17 @@ Partial Class Materiales
         '
         Me.TabPage2.Controls.Add(Me.GroupBox3)
         Me.TabPage2.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TabPage2.Location = New System.Drawing.Point(4, 26)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 31)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(380, 617)
+        Me.TabPage2.Size = New System.Drawing.Size(380, 669)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Listado de materiales"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'Materiales
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 17.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 22.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
         Me.AutoScrollMargin = New System.Drawing.Size(10, 10)
