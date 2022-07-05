@@ -161,8 +161,7 @@ Partial Class Principal
         Me.dgvWips.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvWips.EnableHeadersVisualStyles = False
         Me.dgvWips.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvWips.Location = New System.Drawing.Point(9, 110)
-        Me.dgvWips.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvWips.Location = New System.Drawing.Point(14, 169)
         Me.dgvWips.Name = "dgvWips"
         Me.dgvWips.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -176,7 +175,7 @@ Partial Class Principal
         Me.dgvWips.RowHeadersVisible = False
         Me.dgvWips.RowHeadersWidth = 51
         Me.dgvWips.RowTemplate.Height = 24
-        Me.dgvWips.Size = New System.Drawing.Size(1219, 240)
+        Me.dgvWips.Size = New System.Drawing.Size(1814, 554)
         Me.dgvWips.TabIndex = 5435
         '
         'lblitems
@@ -184,10 +183,9 @@ Partial Class Principal
         Me.lblitems.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblitems.AutoSize = True
         Me.lblitems.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblitems.Location = New System.Drawing.Point(12032, 1614)
-        Me.lblitems.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblitems.Location = New System.Drawing.Point(26144, 3725)
         Me.lblitems.Name = "lblitems"
-        Me.lblitems.Size = New System.Drawing.Size(54, 16)
+        Me.lblitems.Size = New System.Drawing.Size(78, 24)
         Me.lblitems.TabIndex = 5436
         Me.lblitems.Text = "Items: "
         '
@@ -197,10 +195,9 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblwsortasig.AutoSize = True
         Me.lblwsortasig.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblwsortasig.Location = New System.Drawing.Point(26, 83)
-        Me.lblwsortasig.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblwsortasig.Location = New System.Drawing.Point(39, 128)
         Me.lblwsortasig.Name = "lblwsortasig"
-        Me.lblwsortasig.Size = New System.Drawing.Size(13, 16)
+        Me.lblwsortasig.Size = New System.Drawing.Size(17, 24)
         Me.lblwsortasig.TabIndex = 5437
         Me.lblwsortasig.Text = "-"
         '
@@ -209,50 +206,50 @@ Partial Class Principal
         Me.ContextMenuDisponibilidad.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ContextMenuDisponibilidad.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTextBox1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem4, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem15})
         Me.ContextMenuDisponibilidad.Name = "ContextMenuDesviacion"
-        Me.ContextMenuDisponibilidad.Size = New System.Drawing.Size(187, 161)
+        Me.ContextMenuDisponibilidad.Size = New System.Drawing.Size(254, 231)
         '
         'ToolStripTextBox1
         '
         Me.ToolStripTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripTextBox1.Name = "ToolStripTextBox1"
         Me.ToolStripTextBox1.ReadOnly = True
-        Me.ToolStripTextBox1.Size = New System.Drawing.Size(100, 23)
+        Me.ToolStripTextBox1.Size = New System.Drawing.Size(100, 31)
         Me.ToolStripTextBox1.Text = "Solicitar"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(186, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(253, 32)
         Me.ToolStripMenuItem2.Text = "Cambio Maquina"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(186, 22)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(253, 32)
         Me.ToolStripMenuItem4.Text = "Materiales Asignados"
         '
         'ToolStripMenuItem7
         '
         Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(186, 22)
+        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(253, 32)
         Me.ToolStripMenuItem7.Text = "Cambiar Orden"
         '
         'ToolStripMenuItem8
         '
         Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
-        Me.ToolStripMenuItem8.Size = New System.Drawing.Size(186, 22)
+        Me.ToolStripMenuItem8.Size = New System.Drawing.Size(253, 32)
         Me.ToolStripMenuItem8.Text = "Detener"
         '
         'ToolStripMenuItem9
         '
         Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
-        Me.ToolStripMenuItem9.Size = New System.Drawing.Size(186, 22)
+        Me.ToolStripMenuItem9.Size = New System.Drawing.Size(253, 32)
         Me.ToolStripMenuItem9.Text = "Volver a corte"
         '
         'ToolStripMenuItem15
         '
         Me.ToolStripMenuItem15.Name = "ToolStripMenuItem15"
-        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(186, 22)
+        Me.ToolStripMenuItem15.Size = New System.Drawing.Size(253, 32)
         Me.ToolStripMenuItem15.Text = "Desviar Terminal"
         '
         'pnluserandtitle
@@ -264,20 +261,18 @@ Partial Class Principal
         Me.pnluserandtitle.Controls.Add(Me.lblWIPorCWO)
         Me.pnluserandtitle.Controls.Add(Me.lbldept)
         Me.pnluserandtitle.Controls.Add(Me.lblwelcome)
-        Me.pnluserandtitle.Location = New System.Drawing.Point(1, 24)
-        Me.pnluserandtitle.Margin = New System.Windows.Forms.Padding(2)
+        Me.pnluserandtitle.Location = New System.Drawing.Point(2, 37)
         Me.pnluserandtitle.Name = "pnluserandtitle"
-        Me.pnluserandtitle.Size = New System.Drawing.Size(1236, 39)
+        Me.pnluserandtitle.Size = New System.Drawing.Size(1853, 90)
         Me.pnluserandtitle.TabIndex = 5438
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(710, 10)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label4.Location = New System.Drawing.Point(1065, 15)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(141, 20)
+        Me.Label4.Size = New System.Drawing.Size(200, 29)
         Me.Label4.TabIndex = 5458
         Me.Label4.Text = "Semana Actual: "
         '
@@ -285,10 +280,9 @@ Partial Class Principal
         '
         Me.lblWIP.AutoSize = True
         Me.lblWIP.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblWIP.Location = New System.Drawing.Point(584, 10)
-        Me.lblWIP.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblWIP.Location = New System.Drawing.Point(876, 15)
         Me.lblWIP.Name = "lblWIP"
-        Me.lblWIP.Size = New System.Drawing.Size(15, 20)
+        Me.lblWIP.Size = New System.Drawing.Size(22, 29)
         Me.lblWIP.TabIndex = 5457
         Me.lblWIP.Text = "-"
         Me.lblWIP.Visible = False
@@ -297,10 +291,9 @@ Partial Class Principal
         '
         Me.lblWIPorCWO.AutoSize = True
         Me.lblWIPorCWO.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblWIPorCWO.Location = New System.Drawing.Point(407, 8)
-        Me.lblWIPorCWO.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblWIPorCWO.Location = New System.Drawing.Point(610, 12)
         Me.lblWIPorCWO.Name = "lblWIPorCWO"
-        Me.lblWIPorCWO.Size = New System.Drawing.Size(15, 20)
+        Me.lblWIPorCWO.Size = New System.Drawing.Size(22, 29)
         Me.lblWIPorCWO.TabIndex = 2
         Me.lblWIPorCWO.Text = "-"
         '
@@ -309,10 +302,9 @@ Partial Class Principal
         Me.lbldept.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbldept.AutoSize = True
         Me.lbldept.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbldept.Location = New System.Drawing.Point(998, 10)
-        Me.lbldept.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lbldept.Location = New System.Drawing.Point(1496, 15)
         Me.lbldept.Name = "lbldept"
-        Me.lbldept.Size = New System.Drawing.Size(15, 20)
+        Me.lbldept.Size = New System.Drawing.Size(22, 29)
         Me.lbldept.TabIndex = 1
         Me.lbldept.Text = "-"
         '
@@ -320,10 +312,9 @@ Partial Class Principal
         '
         Me.lblwelcome.AutoSize = True
         Me.lblwelcome.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblwelcome.Location = New System.Drawing.Point(7, 10)
-        Me.lblwelcome.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblwelcome.Location = New System.Drawing.Point(10, 15)
         Me.lblwelcome.Name = "lblwelcome"
-        Me.lblwelcome.Size = New System.Drawing.Size(107, 20)
+        Me.lblwelcome.Size = New System.Drawing.Size(158, 29)
         Me.lblwelcome.TabIndex = 0
         Me.lblwelcome.Text = "Bienvenido: "
         '
@@ -343,8 +334,7 @@ Partial Class Principal
         Me.Chart1.ChartAreas.Add(ChartArea1)
         Legend1.Name = "Legend1"
         Me.Chart1.Legends.Add(Legend1)
-        Me.Chart1.Location = New System.Drawing.Point(4, 3)
-        Me.Chart1.Margin = New System.Windows.Forms.Padding(2)
+        Me.Chart1.Location = New System.Drawing.Point(6, 5)
         Me.Chart1.Name = "Chart1"
         Series1.ChartArea = "ChartArea1"
         Series1.Legend = "Legend1"
@@ -365,7 +355,7 @@ Partial Class Principal
         Me.Chart1.Series.Add(Series1)
         Me.Chart1.Series.Add(Series2)
         Me.Chart1.Series.Add(Series3)
-        Me.Chart1.Size = New System.Drawing.Size(1207, 257)
+        Me.Chart1.Size = New System.Drawing.Size(1810, 395)
         Me.Chart1.TabIndex = 5439
         Me.Chart1.Text = "Chart1"
         '
@@ -374,57 +364,57 @@ Partial Class Principal
         Me.ContextMenuVerMW.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ContextMenuVerMW.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem12, Me.ToolStripMenuItem13, Me.ToolStripTextBox5, Me.ToolStripTextBox6, Me.ToolStripTextBox7, Me.AsignarMaterialToolStripMenuItem, Me.ToolStripMenuItem14, Me.DesviarTerminalToolStripMenuItem})
         Me.ContextMenuVerMW.Name = "ContextMenuDesviacion"
-        Me.ContextMenuVerMW.Size = New System.Drawing.Size(161, 189)
+        Me.ContextMenuVerMW.Size = New System.Drawing.Size(213, 269)
         '
         'ToolStripMenuItem12
         '
         Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(160, 22)
+        Me.ToolStripMenuItem12.Size = New System.Drawing.Size(212, 32)
         Me.ToolStripMenuItem12.Text = "Listo"
         '
         'ToolStripMenuItem13
         '
         Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
-        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(160, 22)
+        Me.ToolStripMenuItem13.Size = New System.Drawing.Size(212, 32)
         Me.ToolStripMenuItem13.Text = "Cortos"
         '
         'ToolStripTextBox5
         '
         Me.ToolStripTextBox5.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripTextBox5.Name = "ToolStripTextBox5"
-        Me.ToolStripTextBox5.Size = New System.Drawing.Size(100, 23)
+        Me.ToolStripTextBox5.Size = New System.Drawing.Size(100, 31)
         Me.ToolStripTextBox5.Text = "Ver Materiales"
         '
         'ToolStripTextBox6
         '
         Me.ToolStripTextBox6.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripTextBox6.Name = "ToolStripTextBox6"
-        Me.ToolStripTextBox6.Size = New System.Drawing.Size(100, 23)
+        Me.ToolStripTextBox6.Size = New System.Drawing.Size(100, 31)
         Me.ToolStripTextBox6.Text = "Ver Aplicadores"
         '
         'ToolStripTextBox7
         '
         Me.ToolStripTextBox7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ToolStripTextBox7.Name = "ToolStripTextBox7"
-        Me.ToolStripTextBox7.Size = New System.Drawing.Size(100, 23)
+        Me.ToolStripTextBox7.Size = New System.Drawing.Size(100, 31)
         Me.ToolStripTextBox7.Text = "Agregar Nota"
         '
         'AsignarMaterialToolStripMenuItem
         '
         Me.AsignarMaterialToolStripMenuItem.Name = "AsignarMaterialToolStripMenuItem"
-        Me.AsignarMaterialToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.AsignarMaterialToolStripMenuItem.Size = New System.Drawing.Size(212, 32)
         Me.AsignarMaterialToolStripMenuItem.Text = "Asignar material"
         '
         'ToolStripMenuItem14
         '
         Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
-        Me.ToolStripMenuItem14.Size = New System.Drawing.Size(160, 22)
+        Me.ToolStripMenuItem14.Size = New System.Drawing.Size(212, 32)
         Me.ToolStripMenuItem14.Text = "Quitar Corto"
         '
         'DesviarTerminalToolStripMenuItem
         '
         Me.DesviarTerminalToolStripMenuItem.Name = "DesviarTerminalToolStripMenuItem"
-        Me.DesviarTerminalToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.DesviarTerminalToolStripMenuItem.Size = New System.Drawing.Size(212, 32)
         Me.DesviarTerminalToolStripMenuItem.Text = "Desviar Terminal"
         '
         'GroupBox1
@@ -435,11 +425,9 @@ Partial Class Principal
         Me.GroupBox1.Controls.Add(Me.rbListosParaEntrar)
         Me.GroupBox1.Controls.Add(Me.rbSolicitado)
         Me.GroupBox1.Controls.Add(Me.rbsolicitar)
-        Me.GroupBox1.Location = New System.Drawing.Point(298, 67)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.GroupBox1.Location = New System.Drawing.Point(447, 103)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox1.Size = New System.Drawing.Size(803, 40)
+        Me.GroupBox1.Size = New System.Drawing.Size(1204, 62)
         Me.GroupBox1.TabIndex = 5451
         Me.GroupBox1.TabStop = False
         '
@@ -447,10 +435,9 @@ Partial Class Principal
         '
         Me.rdbOnHold.AutoSize = True
         Me.rdbOnHold.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rdbOnHold.Location = New System.Drawing.Point(699, 13)
-        Me.rdbOnHold.Margin = New System.Windows.Forms.Padding(2)
+        Me.rdbOnHold.Location = New System.Drawing.Point(1048, 20)
         Me.rdbOnHold.Name = "rdbOnHold"
-        Me.rdbOnHold.Size = New System.Drawing.Size(73, 20)
+        Me.rdbOnHold.Size = New System.Drawing.Size(103, 28)
         Me.rdbOnHold.TabIndex = 5
         Me.rdbOnHold.TabStop = True
         Me.rdbOnHold.Text = "Cortos"
@@ -460,10 +447,9 @@ Partial Class Principal
         '
         Me.rbEmpezadosyDetenidos.AutoSize = True
         Me.rbEmpezadosyDetenidos.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbEmpezadosyDetenidos.Location = New System.Drawing.Point(482, 13)
-        Me.rbEmpezadosyDetenidos.Margin = New System.Windows.Forms.Padding(2)
+        Me.rbEmpezadosyDetenidos.Location = New System.Drawing.Point(723, 20)
         Me.rbEmpezadosyDetenidos.Name = "rbEmpezadosyDetenidos"
-        Me.rbEmpezadosyDetenidos.Size = New System.Drawing.Size(193, 20)
+        Me.rbEmpezadosyDetenidos.Size = New System.Drawing.Size(279, 28)
         Me.rbEmpezadosyDetenidos.TabIndex = 4
         Me.rbEmpezadosyDetenidos.TabStop = True
         Me.rbEmpezadosyDetenidos.Text = "Empezados y Detenidos"
@@ -473,10 +459,9 @@ Partial Class Principal
         '
         Me.rbYaempezados.AutoSize = True
         Me.rbYaempezados.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbYaempezados.Location = New System.Drawing.Point(337, 12)
-        Me.rbYaempezados.Margin = New System.Windows.Forms.Padding(2)
+        Me.rbYaempezados.Location = New System.Drawing.Point(506, 18)
         Me.rbYaempezados.Name = "rbYaempezados"
-        Me.rbYaempezados.Size = New System.Drawing.Size(127, 20)
+        Me.rbYaempezados.Size = New System.Drawing.Size(182, 28)
         Me.rbYaempezados.TabIndex = 3
         Me.rbYaempezados.TabStop = True
         Me.rbYaempezados.Text = "Ya empezados"
@@ -486,10 +471,9 @@ Partial Class Principal
         '
         Me.rbListosParaEntrar.AutoSize = True
         Me.rbListosParaEntrar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbListosParaEntrar.Location = New System.Drawing.Point(165, 12)
-        Me.rbListosParaEntrar.Margin = New System.Windows.Forms.Padding(2)
+        Me.rbListosParaEntrar.Location = New System.Drawing.Point(248, 18)
         Me.rbListosParaEntrar.Name = "rbListosParaEntrar"
-        Me.rbListosParaEntrar.Size = New System.Drawing.Size(150, 20)
+        Me.rbListosParaEntrar.Size = New System.Drawing.Size(217, 28)
         Me.rbListosParaEntrar.TabIndex = 2
         Me.rbListosParaEntrar.TabStop = True
         Me.rbListosParaEntrar.Text = "Listos Para Entrar"
@@ -499,10 +483,9 @@ Partial Class Principal
         '
         Me.rbSolicitado.AutoSize = True
         Me.rbSolicitado.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbSolicitado.Location = New System.Drawing.Point(166, 12)
-        Me.rbSolicitado.Margin = New System.Windows.Forms.Padding(2)
+        Me.rbSolicitado.Location = New System.Drawing.Point(249, 18)
         Me.rbSolicitado.Name = "rbSolicitado"
-        Me.rbSolicitado.Size = New System.Drawing.Size(95, 20)
+        Me.rbSolicitado.Size = New System.Drawing.Size(134, 28)
         Me.rbSolicitado.TabIndex = 1
         Me.rbSolicitado.TabStop = True
         Me.rbSolicitado.Text = "Solicitado"
@@ -513,10 +496,9 @@ Partial Class Principal
         '
         Me.rbsolicitar.AutoSize = True
         Me.rbsolicitar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbsolicitar.Location = New System.Drawing.Point(8, 13)
-        Me.rbsolicitar.Margin = New System.Windows.Forms.Padding(2)
+        Me.rbsolicitar.Location = New System.Drawing.Point(12, 20)
         Me.rbsolicitar.Name = "rbsolicitar"
-        Me.rbsolicitar.Size = New System.Drawing.Size(139, 20)
+        Me.rbsolicitar.Size = New System.Drawing.Size(197, 28)
         Me.rbsolicitar.TabIndex = 0
         Me.rbsolicitar.TabStop = True
         Me.rbsolicitar.Text = "Solicitar Mat/Apl"
@@ -527,9 +509,11 @@ Partial Class Principal
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Controls.Add(Me.Button1)
         Me.GroupBox2.Controls.Add(Me.DataGridView1)
-        Me.GroupBox2.Location = New System.Drawing.Point(474, 357)
+        Me.GroupBox2.Location = New System.Drawing.Point(711, 549)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(747, 207)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.GroupBox2.Size = New System.Drawing.Size(1120, 318)
         Me.GroupBox2.TabIndex = 5452
         Me.GroupBox2.TabStop = False
         '
@@ -537,10 +521,9 @@ Partial Class Principal
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(10, 19)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(15, 29)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(85, 20)
+        Me.Label1.Size = New System.Drawing.Size(124, 29)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Historial: "
         '
@@ -548,9 +531,10 @@ Partial Class Principal
         '
         Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
         Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button1.Location = New System.Drawing.Point(686, 12)
+        Me.Button1.Location = New System.Drawing.Point(1029, 18)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(32, 25)
+        Me.Button1.Size = New System.Drawing.Size(48, 38)
         Me.Button1.TabIndex = 5437
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -580,8 +564,7 @@ Partial Class Principal
         Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridView1.EnableHeadersVisualStyles = False
         Me.DataGridView1.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DataGridView1.Location = New System.Drawing.Point(5, 41)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
+        Me.DataGridView1.Location = New System.Drawing.Point(8, 63)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -595,15 +578,14 @@ Partial Class Principal
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.RowHeadersWidth = 51
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(732, 152)
+        Me.DataGridView1.Size = New System.Drawing.Size(1098, 234)
         Me.DataGridView1.TabIndex = 5436
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(168, 123)
-        Me.ProgressBar1.Margin = New System.Windows.Forms.Padding(2)
+        Me.ProgressBar1.Location = New System.Drawing.Point(252, 189)
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(246, 26)
+        Me.ProgressBar1.Size = New System.Drawing.Size(369, 40)
         Me.ProgressBar1.TabIndex = 5460
         Me.ProgressBar1.Visible = False
         '
@@ -635,8 +617,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.DefaultCellStyle = DataGridViewCellStyle8
         Me.dgvMatSinStockCompras.EnableHeadersVisualStyles = False
         Me.dgvMatSinStockCompras.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvMatSinStockCompras.Location = New System.Drawing.Point(17, 44)
-        Me.dgvMatSinStockCompras.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvMatSinStockCompras.Location = New System.Drawing.Point(26, 68)
         Me.dgvMatSinStockCompras.Name = "dgvMatSinStockCompras"
         DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
@@ -649,7 +630,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.RowHeadersVisible = False
         Me.dgvMatSinStockCompras.RowHeadersWidth = 51
         Me.dgvMatSinStockCompras.RowTemplate.Height = 24
-        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(512, 205)
+        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(756, 32)
         Me.dgvMatSinStockCompras.TabIndex = 5458
         '
         'Chk
@@ -661,9 +642,10 @@ Partial Class Principal
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(243, 74)
+        Me.Button2.Location = New System.Drawing.Point(364, 114)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(50, 29)
+        Me.Button2.Size = New System.Drawing.Size(75, 45)
         Me.Button2.TabIndex = 5453
         Me.Button2.Text = "wSort's"
         Me.Button2.UseVisualStyleBackColor = True
@@ -673,9 +655,11 @@ Partial Class Principal
         Me.GroupBox3.Controls.Add(Me.Button3)
         Me.GroupBox3.Controls.Add(Me.Label2)
         Me.GroupBox3.Controls.Add(Me.dgvwSorts)
-        Me.GroupBox3.Location = New System.Drawing.Point(44, 358)
+        Me.GroupBox3.Location = New System.Drawing.Point(66, 551)
+        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(414, 212)
+        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.GroupBox3.Size = New System.Drawing.Size(621, 326)
         Me.GroupBox3.TabIndex = 5454
         Me.GroupBox3.TabStop = False
         '
@@ -683,9 +667,10 @@ Partial Class Principal
         '
         Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
         Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button3.Location = New System.Drawing.Point(365, 11)
+        Me.Button3.Location = New System.Drawing.Point(548, 17)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(32, 36)
+        Me.Button3.Size = New System.Drawing.Size(48, 55)
         Me.Button3.TabIndex = 5439
         Me.Button3.UseVisualStyleBackColor = True
         '
@@ -693,10 +678,9 @@ Partial Class Principal
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(5, 19)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label2.Location = New System.Drawing.Point(8, 29)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(150, 20)
+        Me.Label2.Size = New System.Drawing.Size(218, 29)
         Me.Label2.TabIndex = 5438
         Me.Label2.Text = "Definicion wSort: "
         '
@@ -726,8 +710,7 @@ Partial Class Principal
         Me.dgvwSorts.DefaultCellStyle = DataGridViewCellStyle11
         Me.dgvwSorts.EnableHeadersVisualStyles = False
         Me.dgvwSorts.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvwSorts.Location = New System.Drawing.Point(5, 52)
-        Me.dgvwSorts.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvwSorts.Location = New System.Drawing.Point(8, 80)
         Me.dgvwSorts.Name = "dgvwSorts"
         Me.dgvwSorts.ReadOnly = True
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -741,17 +724,18 @@ Partial Class Principal
         Me.dgvwSorts.RowHeadersVisible = False
         Me.dgvwSorts.RowHeadersWidth = 51
         Me.dgvwSorts.RowTemplate.Height = 24
-        Me.dgvwSorts.Size = New System.Drawing.Size(397, 145)
+        Me.dgvwSorts.Size = New System.Drawing.Size(596, 223)
         Me.dgvwSorts.TabIndex = 5437
         '
         'MenuStrip1
         '
+        Me.MenuStrip1.GripMargin = New System.Windows.Forms.Padding(2, 2, 0, 2)
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.AboutToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
-        Me.MenuStrip1.Size = New System.Drawing.Size(1237, 24)
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(6, 3, 0, 3)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1856, 54)
         Me.MenuStrip1.TabIndex = 5455
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -759,55 +743,55 @@ Partial Class Principal
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MonitorWIPS, Me.ToolStripMenuItem1, Me.ToolStripMenuItem10, Me.ToolStripMenuItem11, Me.ToolStripMenuItem3, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(53, 48)
         Me.FileToolStripMenuItem.Text = "Ir a"
         '
         'MonitorWIPS
         '
         Me.MonitorWIPS.Name = "MonitorWIPS"
-        Me.MonitorWIPS.Size = New System.Drawing.Size(171, 22)
+        Me.MonitorWIPS.Size = New System.Drawing.Size(261, 34)
         Me.MonitorWIPS.Text = "Monitor WIP's"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(171, 22)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(261, 34)
         Me.ToolStripMenuItem1.Text = "CSHP"
         '
         'ToolStripMenuItem10
         '
         Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(171, 22)
+        Me.ToolStripMenuItem10.Size = New System.Drawing.Size(261, 34)
         Me.ToolStripMenuItem10.Text = "Graficas"
         '
         'ToolStripMenuItem11
         '
         Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
-        Me.ToolStripMenuItem11.Size = New System.Drawing.Size(171, 22)
+        Me.ToolStripMenuItem11.Size = New System.Drawing.Size(261, 34)
         Me.ToolStripMenuItem11.Text = "Hora x Hora"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(171, 22)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(261, 34)
         Me.ToolStripMenuItem3.Text = "Ver Manual de uso"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(171, 22)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(261, 34)
         Me.ToolStripMenuItem5.Text = "Cambiar de usario"
         '
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(171, 22)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(261, 34)
         Me.ToolStripMenuItem6.Text = "WIP Issues"
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(52, 20)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(78, 48)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'NotifyIcon1
@@ -825,10 +809,9 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(1157, 79)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label3.Location = New System.Drawing.Point(1736, 122)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(13, 16)
+        Me.Label3.Size = New System.Drawing.Size(17, 24)
         Me.Label3.TabIndex = 5457
         Me.Label3.Text = "-"
         '
@@ -842,21 +825,19 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(6, 358)
-        Me.TabControl1.Margin = New System.Windows.Forms.Padding(2)
+        Me.TabControl1.Location = New System.Drawing.Point(9, 551)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1222, 285)
+        Me.TabControl1.Size = New System.Drawing.Size(1821, 155)
         Me.TabControl1.TabIndex = 5461
         '
         'TabPage1
         '
         Me.TabPage1.Controls.Add(Me.Chart1)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Margin = New System.Windows.Forms.Padding(2)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 29)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage1.Size = New System.Drawing.Size(1214, 259)
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage1.Size = New System.Drawing.Size(1825, 405)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Grafica"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -874,11 +855,10 @@ Partial Class Principal
         Me.TabPage2.Controls.Add(Me.dgvAfectados)
         Me.TabPage2.Controls.Add(Me.dgvMatSinStockCompras)
         Me.TabPage2.Controls.Add(Me.ProgressBar1)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Margin = New System.Windows.Forms.Padding(2)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 29)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage2.Size = New System.Drawing.Size(1214, 259)
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage2.Size = New System.Drawing.Size(1813, 122)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "PN Cortos"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -889,10 +869,9 @@ Partial Class Principal
         Me.btnCortosPN.BackgroundImage = CType(resources.GetObject("btnCortosPN.BackgroundImage"), System.Drawing.Image)
         Me.btnCortosPN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnCortosPN.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCortosPN.Location = New System.Drawing.Point(696, 6)
-        Me.btnCortosPN.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnCortosPN.Location = New System.Drawing.Point(1032, 9)
         Me.btnCortosPN.Name = "btnCortosPN"
-        Me.btnCortosPN.Size = New System.Drawing.Size(36, 37)
+        Me.btnCortosPN.Size = New System.Drawing.Size(54, 57)
         Me.btnCortosPN.TabIndex = 5470
         Me.btnCortosPN.UseVisualStyleBackColor = True
         Me.btnCortosPN.Visible = False
@@ -902,10 +881,9 @@ Partial Class Principal
         Me.btnAgregaFecha.BackgroundImage = CType(resources.GetObject("btnAgregaFecha.BackgroundImage"), System.Drawing.Image)
         Me.btnAgregaFecha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnAgregaFecha.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnAgregaFecha.Location = New System.Drawing.Point(320, 3)
-        Me.btnAgregaFecha.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnAgregaFecha.Location = New System.Drawing.Point(480, 5)
         Me.btnAgregaFecha.Name = "btnAgregaFecha"
-        Me.btnAgregaFecha.Size = New System.Drawing.Size(36, 37)
+        Me.btnAgregaFecha.Size = New System.Drawing.Size(54, 57)
         Me.btnAgregaFecha.TabIndex = 5469
         Me.btnAgregaFecha.UseVisualStyleBackColor = True
         Me.btnAgregaFecha.Visible = False
@@ -916,10 +894,9 @@ Partial Class Principal
         Me.btnexportaeficc.BackColor = System.Drawing.Color.White
         Me.btnexportaeficc.BackgroundImage = CType(resources.GetObject("btnexportaeficc.BackgroundImage"), System.Drawing.Image)
         Me.btnexportaeficc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.btnexportaeficc.Location = New System.Drawing.Point(440, 12)
-        Me.btnexportaeficc.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnexportaeficc.Location = New System.Drawing.Point(648, 18)
         Me.btnexportaeficc.Name = "btnexportaeficc"
-        Me.btnexportaeficc.Size = New System.Drawing.Size(78, 27)
+        Me.btnexportaeficc.Size = New System.Drawing.Size(117, 42)
         Me.btnexportaeficc.TabIndex = 5468
         Me.btnexportaeficc.UseVisualStyleBackColor = False
         Me.btnexportaeficc.Visible = False
@@ -929,10 +906,9 @@ Partial Class Principal
         Me.btnRefrescaGrid.BackgroundImage = CType(resources.GetObject("btnRefrescaGrid.BackgroundImage"), System.Drawing.Image)
         Me.btnRefrescaGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnRefrescaGrid.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnRefrescaGrid.Location = New System.Drawing.Point(386, 6)
-        Me.btnRefrescaGrid.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnRefrescaGrid.Location = New System.Drawing.Point(579, 9)
         Me.btnRefrescaGrid.Name = "btnRefrescaGrid"
-        Me.btnRefrescaGrid.Size = New System.Drawing.Size(29, 33)
+        Me.btnRefrescaGrid.Size = New System.Drawing.Size(44, 51)
         Me.btnRefrescaGrid.TabIndex = 5467
         Me.btnRefrescaGrid.UseVisualStyleBackColor = True
         Me.btnRefrescaGrid.Visible = False
@@ -943,10 +919,9 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(14, 20)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label8.Location = New System.Drawing.Point(21, 31)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(183, 16)
+        Me.Label8.Size = New System.Drawing.Size(262, 24)
         Me.Label8.TabIndex = 5465
         Me.Label8.Text = "Numeros de Parte cortos"
         '
@@ -955,10 +930,9 @@ Partial Class Principal
         Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(531, 21)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label7.Location = New System.Drawing.Point(784, 32)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(134, 16)
+        Me.Label7.Size = New System.Drawing.Size(189, 24)
         Me.Label7.TabIndex = 5464
         Me.Label7.Text = "Detalle afectacion"
         '
@@ -967,10 +941,9 @@ Partial Class Principal
         Me.lblAfectados.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblAfectados.AutoSize = True
         Me.lblAfectados.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAfectados.Location = New System.Drawing.Point(1068, 24)
-        Me.lblAfectados.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblAfectados.Location = New System.Drawing.Point(1590, 37)
         Me.lblAfectados.Name = "lblAfectados"
-        Me.lblAfectados.Size = New System.Drawing.Size(13, 16)
+        Me.lblAfectados.Size = New System.Drawing.Size(17, 24)
         Me.lblAfectados.TabIndex = 5463
         Me.lblAfectados.Text = "-"
         '
@@ -978,10 +951,9 @@ Partial Class Principal
         '
         Me.lblitemscortos.AutoSize = True
         Me.lblitemscortos.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblitemscortos.Location = New System.Drawing.Point(476, 21)
-        Me.lblitemscortos.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblitemscortos.Location = New System.Drawing.Point(714, 32)
         Me.lblitemscortos.Name = "lblitemscortos"
-        Me.lblitemscortos.Size = New System.Drawing.Size(13, 16)
+        Me.lblitemscortos.Size = New System.Drawing.Size(17, 24)
         Me.lblitemscortos.TabIndex = 5462
         Me.lblitemscortos.Text = "-"
         '
@@ -1012,8 +984,7 @@ Partial Class Principal
         Me.dgvAfectados.DefaultCellStyle = DataGridViewCellStyle14
         Me.dgvAfectados.EnableHeadersVisualStyles = False
         Me.dgvAfectados.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvAfectados.Location = New System.Drawing.Point(534, 44)
-        Me.dgvAfectados.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvAfectados.Location = New System.Drawing.Point(789, 68)
         Me.dgvAfectados.Name = "dgvAfectados"
         DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
@@ -1026,7 +997,7 @@ Partial Class Principal
         Me.dgvAfectados.RowHeadersVisible = False
         Me.dgvAfectados.RowHeadersWidth = 51
         Me.dgvAfectados.RowTemplate.Height = 24
-        Me.dgvAfectados.Size = New System.Drawing.Size(670, 205)
+        Me.dgvAfectados.Size = New System.Drawing.Size(1005, 32)
         Me.dgvAfectados.TabIndex = 5461
         '
         'aChk
@@ -1038,10 +1009,10 @@ Partial Class Principal
         '
         'Principal
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(1237, 652)
+        Me.ClientSize = New System.Drawing.Size(1237, 668)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.GroupBox1)
@@ -1054,7 +1025,6 @@ Partial Class Principal
         Me.Controls.Add(Me.lblitems)
         Me.Controls.Add(Me.dgvWips)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "Principal"
         Me.RightToLeftLayout = True
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

@@ -1,6 +1,8 @@
 ﻿Imports System.Data.SqlClient
 Public Class CreatePWO
     Dim AU As Integer = 0
+    Dim TablasMerged As List(Of Object) = New List(Of Object)
+    'Dim TablasMerged As Queue(Of Object) = New Queue(Of Object)()
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Cursor.Current = Cursors.WaitCursor
         AU = 0
@@ -161,24 +163,45 @@ Public Class CreatePWO
             aTable.Load(dr)
             cnn.Close()
             If aTable.Rows.Count > 0 Then
-                With dgvDetalleTerminales
-                    .DataSource = aTable
-                    .DataSource = aTable
-                    .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    .ClearSelection()
-                End With
-                SumQtyAndTest(aTable)
+                If dgvDetalleTerminales.Rows.Count > 0 Then
+                    If TablasMerged.Count > 0 Then
+                        With dgvDetalleTerminales
+                            .DataSource = MergedObjTables(aTable)
+                            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                            .AutoResizeColumns()
+                            .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                            .ClearSelection()
+                            SumQtyAndTest(aTable)
+                        End With
+                    End If
+                Else
+                    With dgvDetalleTerminales
+                        .DataSource = Nothing
+                        .DataSource = aTable
+                        .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                        .AutoResizeColumns()
+                        .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                        .ClearSelection()
+                        SumQtyAndTest(aTable)
+                        TablasMerged.Add(aTable)
+                    End With
+                End If
             Else
                 dgvDetalleTerminales.DataSource = Nothing
             End If
+            DisableButton()
             Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
+    Private MergedObjTables As Func(Of DataTable, DataTable) = Function(x)
+                                                                   Dim aTb As DataTable = New DataTable
+                                                                   aTb.Merge(x)
+                                                                   TablasMerged.Insert(TablasMerged.Count - 1, aTb)
+                                                                   Return aTb
+                                                               End Function
     Private SumQtyAndTest As Action(Of DataTable) = Function(a)
                                                         Dim Qty = (From row In a.AsEnumerable() Select row("TABalance")).ToList().Sum(Function(i) CInt(i.ToString()))
                                                         Qty += (From row In a.AsEnumerable() Select row("TBBalance")).ToList().Sum(Function(i) CInt(i.ToString()))
@@ -187,6 +210,13 @@ Public Class CreatePWO
                                                         Label4.Text = Test.ToString
                                                         Return Nothing
                                                     End Function
+    Private Sub DisableButton()
+        If dgvDetalleTerminales.Rows.Count > 0 And TablasMerged.Count > 1 Then
+            Button3.Visible = True
+        Else
+            Button3.Visible = False
+        End If
+    End Sub
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
         If e.KeyChar = Chr(13) Then
             Cursor.Current = Cursors.WaitCursor
@@ -203,7 +233,27 @@ Public Class CreatePWO
     End Sub
     Private Sub dgvTerminalesXProcesar_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTerminalesXProcesar.CellDoubleClick
         If e.RowIndex >= 0 Then
+            Cursor.Current = Cursors.WaitCursor
             SelectedTermProcess(dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString)
+            Cursor.Current = Cursors.Default
         End If
+    End Sub
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        'Eliminar ultima terminal seleccionada, para eso borramos el ultimo merge de las datatable
+        'If dgvDetalleTerminales.Rows.Count > 0 And TablasMerged.Count > 1 Then
+        '    TablasMerged.RemoveAt(TablasMerged.Count - 1)
+        '    Dim aTabla As New DataTable
+        '    aTabla = TablasMerged.Last()
+        '    Dim countRows = aTabla.Rows.Count
+        '    With dgvDetalleTerminales
+        '        .DataSource = Nothing
+        '        .DataSource = aTabla
+        '        .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+        '        .AutoResizeColumns()
+        '        .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        '        .ClearSelection()
+        '        SumQtyAndTest(aTabla)
+        '    End With
+        'End If
     End Sub
 End Class

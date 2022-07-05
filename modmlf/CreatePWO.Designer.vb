@@ -151,7 +151,7 @@ Partial Class CreatePWO
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(20, 74)
+        Me.CheckBox1.Location = New System.Drawing.Point(6, 73)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(161, 24)
         Me.CheckBox1.TabIndex = 5439
@@ -160,7 +160,7 @@ Partial Class CreatePWO
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(20, 35)
+        Me.Button2.Location = New System.Drawing.Point(6, 35)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(122, 32)
         Me.Button2.TabIndex = 5440
@@ -257,15 +257,16 @@ Partial Class CreatePWO
         Me.Button3.TabIndex = 5447
         Me.Button3.Text = "Remove Selection"
         Me.Button3.UseVisualStyleBackColor = True
+        Me.Button3.Visible = False
         '
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.Button2)
         Me.GroupBox2.Controls.Add(Me.CheckBox1)
         Me.GroupBox2.Controls.Add(Me.GroupBox1)
-        Me.GroupBox2.Location = New System.Drawing.Point(1199, 590)
+        Me.GroupBox2.Location = New System.Drawing.Point(1178, 590)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(422, 156)
+        Me.GroupBox2.Size = New System.Drawing.Size(443, 156)
         Me.GroupBox2.TabIndex = 5448
         Me.GroupBox2.TabStop = False
         '
