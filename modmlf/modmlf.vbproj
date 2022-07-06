@@ -170,6 +170,7 @@
     <Compile Include="CambioMaquina.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ChargeInfo.vb" />
     <Compile Include="cnnACS.vb" />
     <Compile Include="CorreoFalla.vb" />
     <Compile Include="CreatePWO.Designer.vb">

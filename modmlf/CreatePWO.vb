@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Public Class CreatePWO
     Dim AU As Integer = 0
-    Dim TablasMerged As List(Of Object) = New List(Of Object)
+    Dim InfoTablas As List(Of ChargeInfo) = New List(Of ChargeInfo)
     'Dim TablasMerged As Queue(Of Object) = New Queue(Of Object)()
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Cursor.Current = Cursors.WaitCursor
@@ -156,22 +156,25 @@ Public Class CreatePWO
                                       $" WIP in (select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")})" &
                                       "order by IDSort asc"
             Dim cmd As SqlCommand = New SqlCommand(aConsulta, cnn)
+            Dim aTable As DataTable = New DataTable, tbAux As DataTable = New DataTable
             Dim dr As SqlDataReader
-            Dim aTable As DataTable = New DataTable
             cnn.Open()
             dr = cmd.ExecuteReader
             aTable.Load(dr)
             cnn.Close()
             If aTable.Rows.Count > 0 Then
                 If dgvDetalleTerminales.Rows.Count > 0 Then
-                    If TablasMerged.Count > 0 Then
+                    If InfoTablas.Count > 0 Then
                         With dgvDetalleTerminales
-                            .DataSource = MergedObjTables(aTable)
+                            tbAux = MergedObjTables(aTable)
+                            .DataSource = tbAux
                             .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                             .AutoResizeColumns()
                             .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                             .ClearSelection()
-                            SumQtyAndTest(aTable)
+                            SumQtyAndTest(tbAux)
+                            Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
+                            FillListInfoTablas(PN, last + aTable.Rows.Count)
                         End With
                     End If
                 Else
@@ -183,7 +186,7 @@ Public Class CreatePWO
                         .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                         .ClearSelection()
                         SumQtyAndTest(aTable)
-                        TablasMerged.Add(aTable)
+                        FillListInfoTablas(PN, aTable.Rows.Count)
                     End With
                 End If
             Else
@@ -197,21 +200,32 @@ Public Class CreatePWO
         End Try
     End Sub
     Private MergedObjTables As Func(Of DataTable, DataTable) = Function(x)
-                                                                   Dim aTb As DataTable = New DataTable
-                                                                   aTb.Merge(x)
-                                                                   TablasMerged.Insert(TablasMerged.Count - 1, aTb)
-                                                                   Return aTb
+                                                                   Dim dt As New DataTable
+                                                                   dt = (DirectCast(dgvDetalleTerminales.DataSource, DataTable))
+                                                                   dt.Merge(x)
+                                                                   Return dt
                                                                End Function
     Private SumQtyAndTest As Action(Of DataTable) = Function(a)
-                                                        Dim Qty = (From row In a.AsEnumerable() Select row("TABalance")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                        Qty += (From row In a.AsEnumerable() Select row("TBBalance")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                        Dim Test = (From row In a.AsEnumerable() Select row("Test")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                        Label3.Text = Qty.ToString
-                                                        Label4.Text = Test.ToString
+                                                        Try
+                                                            Dim Qty = (From row In a.AsEnumerable() Select row("TABalance")).ToList().Sum(Function(i) CInt(i.ToString()))
+                                                            Qty += (From row In a.AsEnumerable() Select row("TBBalance")).ToList().Sum(Function(i) CInt(i.ToString()))
+                                                            Dim Test = (From row In a.AsEnumerable() Select row("Test")).ToList().Sum(Function(i) CInt(i.ToString()))
+                                                            Label3.Text = Qty.ToString
+                                                            Label4.Text = Test.ToString
+                                                        Catch ex As Exception
+                                                            MessageBox.Show(ex.ToString)
+                                                        End Try
                                                         Return Nothing
                                                     End Function
+    Private FillListInfoTablas As Action(Of String, Integer) = Function(b, c)
+                                                                   Dim oCreate As ChargeInfo = New ChargeInfo
+                                                                   oCreate.PN = b
+                                                                   oCreate.Rows = c
+                                                                   InfoTablas.Add(oCreate)
+                                                                   Return Nothing
+                                                               End Function
     Private Sub DisableButton()
-        If dgvDetalleTerminales.Rows.Count > 0 And TablasMerged.Count > 1 Then
+        If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 1 Then
             Button3.Visible = True
         Else
             Button3.Visible = False
@@ -234,26 +248,40 @@ Public Class CreatePWO
     Private Sub dgvTerminalesXProcesar_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTerminalesXProcesar.CellDoubleClick
         If e.RowIndex >= 0 Then
             Cursor.Current = Cursors.WaitCursor
-            SelectedTermProcess(dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString)
+            Dim auxTerm As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString
+            If (InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(auxTerm)).Count) > 0 Then
+                MessageBox.Show($"Esta terminal: {auxTerm} ya esta en la lista en por procesar, no es posible agregarla de nuevo.")
+            Else
+                SelectedTermProcess(auxTerm)
+            End If
             Cursor.Current = Cursors.Default
         End If
     End Sub
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         'Eliminar ultima terminal seleccionada, para eso borramos el ultimo merge de las datatable
-        'If dgvDetalleTerminales.Rows.Count > 0 And TablasMerged.Count > 1 Then
-        '    TablasMerged.RemoveAt(TablasMerged.Count - 1)
-        '    Dim aTabla As New DataTable
-        '    aTabla = TablasMerged.Last()
-        '    Dim countRows = aTabla.Rows.Count
-        '    With dgvDetalleTerminales
-        '        .DataSource = Nothing
-        '        .DataSource = aTabla
-        '        .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-        '        .AutoResizeColumns()
-        '        .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-        '        .ClearSelection()
-        '        SumQtyAndTest(aTabla)
-        '    End With
-        'End If
+        InfoTablas.ForEach(Function(a) MessageBox.Show(a.PN.ToString + vbNewLine + a.Rows.ToString))
+        Dim dt As New DataTable
+        dt = (DirectCast(dgvDetalleTerminales.DataSource, DataTable))
+        Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
+        InfoTablas.RemoveAt(InfoTablas.FindIndex(Function(d) d.Rows.Equals(last)))
+        last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
+        For i = 0 To dt.Rows.Count - 1
+            If i >= last Then
+                dt.Rows(i).Delete()
+            End If
+        Next
+        Dim tbClone As DataTable
+        tbClone = dt.Copy
+        Dim intr = tbClone.Rows.Count
+        With dgvDetalleTerminales
+            .DataSource = Nothing
+            .DataSource = dt
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+            .AutoResizeColumns()
+            .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .ClearSelection()
+            SumQtyAndTest(tbClone)
+        End With
+        InfoTablas.ForEach(Function(a) MessageBox.Show(a.PN.ToString + vbNewLine + a.Rows.ToString))
     End Sub
 End Class
