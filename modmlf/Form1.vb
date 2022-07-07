@@ -1697,7 +1697,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                 If FProm = "" Then
                     FProm = Convert.ToDateTime(Now)
                 End If
-                query = $"select {Dept} from tblWIP where WIP = '{WIP}'"
+                query = $"select IsNull({Dept},'') from tblWIP where WIP = '{WIP}'"
                 cmd = New SqlCommand(query, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
