@@ -79,7 +79,7 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvTerminalesXProcesar.EnableHeadersVisualStyles = False
         Me.dgvTerminalesXProcesar.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvTerminalesXProcesar.Location = New System.Drawing.Point(12, 55)
+        Me.dgvTerminalesXProcesar.Location = New System.Drawing.Point(12, 101)
         Me.dgvTerminalesXProcesar.Name = "dgvTerminalesXProcesar"
         Me.dgvTerminalesXProcesar.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -93,7 +93,7 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar.RowHeadersVisible = False
         Me.dgvTerminalesXProcesar.RowHeadersWidth = 51
         Me.dgvTerminalesXProcesar.RowTemplate.Height = 24
-        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(676, 225)
+        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(676, 343)
         Me.dgvTerminalesXProcesar.TabIndex = 5436
         '
         'dgvDetalleTerminales
@@ -141,7 +141,7 @@ Partial Class CreatePWO
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(30, 18)
+        Me.Button1.Location = New System.Drawing.Point(26, 42)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(122, 31)
         Me.Button1.TabIndex = 5438
@@ -151,7 +151,7 @@ Partial Class CreatePWO
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(6, 73)
+        Me.CheckBox1.Location = New System.Drawing.Point(25, 92)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(161, 24)
         Me.CheckBox1.TabIndex = 5439
@@ -160,7 +160,7 @@ Partial Class CreatePWO
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(6, 35)
+        Me.Button2.Location = New System.Drawing.Point(45, 39)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(122, 32)
         Me.Button2.TabIndex = 5440
@@ -173,7 +173,7 @@ Partial Class CreatePWO
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(181, 20)
+        Me.GroupBox1.Location = New System.Drawing.Point(224, 25)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(226, 117)
         Me.GroupBox1.TabIndex = 5441
@@ -218,7 +218,7 @@ Partial Class CreatePWO
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(552, 29)
+        Me.Label6.Location = New System.Drawing.Point(548, 53)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(73, 20)
         Me.Label6.TabIndex = 5443
@@ -227,7 +227,7 @@ Partial Class CreatePWO
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(178, 25)
+        Me.Label7.Location = New System.Drawing.Point(174, 49)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(36, 20)
         Me.Label7.TabIndex = 5444
@@ -235,7 +235,7 @@ Partial Class CreatePWO
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(220, 22)
+        Me.TextBox1.Location = New System.Drawing.Point(216, 46)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(91, 26)
         Me.TextBox1.TabIndex = 5445
@@ -264,9 +264,9 @@ Partial Class CreatePWO
         Me.GroupBox2.Controls.Add(Me.Button2)
         Me.GroupBox2.Controls.Add(Me.CheckBox1)
         Me.GroupBox2.Controls.Add(Me.GroupBox1)
-        Me.GroupBox2.Location = New System.Drawing.Point(1178, 590)
+        Me.GroupBox2.Location = New System.Drawing.Point(1154, 590)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(443, 156)
+        Me.GroupBox2.Size = New System.Drawing.Size(467, 156)
         Me.GroupBox2.TabIndex = 5448
         Me.GroupBox2.TabStop = False
         '
