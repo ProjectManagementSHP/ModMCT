@@ -9,6 +9,7 @@ Module Variables
     Public conex As New SqlConnection(strconexion) 'Graficas de MLF 
     Public conexOne As New SqlConnection(strconexion) 'Graficas de Planeacion
     Public conexNotify As New SqlConnection(strconexion) 'notificaciones
+    Public conexMensajeCortos As New SqlConnection(strconexion) 'notificaciones
     Public tb As New DataTable
     Public cmd As SqlCommand
     Public dr As SqlDataReader
@@ -20,7 +21,7 @@ Module Variables
     Public campocortesolicitud As String
     Public CWO As String, ver As String
     Public WIP As String, PN As String
-    Public ColaGrafica As Boolean = False, PNPassDue As Boolean = False
+    Public ColaGrafica As Boolean = False
     Public op, sort, p, flag, maq, flagActualizacion, cola As Integer
     Public userID As String
     Public host As String = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString
