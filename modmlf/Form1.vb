@@ -97,6 +97,8 @@ Public Class Principal
             Button2.BackColor = Color.Bisque
             btnCortosPN.Visible = False
             cargadatosCompras()
+            Timer3.Enabled = True
+            Timer3.Interval = 1800000
         ElseIf opcion = 6 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -2070,49 +2072,92 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Try
             Dim consulta As String = ""
             Dim commm As SqlCommand
-            consulta = $"select Count(bw.PN)
-from tblBOMWIP bw
-INNER JOIN tblItemsQB qb on bw.PN=qb.PN
-where bw.ProcFDisMat is not null and (
-    Convert(date,bw.ProcFDisMat) <= Convert(date,GETDATE()) and qb.QtyOnHand = 0
-)"
-            conex.Close()
-            commm = New SqlCommand(consulta, conex)
+            consulta = $"select distinct bw.PN,
+             (
+             select 
+             case when bw.PN like 'C%' or bw.PN like 'W%'  
+             then (
+             select SUM(WireBalance * LengthWire) * 0.0032808 AS Qty 
+             From tblWipDet where WireBalance > 0 AND Wire = bw.PN AND 
+             wip in (
+             select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+             (ConfirmacionAlm='OnHold')
+             ))
+             when bw.PN like 'T%'
+             then (SELECT SUM(TABalance) As Qty FROM tblWipDet where TABalance > 0 AND TermA = bw.PN AND
+             wip in (
+             select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+             (ConfirmacionAlm='OnHold'))
+             ) + (SELECT SUM(TBBalance) As Qty FROM tblWipDet where TBBalance > 0 AND TermB = bw.PN AND
+             wip in (
+             select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+             (ConfirmacionAlm='OnHold'))
+             ) end)
+             [QtyRequerida],
+             qb.QtyOnHand,bw.ProcFDisMat
+             from tblBOMWIP bw
+             INNER JOIN tblItemsQB qb on bw.PN=qb.PN
+             where 
+             bw.PN in (
+             SELECT tblBOMCWO.PN 
+             FROM tblBOMCWO 
+             WHERE 
+             tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+             (ConfirmacionAlm='OnHold')) and tblBOMCWO.Hold=1
+             ) and
+             bw.ProcFDisMat is not null and (
+                 Convert(date,bw.ProcFDisMat) <= Convert(date,GETDATE())
+             )
+             order by bw.ProcFDisMat desc"
+            conexMensajeCortos.Close()
+            commm = New SqlCommand(consulta, conexMensajeCortos)
+            Dim ReadData As SqlDataReader
+            Dim aTableReader As DataTable = New DataTable
             commm.CommandType = CommandType.Text
-            conex.Open()
-            If CInt(commm.ExecuteScalar()) > 0 Then
-                conex.Close()
+            conexMensajeCortos.Open()
+            ReadData = commm.ExecuteReader
+            aTableReader.Load((ReadData))
+            conexMensajeCortos.Close()
+            If aTableReader.Rows.Count > 0 Then
+                For ii = 0 To aTableReader.Rows.Count - 1
+                    If Not CInt(aTableReader.Rows(ii).Item("QtyRequerida").ToString) > CInt(aTableReader.Rows(ii).Item("QtyOnHand").ToString) Then
+                        aTableReader.Rows(ii).Delete()
+                    End If
+                Next
+            End If
+            aTableReader.AcceptChanges()
+            If aTableReader.Rows.Count > 0 Then
                 With MensajePN
                     With .dgvNumerosParte
-                        .DataSource = GetTable("select bw.PN,qb.QtyOnHand,bw.ProcFDisMat,bw.NotasCompras,qb.QtyOnOrder,bw.WIP
-from tblBOMWIP bw
-INNER JOIN tblItemsQB qb on bw.PN=qb.PN
-where bw.ProcFDisMat is not null and (
-    Convert(date,bw.ProcFDisMat) <= Convert(date,GETDATE()) and qb.QtyOnHand = 0
-)
-order by bw.ProcFDisMat desc")
+                        .DataSource = aTableReader
                         .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                         .AutoResizeColumns()
                         .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                        .Columns("ProcFDisMat").DefaultCellStyle.Format = ("dd-MMM-yy")
                         .ClearSelection()
                     End With
                     .Label3.Text = "Items: " + .dgvNumerosParte.Rows.Count.ToString
                     .ShowDialog()
-                    PNPassDue = True
+                    .BringToFront()
                 End With
-            Else
-                PNPassDue = False
             End If
-            conex.Close()
+            conexMensajeCortos.Close()
         Catch ex As Exception
-            conex.Close()
+            conexMensajeCortos.Close()
             cnn.Close()
         End Try
     End Sub
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
         Timer2.Stop()
         cargachart()
-        If PNPassDue = False Then FechasIncumplidas()
         Timer2.Enabled = True
         Timer2.Interval = 60000
     End Sub
@@ -2690,6 +2735,12 @@ where a.PN='" + PN + "' and c.Status='OPEN' and (b.WSort < 30 or c.wSort < 30) a
             DesviacionesCheck()
         End If
         Cursor.Current = Cursors.Default
+    End Sub
+    Private Sub Timer3_Tick(sender As Object, e As EventArgs) Handles Timer3.Tick
+        Timer3.Stop()
+        FechasIncumplidas()
+        Timer3.Enabled = True
+        Timer3.Interval = 1800000
     End Sub
     Private Sub dgvMatSinStockCompras_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvMatSinStockCompras.CellMouseDown
         If opcion = 2 Then

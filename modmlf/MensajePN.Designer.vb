@@ -42,7 +42,7 @@ Partial Class MensajePN
         Me.dgvNumerosParte.BackgroundColor = System.Drawing.SystemColors.ControlLightLight
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -59,13 +59,12 @@ Partial Class MensajePN
         Me.dgvNumerosParte.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvNumerosParte.EnableHeadersVisualStyles = False
         Me.dgvNumerosParte.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvNumerosParte.Location = New System.Drawing.Point(11, 102)
-        Me.dgvNumerosParte.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvNumerosParte.Location = New System.Drawing.Point(16, 157)
         Me.dgvNumerosParte.Name = "dgvNumerosParte"
         Me.dgvNumerosParte.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial Unicode MS", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -74,7 +73,7 @@ Partial Class MensajePN
         Me.dgvNumerosParte.RowHeadersVisible = False
         Me.dgvNumerosParte.RowHeadersWidth = 51
         Me.dgvNumerosParte.RowTemplate.Height = 24
-        Me.dgvNumerosParte.Size = New System.Drawing.Size(477, 139)
+        Me.dgvNumerosParte.Size = New System.Drawing.Size(716, 214)
         Me.dgvNumerosParte.TabIndex = 5436
         '
         'Button2
@@ -84,10 +83,9 @@ Partial Class MensajePN
         Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Arial", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(225, 254)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button2.Location = New System.Drawing.Point(338, 391)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(54, 36)
+        Me.Button2.Size = New System.Drawing.Size(81, 55)
         Me.Button2.TabIndex = 5462
         Me.Button2.Text = "Ok"
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -99,10 +97,9 @@ Partial Class MensajePN
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(372, 84)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label3.Location = New System.Drawing.Point(558, 129)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(13, 16)
+        Me.Label3.Size = New System.Drawing.Size(17, 24)
         Me.Label3.TabIndex = 5463
         Me.Label3.Text = "-"
         '
@@ -110,27 +107,28 @@ Partial Class MensajePN
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(25, 20)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(38, 31)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(417, 36)
+        Me.Label1.Size = New System.Drawing.Size(1022, 81)
         Me.Label1.TabIndex = 5464
-        Me.Label1.Text = "Lista de materiales con fecha de materiales proporcionada" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "vencida sin stock, ver" &
-    "ifica." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Label1.Text = "Lista de materiales con fecha de compras vencida y sin stock, " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "verifica y asigna" &
+    " una nueva fecha." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'MensajePN
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(499, 300)
+        Me.ClientSize = New System.Drawing.Size(748, 462)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.dgvNumerosParte)
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "MensajePN"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Fecha Incumplida"
         CType(Me.dgvNumerosParte, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
