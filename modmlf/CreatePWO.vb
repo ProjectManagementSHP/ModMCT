@@ -159,7 +159,7 @@ Public Class CreatePWO
     End Sub
     Private Sub SelectedTermProcess(PN As String)
         Try
-            Dim aConsulta As String = "select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,0 [Test],'' [Celda],WireID from tblWipDet" &
+            Dim aConsulta As String = "select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,0 [Test],'' [Celda],WireID,MaqA,MaqB from tblWipDet" &
                                       $" where ((TermA = '{PN}' and MaqA='MM') or (TermB='{PN}' and MaqB='MM')) and" &
                                       $" WIP in (select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) 
                                       and ((PWOA is null and MaqA='MM') or (PWOB is null and MaqB='MM'))" &
@@ -349,5 +349,17 @@ Public Class CreatePWO
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
 
+    End Sub
+    Private Sub Button3_MouseHover(sender As Object, e As EventArgs) Handles Button3.MouseHover
+        Cursor.Current = Cursors.Hand
+    End Sub
+    Private Sub Button3_MouseLeave(sender As Object, e As EventArgs) Handles Button3.MouseLeave
+        Cursor.Current = Cursors.Default
+    End Sub
+    Private Sub Button1_MouseHover(sender As Object, e As EventArgs) Handles Button1.MouseHover
+        Cursor.Current = Cursors.Hand
+    End Sub
+    Private Sub Button1_MouseLeave(sender As Object, e As EventArgs) Handles Button1.MouseLeave
+        Cursor.Current = Cursors.Default
     End Sub
 End Class

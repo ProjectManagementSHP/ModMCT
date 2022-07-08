@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class CreatePWO
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class CreatePWO
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -141,12 +141,14 @@ Partial Class CreatePWO
         '
         'Button1
         '
+        Me.Button1.BackColor = System.Drawing.Color.LightBlue
+        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Location = New System.Drawing.Point(26, 42)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(122, 31)
         Me.Button1.TabIndex = 5438
         Me.Button1.Text = "OO MP"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'CheckBox1
         '
@@ -160,12 +162,14 @@ Partial Class CreatePWO
         '
         'Button2
         '
+        Me.Button2.BackColor = System.Drawing.Color.LightBlue
+        Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button2.Location = New System.Drawing.Point(45, 39)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(122, 32)
         Me.Button2.TabIndex = 5440
         Me.Button2.Text = "Create PWO"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.Button2.UseVisualStyleBackColor = False
         '
         'GroupBox1
         '
@@ -218,7 +222,7 @@ Partial Class CreatePWO
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(548, 53)
+        Me.Label6.Location = New System.Drawing.Point(536, 69)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(73, 20)
         Me.Label6.TabIndex = 5443
@@ -251,12 +255,16 @@ Partial Class CreatePWO
         '
         'Button3
         '
+        Me.Button3.BackColor = System.Drawing.Color.Firebrick
+        Me.Button3.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Button3.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.Button3.Location = New System.Drawing.Point(18, 498)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(122, 53)
+        Me.Button3.Size = New System.Drawing.Size(199, 54)
         Me.Button3.TabIndex = 5447
         Me.Button3.Text = "Remove Selection"
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.Button3.UseVisualStyleBackColor = False
         Me.Button3.Visible = False
         '
         'GroupBox2
