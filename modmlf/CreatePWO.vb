@@ -132,9 +132,11 @@ Public Class CreatePWO
         from tblWipDet where WIP in (
         select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}
         ) and MaqB='MM' and TermB like 'T%' and PWOB is null)"
-            Dim cmd As SqlCommand = New SqlCommand(consulta, cnn)
             Dim dr As SqlDataReader
-            Dim aTable As DataTable = New DataTable
+            Dim aTable As New DataTable
+            Dim cmd As SqlCommand = New SqlCommand(consulta, cnn) With {
+                .CommandText = CommandType.Text
+            }
             cnn.Open()
             dr = cmd.ExecuteReader
             aTable.Load(dr)
@@ -210,7 +212,7 @@ Public Class CreatePWO
         End Try
     End Sub
     Private MergedObjTables As Func(Of DataTable, DataGridView, DataTable) = Function(x, y)
-                                                                                 Dim dt As New DataTable
+                                                                                 Dim dt As New DataTable 
                                                                                  dt = (DirectCast(y.DataSource, DataTable))
                                                                                  dt.Merge(x)
                                                                                  Return dt
@@ -237,12 +239,12 @@ Public Class CreatePWO
     Private Sub FillColorGrid()
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
             Dim auxRow As Integer = 0
+            Dim First = (From d In InfoTablas Order By d.Rows Ascending Select d.Rows).First()
             InfoTablas.ForEach(
                 Function(Term)
                     Dim CountInteraction As Integer = 0
                     For Each row As DataGridViewRow In dgvDetalleTerminales.Rows
                         CountInteraction += 1
-                        Dim First = (From d In InfoTablas Order By d.Rows Ascending Select d.Rows).First()
                         If First = Term.Rows Then
                             auxRow = Term.Rows
                             If CountInteraction >= 1 And CountInteraction <= Term.Rows Then
@@ -347,7 +349,7 @@ Public Class CreatePWO
         FillColorGrid()
         Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
     End Sub
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
 
     End Sub
     Private Sub Button3_MouseHover(sender As Object, e As EventArgs) Handles Button3.MouseHover
