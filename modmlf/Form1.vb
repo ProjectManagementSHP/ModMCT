@@ -1699,20 +1699,22 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                 If FProm = "" Then
                     FProm = Convert.ToDateTime(Now)
                 End If
-                query = $"select IsNull({Dept},'') from tblWIP where WIP = '{WIP}'"
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
+                Dim aQuery As String = $"select IsNull({Dept},'') from tblWIP where WIP = '{WIP}'"
+                Dim aCmd As New SqlCommand(aQuery, cnn) With {
+                    .CommandType = CommandType.Text
+                }
                 cnn.Open()
-                If IsDBNull(cmd.ExecuteScalar()) Or CStr(cmd.ExecuteScalar) = "" Then
-                    query = $"update tblWIP set {Dept} = '{notes}', {FDept}='{FProm}' where WIP='{WIP}'"
+                If IsDBNull(aCmd.ExecuteScalar()) Or CStr(aCmd.ExecuteScalar) = "" Then
+                    aQuery = $"update tblWIP set {Dept} = '{notes}', {FDept}='{FProm}' where WIP='{WIP}'"
                 Else
-                    query = $"update tblWIP set {Dept} = {Dept} + '{notes}', {FDept}='{FProm}' where WIP='{WIP}'"
+                    aQuery = $"update tblWIP set {Dept} = {Dept} + '{notes}', {FDept}='{FProm}' where WIP='{WIP}'"
                 End If
                 cnn.Close()
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
+                aCmd = New SqlCommand(aQuery, cnn) With {
+                    .CommandType = CommandType.Text
+                }
                 cnn.Open()
-                cmd.ExecuteNonQuery()
+                aCmd.ExecuteNonQuery()
                 cnn.Close()
             End If
         Catch ex As Exception
