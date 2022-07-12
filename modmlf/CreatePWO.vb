@@ -132,11 +132,12 @@ Public Class CreatePWO
         from tblWipDet where WIP in (
         select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}
         ) and MaqB='MM' and TermB like 'T%' and PWOB is null)"
+            Dim len = consulta.Length
             Dim dr As SqlDataReader
             Dim aTable As New DataTable
-            Dim cmd As SqlCommand = New SqlCommand(consulta, cnn) With {
-                .CommandText = CommandType.Text
-            }
+            Dim cmd As SqlCommand = New SqlCommand(consulta, cnn) 'With {
+            '.CommandText = CommandType.Text
+            '}
             cnn.Open()
             dr = cmd.ExecuteReader
             aTable.Load(dr)
@@ -211,6 +212,92 @@ Public Class CreatePWO
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
+    Private Function GetSerialNewPWO(PrevPWO As String)
+        Dim Numero, Ascii1, Ascii2, Ascii3, Ascii4 As Integer
+        Dim NumeroString, Letras, Letra1, Letra2, Letra3, Letra4, NewSerial, TnewSerial As String
+        NewSerial = ""
+        TnewSerial = ""
+        PrevPWO = Mid(PrevPWO, 5)
+        Try
+            If PrevPWO <> "" Then
+                Letras = Microsoft.VisualBasic.Left(PrevPWO, 4)
+                Numero = Convert.ToInt64(Microsoft.VisualBasic.Right(PrevPWO, 9))
+                If Numero < 999999999 Then
+                    Numero += 1
+                    NumeroString = Numero.ToString
+                    If NumeroString.Length < 9 Then
+                        For count As Integer = NumeroString.Length To 8
+                            NumeroString = "0" + NumeroString
+                        Next
+                    End If
+                    NewSerial = Letras + NumeroString
+                ElseIf Numero = 999999999 Then
+                    NumeroString = "000000001"
+                    Letra1 = Mid(Letras, 1, 1)
+                    Letra2 = Mid(Letras, 2, 1)
+                    Letra3 = Mid(Letras, 3, 1)
+                    Letra4 = Mid(Letras, 4, 1)
+                    Ascii1 = Asc(Letra1)
+                    Ascii2 = Asc(Letra2)
+                    Ascii3 = Asc(Letra3)
+                    Ascii4 = Asc(Letra4)
+                    If Ascii4 < 90 Then
+                        Ascii4 = Ascii4 + 1
+                    ElseIf Ascii4 = 90 And Ascii3 < 90 Then
+                        Ascii4 = 65
+                        Ascii3 = Ascii3 + 1
+                    ElseIf Ascii4 = 90 And Ascii3 = 90 And Ascii2 < 90 Then
+                        Ascii4 = 65
+                        Ascii3 = 65
+                        Ascii2 = Ascii2 + 1
+                    ElseIf Ascii4 = 90 And Ascii3 = 90 And Ascii2 = 90 And Ascii1 < 90 Then
+                        Ascii4 = 65
+                        Ascii3 = 65
+                        Ascii2 = 65
+                        Ascii1 = Ascii1 + 1
+                    ElseIf Ascii4 = 90 And Ascii3 = 90 And Ascii2 = 90 And Ascii1 = 90 Then
+                        Ascii4 = 65
+                        Ascii3 = 65
+                        Ascii2 = 65
+                        Ascii1 = 65
+                    End If
+                    Letra1 = Convert.ToChar(Ascii1).ToString
+                    Letra2 = Convert.ToChar(Ascii2).ToString
+                    Letra3 = Convert.ToChar(Ascii3).ToString
+                    Letra4 = Convert.ToChar(Ascii4).ToString
+                    Letras = Letra1 + Letra2 + Letra3 + Letra4
+                    NewSerial = Letras + NumeroString
+                End If
+            ElseIf PrevPWO = "" Then
+                Letras = "AAAA"
+                NumeroString = "00000000" + Numero.ToString
+                NewSerial = Letras + NumeroString
+            End If
+            TnewSerial = "PWO-" + NewSerial
+            Return TnewSerial
+        Catch ex As Exception
+            MessageBox.Show(ex.Message + " Genera Serial Function", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return Nothing
+        End Try
+    End Function
+    Private ReadOnly Property SelectIDPWO
+        Get
+            Try
+                Dim cmd As New SqlCommand("select MAX(PWO) from tblPWO", cnn) With {
+                .CommandType = CommandType.Text
+                }
+                cnn.Open()
+                Return cmd.ExecuteScalar()
+                cnn.Close()
+            Catch ex As Exception
+                cnn.Close()
+                Return Nothing
+            Finally
+                cnn.Close()
+            End Try
+        End Get
+    End Property
+
     Private MergedObjTables As Func(Of DataTable, DataGridView, DataTable) = Function(x, y)
                                                                                  Dim dt As New DataTable 
                                                                                  dt = (DirectCast(y.DataSource, DataTable))
@@ -350,7 +437,11 @@ Public Class CreatePWO
         Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
-
+        If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
+            MessageBox.Show(GetSerialNewPWO(SelectIDPWO.ToString))
+        Else
+            MessageBox.Show("Seleccione primero una terminal para poder crear PWO.")
+        End If
     End Sub
     Private Sub Button3_MouseHover(sender As Object, e As EventArgs) Handles Button3.MouseHover
         Cursor.Current = Cursors.Hand
