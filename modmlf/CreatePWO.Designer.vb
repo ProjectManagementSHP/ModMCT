@@ -46,6 +46,7 @@ Partial Class CreatePWO
         Me.Button3 = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         CType(Me.dgvTerminalesXProcesar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetalleTerminales, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -280,6 +281,7 @@ Partial Class CreatePWO
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Label8)
         Me.GroupBox3.Controls.Add(Me.dgvDetalleTerminales)
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.Button3)
@@ -289,6 +291,15 @@ Partial Class CreatePWO
         Me.GroupBox3.TabIndex = 5449
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Details:"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(223, 506)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(155, 40)
+        Me.Label8.TabIndex = 5448
+        Me.Label8.Text = "Number of terminals " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "selected:"
         '
         'CreatePWO
         '
@@ -337,4 +348,5 @@ Partial Class CreatePWO
     Friend WithEvents Button3 As Button
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents Label8 As Label
 End Class

@@ -160,7 +160,7 @@ Public Class CreatePWO
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
-    Private Sub SelectedTermProcess(PN As String)
+    Private Sub SelectedTermProcess(PN As String, Cell As String)
         Try
             Dim aConsulta As String = "select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,0 [Test],'' [Celda],WireID,MaqA,MaqB from tblWipDet" &
                                       $" where ((TermA = '{PN}' and MaqA='MM') or (TermB='{PN}' and MaqB='MM')) and" &
@@ -186,7 +186,7 @@ Public Class CreatePWO
                             .ClearSelection()
                             SumQtyAndTest(tbAux)
                             Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
-                            FillListInfoTablas(PN, last + aTable.Rows.Count)
+                            FillListInfoTablas(PN, last + aTable.Rows.Count, Cell)
                         End With
                     End If
                 Else
@@ -198,7 +198,7 @@ Public Class CreatePWO
                         .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                         .ClearSelection()
                         SumQtyAndTest(aTable)
-                        FillListInfoTablas(PN, aTable.Rows.Count)
+                        FillListInfoTablas(PN, aTable.Rows.Count, Cell)
                     End With
                 End If
             Else
@@ -207,6 +207,8 @@ Public Class CreatePWO
             DisableButton()
             FillColorGrid()
             Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
+            Label8.Text = "Number of terminals 
+selected: " + InfoTablas.Count.ToString
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
@@ -316,13 +318,14 @@ Public Class CreatePWO
                                                         End Try
                                                         Return Nothing
                                                     End Function
-    Private FillListInfoTablas As Action(Of String, Integer) = Function(b, c)
-                                                                   Dim oCreate As ChargeInfo = New ChargeInfo
-                                                                   oCreate.PN = b
-                                                                   oCreate.Rows = c
-                                                                   InfoTablas.Add(oCreate)
-                                                                   Return Nothing
-                                                               End Function
+    Private FillListInfoTablas As Action(Of String, Integer, String) = Function(b, c, d)
+                                                                           Dim oCreate As ChargeInfo = New ChargeInfo
+                                                                           oCreate.PN = b
+                                                                           oCreate.Rows = c
+                                                                           oCreate.Cell = d
+                                                                           InfoTablas.Add(oCreate)
+                                                                           Return Nothing
+                                                                       End Function
     Private Sub FillColorGrid()
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
             Dim auxRow As Integer = 0
@@ -402,10 +405,11 @@ Public Class CreatePWO
         If e.RowIndex >= 0 Then
             Cursor.Current = Cursors.WaitCursor
             Dim auxTerm As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString
+            Dim auxCell As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Celda").Value.ToString
             If (InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(auxTerm)).Count) > 0 Then
                 MessageBox.Show($"Esta terminal: {auxTerm} ya esta en la lista en por procesar, no es posible agregarla de nuevo.")
             Else
-                SelectedTermProcess(auxTerm)
+                SelectedTermProcess(auxTerm, auxCell)
             End If
             Cursor.Current = Cursors.Default
         End If
@@ -435,6 +439,8 @@ Public Class CreatePWO
         DisableButton()
         FillColorGrid()
         Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
+        Label8.Text = "Number of terminals 
+selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
