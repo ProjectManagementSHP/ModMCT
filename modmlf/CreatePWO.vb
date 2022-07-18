@@ -12,10 +12,12 @@ Public Class CreatePWO
                 InfoTablas.Clear()
                 If TextBox1.Text <> "" Then TextBox1.Clear()
                 ChargeGrid()
+                CleanningState()
             End If
         Else
             If TextBox1.Text <> "" Then TextBox1.Clear()
             ChargeGrid()
+            CleanningState()
         End If
         Cursor.Current = Cursors.Default
     End Sub
@@ -28,7 +30,16 @@ Public Class CreatePWO
         (det.TermB=tblWipDet.TermA and MaqB='MM'and PWOB is null)) and wip in (
         select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 
         {If(AU = 0, " ", $" and AU={AU}")})
-        ) [Qty],0 [Test], (
+        ) [Qty],((
+		(
+        select SUM(TABalance) + SUM(TBBalance) from tblWipDet det
+        where ((det.TermA = tblWipDet.TermA and MaqA='MM' and PWOA is null) or 
+        (det.TermB=tblWipDet.TermA and MaqB='MM'and PWOB is null)) and wip in (
+        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30
+		{If(AU = 0, " ", $" and AU={AU}")}
+        )
+        ) * 3 + 12) / 60
+		) [Test], (
         select case when (select COUNT(AplPn)
         from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
         on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') > 0
@@ -84,7 +95,15 @@ Public Class CreatePWO
         (det.TermB=tblWipDet.TermB and MaqB='MM' and PWOB is null)) and wip in (
         select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 
         {If(AU = 0, " ", $" and AU={AU}")})
-        ) [Qty],0 [Test], (
+        ) [Qty],(
+		((
+        select SUM(TABalance) + SUM(TBBalance) from tblWipDet det 
+        where ((det.TermA = tblWipDet.TermB and MaqA='MM' and PWOA is null) or 
+        (det.TermB=tblWipDet.TermB and MaqB='MM' and PWOB is null)) and wip in (
+        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 
+        {If(AU = 0, " ", $" and AU={AU}")}
+        )) * 3 + 12) / 60
+		) [Test], (
         select case when (select COUNT(AplPn)
         from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
         on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') > 0
@@ -135,9 +154,7 @@ Public Class CreatePWO
             Dim len = consulta.Length
             Dim dr As SqlDataReader
             Dim aTable As New DataTable
-            Dim cmd As SqlCommand = New SqlCommand(consulta, cnn) 'With {
-            '.CommandText = CommandType.Text
-            '}
+            Dim cmd As SqlCommand = New SqlCommand(consulta, cnn)
             cnn.Open()
             dr = cmd.ExecuteReader
             aTable.Load(dr)
@@ -160,9 +177,19 @@ Public Class CreatePWO
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
-    Private Sub SelectedTermProcess(PN As String, Cell As String)
+    Private Sub CleanningState()
+        dgvPNTermsProcess.DataSource = Nothing
+        Label8.Text = "Number of terminals 
+selected: " + InfoTablas.Count.ToString
+        Label5.Text = "Records:"
+        Label10.Text = "-"
+        Label9.Text = "-"
+        Label3.Text = "-"
+        Label4.Text = "-"
+    End Sub
+    Private Sub SelectedTermProcess(PN As String, Cell As String, Balance As Integer)
         Try
-            Dim aConsulta As String = "select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,0 [Test],'' [Celda],WireID,MaqA,MaqB from tblWipDet" &
+            Dim aConsulta As String = "select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,((TABalance + TBBalance) * 3 + 12) / 60 [Test],'' [Celda],WireID,MaqA,MaqB from tblWipDet" &
                                       $" where ((TermA = '{PN}' and MaqA='MM') or (TermB='{PN}' and MaqB='MM')) and" &
                                       $" WIP in (select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) 
                                       and ((PWOA is null and MaqA='MM') or (PWOB is null and MaqB='MM'))" &
@@ -186,7 +213,7 @@ Public Class CreatePWO
                             .ClearSelection()
                             SumQtyAndTest(tbAux)
                             Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
-                            FillListInfoTablas(PN, last + aTable.Rows.Count, Cell)
+                            FillListInfoTablas(PN, last + aTable.Rows.Count, Cell, Balance)
                         End With
                     End If
                 Else
@@ -198,7 +225,7 @@ Public Class CreatePWO
                         .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                         .ClearSelection()
                         SumQtyAndTest(aTable)
-                        FillListInfoTablas(PN, aTable.Rows.Count, Cell)
+                        FillListInfoTablas(PN, aTable.Rows.Count, Cell, Balance)
                     End With
                 End If
             Else
@@ -206,11 +233,31 @@ Public Class CreatePWO
             End If
             DisableButton()
             FillColorGrid()
+            ChargeSpecsTerms()
             Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
             Label8.Text = "Number of terminals 
 selected: " + InfoTablas.Count.ToString
         Catch ex As Exception
             cnn.Close()
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+        End Try
+    End Sub
+    Private Sub ChargeSpecsTerms()
+        Try
+            With dgvPNTermsProcess
+                Dim auxList = InfoTablas.[Select](Function(i) New With {i.PN, i.Balance, i.RunTime
+                                                                        }).ToList()
+                .DataSource = auxList
+                .AutoResizeColumns()
+                .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .ClearSelection()
+                Dim SumRunTime = InfoTablas.[Select](Function(i) i.RunTime).Sum(Function(a) a)
+                Dim SetupTime As Integer = InfoTablas.Count * 12
+                Label10.Text = SumRunTime
+                Label9.Text = SetupTime
+                Label4.Text = SumRunTime + SetupTime
+            End With
+        Catch ex As Exception
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
@@ -318,14 +365,16 @@ selected: " + InfoTablas.Count.ToString
                                                         End Try
                                                         Return Nothing
                                                     End Function
-    Private FillListInfoTablas As Action(Of String, Integer, String) = Function(b, c, d)
-                                                                           Dim oCreate As ChargeInfo = New ChargeInfo
-                                                                           oCreate.PN = b
-                                                                           oCreate.Rows = c
-                                                                           oCreate.Cell = d
-                                                                           InfoTablas.Add(oCreate)
-                                                                           Return Nothing
-                                                                       End Function
+    Private FillListInfoTablas As Action(Of String, Integer, String, Integer) = Function(b, c, d, e)
+                                                                                    Dim oCreate As ChargeInfo = New ChargeInfo
+                                                                                    oCreate.PN = b
+                                                                                    oCreate.Rows = c
+                                                                                    oCreate.Cell = d
+                                                                                    oCreate.Balance = e
+                                                                                    oCreate.RunTime = e * 3 / 60
+                                                                                    InfoTablas.Add(oCreate)
+                                                                                    Return Nothing
+                                                                                End Function
     Private Sub FillColorGrid()
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
             Dim auxRow As Integer = 0
@@ -390,9 +439,11 @@ selected: " + InfoTablas.Count.ToString
                         dgvDetalleTerminales.DataSource = Nothing
                         InfoTablas.Clear()
                         ChargeGrid()
+                        CleanningState()
                     End If
                 Else
                     ChargeGrid()
+                    CleanningState()
                 End If
             Else
                 MessageBox.Show("El AU ingresado no es valido.")
@@ -406,10 +457,11 @@ selected: " + InfoTablas.Count.ToString
             Cursor.Current = Cursors.WaitCursor
             Dim auxTerm As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString
             Dim auxCell As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Celda").Value.ToString
+            Dim auxBalance As Integer = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Qty").Value.ToString
             If (InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(auxTerm)).Count) > 0 Then
                 MessageBox.Show($"Esta terminal: {auxTerm} ya esta en la lista en por procesar, no es posible agregarla de nuevo.")
             Else
-                SelectedTermProcess(auxTerm, auxCell)
+                SelectedTermProcess(auxTerm, auxCell, auxBalance)
             End If
             Cursor.Current = Cursors.Default
         End If
@@ -438,6 +490,7 @@ selected: " + InfoTablas.Count.ToString
         End With
         DisableButton()
         FillColorGrid()
+        ChargeSpecsTerms()
         Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
         Label8.Text = "Number of terminals 
 selected: " + InfoTablas.Count.ToString
