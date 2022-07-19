@@ -1,7 +1,9 @@
 ﻿Imports System.Data.SqlClient
 Public Class AutomaticSort
+    Inherits CreateWorkOrder
     Public conexion As New SqlConnection(strconexion)
     Public Maq As Integer
+    Public Cell As String
     Public NewSort As Integer
     Public OldSort As Integer
     Public LongitudArray As Integer
@@ -21,6 +23,9 @@ Public Class AutomaticSort
     Public Sub New(Maquina As Integer, oldsort As Integer)
         Me.Maq = Maquina
         Me.OldSort = oldsort
+    End Sub
+    Public Sub New(Cell As String)
+        Me.Cell = Cell
     End Sub
     Function Compare() As Boolean
         If Me.NewSort > 0 Then
@@ -172,10 +177,25 @@ Public Class AutomaticSort
     Function GetSort() As Integer
         Try
             Dim value As Integer, query As String = ""
-            query = "select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblCWO where Maq=@Maq and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
+            query = $"select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblCWO where Maq={Maq} and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
             Dim cmd As SqlCommand = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add("@Maq", SqlDbType.Int).Value = Maq
+            'cmd.Parameters.Add("@Maq", SqlDbType.Int).Value = Maq
+            cnn.Open()
+            value = cmd.ExecuteScalar
+            cnn.Close()
+            Return value
+        Catch ex As Exception
+            cnn.Close()
+            Return 0
+        End Try
+    End Function
+    Function GetSortPWO() As Integer
+        Try
+            Dim value As Integer, query As String = ""
+            query = $"select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblPWO where Cell={Cell} and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
+            Dim cmd As SqlCommand = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
             cnn.Open()
             value = cmd.ExecuteScalar
             cnn.Close()
@@ -188,6 +208,18 @@ Public Class AutomaticSort
     Sub ReOrderSort()
         Try
             Using cmd As New SqlCommand("update tblCWO set Id= Id - 1 where Maq=" + Maq.ToString + " and Status='OPEN' and Id > 0 and Id > " + OldSort.ToString + "", cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                cmd.ExecuteNonQuery()
+                cnn.Close()
+            End Using
+        Catch ex As Exception
+            cnn.Close()
+        End Try
+    End Sub
+    Sub PushFirstPlacePWO()
+        Try
+            Using cmd As New SqlCommand("update tblPWO set Id= Id + 1 where Cell=" + Cell.ToString + " and Status='OPEN' and Id > 0 ", cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
                 cmd.ExecuteNonQuery()
