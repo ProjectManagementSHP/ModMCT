@@ -107,78 +107,7 @@ Public Class CreateWorkOrder
     End Sub
     Private Sub CreateBOMWorkOrder()
         Try
-            Dim ObAux As ChargeInfo
-            Dim lst As List(Of ChargeInfo) = New List(Of ChargeInfo)
-            Dim WIP As String = ""
-            Dim auxBalanceForWIP As Integer = 0
-            Dim auxTerm As String = ""
-            Dim auxRow As Integer = 0
-            Dim First = (From d In _ListForProcess Order By d.Rows Ascending Select d.Rows).First()
-            _ListForProcess.ForEach(
-                Function(Term)
-                    For ii = 0 To GridDemon.Rows.Count - 1
-                        If First = Term.Rows Then
-                            auxRow = Term.Rows
-                            If ii = 0 Then
-                                WIP = GridDemon.Rows(ii).Cells("WIP").Value.ToString
-                                If Term.PN.Equals(GridDemon.Rows(ii).Cells("TermA").Value.ToString) And GridDemon.Rows(ii).Cells("MaqA").Value.ToString = "MM" Then
-                                    auxBalanceForWIP += CInt(GridDemon.Rows(ii).Cells("TABalance").Value.ToString)
-                                End If
-                                If Term.PN.Equals(GridDemon.Rows(ii).Cells("TermB").Value.ToString) And GridDemon.Rows(ii).Cells("MaqA").Value.ToString = "MM" Then
-                                    auxBalanceForWIP += CInt(GridDemon.Rows(ii).Cells("TBBalance").Value.ToString)
-                                End If
-                            Else
-                                If WIP = GridDemon.Rows(ii).Cells("WIP").Value.ToString Then
-                                    If Term.PN.Equals(GridDemon.Rows(ii).Cells("TermA").Value.ToString) And GridDemon.Rows(ii).Cells("MaqA").Value.ToString = "MM" Then
-                                        auxBalanceForWIP += CInt(GridDemon.Rows(ii).Cells("TABalance").Value.ToString)
-                                    End If
-                                    If Term.PN.Equals(GridDemon.Rows(ii).Cells("TermB").Value.ToString) And GridDemon.Rows(ii).Cells("MaqA").Value.ToString = "MM" Then
-                                        auxBalanceForWIP += CInt(GridDemon.Rows(ii).Cells("TBBalance").Value.ToString)
-                                    End If
-                                Else
-                                    ObAux = New ChargeInfo
-                                    With ObAux
-                                        .PN = Term.PN
-                                        .Balance = auxBalanceForWIP
-                                        .WIP = WIP
-                                    End With
-                                    lst.Add(ObAux)
-                                    WIP = GridDemon.Rows(ii).Cells("WIP").Value.ToString
-                                    auxBalanceForWIP = 0
-                                    If Term.PN.Equals(GridDemon.Rows(ii).Cells("TermA").Value.ToString) And GridDemon.Rows(ii).Cells("MaqA").Value.ToString = "MM" Then
-                                        auxBalanceForWIP += CInt(GridDemon.Rows(ii).Cells("TABalance").Value.ToString)
-                                    End If
-                                    If Term.PN.Equals(GridDemon.Rows(ii).Cells("TermB").Value.ToString) And GridDemon.Rows(ii).Cells("MaqA").Value.ToString = "MM" Then
-                                        auxBalanceForWIP += CInt(GridDemon.Rows(ii).Cells("TBBalance").Value.ToString)
-                                    End If
-                                End If
-                            End If
-                        ElseIf auxRow < Term.Rows Then
 
-                        End If
-                        If lst Is Nothing Then
-                            ObAux = New ChargeInfo
-                            With ObAux
-                                .PN = Term.PN
-                                .Balance = auxBalanceForWIP
-                                .WIP = WIP
-                            End With
-                            lst.Add(ObAux)
-                        Else
-                            If Not (lst.Where(Function(a) a.PN = Term.PN And a.WIP = WIP And a.Balance = auxBalanceForWIP).Count > 0) Then
-                                ObAux = New ChargeInfo
-                                With ObAux
-                                    .PN = Term.PN
-                                    .Balance = auxBalanceForWIP
-                                    .WIP = WIP
-                                End With
-                                lst.Add(ObAux)
-                            End If
-                        End If
-                    Next
-                    Return Nothing
-                End Function
-                )
         Catch ex As Exception
 
         End Try

@@ -4,7 +4,6 @@
     Private _Cell As String
     Private _Balance As Integer
     Private _RunTime As Integer
-    Private _WIP As String
 
     Public Property PN As String
         Get
@@ -45,14 +44,6 @@
         End Get
         Set
             _RunTime = Value
-        End Set
-    End Property
-    Public Property WIP As String
-        Get
-            Return _WIP
-        End Get
-        Set
-            _WIP = Value
         End Set
     End Property
 End Class
