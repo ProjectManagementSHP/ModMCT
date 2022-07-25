@@ -1859,12 +1859,11 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                                     oPn As String,
                                     WIP As String)
         Try
-            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@FProm,@note,GETDATE(),'MLF')"
+            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,'Compras',@FProm,@note,GETDATE(),'MLF')"
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
             cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
-            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
             cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = fecha
             If notes Like $"*{PN}*" Then
                 cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
