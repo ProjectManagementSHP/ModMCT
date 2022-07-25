@@ -228,6 +228,12 @@
     <Compile Include="MensajePN.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ModifyAndAddPN.Designer.vb">
+      <DependentUpon>ModifyAndAddPN.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ModifyAndAddPN.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -289,6 +295,9 @@
     <EmbeddedResource Include="MensajePN.resx">
       <DependentUpon>MensajePN.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ModifyAndAddPN.resx">
+      <DependentUpon>ModifyAndAddPN.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -339,6 +348,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="42571verticaltrafficlight_99064.ico" />
+    <None Include="Resources\save_icon-icons.com_53618%281%29.ico" />
+    <None Include="Resources\BotonCorto2.PNG" />
     <None Include="Resources\delete_unapprove_discard_remove_x_red_icon-icons.com_55984.png" />
   </ItemGroup>
   <ItemGroup>

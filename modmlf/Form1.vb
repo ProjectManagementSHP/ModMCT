@@ -34,6 +34,7 @@ Public Class Principal
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "Corte"
             rbsolicitar.Checked = True
             Button2.BackColor = Color.LightGreen
@@ -48,6 +49,7 @@ Public Class Principal
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
+            dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
             lbldept.Text = "Almacen"
             rbListosParaEntrar.Checked = True
             ToolStripMenuItem10.Visible = False
@@ -72,6 +74,7 @@ Public Class Principal
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "XP"
             rbsolicitar.Checked = True
             ToolStripMenuItem10.Visible = False
@@ -86,6 +89,7 @@ Public Class Principal
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
+            dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             lbldept.Text = "Compras"
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             dgvMatSinStockCompras.Visible = True
@@ -106,6 +110,7 @@ Public Class Principal
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "Planeacion Corte"
             ToolStripMenuItem10.Visible = True
             rbListosParaEntrar.Checked = True
@@ -121,6 +126,7 @@ Public Class Principal
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "Planeacion XP"
             ToolStripMenuItem10.Visible = True
             rbListosParaEntrar.Checked = True
@@ -149,8 +155,10 @@ Public Class Principal
         GroupBox3.Visible = False
         Timer1.Enabled = True
         Timer1.Interval = 3000
+        If opcion = 5 Then btnAgregarNewElemento.Visible = True
         cargachart()
         GridCharge()
+        ChargeInfoCortos()
         'AutoUpdate()
     End Sub
     Private Sub llenagrid(query As String)
@@ -214,7 +222,171 @@ Public Class Principal
         systemType = dgvAfectados.GetType()
         propertyInfo = systemType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
         propertyInfo.SetValue(dgvAfectados, True, Nothing)
+        '--------------------------------------------
+        systemType = dgvCortosCompletos.GetType()
+        propertyInfo = systemType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
+        propertyInfo.SetValue(dgvCortosCompletos, True, Nothing)
     End Sub
+    Public Sub ChargeInfoCortos()
+        Try
+            Dim dt As DataTable = New DataTable
+            Dim consulta As String = "SELECT distinct tblBOMCWO.PN AS [Component PN], tblBOMCWO.Description [Description],
+(select MIN(CONVERT(date,dateConfirmaAlm)) from tblCWO where CWO in (
+select CWO from tblBOMCWO aPn where aPn.PN=tblBOMCWO.PN and Hold=1)
+) [Fecha Corto], 
+[AUs afectados],
+(select top 1 Cust from tblMaster where AU in (select AU
+FROM tblBOMCWO bcm WHERE 
+tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
+on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold')) 
+and bcm.Hold=1 and bcm.PN=tblBOMCWO.PN)
+)[Cliente],(
+select sum(Convert(int,Balance))
+FROM tblBOMCWO c WHERE 
+c.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
+on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold')) 
+and c.Hold=1 and c.PN=tblBOMCWO.PN
+) [AU Qty], (
+select Min(Convert(date,DueDateCustomer))
+FROM tblBOMCWO cc inner join tblWIP wip on cc.WIP=wip.WIP inner join tblCWO cw on cw.CWO=cc.CWO WHERE 
+(wip.WSort = 3 or wip.WSort=12 or wip.WSort=14 or wip.WSort=25) And (cw.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold') 
+and cc.Hold=1 and cc.PN=tblBOMCWO.PN
+) [AU Date], 
+(select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblBOMCWO.PN and Status <> 'CLOSE') [O.H],
+(select Max(Convert(date,ProcFDispMat2))
+FROM tblBOMCWO cc inner join tblWIP wip on cc.WIP=wip.WIP inner join tblCWO cw on cw.CWO=cc.CWO WHERE 
+(wip.WSort = 3 or wip.WSort=12 or wip.WSort=14 or wip.WSort=25) And (cw.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold') 
+and cc.Hold=1 and cc.PN=tblBOMCWO.PN
+) [ETA], (select MAX(Qty) from tblBOM where PN=tblBOMCWO.PN and AU in (
+select AU
+FROM tblBOMCWO c WHERE 
+c.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
+on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold')) 
+and c.Hold=1 and c.PN=tblBOMCWO.PN
+)) [Qty PN],(select distinct POAsigned from tblBOMWIP a inner join tblBOMCWO b on a.WIP=b.WIP  where a.PN = tblBOMCWO.PN  and b.Hold=1 and a.WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
+on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold')) and a.POAsigned is not null) [PO Asignada],(select distinct c.VendorCode from tblBOMWIP a inner join tblBOMCWO b on a.WIP=b.WIP inner join tblItemsPOs c on c.IDPO=a.POAsigned where a.PN = tblBOMCWO.PN  and b.Hold=1 and a.WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold')) and a.POAsigned is not null) [Vendor], '' [Razon], (select distinct NotasCompras from tblBOMWIP cw where cw.PN = tblBOMCWO.PN and cw.WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
+on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+and (ConfirmacionAlm='OnHold'))) [Notas]
+FROM tblBOMCWO inner join tblBOMWIP bw on tblBOMCWO.WIP=bw.WIP
+CROSS APPLY(SELECT dbo.[Return_AUS](tblBOMCWO.PN))Tab([AUs afectados])
+WHERE tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
+on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold')) 
+and tblBOMCWO.Hold=1 ORDER BY tblBOMCWO.PN"
+            cmd = New SqlCommand(consulta, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            dt.Load(dr)
+            cnn.Close()
+            If dt.Rows.Count > 0 Then
+                With dgvCortosCompletos
+                    .DataSource = dt
+                    .Columns("Fecha Corto").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    .Columns("AU Date").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    .Columns("ETA").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    .AutoResizeColumns()
+                End With
+            End If
+            Label5.Text = "Items: " + dgvCortosCompletos.Rows.Count.ToString
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Terminales")
+            CorreoFalla.EnviaCorreoFalla("ChargeInfoCortos", host, UserName)
+        End Try
+    End Sub
+    Public Function ModificandoPN(FechaProm As DateTime,
+                                  Notas As String,
+                                  PO As String,
+                                  Razon As String,
+                                  PNChange As String)
+        Try
+            cmd = New SqlCommand($"update tblBOMWIP set ProcFDisMat='{FechaProm}',
+            NotasCompras='{Notas}',POAsigned={If(PO = "", " ", $"'{PO}'")},Razon='{Razon}'
+            where wip in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP 
+            inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+            and (ConfirmacionAlm='OnHold')) and PN = '{PNChange}'", cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            Return True
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.ToString, "Error Loading Terminales")
+            Return False
+        End Try
+    End Function
+    Public ReadOnly Property CargaComboModificandoPN(PN As String)
+        Get
+            Try
+                Dim lst As New List(Of String)
+                Dim consulta As String = $"select distinct tblItemsPOs.IDPO from tblItemsPOs inner join tblItemsPOsDet on tblItemsPOs.IDPO = tblItemsPOsDet.IDPO where PN = '{PN}' and Status='OPEN' and Importation=1 and QtyReceivedJuarez < QtyReceivedEP"
+                cmd = New SqlCommand(consulta, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                If dr.HasRows Then
+                    While dr.Read
+                        lst.Add(dr.GetValue(0))
+                    End While
+                End If
+                cnn.Close()
+                Return lst
+            Catch ex As Exception
+                cnn.Close()
+                MessageBox.Show(ex.ToString)
+                Return Nothing
+            End Try
+        End Get
+    End Property
+    Public ReadOnly Property CargaVendor(PO As String, pn As String)
+        Get
+            Try
+                Dim Vendor As String
+                Dim consulta As String = $"select distinct tblItemsPOs.VendorCode from tblItemsPOs inner join tblItemsPOsDet on tblItemsPOs.IDPO = tblItemsPOsDet.IDPO where tblItemsPOs.IDPO='{PO}' and PN = '{pn}' and Status='OPEN' and Importation=1 and QtyReceivedJuarez < QtyReceivedEP"
+                cmd = New SqlCommand(consulta, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                Vendor = CStr(cmd.ExecuteScalar())
+                cnn.Close()
+                Return Vendor
+            Catch ex As Exception
+                cnn.Close()
+                MessageBox.Show(ex.ToString)
+                Return Nothing
+            End Try
+        End Get
+    End Property
+    Public ReadOnly Property FiltraPN(SearchPn As String)
+        Get
+            Try
+                Dim da1 As New SqlDataAdapter
+                query = "select distinct w.WIP,w.AU,w.Rev,w.Qty [Cantidad] from tblWIP w inner join tblBOMWIP bw on w.WIP=bw.WIP where w.Status = 'OPEN' and wSort < 32 and bw.PN like @filtro and bw.Balance > 0"
+                da1 = New SqlDataAdapter(query, cnn)
+                da1.SelectCommand.Parameters.AddWithValue("@filtro", String.Format("%{0}%", SearchPn))
+                Dim table As New DataTable
+                da1.Fill(table)
+                Return table
+            Catch ex As Exception
+                cnn.Close()
+                MessageBox.Show(ex.ToString)
+                Return Nothing
+            End Try
+        End Get
+    End Property
     Private Sub cargadatosCompras()
         GroupBox3.Visible = False
         GroupBox2.Visible = False
@@ -1682,7 +1854,48 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End Try
         Cursor.Current = Cursors.Default
     End Sub
-    Sub NotesInWIP(WIP As String, notes As String, FProm As String)
+    Public Sub LlenandoNotasCompras(fecha As String,
+                                    notes As String,
+                                    oPn As String,
+                                    WIP As String)
+        Try
+            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@FProm,@note,GETDATE(),'MLF')"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
+            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = fecha
+            If notes Like $"*{PN}*" Then
+                cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+            Else
+                cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes + " para PN= " + oPn
+            End If
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            '---------------------------
+            query = "update tblWIP set ProcFDispMat2 = (select top 1 ProcFDisMat from tblBOMWIP where WIP=@wip order by ProcFDisMat desc) where WIP=@wip"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = WIP
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            ' ----------- Manda alerta al almacen
+            ' ---------------------------
+            Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=8 where Dep='Almacen'", cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                cmd.ExecuteNonQuery()
+                cnn.Close()
+            End Using
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.ToString, "Error Loading Terminales")
+        End Try
+    End Sub
+    Public Sub NotesInWIP(WIP As String, notes As String, FProm As String)
         Dim Dept As String = "", FDept As String = ""
         Try
             If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
@@ -2186,7 +2399,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and (b.WSort < 30 or c.wSort < 30) a
             Return Nothing
         End Try
     End Function
-    Function GetTable(consulta As String)
+    Public Function GetTable(consulta As String)
         Try
             Dim table As New DataTable()
             cmd = New SqlCommand(consulta, cnn)
@@ -2743,6 +2956,57 @@ where a.PN='" + PN + "' and c.Status='OPEN' and (b.WSort < 30 or c.wSort < 30) a
         FechasIncumplidas()
         Timer3.Enabled = True
         Timer3.Interval = 1800000
+    End Sub
+    Private Sub TLModificar_Click(sender As Object, e As EventArgs) Handles TLModificar.Click
+        Cursor.Current = Cursors.WaitCursor
+        If dgvCortosCompletos.Rows.Count > 0 And opcion = 5 Then
+            If PN <> "" Then
+                Dim Modificar As ModifyAndAddPN = New ModifyAndAddPN(PN)
+                Modificar.cmbPOModify.DataSource = CargaComboModificandoPN(PN)
+                If Modificar.cmbPOModify.Text <> "" Then
+                    Modificar.txbVendorModify.Text = CargaVendor(Modificar.cmbPOModify.Text.ToString, PN)
+                End If
+                Modificar.TabPage2.Visible = False
+                Modificar.TabPage2.Parent = TabControl1
+                Modificar.TabControl1.SelectedTab = TabPage1
+                Modificar.ShowDialog()
+                PN = ""
+            End If
+        End If
+        Cursor.Current = Cursors.Default
+    End Sub
+    Private Sub dgvCortosCompletos_MouseClick(sender As Object, e As MouseEventArgs) Handles dgvCortosCompletos.MouseClick
+        If dgvCortosCompletos.Rows.Count > 0 Then
+            If opcion = 5 Then
+                If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                    ContextMenuStripModificar.Show(Cursor.Position.X, Cursor.Position.Y)
+                    TLModificar.Visible = True
+                End If
+            End If
+        End If
+    End Sub
+    Private Sub dgvCortosCompletos_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvCortosCompletos.CellMouseDown
+        If opcion = 5 Then
+            If e.RowIndex <> -1 And e.ColumnIndex <> -1 Then
+                If e.Button = MouseButtons.Right Then
+                    Try
+                        dgvCortosCompletos.CurrentCell = dgvCortosCompletos.Rows(e.RowIndex).Cells(e.ColumnIndex)
+                        dgvCortosCompletos.Rows(e.RowIndex).Selected = True
+                        PN = Convert.ToString(dgvCortosCompletos.Rows(e.RowIndex).Cells(0).Value)
+                    Catch ex As Exception
+                        MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
+                        CorreoFalla.EnviaCorreoFalla("dgvCortosCompletos_CellMouseDown", host, UserName)
+                    End Try
+                End If
+            End If
+        End If
+    End Sub
+    Private Sub btnAgregarNewElemento_Click(sender As Object, e As EventArgs) Handles btnAgregarNewElemento.Click
+        Dim AgregarNuevoPN As New ModifyAndAddPN
+        AgregarNuevoPN.TabPage1.Visible = False
+        AgregarNuevoPN.TabPage1.Parent = TabControl1
+        AgregarNuevoPN.TabControl1.SelectedTab = TabPage2
+        AgregarNuevoPN.ShowDialog()
     End Sub
     Private Sub dgvMatSinStockCompras_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvMatSinStockCompras.CellMouseDown
         If opcion = 2 Then
