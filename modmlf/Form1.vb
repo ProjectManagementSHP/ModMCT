@@ -3055,8 +3055,12 @@ where a.PN='" + PN + "' and c.Status='OPEN' and (b.WSort < 30 or c.wSort < 30) a
             If PN <> "" Then
                 Dim aTable = New DataTable()
                 aTable = PNQuitandoCorto(PN)
-                If aTable.Rows.Count = 1 Then
-                    CheckPN(aTable)
+                If aTable IsNot Nothing Then
+                    If aTable.Rows.Count = 1 Then
+                        CheckPN(aTable)
+                    Else
+                        MsgBox("No se logro realizar el proceso, verifica el Numero de parte seleccionado")
+                    End If
                 Else
                     MsgBox("No se logro realizar el proceso, verifica el Numero de parte seleccionado")
                 End If
@@ -3182,6 +3186,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and (b.WSort < 30 or c.wSort < 30) a
                     AsignarMaterialToolStripMenuItem.Visible = False
                     ToolStripTextBox7.Visible = False
                     ToolStripMenuItem14.Visible = True
+                    DesviarTerminalToolStripMenuItem.Visible = False
                 End If
             End If
         End If
