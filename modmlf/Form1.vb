@@ -490,6 +490,43 @@ Public Class Principal
             MessageBox.Show(ex.ToString)
         End Try
     End Sub
+    Public Sub QuitarPnCortos(PartNumber As String)
+        Try
+            Dim resultado As Integer = 0
+            Dim oQuery As String = $"select Count(*) from tblBOMCWO where PN = '{PartNumber}' and Hold = 1"
+            cmd = New SqlCommand(oQuery, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            resultado = CInt(cmd.ExecuteScalar)
+            cnn.Close()
+            If resultado > 0 Then
+                CheckCortosPN(PartNumber)
+            Else
+                oQuery = $"select Count(*) from tblCortosPn where PN = '{PartNumber}' and Hold = 1 and CONVERT(date,[Fecha_Corto]) 
+                         BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
+                         (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))
+                         "
+                cmd = New SqlCommand(oQuery, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                resultado = CInt(cmd.ExecuteScalar)
+                cnn.Close()
+                If resultado > 0 Then
+                    oQuery = $"update tblCortosPn set Hold = 0 where pn='{PartNumber}' and CONVERT(date,[Fecha_Corto]) 
+                             BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
+                             (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))"
+                    cmd = New SqlCommand(oQuery, cnn)
+                    cmd.CommandType = CommandType.Text
+                    cnn.Open()
+                    cmd.ExecuteNonQuery()
+                    cnn.Close()
+                End If
+            End If
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
     Private Sub cargadatosCompras()
         GroupBox3.Visible = False
         GroupBox2.Visible = False
@@ -1526,6 +1563,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                     QuitaCortoCWOyWIPxPN(aPn, True)
                     MsgBox("Se ha quitado el corto en su totalidad por la cantidad completa")
                 End If
+                QuitarPnCortos(aPn)
             ElseIf aQtyOnHand = 0 Then
                 If aInTransit > 0 Then
                     MsgBox($"Este Numero de parte {aPn} sigue sin stock, se encuentran en transito la cantidad de: {aInTransit}")
