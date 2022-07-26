@@ -41,12 +41,12 @@ Partial Class Principal
         Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Principal))
-        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dgvWips = New System.Windows.Forms.DataGridView()
         Me.lblitems = New System.Windows.Forms.Label()
         Me.lblwsortasig = New System.Windows.Forms.Label()
@@ -83,12 +83,14 @@ Partial Class Principal
         Me.rbsolicitar = New System.Windows.Forms.RadioButton()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.dgvMatSinStockCompras = New System.Windows.Forms.DataGridView()
         Me.Chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.dgvwSorts = New System.Windows.Forms.DataGridView()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -108,24 +110,22 @@ Partial Class Principal
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.btnCortosPN = New System.Windows.Forms.Button()
+        Me.btnAgregaFecha = New System.Windows.Forms.Button()
+        Me.btnexportaeficc = New System.Windows.Forms.Button()
+        Me.btnRefrescaGrid = New System.Windows.Forms.Button()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lblAfectados = New System.Windows.Forms.Label()
         Me.lblitemscortos = New System.Windows.Forms.Label()
         Me.dgvAfectados = New System.Windows.Forms.DataGridView()
         Me.aChk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.dgvCortosCompletos = New System.Windows.Forms.DataGridView()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.btnCortosPN = New System.Windows.Forms.Button()
-        Me.btnAgregaFecha = New System.Windows.Forms.Button()
-        Me.btnexportaeficc = New System.Windows.Forms.Button()
-        Me.btnRefrescaGrid = New System.Windows.Forms.Button()
         Me.btnAgregarNewElemento = New System.Windows.Forms.PictureBox()
         Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.dgvCortosCompletos = New System.Windows.Forms.DataGridView()
+        Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
         Me.ContextMenuStripModificar = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.TLModificar = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.dgvWips, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -145,8 +145,8 @@ Partial Class Principal
         Me.TabPage2.SuspendLayout()
         CType(Me.dgvAfectados, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStripModificar.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -190,7 +190,7 @@ Partial Class Principal
         Me.dgvWips.RowHeadersVisible = False
         Me.dgvWips.RowHeadersWidth = 51
         Me.dgvWips.RowTemplate.Height = 24
-        Me.dgvWips.Size = New System.Drawing.Size(1951, 369)
+        Me.dgvWips.Size = New System.Drawing.Size(1966, 369)
         Me.dgvWips.TabIndex = 5435
         '
         'lblitems
@@ -198,7 +198,7 @@ Partial Class Principal
         Me.lblitems.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblitems.AutoSize = True
         Me.lblitems.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblitems.Location = New System.Drawing.Point(18171, 2483)
+        Me.lblitems.Location = New System.Drawing.Point(18186, 2483)
         Me.lblitems.Name = "lblitems"
         Me.lblitems.Size = New System.Drawing.Size(78, 24)
         Me.lblitems.TabIndex = 5436
@@ -278,7 +278,7 @@ Partial Class Principal
         Me.pnluserandtitle.Controls.Add(Me.lblwelcome)
         Me.pnluserandtitle.Location = New System.Drawing.Point(2, 37)
         Me.pnluserandtitle.Name = "pnluserandtitle"
-        Me.pnluserandtitle.Size = New System.Drawing.Size(1977, 60)
+        Me.pnluserandtitle.Size = New System.Drawing.Size(1992, 60)
         Me.pnluserandtitle.TabIndex = 5438
         '
         'Label4
@@ -317,7 +317,7 @@ Partial Class Principal
         Me.lbldept.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbldept.AutoSize = True
         Me.lbldept.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbldept.Location = New System.Drawing.Point(1621, 15)
+        Me.lbldept.Location = New System.Drawing.Point(1636, 15)
         Me.lbldept.Name = "lbldept"
         Me.lbldept.Size = New System.Drawing.Size(22, 29)
         Me.lbldept.TabIndex = 1
@@ -370,7 +370,7 @@ Partial Class Principal
         Me.Chart1.Series.Add(Series4)
         Me.Chart1.Series.Add(Series5)
         Me.Chart1.Series.Add(Series6)
-        Me.Chart1.Size = New System.Drawing.Size(1940, 496)
+        Me.Chart1.Size = New System.Drawing.Size(1955, 525)
         Me.Chart1.TabIndex = 5439
         Me.Chart1.Text = "Chart1"
         '
@@ -542,6 +542,17 @@ Partial Class Principal
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Historial: "
         '
+        'Button1
+        '
+        Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
+        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button1.Location = New System.Drawing.Point(1029, 18)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(48, 38)
+        Me.Button1.TabIndex = 5437
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'DataGridView1
         '
         Me.DataGridView1.AllowUserToAddRows = False
@@ -634,7 +645,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.RowHeadersVisible = False
         Me.dgvMatSinStockCompras.RowHeadersWidth = 51
         Me.dgvMatSinStockCompras.RowTemplate.Height = 24
-        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(898, 416)
+        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(913, 445)
         Me.dgvMatSinStockCompras.TabIndex = 5458
         '
         'Chk
@@ -666,6 +677,17 @@ Partial Class Principal
         Me.GroupBox3.Size = New System.Drawing.Size(621, 326)
         Me.GroupBox3.TabIndex = 5454
         Me.GroupBox3.TabStop = False
+        '
+        'Button3
+        '
+        Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
+        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button3.Location = New System.Drawing.Point(548, 17)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(48, 55)
+        Me.Button3.TabIndex = 5439
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -728,7 +750,7 @@ Partial Class Principal
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(6, 3, 0, 3)
-        Me.MenuStrip1.Size = New System.Drawing.Size(1979, 35)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1994, 35)
         Me.MenuStrip1.TabIndex = 5455
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -822,7 +844,7 @@ Partial Class Principal
         Me.TabControl1.Location = New System.Drawing.Point(2, 551)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1963, 539)
+        Me.TabControl1.Size = New System.Drawing.Size(1978, 568)
         Me.TabControl1.TabIndex = 5461
         '
         'TabPage1
@@ -831,7 +853,7 @@ Partial Class Principal
         Me.TabPage1.Location = New System.Drawing.Point(4, 29)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1955, 506)
+        Me.TabPage1.Size = New System.Drawing.Size(1970, 535)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Grafica"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -852,177 +874,10 @@ Partial Class Principal
         Me.TabPage2.Location = New System.Drawing.Point(4, 29)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1955, 506)
+        Me.TabPage2.Size = New System.Drawing.Size(1970, 535)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "PN Cortos"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(21, 31)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(262, 24)
-        Me.Label8.TabIndex = 5465
-        Me.Label8.Text = "Numeros de Parte cortos"
-        '
-        'Label7
-        '
-        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(926, 32)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(189, 24)
-        Me.Label7.TabIndex = 5464
-        Me.Label7.Text = "Detalle afectacion"
-        '
-        'lblAfectados
-        '
-        Me.lblAfectados.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblAfectados.AutoSize = True
-        Me.lblAfectados.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAfectados.Location = New System.Drawing.Point(1732, 37)
-        Me.lblAfectados.Name = "lblAfectados"
-        Me.lblAfectados.Size = New System.Drawing.Size(17, 24)
-        Me.lblAfectados.TabIndex = 5463
-        Me.lblAfectados.Text = "-"
-        '
-        'lblitemscortos
-        '
-        Me.lblitemscortos.AutoSize = True
-        Me.lblitemscortos.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblitemscortos.Location = New System.Drawing.Point(714, 32)
-        Me.lblitemscortos.Name = "lblitemscortos"
-        Me.lblitemscortos.Size = New System.Drawing.Size(17, 24)
-        Me.lblitemscortos.TabIndex = 5462
-        Me.lblitemscortos.Text = "-"
-        '
-        'dgvAfectados
-        '
-        Me.dgvAfectados.AllowUserToAddRows = False
-        Me.dgvAfectados.AllowUserToDeleteRows = False
-        Me.dgvAfectados.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dgvAfectados.BackgroundColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle34.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvAfectados.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle34
-        Me.dgvAfectados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvAfectados.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.aChk})
-        DataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle35.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvAfectados.DefaultCellStyle = DataGridViewCellStyle35
-        Me.dgvAfectados.EnableHeadersVisualStyles = False
-        Me.dgvAfectados.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvAfectados.Location = New System.Drawing.Point(931, 68)
-        Me.dgvAfectados.Name = "dgvAfectados"
-        DataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle36.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle36.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvAfectados.RowHeadersDefaultCellStyle = DataGridViewCellStyle36
-        Me.dgvAfectados.RowHeadersVisible = False
-        Me.dgvAfectados.RowHeadersWidth = 51
-        Me.dgvAfectados.RowTemplate.Height = 24
-        Me.dgvAfectados.Size = New System.Drawing.Size(1005, 416)
-        Me.dgvAfectados.TabIndex = 5461
-        '
-        'aChk
-        '
-        Me.aChk.HeaderText = "Check"
-        Me.aChk.MinimumWidth = 6
-        Me.aChk.Name = "aChk"
-        Me.aChk.Width = 125
-        '
-        'Timer3
-        '
-        '
-        'TabPage3
-        '
-        Me.TabPage3.Controls.Add(Me.Label5)
-        Me.TabPage3.Controls.Add(Me.btnAgregarNewElemento)
-        Me.TabPage3.Controls.Add(Me.Button4)
-        Me.TabPage3.Controls.Add(Me.dgvCortosCompletos)
-        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(1955, 506)
-        Me.TabPage3.TabIndex = 2
-        Me.TabPage3.Text = "Relacion Numeros de parte cortos"
-        Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'dgvCortosCompletos
-        '
-        Me.dgvCortosCompletos.AllowUserToAddRows = False
-        Me.dgvCortosCompletos.AllowUserToDeleteRows = False
-        Me.dgvCortosCompletos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dgvCortosCompletos.BackgroundColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle31.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle31.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvCortosCompletos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle31
-        Me.dgvCortosCompletos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle32.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle32.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle32.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvCortosCompletos.DefaultCellStyle = DataGridViewCellStyle32
-        Me.dgvCortosCompletos.EnableHeadersVisualStyles = False
-        Me.dgvCortosCompletos.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvCortosCompletos.Location = New System.Drawing.Point(6, 81)
-        Me.dgvCortosCompletos.Name = "dgvCortosCompletos"
-        Me.dgvCortosCompletos.ReadOnly = True
-        DataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle33.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvCortosCompletos.RowHeadersDefaultCellStyle = DataGridViewCellStyle33
-        Me.dgvCortosCompletos.RowHeadersVisible = False
-        Me.dgvCortosCompletos.RowHeadersWidth = 51
-        Me.dgvCortosCompletos.RowTemplate.Height = 24
-        Me.dgvCortosCompletos.Size = New System.Drawing.Size(1944, 406)
-        Me.dgvCortosCompletos.TabIndex = 5436
-        '
-        'Label5
-        '
-        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(1055, 51)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(78, 24)
-        Me.Label5.TabIndex = 5470
-        Me.Label5.Text = "Items: "
         '
         'btnCortosPN
         '
@@ -1030,7 +885,7 @@ Partial Class Principal
         Me.btnCortosPN.BackgroundImage = CType(resources.GetObject("btnCortosPN.BackgroundImage"), System.Drawing.Image)
         Me.btnCortosPN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnCortosPN.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCortosPN.Location = New System.Drawing.Point(1174, 9)
+        Me.btnCortosPN.Location = New System.Drawing.Point(1189, 9)
         Me.btnCortosPN.Name = "btnCortosPN"
         Me.btnCortosPN.Size = New System.Drawing.Size(54, 57)
         Me.btnCortosPN.TabIndex = 5470
@@ -1055,7 +910,7 @@ Partial Class Principal
         Me.btnexportaeficc.BackColor = System.Drawing.Color.White
         Me.btnexportaeficc.BackgroundImage = CType(resources.GetObject("btnexportaeficc.BackgroundImage"), System.Drawing.Image)
         Me.btnexportaeficc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.btnexportaeficc.Location = New System.Drawing.Point(790, 18)
+        Me.btnexportaeficc.Location = New System.Drawing.Point(805, 18)
         Me.btnexportaeficc.Name = "btnexportaeficc"
         Me.btnexportaeficc.Size = New System.Drawing.Size(117, 42)
         Me.btnexportaeficc.TabIndex = 5468
@@ -1074,12 +929,132 @@ Partial Class Principal
         Me.btnRefrescaGrid.UseVisualStyleBackColor = True
         Me.btnRefrescaGrid.Visible = False
         '
+        'Label8
+        '
+        Me.Label8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(21, 31)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(262, 24)
+        Me.Label8.TabIndex = 5465
+        Me.Label8.Text = "Numeros de Parte cortos"
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(941, 32)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(189, 24)
+        Me.Label7.TabIndex = 5464
+        Me.Label7.Text = "Detalle afectacion"
+        '
+        'lblAfectados
+        '
+        Me.lblAfectados.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblAfectados.AutoSize = True
+        Me.lblAfectados.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAfectados.Location = New System.Drawing.Point(1747, 37)
+        Me.lblAfectados.Name = "lblAfectados"
+        Me.lblAfectados.Size = New System.Drawing.Size(17, 24)
+        Me.lblAfectados.TabIndex = 5463
+        Me.lblAfectados.Text = "-"
+        '
+        'lblitemscortos
+        '
+        Me.lblitemscortos.AutoSize = True
+        Me.lblitemscortos.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblitemscortos.Location = New System.Drawing.Point(714, 32)
+        Me.lblitemscortos.Name = "lblitemscortos"
+        Me.lblitemscortos.Size = New System.Drawing.Size(17, 24)
+        Me.lblitemscortos.TabIndex = 5462
+        Me.lblitemscortos.Text = "-"
+        '
+        'dgvAfectados
+        '
+        Me.dgvAfectados.AllowUserToAddRows = False
+        Me.dgvAfectados.AllowUserToDeleteRows = False
+        Me.dgvAfectados.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvAfectados.BackgroundColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle31.BackColor = System.Drawing.Color.LightGreen
+        DataGridViewCellStyle31.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvAfectados.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle31
+        Me.dgvAfectados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvAfectados.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.aChk})
+        DataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle32.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle32.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle32.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvAfectados.DefaultCellStyle = DataGridViewCellStyle32
+        Me.dgvAfectados.EnableHeadersVisualStyles = False
+        Me.dgvAfectados.GridColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.dgvAfectados.Location = New System.Drawing.Point(946, 68)
+        Me.dgvAfectados.Name = "dgvAfectados"
+        DataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle33.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvAfectados.RowHeadersDefaultCellStyle = DataGridViewCellStyle33
+        Me.dgvAfectados.RowHeadersVisible = False
+        Me.dgvAfectados.RowHeadersWidth = 51
+        Me.dgvAfectados.RowTemplate.Height = 24
+        Me.dgvAfectados.Size = New System.Drawing.Size(1005, 445)
+        Me.dgvAfectados.TabIndex = 5461
+        '
+        'aChk
+        '
+        Me.aChk.HeaderText = "Check"
+        Me.aChk.MinimumWidth = 6
+        Me.aChk.Name = "aChk"
+        Me.aChk.Width = 125
+        '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.Label5)
+        Me.TabPage3.Controls.Add(Me.btnAgregarNewElemento)
+        Me.TabPage3.Controls.Add(Me.Button4)
+        Me.TabPage3.Controls.Add(Me.dgvCortosCompletos)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 29)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(1970, 535)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Relacion Numeros de parte cortos"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(1055, 51)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(78, 24)
+        Me.Label5.TabIndex = 5470
+        Me.Label5.Text = "Items: "
+        '
         'btnAgregarNewElemento
         '
         Me.btnAgregarNewElemento.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnAgregarNewElemento.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAgregarNewElemento.Image = Global.modmlf.My.Resources.Resources.BotonCorto2
-        Me.btnAgregarNewElemento.Location = New System.Drawing.Point(1419, 6)
+        Me.btnAgregarNewElemento.Location = New System.Drawing.Point(1559, 6)
         Me.btnAgregarNewElemento.Name = "btnAgregarNewElemento"
         Me.btnAgregarNewElemento.Size = New System.Drawing.Size(392, 69)
         Me.btnAgregarNewElemento.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -1098,27 +1073,52 @@ Partial Class Principal
         Me.Button4.TabIndex = 5468
         Me.Button4.UseVisualStyleBackColor = True
         '
-        'Button3
+        'dgvCortosCompletos
         '
-        Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
-        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button3.Location = New System.Drawing.Point(548, 17)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(48, 55)
-        Me.Button3.TabIndex = 5439
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.dgvCortosCompletos.AllowUserToAddRows = False
+        Me.dgvCortosCompletos.AllowUserToDeleteRows = False
+        Me.dgvCortosCompletos.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvCortosCompletos.BackgroundColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle34.BackColor = System.Drawing.Color.LightGreen
+        DataGridViewCellStyle34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvCortosCompletos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle34
+        Me.dgvCortosCompletos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle35.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvCortosCompletos.DefaultCellStyle = DataGridViewCellStyle35
+        Me.dgvCortosCompletos.EnableHeadersVisualStyles = False
+        Me.dgvCortosCompletos.GridColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.dgvCortosCompletos.Location = New System.Drawing.Point(6, 81)
+        Me.dgvCortosCompletos.Name = "dgvCortosCompletos"
+        Me.dgvCortosCompletos.ReadOnly = True
+        DataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle36.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle36.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvCortosCompletos.RowHeadersDefaultCellStyle = DataGridViewCellStyle36
+        Me.dgvCortosCompletos.RowHeadersVisible = False
+        Me.dgvCortosCompletos.RowHeadersWidth = 51
+        Me.dgvCortosCompletos.RowTemplate.Height = 24
+        Me.dgvCortosCompletos.Size = New System.Drawing.Size(1959, 435)
+        Me.dgvCortosCompletos.TabIndex = 5436
         '
-        'Button1
+        'Timer3
         '
-        Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
-        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button1.Location = New System.Drawing.Point(1029, 18)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(48, 38)
-        Me.Button1.TabIndex = 5437
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'ContextMenuStripModificar
         '
@@ -1138,7 +1138,7 @@ Partial Class Principal
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(1979, 1104)
+        Me.ClientSize = New System.Drawing.Size(1994, 1133)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.GroupBox1)
@@ -1181,8 +1181,8 @@ Partial Class Principal
         CType(Me.dgvAfectados, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
-        CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStripModificar.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()

@@ -585,12 +585,14 @@ Public Class Materiales
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Try
             If holdoconfir = 1 Then
+                Dim lst As New List(Of String)
                 If TextBox2.Text <> "" Then
                     Dim mensaje As String = ""
                     If Label4.Text <> "" Then
                         If DataGridView1.Rows.Count > 0 Then
                             For o As Integer = 0 To DataGridView1.Rows.Count - 1
                                 If DataGridView1.Rows(o).Cells("chk").Value = True Then
+                                    lst.Add(DataGridView1.Rows(o).Cells("PN").Value.ToString)
                                     UpdateHoldPN(lblcwomat.Text, DataGridView1.Rows(o).Cells("PN").Value.ToString)
                                     If mensaje = "" Then
                                         If CheckMovNegative(DataGridView1.Rows(o).Cells("PN").Value.ToString, DataGridView1.Rows(o).Cells("Balance").Value.ToString) = True Then
@@ -607,11 +609,15 @@ Public Class Materiales
                                     End If
                                 End If
                             Next
+                            lst.ForEach(Function(pn)
+                                            Principal.CheckCortosPN(pn)
+                                            Return Nothing
+                                        End Function)
                             mensaje = mensaje + " se han puesto en Cortos por falta de material, en el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
                         Else
                             mensaje = "Se notifica que se pone el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
@@ -626,6 +632,7 @@ Public Class Materiales
                             For o As Integer = 0 To DataGridView1.Rows.Count - 1
                                 If DataGridView1.Rows(o).Cells("chk").Value = True Then
                                     UpdateHoldPN(lblcwomat.Text, DataGridView1.Rows(o).Cells("PN").Value.ToString)
+                                    lst.Add(DataGridView1.Rows(o).Cells("PN").Value.ToString)
                                     If mensaje = "" Then
                                         If CheckMovNegative(DataGridView1.Rows(o).Cells("PN").Value.ToString, DataGridView1.Rows(o).Cells("Balance").Value.ToString) = True Then
                                             mensaje = DataGridView1.Rows(o).Cells("PN").Value.ToString & " (Ajustes Neg)"
@@ -645,7 +652,11 @@ Public Class Materiales
                         Else
                             mensaje = "Se notifica que se pone el CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        lst.ForEach(Function(pn)
+                                        Principal.CheckCortosPN(pn)
+                                        Return Nothing
+                                    End Function)
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True

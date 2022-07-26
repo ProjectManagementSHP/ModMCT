@@ -64,6 +64,7 @@
                 'Dim WipsAProcesar As New List(Of String)
                 'Dim CwoAProcesar As New List(Of String)
                 With Principal
+                    Dim lst As New List(Of String)
                     For o As Integer = 0 To .dgvAfectados.Rows.Count - 1
                         If .dgvAfectados.Rows(o).Cells("aChk").Value = True Then
                             If .CheckWSort(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString) = True Then
@@ -87,6 +88,7 @@
                                     End If
                                 End If
                                 Materiales.UpdateHoldPN(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString, .dgvAfectados.Rows(o).Cells("PN").Value.ToString)
+                                lst.Add(.dgvAfectados.Rows(o).Cells("PN").Value.ToString)
                                 If mensaje = "" Then
                                     If Materiales.CheckMovNegative(.dgvAfectados.Rows(o).Cells("PN").Value.ToString, .dgvAfectados.Rows(o).Cells("Qty").Value.ToString) = True Then
                                         mensaje = .dgvAfectados.Rows(o).Cells("PN").Value.ToString & " (Ajustes Neg)"
@@ -107,8 +109,12 @@
                             End If
                         End If
                     Next
+                    lst.ForEach(Function(pn)
+                                    Principal.CheckCortosPN(pn)
+                                    Return Nothing
+                                End Function)
                     mensaje = mensaje + " se han puesto en Cortos por falta de material, en los WIP: " & Wips & " y CWO: " & CWos & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
-                    CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Descomentar cuando se suba
+                    'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Descomentar cuando se suba
                     ''For Each wipFromList In WipsAProcesar
 
                     ''Next
