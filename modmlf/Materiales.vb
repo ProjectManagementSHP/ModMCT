@@ -609,10 +609,6 @@ Public Class Materiales
                                     End If
                                 End If
                             Next
-                            lst.ForEach(Function(pn)
-                                            Principal.CheckCortosPN(pn)
-                                            Return Nothing
-                                        End Function)
                             mensaje = mensaje + " se han puesto en Cortos por falta de material, en el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
                         Else
                             mensaje = "Se notifica que se pone el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
@@ -623,6 +619,10 @@ Public Class Materiales
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
                         Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        lst.ForEach(Function(pn)
+                                        Principal.CheckCortosPN(pn)
+                                        Return Nothing
+                                    End Function)
                         Principal.filtros(3)
                         holdoconfir = 0
                         Me.Dispose()
@@ -652,16 +652,16 @@ Public Class Materiales
                         Else
                             mensaje = "Se notifica que se pone el CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        lst.ForEach(Function(pn)
-                                        Principal.CheckCortosPN(pn)
-                                        Return Nothing
-                                    End Function)
                         'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
                         Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        lst.ForEach(Function(pn)
+                                        Principal.CheckCortosPN(pn)
+                                        Return Nothing
+                                    End Function)
                         Principal.filtros(3)
                         holdoconfir = 0
                         Me.Dispose()
