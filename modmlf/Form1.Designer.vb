@@ -83,14 +83,12 @@ Partial Class Principal
         Me.rbsolicitar = New System.Windows.Forms.RadioButton()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.dgvMatSinStockCompras = New System.Windows.Forms.DataGridView()
         Me.Chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Button3 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.dgvwSorts = New System.Windows.Forms.DataGridView()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -110,10 +108,6 @@ Partial Class Principal
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.btnCortosPN = New System.Windows.Forms.Button()
-        Me.btnAgregaFecha = New System.Windows.Forms.Button()
-        Me.btnexportaeficc = New System.Windows.Forms.Button()
-        Me.btnRefrescaGrid = New System.Windows.Forms.Button()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.lblAfectados = New System.Windows.Forms.Label()
@@ -122,12 +116,19 @@ Partial Class Principal
         Me.aChk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.btnAgregarNewElemento = New System.Windows.Forms.PictureBox()
-        Me.Button4 = New System.Windows.Forms.Button()
         Me.dgvCortosCompletos = New System.Windows.Forms.DataGridView()
         Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
         Me.ContextMenuStripModificar = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.TLModificar = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnCortosPN = New System.Windows.Forms.Button()
+        Me.btnAgregaFecha = New System.Windows.Forms.Button()
+        Me.btnexportaeficc = New System.Windows.Forms.Button()
+        Me.btnRefrescaGrid = New System.Windows.Forms.Button()
+        Me.BtnExportarCortos = New System.Windows.Forms.PictureBox()
+        Me.btnAgregarNewElemento = New System.Windows.Forms.PictureBox()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.dgvWips, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuDisponibilidad.SuspendLayout()
         Me.pnluserandtitle.SuspendLayout()
@@ -145,9 +146,10 @@ Partial Class Principal
         Me.TabPage2.SuspendLayout()
         CType(Me.dgvAfectados, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStripModificar.SuspendLayout()
+        CType(Me.BtnExportarCortos, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvWips
@@ -176,7 +178,7 @@ Partial Class Principal
         Me.dgvWips.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvWips.EnableHeadersVisualStyles = False
         Me.dgvWips.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvWips.Location = New System.Drawing.Point(14, 169)
+        Me.dgvWips.Location = New System.Drawing.Point(10, 163)
         Me.dgvWips.Name = "dgvWips"
         Me.dgvWips.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -190,7 +192,7 @@ Partial Class Principal
         Me.dgvWips.RowHeadersVisible = False
         Me.dgvWips.RowHeadersWidth = 51
         Me.dgvWips.RowTemplate.Height = 24
-        Me.dgvWips.Size = New System.Drawing.Size(1952, 554)
+        Me.dgvWips.Size = New System.Drawing.Size(2167, 350)
         Me.dgvWips.TabIndex = 5435
         '
         'lblitems
@@ -198,7 +200,7 @@ Partial Class Principal
         Me.lblitems.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblitems.AutoSize = True
         Me.lblitems.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblitems.Location = New System.Drawing.Point(26282, 3725)
+        Me.lblitems.Location = New System.Drawing.Point(32767, 8382)
         Me.lblitems.Name = "lblitems"
         Me.lblitems.Size = New System.Drawing.Size(78, 24)
         Me.lblitems.TabIndex = 5436
@@ -276,9 +278,9 @@ Partial Class Principal
         Me.pnluserandtitle.Controls.Add(Me.lblWIPorCWO)
         Me.pnluserandtitle.Controls.Add(Me.lbldept)
         Me.pnluserandtitle.Controls.Add(Me.lblwelcome)
-        Me.pnluserandtitle.Location = New System.Drawing.Point(2, 37)
+        Me.pnluserandtitle.Location = New System.Drawing.Point(0, 38)
         Me.pnluserandtitle.Name = "pnluserandtitle"
-        Me.pnluserandtitle.Size = New System.Drawing.Size(1991, 90)
+        Me.pnluserandtitle.Size = New System.Drawing.Size(2189, 55)
         Me.pnluserandtitle.TabIndex = 5438
         '
         'Label4
@@ -317,7 +319,7 @@ Partial Class Principal
         Me.lbldept.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbldept.AutoSize = True
         Me.lbldept.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbldept.Location = New System.Drawing.Point(1635, 15)
+        Me.lbldept.Location = New System.Drawing.Point(1833, 15)
         Me.lbldept.Name = "lbldept"
         Me.lbldept.Size = New System.Drawing.Size(22, 29)
         Me.lbldept.TabIndex = 1
@@ -349,7 +351,7 @@ Partial Class Principal
         Me.Chart1.ChartAreas.Add(ChartArea1)
         Legend1.Name = "Legend1"
         Me.Chart1.Legends.Add(Legend1)
-        Me.Chart1.Location = New System.Drawing.Point(6, 5)
+        Me.Chart1.Location = New System.Drawing.Point(6, 3)
         Me.Chart1.Name = "Chart1"
         Series1.ChartArea = "ChartArea1"
         Series1.Legend = "Legend1"
@@ -370,7 +372,7 @@ Partial Class Principal
         Me.Chart1.Series.Add(Series1)
         Me.Chart1.Series.Add(Series2)
         Me.Chart1.Series.Add(Series3)
-        Me.Chart1.Size = New System.Drawing.Size(1955, 525)
+        Me.Chart1.Size = New System.Drawing.Size(2150, 336)
         Me.Chart1.TabIndex = 5439
         Me.Chart1.Text = "Chart1"
         '
@@ -440,9 +442,9 @@ Partial Class Principal
         Me.GroupBox1.Controls.Add(Me.rbListosParaEntrar)
         Me.GroupBox1.Controls.Add(Me.rbSolicitado)
         Me.GroupBox1.Controls.Add(Me.rbsolicitar)
-        Me.GroupBox1.Location = New System.Drawing.Point(447, 103)
+        Me.GroupBox1.Location = New System.Drawing.Point(447, 99)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(1204, 62)
+        Me.GroupBox1.Size = New System.Drawing.Size(1204, 56)
         Me.GroupBox1.TabIndex = 5451
         Me.GroupBox1.TabStop = False
         '
@@ -450,7 +452,7 @@ Partial Class Principal
         '
         Me.rdbOnHold.AutoSize = True
         Me.rdbOnHold.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rdbOnHold.Location = New System.Drawing.Point(1048, 20)
+        Me.rdbOnHold.Location = New System.Drawing.Point(1044, 15)
         Me.rdbOnHold.Name = "rdbOnHold"
         Me.rdbOnHold.Size = New System.Drawing.Size(103, 28)
         Me.rdbOnHold.TabIndex = 5
@@ -462,7 +464,7 @@ Partial Class Principal
         '
         Me.rbEmpezadosyDetenidos.AutoSize = True
         Me.rbEmpezadosyDetenidos.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbEmpezadosyDetenidos.Location = New System.Drawing.Point(723, 20)
+        Me.rbEmpezadosyDetenidos.Location = New System.Drawing.Point(720, 15)
         Me.rbEmpezadosyDetenidos.Name = "rbEmpezadosyDetenidos"
         Me.rbEmpezadosyDetenidos.Size = New System.Drawing.Size(279, 28)
         Me.rbEmpezadosyDetenidos.TabIndex = 4
@@ -474,7 +476,7 @@ Partial Class Principal
         '
         Me.rbYaempezados.AutoSize = True
         Me.rbYaempezados.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbYaempezados.Location = New System.Drawing.Point(506, 18)
+        Me.rbYaempezados.Location = New System.Drawing.Point(503, 15)
         Me.rbYaempezados.Name = "rbYaempezados"
         Me.rbYaempezados.Size = New System.Drawing.Size(182, 28)
         Me.rbYaempezados.TabIndex = 3
@@ -486,7 +488,7 @@ Partial Class Principal
         '
         Me.rbListosParaEntrar.AutoSize = True
         Me.rbListosParaEntrar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbListosParaEntrar.Location = New System.Drawing.Point(248, 18)
+        Me.rbListosParaEntrar.Location = New System.Drawing.Point(249, 15)
         Me.rbListosParaEntrar.Name = "rbListosParaEntrar"
         Me.rbListosParaEntrar.Size = New System.Drawing.Size(217, 28)
         Me.rbListosParaEntrar.TabIndex = 2
@@ -511,7 +513,7 @@ Partial Class Principal
         '
         Me.rbsolicitar.AutoSize = True
         Me.rbsolicitar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.rbsolicitar.Location = New System.Drawing.Point(12, 20)
+        Me.rbsolicitar.Location = New System.Drawing.Point(18, 17)
         Me.rbsolicitar.Name = "rbsolicitar"
         Me.rbsolicitar.Size = New System.Drawing.Size(197, 28)
         Me.rbsolicitar.TabIndex = 0
@@ -541,17 +543,6 @@ Partial Class Principal
         Me.Label1.Size = New System.Drawing.Size(124, 29)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Historial: "
-        '
-        'Button1
-        '
-        Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
-        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button1.Location = New System.Drawing.Point(1029, 18)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(48, 38)
-        Me.Button1.TabIndex = 5437
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'DataGridView1
         '
@@ -598,7 +589,7 @@ Partial Class Principal
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(252, 189)
+        Me.ProgressBar1.Location = New System.Drawing.Point(254, 83)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(369, 40)
         Me.ProgressBar1.TabIndex = 5460
@@ -632,7 +623,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.DefaultCellStyle = DataGridViewCellStyle8
         Me.dgvMatSinStockCompras.EnableHeadersVisualStyles = False
         Me.dgvMatSinStockCompras.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvMatSinStockCompras.Location = New System.Drawing.Point(26, 68)
+        Me.dgvMatSinStockCompras.Location = New System.Drawing.Point(15, 68)
         Me.dgvMatSinStockCompras.Name = "dgvMatSinStockCompras"
         DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
@@ -645,7 +636,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.RowHeadersVisible = False
         Me.dgvMatSinStockCompras.RowHeadersWidth = 51
         Me.dgvMatSinStockCompras.RowTemplate.Height = 24
-        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(905, 162)
+        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(932, 271)
         Me.dgvMatSinStockCompras.TabIndex = 5458
         '
         'Chk
@@ -677,17 +668,6 @@ Partial Class Principal
         Me.GroupBox3.Size = New System.Drawing.Size(621, 326)
         Me.GroupBox3.TabIndex = 5454
         Me.GroupBox3.TabStop = False
-        '
-        'Button3
-        '
-        Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
-        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button3.Location = New System.Drawing.Point(548, 17)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(48, 55)
-        Me.Button3.TabIndex = 5439
-        Me.Button3.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -750,7 +730,7 @@ Partial Class Principal
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(6, 3, 0, 3)
-        Me.MenuStrip1.Size = New System.Drawing.Size(1994, 54)
+        Me.MenuStrip1.Size = New System.Drawing.Size(2189, 35)
         Me.MenuStrip1.TabIndex = 5455
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -758,7 +738,7 @@ Partial Class Principal
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MonitorWIPS, Me.ToolStripMenuItem1, Me.ToolStripMenuItem10, Me.ToolStripMenuItem11, Me.ToolStripMenuItem3, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(53, 48)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(53, 29)
         Me.FileToolStripMenuItem.Text = "Ir a"
         '
         'MonitorWIPS
@@ -806,7 +786,7 @@ Partial Class Principal
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(78, 48)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(78, 29)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'NotifyIcon1
@@ -841,10 +821,10 @@ Partial Class Principal
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Location = New System.Drawing.Point(2, 551)
+        Me.TabControl1.Location = New System.Drawing.Point(10, 519)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1970, 285)
+        Me.TabControl1.Size = New System.Drawing.Size(2167, 378)
         Me.TabControl1.TabIndex = 5461
         '
         'TabPage1
@@ -853,7 +833,7 @@ Partial Class Principal
         Me.TabPage1.Location = New System.Drawing.Point(4, 29)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1970, 535)
+        Me.TabPage1.Size = New System.Drawing.Size(2159, 345)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Grafica"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -874,60 +854,10 @@ Partial Class Principal
         Me.TabPage2.Location = New System.Drawing.Point(4, 29)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1962, 252)
+        Me.TabPage2.Size = New System.Drawing.Size(2159, 345)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "PN Cortos"
         Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'btnCortosPN
-        '
-        Me.btnCortosPN.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCortosPN.BackgroundImage = CType(resources.GetObject("btnCortosPN.BackgroundImage"), System.Drawing.Image)
-        Me.btnCortosPN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.btnCortosPN.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCortosPN.Location = New System.Drawing.Point(1181, 9)
-        Me.btnCortosPN.Name = "btnCortosPN"
-        Me.btnCortosPN.Size = New System.Drawing.Size(54, 57)
-        Me.btnCortosPN.TabIndex = 5470
-        Me.btnCortosPN.UseVisualStyleBackColor = True
-        Me.btnCortosPN.Visible = False
-        '
-        'btnAgregaFecha
-        '
-        Me.btnAgregaFecha.BackgroundImage = CType(resources.GetObject("btnAgregaFecha.BackgroundImage"), System.Drawing.Image)
-        Me.btnAgregaFecha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.btnAgregaFecha.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnAgregaFecha.Location = New System.Drawing.Point(480, 5)
-        Me.btnAgregaFecha.Name = "btnAgregaFecha"
-        Me.btnAgregaFecha.Size = New System.Drawing.Size(54, 57)
-        Me.btnAgregaFecha.TabIndex = 5469
-        Me.btnAgregaFecha.UseVisualStyleBackColor = True
-        Me.btnAgregaFecha.Visible = False
-        '
-        'btnexportaeficc
-        '
-        Me.btnexportaeficc.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnexportaeficc.BackColor = System.Drawing.Color.White
-        Me.btnexportaeficc.BackgroundImage = CType(resources.GetObject("btnexportaeficc.BackgroundImage"), System.Drawing.Image)
-        Me.btnexportaeficc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.btnexportaeficc.Location = New System.Drawing.Point(797, 18)
-        Me.btnexportaeficc.Name = "btnexportaeficc"
-        Me.btnexportaeficc.Size = New System.Drawing.Size(117, 42)
-        Me.btnexportaeficc.TabIndex = 5468
-        Me.btnexportaeficc.UseVisualStyleBackColor = False
-        Me.btnexportaeficc.Visible = False
-        '
-        'btnRefrescaGrid
-        '
-        Me.btnRefrescaGrid.BackgroundImage = CType(resources.GetObject("btnRefrescaGrid.BackgroundImage"), System.Drawing.Image)
-        Me.btnRefrescaGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.btnRefrescaGrid.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnRefrescaGrid.Location = New System.Drawing.Point(579, 9)
-        Me.btnRefrescaGrid.Name = "btnRefrescaGrid"
-        Me.btnRefrescaGrid.Size = New System.Drawing.Size(44, 51)
-        Me.btnRefrescaGrid.TabIndex = 5467
-        Me.btnRefrescaGrid.UseVisualStyleBackColor = True
-        Me.btnRefrescaGrid.Visible = False
         '
         'Label8
         '
@@ -946,7 +876,7 @@ Partial Class Principal
         Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(933, 32)
+        Me.Label7.Location = New System.Drawing.Point(966, 32)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(189, 24)
         Me.Label7.TabIndex = 5464
@@ -957,7 +887,7 @@ Partial Class Principal
         Me.lblAfectados.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblAfectados.AutoSize = True
         Me.lblAfectados.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAfectados.Location = New System.Drawing.Point(1739, 37)
+        Me.lblAfectados.Location = New System.Drawing.Point(1772, 37)
         Me.lblAfectados.Name = "lblAfectados"
         Me.lblAfectados.Size = New System.Drawing.Size(17, 24)
         Me.lblAfectados.TabIndex = 5463
@@ -1000,7 +930,7 @@ Partial Class Principal
         Me.dgvAfectados.DefaultCellStyle = DataGridViewCellStyle14
         Me.dgvAfectados.EnableHeadersVisualStyles = False
         Me.dgvAfectados.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvAfectados.Location = New System.Drawing.Point(938, 68)
+        Me.dgvAfectados.Location = New System.Drawing.Point(959, 68)
         Me.dgvAfectados.Name = "dgvAfectados"
         DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
@@ -1013,7 +943,7 @@ Partial Class Principal
         Me.dgvAfectados.RowHeadersVisible = False
         Me.dgvAfectados.RowHeadersWidth = 51
         Me.dgvAfectados.RowTemplate.Height = 24
-        Me.dgvAfectados.Size = New System.Drawing.Size(1005, 162)
+        Me.dgvAfectados.Size = New System.Drawing.Size(1194, 271)
         Me.dgvAfectados.TabIndex = 5461
         '
         'aChk
@@ -1025,6 +955,7 @@ Partial Class Principal
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.BtnExportarCortos)
         Me.TabPage3.Controls.Add(Me.Label5)
         Me.TabPage3.Controls.Add(Me.btnAgregarNewElemento)
         Me.TabPage3.Controls.Add(Me.Button4)
@@ -1032,7 +963,7 @@ Partial Class Principal
         Me.TabPage3.Location = New System.Drawing.Point(4, 29)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(1970, 535)
+        Me.TabPage3.Size = New System.Drawing.Size(2159, 345)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Relacion Numeros de parte cortos"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -1048,30 +979,6 @@ Partial Class Principal
         Me.Label5.Size = New System.Drawing.Size(78, 24)
         Me.Label5.TabIndex = 5470
         Me.Label5.Text = "Items: "
-        '
-        'btnAgregarNewElemento
-        '
-        Me.btnAgregarNewElemento.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.btnAgregarNewElemento.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnAgregarNewElemento.Image = Global.modmlf.My.Resources.Resources.BotonCorto2
-        Me.btnAgregarNewElemento.Location = New System.Drawing.Point(1559, 6)
-        Me.btnAgregarNewElemento.Name = "btnAgregarNewElemento"
-        Me.btnAgregarNewElemento.Size = New System.Drawing.Size(392, 69)
-        Me.btnAgregarNewElemento.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.btnAgregarNewElemento.TabIndex = 5469
-        Me.btnAgregarNewElemento.TabStop = False
-        Me.btnAgregarNewElemento.Visible = False
-        '
-        'Button4
-        '
-        Me.Button4.BackgroundImage = CType(resources.GetObject("Button4.BackgroundImage"), System.Drawing.Image)
-        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.Button4.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button4.Location = New System.Drawing.Point(11, 14)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(60, 54)
-        Me.Button4.TabIndex = 5468
-        Me.Button4.UseVisualStyleBackColor = True
         '
         'dgvCortosCompletos
         '
@@ -1100,7 +1007,7 @@ Partial Class Principal
         Me.dgvCortosCompletos.DefaultCellStyle = DataGridViewCellStyle17
         Me.dgvCortosCompletos.EnableHeadersVisualStyles = False
         Me.dgvCortosCompletos.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvCortosCompletos.Location = New System.Drawing.Point(6, 81)
+        Me.dgvCortosCompletos.Location = New System.Drawing.Point(11, 78)
         Me.dgvCortosCompletos.Name = "dgvCortosCompletos"
         Me.dgvCortosCompletos.ReadOnly = True
         DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -1114,7 +1021,7 @@ Partial Class Principal
         Me.dgvCortosCompletos.RowHeadersVisible = False
         Me.dgvCortosCompletos.RowHeadersWidth = 51
         Me.dgvCortosCompletos.RowTemplate.Height = 24
-        Me.dgvCortosCompletos.Size = New System.Drawing.Size(1959, 435)
+        Me.dgvCortosCompletos.Size = New System.Drawing.Size(2129, 251)
         Me.dgvCortosCompletos.TabIndex = 5436
         '
         'Timer3
@@ -1133,12 +1040,121 @@ Partial Class Principal
         Me.TLModificar.Size = New System.Drawing.Size(159, 32)
         Me.TLModificar.Text = "Modificar"
         '
+        'btnCortosPN
+        '
+        Me.btnCortosPN.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnCortosPN.BackgroundImage = CType(resources.GetObject("btnCortosPN.BackgroundImage"), System.Drawing.Image)
+        Me.btnCortosPN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.btnCortosPN.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCortosPN.Location = New System.Drawing.Point(1225, 9)
+        Me.btnCortosPN.Name = "btnCortosPN"
+        Me.btnCortosPN.Size = New System.Drawing.Size(54, 57)
+        Me.btnCortosPN.TabIndex = 5470
+        Me.btnCortosPN.UseVisualStyleBackColor = True
+        Me.btnCortosPN.Visible = False
+        '
+        'btnAgregaFecha
+        '
+        Me.btnAgregaFecha.BackgroundImage = CType(resources.GetObject("btnAgregaFecha.BackgroundImage"), System.Drawing.Image)
+        Me.btnAgregaFecha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.btnAgregaFecha.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnAgregaFecha.Location = New System.Drawing.Point(480, 5)
+        Me.btnAgregaFecha.Name = "btnAgregaFecha"
+        Me.btnAgregaFecha.Size = New System.Drawing.Size(54, 57)
+        Me.btnAgregaFecha.TabIndex = 5469
+        Me.btnAgregaFecha.UseVisualStyleBackColor = True
+        Me.btnAgregaFecha.Visible = False
+        '
+        'btnexportaeficc
+        '
+        Me.btnexportaeficc.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnexportaeficc.BackColor = System.Drawing.Color.White
+        Me.btnexportaeficc.BackgroundImage = CType(resources.GetObject("btnexportaeficc.BackgroundImage"), System.Drawing.Image)
+        Me.btnexportaeficc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.btnexportaeficc.Location = New System.Drawing.Point(830, 18)
+        Me.btnexportaeficc.Name = "btnexportaeficc"
+        Me.btnexportaeficc.Size = New System.Drawing.Size(117, 42)
+        Me.btnexportaeficc.TabIndex = 5468
+        Me.btnexportaeficc.UseVisualStyleBackColor = False
+        Me.btnexportaeficc.Visible = False
+        '
+        'btnRefrescaGrid
+        '
+        Me.btnRefrescaGrid.BackgroundImage = CType(resources.GetObject("btnRefrescaGrid.BackgroundImage"), System.Drawing.Image)
+        Me.btnRefrescaGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.btnRefrescaGrid.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnRefrescaGrid.Location = New System.Drawing.Point(579, 9)
+        Me.btnRefrescaGrid.Name = "btnRefrescaGrid"
+        Me.btnRefrescaGrid.Size = New System.Drawing.Size(44, 51)
+        Me.btnRefrescaGrid.TabIndex = 5467
+        Me.btnRefrescaGrid.UseVisualStyleBackColor = True
+        Me.btnRefrescaGrid.Visible = False
+        '
+        'BtnExportarCortos
+        '
+        Me.BtnExportarCortos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.BtnExportarCortos.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BtnExportarCortos.Image = Global.modmlf.My.Resources.Resources.botonexport
+        Me.BtnExportarCortos.Location = New System.Drawing.Point(1344, 12)
+        Me.BtnExportarCortos.Name = "BtnExportarCortos"
+        Me.BtnExportarCortos.Size = New System.Drawing.Size(375, 63)
+        Me.BtnExportarCortos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.BtnExportarCortos.TabIndex = 5471
+        Me.BtnExportarCortos.TabStop = False
+        Me.BtnExportarCortos.Visible = False
+        '
+        'btnAgregarNewElemento
+        '
+        Me.btnAgregarNewElemento.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.btnAgregarNewElemento.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnAgregarNewElemento.Image = Global.modmlf.My.Resources.Resources.BotonCorto2
+        Me.btnAgregarNewElemento.Location = New System.Drawing.Point(1725, 8)
+        Me.btnAgregarNewElemento.Name = "btnAgregarNewElemento"
+        Me.btnAgregarNewElemento.Size = New System.Drawing.Size(392, 69)
+        Me.btnAgregarNewElemento.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.btnAgregarNewElemento.TabIndex = 5469
+        Me.btnAgregarNewElemento.TabStop = False
+        Me.btnAgregarNewElemento.Visible = False
+        '
+        'Button4
+        '
+        Me.Button4.BackgroundImage = CType(resources.GetObject("Button4.BackgroundImage"), System.Drawing.Image)
+        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.Button4.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Button4.Location = New System.Drawing.Point(11, 14)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(60, 54)
+        Me.Button4.TabIndex = 5468
+        Me.Button4.UseVisualStyleBackColor = True
+        '
+        'Button3
+        '
+        Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
+        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button3.Location = New System.Drawing.Point(548, 17)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(48, 55)
+        Me.Button3.TabIndex = 5439
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
+        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button1.Location = New System.Drawing.Point(1029, 18)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(48, 38)
+        Me.Button1.TabIndex = 5437
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(1329, 755)
+        Me.ClientSize = New System.Drawing.Size(2189, 909)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.GroupBox1)
@@ -1181,9 +1197,10 @@ Partial Class Principal
         CType(Me.dgvAfectados, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
-        CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStripModificar.ResumeLayout(False)
+        CType(Me.BtnExportarCortos, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1269,4 +1286,5 @@ Partial Class Principal
     Friend WithEvents Label5 As Label
     Friend WithEvents ContextMenuStripModificar As ContextMenuStrip
     Friend WithEvents TLModificar As ToolStripMenuItem
+    Friend WithEvents BtnExportarCortos As PictureBox
 End Class

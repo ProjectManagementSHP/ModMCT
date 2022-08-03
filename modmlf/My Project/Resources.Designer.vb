@@ -63,9 +63,29 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property _1486505265_document_file_export_sending_exit_send_81434() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("1486505265-document-file-export-sending-exit-send_81434", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property BotonCorto2() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("BotonCorto2", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property botonexport() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("botonexport", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

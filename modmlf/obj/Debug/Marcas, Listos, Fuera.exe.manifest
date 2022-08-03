@@ -43,14 +43,50 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1048536">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ClosedXML.dll" size="1198592">
+      <assemblyIdentity name="ClosedXML" version="0.96.0.0" publicKeyToken="FD1EB21B62AE805B" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>o3MeCdrtHPe5va2LPNDcd+95jC+Z7ztRzsxDxLg2NoA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DocumentFormat.OpenXml.dll" size="6024616">
+      <assemblyIdentity name="DocumentFormat.OpenXml" version="2.16.0.0" publicKeyToken="8FB06CB64D019A17" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>44attfqfTbx+EdWaQqyKJBUxCwXTM+uvX7TnQk7qqrU=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExcelNumberFormat.dll" size="30208">
+      <assemblyIdentity name="ExcelNumberFormat" version="1.1.0.0" publicKeyToken="23C6F5D73BE07ECA" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>A8zHGkKDMQLvVK6ezznZ1iwEkcFzWao30dLvDsc5fQQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1088472">
       <assemblyIdentity name="Marcas, Listos, Fuera" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>aQnjCADgZnA36DOLQ3x723ZkdLJ+xw0OoKjggMK4nTc=</dsig:DigestValue>
+        <dsig:DigestValue>tZW6TrW0Fb4Z/7QeenS707yjBa8bwdNCEuxAh8ey1X4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -168,22 +204,22 @@
       <dsig:DigestValue>5fljkQxgDgBFFP14ojkzfsNTjg7sxH0IKTIbkyfMSgw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Marcas, Listos, Fuera.pdb" size="468480">
+  <file name="Marcas, Listos, Fuera.pdb" size="482816">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>mNHLc/u6cu+gqZqMq6A32Myynll+Q+S6i+aEtX/tQ/Q=</dsig:DigestValue>
+      <dsig:DigestValue>3ErAFFe9ZBkt810eoqv//Wf3Ay2HGX+JtVcypCSgis8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Marcas, Listos, Fuera.xml" size="1706">
+  <file name="Marcas, Listos, Fuera.xml" size="2069">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>9wlr+9VNbByNfJObP75tEEgWyfCL2Xaj7dCpeLXKmjU=</dsig:DigestValue>
+      <dsig:DigestValue>x4GJ/+24qifSx6bAPKibzj+R8Nqh4Gvj7bcQeJahWsw=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

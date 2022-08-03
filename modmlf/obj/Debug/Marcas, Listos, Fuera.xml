@@ -22,7 +22,17 @@ Marcas, Listos, Fuera
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:modmlf.My.Resources.Resources._1486505265_document_file_export_sending_exit_send_81434">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:modmlf.My.Resources.Resources.BotonCorto2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modmlf.My.Resources.Resources.botonexport">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

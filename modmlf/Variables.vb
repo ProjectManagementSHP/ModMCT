@@ -22,6 +22,7 @@ Module Variables
     Public CWO As String, ver As String
     Public WIP As String, PN As String
     Public ColaGrafica As Boolean = False
+    Public FlagFechas As Boolean = False
     Public op, sort, p, flag, maq, flagActualizacion, cola As Integer
     Public userID As String
     Public host As String = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString

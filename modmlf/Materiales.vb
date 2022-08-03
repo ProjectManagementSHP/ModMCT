@@ -698,7 +698,9 @@ Public Class Materiales
             CorreoFalla.EnviaCorreoFalla("CheckMovNegative", host, UserName)
         End Try
     End Function
-    Sub UpdateHoldPN(CWO As String, PN As String)
+    Public Sub UpdateHoldPN(
+            CWO As String,
+            PN As String)
         Try
             query = "update tblBOMCWO set Hold=1 where CWO='" + CWO + "' and PN='" + PN + "'"
             cmd = New SqlCommand(query, cnn)

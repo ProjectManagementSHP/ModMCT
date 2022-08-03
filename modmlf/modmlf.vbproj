@@ -89,6 +89,16 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.96.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.96.0\lib\net46\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.16.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.16.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -132,6 +142,7 @@
     <Reference Include="TelerikCommon, Version=2014.2.617.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e">
       <HintPath>bin\Debug\TelerikCommon.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -348,6 +359,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="42571verticaltrafficlight_99064.ico" />
+    <None Include="Resources\botonexport.PNG" />
+    <None Include="Resources\1486505265-document-file-export-sending-exit-send_81434.ico" />
     <None Include="Resources\save_icon-icons.com_53618%281%29.ico" />
     <None Include="Resources\BotonCorto2.PNG" />
     <None Include="Resources\delete_unapprove_discard_remove_x_red_icon-icons.com_55984.png" />
