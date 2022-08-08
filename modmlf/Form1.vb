@@ -1387,11 +1387,11 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             End If
         ElseIf a = 4 Then 'Ya empezados
             If opcion = 1 Or opcion = 6 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 4 Or opcion = 7 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
         ElseIf a = 5 Then 'Empezados y Detenidos
             If opcion = 1 Or opcion = 6 Then
