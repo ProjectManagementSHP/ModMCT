@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SEAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblBOMCWO">
+    <Key>
+      <PropertyRef Name="IdentificadorBOM" />
+    </Key>
+    <Property Name="IdentificadorBOM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CWO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AU" Type="Int32" />
+    <Property Name="Rev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Qty" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="TagAsignado" Type="Int32" />
+    <Property Name="Hold" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblBOMWIP">
+    <Key>
+      <PropertyRef Name="IDBOMWIP" />
+    </Key>
+    <Property Name="IDBOMWIP" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AU" Type="Int32" />
+    <Property Name="Rev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Qty" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Balance" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="MaterialGroup" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PercentIncrease" Type="Int32" />
+    <Property Name="PickList" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Route" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifyBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+    <Property Name="PO" Type="Int64" />
+    <Property Name="Week" Type="Int32" />
+    <Property Name="LeadTime" Type="Int32" />
+    <Property Name="RequieredDate" Type="DateTime" Precision="0" />
+    <Property Name="ProcessDate" Type="DateTime" Precision="0" />
+    <Property Name="FirstDayWeek" Type="DateTime" Precision="0" />
+    <Property Name="Reference" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="QtyExtra" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="ProcFDisMat" Type="DateTime" Precision="3" />
+    <Property Name="NotasCompras" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="POAsigned" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblCWO">
+    <Key>
+      <PropertyRef Name="CWO" />
+    </Key>
+    <Property Name="CWO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="Maq" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Oper" Type="Int32" />
+    <Property Name="DueDate" Type="DateTime" Precision="0" />
+    <Property Name="WireSetup" Type="Int32" />
+    <Property Name="ManualAplicator" Type="Int32" />
+    <Property Name="AutomaticAplicator" Type="Int32" />
+    <Property Name="AplicatorSetup" Type="Int32" />
+    <Property Name="SealSetup" Type="Int32" />
+    <Property Name="TotalSetupTime" Type="Int32" />
+    <Property Name="TotalAplicatorSetup" Type="Int32" />
+    <Property Name="EcRt" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="EpSu" Type="Int32" />
+    <Property Name="EpRt" Type="Int32" />
+    <Property Name="Id" Type="Int32" />
+    <Property Name="Notes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="tlLengthcut" Type="Int64" />
+    <Property Name="SetupTRM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="tlQtyCut" Type="Int64" />
+    <Property Name="DiffWires" Type="Int64" />
+    <Property Name="wires" Type="Int32" />
+    <Property Name="EstCwo" Type="Int32" />
+    <Property Name="WSort" Type="Int32" />
+    <Property Name="StartDateCWO" Type="DateTime" Precision="3" />
+    <Property Name="ApproveForProduction" Type="Boolean" />
+    <Property Name="TotalQtyCrimp" Type="Int32" />
+    <Property Name="WHMaterials" Type="Boolean" />
+    <Property Name="TCTools" Type="Boolean" />
+    <Property Name="RealStartDateCWO" Type="DateTime" Precision="3" />
+    <Property Name="PrintedSNCWO" Type="Boolean" />
+    <Property Name="PrintedMaterialListCWO" Type="Boolean" />
+    <Property Name="RealStopDateCWO" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="MaterialStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CWOChoice" Type="Boolean" />
+    <Property Name="CloseDate" Type="DateTime" Precision="3" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="HL" Type="Boolean" />
+    <Property Name="SemC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaSolicitudMat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ConfirmacionAlm" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ConfirmacionApl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dateSolicitud" Type="DateTime" Precision="3" />
+    <Property Name="dateConfirmaAlm" Type="DateTime" Precision="3" />
+    <Property Name="dateConfirmaApl" Type="DateTime" Precision="3" />
+    <Property Name="AsignadoA" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblCWOSerialNumber">
+    <Key>
+      <PropertyRef Name="IDCWO" />
+    </Key>
+    <Property Name="IDCWO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WireID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CWO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WID" Type="Int32" />
+    <Property Name="Wire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LengthWire" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="WireBalance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TermA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TermB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CoverA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CoverB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="JoinA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="JoinB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StripA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StripB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EPA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EPB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AU" Type="Int64" />
+    <Property Name="Rev" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="LabelCount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Cutting" Type="DateTime" Precision="3" />
+    <Property Name="PressesA" Type="DateTime" Precision="3" />
+    <Property Name="PressesB" Type="DateTime" Precision="3" />
+    <Property Name="Splice" Type="DateTime" Precision="3" />
+    <Property Name="SubStorage" Type="DateTime" Precision="3" />
+    <Property Name="UserCutting" Type="Int32" />
+    <Property Name="UserPressesA" Type="Int32" />
+    <Property Name="UserPressesB" Type="Int32" />
+    <Property Name="UserSplice" Type="Int32" />
+    <Property Name="UserSubStorage" Type="Int32" />
+    <Property Name="PathCWO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NumericalPath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PrintedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PrintedDate" Type="DateTime" Precision="3" />
+    <Property Name="Page" Type="Int32" />
+    <Property Name="PWOA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PWOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CellA" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CellB" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Circuit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="77" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblItemsPOUserIDAuthorization">
+    <Key>
+      <PropertyRef Name="IDUsuario" />
+    </Key>
+    <Property Name="IDUsuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Ext" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="Form" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Module" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="Notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Menu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NumeroEmpleado" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tblItemsQB">
+    <Key>
+      <PropertyRef Name="IDItem" />
+    </Key>
+    <Property Name="IDItem" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SubPN" Type="String" MaxLength="54" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="QtyOnHand" Type="Decimal" Precision="38" Scale="5" />
+    <Property Name="QtyOnOrder" Type="Decimal" Precision="38" Scale="5" />
+    <Property Name="QtyRMA" Type="Decimal" Precision="38" Scale="5" />
+    <Property Name="Reserved" Type="Decimal" Precision="38" Scale="5" />
+    <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PackageQuantity" Type="Int32" />
+    <Property Name="SubPNQtyOnHand" Type="Decimal" Precision="38" Scale="5" />
+    <Property Name="SubPNQtyOnOrder" Type="Decimal" Precision="38" Scale="5" />
+    <Property Name="StandarPack" Type="Int32" />
+    <Property Name="UnitWeight" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PackWeight" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="EmptyPackWeight" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="MOQ" Type="Int32" />
+    <Property Name="BinBalance" Type="Boolean" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="ExchangeRate" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnitPriceMXN" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="PackPrice" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="SalePriceUnit" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="VendorPN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ScanCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MaterialGroup" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Specify" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LocationWH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Dimension" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Vendor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="LeadTime" Type="Int32" />
+    <Property Name="UPC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Buyer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Clasificacion" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="PriceCodice" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="Fraccion" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifyBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+    <Property Name="ListID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreated" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Picture" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="KindPurchasing" Type="Boolean" />
+    <Property Name="UMVendor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UMInputSHP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="QtyInputSHP" Type="Decimal" Precision="38" Scale="5" />
+    <Property Name="NoReturn" Type="Boolean" />
+    <Property Name="ExactlyQuantity" Type="Boolean" />
+    <Property Name="QAValidation" Type="Boolean" />
+    <Property Name="PriOption" Type="Boolean" />
+    <Property Name="Max" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Min" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Currency" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="LP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="SubBOM" Type="Boolean" />
+    <Property Name="DescriptionOldSystem" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UnitPriceBOM" Type="Decimal" Precision="18" Scale="5" />
+    <Property Name="CostInv" Type="Decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <EntityType Name="tblMaqRate">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Maq" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FechaDNueva" Type="DateTime" Precision="0" />
+    <Property Name="Cat" Type="Int32" />
+    <Property Name="Categoria" Type="String" MaxLength="75" FixedLength="false" Unicode="true" />
+    <Property Name="MaxAWG" Type="Int32" />
+    <Property Name="MinAWG" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="Impresion" Type="Int32" />
+    <Property Name="Sello" Type="Int32" />
+    <Property Name="C0_0_99ppm" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="C1_2_99ppm" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="C3_4_99ppm" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="C5_7_99ppm" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="C8_9_99ppm" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="C10_" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="ZonaCero" Type="Boolean" />
+    <Property Name="Host" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblMasterDet">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AU" Type="Int32" />
+    <Property Name="Rev" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+    <Property Name="FromX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ToX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WID" Type="Int32" />
+    <Property Name="Wire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LengthWire" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TermA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StripA" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="JoinA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SpA" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="CoverA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TermB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StripB" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="JoinB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SpB" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="CoverB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WDevA" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="WDevB" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Ink" Type="Int32" />
+    <Property Name="Notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="EPA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EPB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TA" Type="Int32" />
+    <Property Name="TB" Type="Int32" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifyBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+    <Property Name="Hold" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IDSort" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tblMLFNotification">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Dep" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SendReceive" Type="Int32" />
+    <Property Name="TypeOfNotify" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tblPWO">
+    <Key>
+      <PropertyRef Name="PWO" />
+    </Key>
+    <Property Name="PWO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cell" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="DueDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ESetupTime" Type="Int32" />
+    <Property Name="ERunTime" Type="Int32" />
+    <Property Name="ETotalTime" Type="Int32" />
+    <Property Name="RealRunTime" Type="Int32" />
+    <Property Name="Efficiency" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="NumTravelers" Type="Int64" />
+    <Property Name="TotalCrimps" Type="Int64" />
+    <Property Name="Printed" Type="Boolean" />
+    <Property Name="WHMaterials" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="Int32" />
+    <Property Name="CloseDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="tblWIP">
+    <Key>
+      <PropertyRef Name="WIP" />
+    </Key>
+    <Property Name="WIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AU" Type="Int32" />
+    <Property Name="Rev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Qty" Type="Int32" />
+    <Property Name="BalanceProcess" Type="Int32" />
+    <Property Name="BalanceSubStorage" Type="Int32" />
+    <Property Name="BalanceAssy" Type="Int32" />
+    <Property Name="BalancePack" Type="Int32" />
+    <Property Name="BalanceShipped" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EstimatedStartDateProces" Type="DateTime" Precision="3" />
+    <Property Name="StartDateProces" Type="DateTime" Precision="3" />
+    <Property Name="DueDateProcess" Type="DateTime" Precision="3" />
+    <Property Name="DueDateAssy" Type="DateTime" Precision="3" />
+    <Property Name="DueDateShipped" Type="DateTime" Precision="3" />
+    <Property Name="DueDateCustomer" Type="DateTime" Precision="3" />
+    <Property Name="ClosedDate" Type="DateTime" Precision="3" />
+    <Property Name="Priority" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Instruction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="wSort" Type="Decimal" Precision="2" Scale="0" />
+    <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IT" Type="Int32" />
+    <Property Name="StartProd" Type="DateTime" Precision="3" />
+    <Property Name="Notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Hold" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="WipState" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="KindOfAU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WeekProcess" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PWOSort" Type="Int32" />
+    <Property Name="RequiredPWO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="AddOperations" Type="Boolean" />
+    <Property Name="SerialNumbers" Type="Boolean" />
+    <Property Name="WHMaterialsSplice" Type="Boolean" />
+    <Property Name="WHMaterialsAssy" Type="Boolean" />
+    <Property Name="WHMaterialsPack" Type="Boolean" />
+    <Property Name="WHMaterialsCords" Type="Boolean" />
+    <Property Name="Printed" Type="Boolean" />
+    <Property Name="TimeTest" Type="Decimal" Precision="38" Scale="2" />
+    <Property Name="Line" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ApprobationPur" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="ApprobationPurBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ApprobationPurDate" Type="DateTime" Precision="3" />
+    <Property Name="PrintedOper" Type="Boolean" />
+    <Property Name="IDClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CS1" Type="Boolean" />
+    <Property Name="SaDueDate" Type="DateTime" Precision="3" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PR" Type="Int32" />
+    <Property Name="ProcFDispMat" Type="DateTime" Precision="3" />
+    <Property Name="ProcNotas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CutFProm" Type="DateTime" Precision="3" />
+    <Property Name="CutNotas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CancelDate" Type="DateTime" Precision="3" />
+    <Property Name="CancelBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Vol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Atado" Type="Int32" />
+    <Property Name="Sem" Type="Int32" />
+    <Property Name="AlmFProm" Type="DateTime" Precision="3" />
+    <Property Name="AlmNotas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IngFProm" Type="DateTime" Precision="3" />
+    <Property Name="IngNotas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IngResponsable" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Corte" Type="Int32" />
+    <Property Name="MP" Type="Int32" />
+    <Property Name="SA" Type="Int32" />
+    <Property Name="Ens" Type="Int32" />
+    <Property Name="Shipping" Type="Int32" />
+    <Property Name="FGSHP" Type="Int32" />
+    <Property Name="FGSHPEP" Type="Int32" />
+    <Property Name="IEns" Type="Int32" />
+    <Property Name="A_Corte" Type="Int32" />
+    <Property Name="Balance" Type="Int32" />
+    <Property Name="EnsFProm" Type="DateTime" Precision="3" />
+    <Property Name="EnsNotas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="MPFProm" Type="DateTime" Precision="3" />
+    <Property Name="MPNotas" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ProcFDispMat2" Type="DateTime" Precision="3" />
+    <Property Name="OnHold" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="UsuarioHold" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tblWipDet">
+    <Key>
+      <PropertyRef Name="WireID" />
+    </Key>
+    <Property Name="WireID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="WIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CWO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AU" Type="Int64" />
+    <Property Name="Rev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="Int64" />
+    <Property Name="WID" Type="Int32" />
+    <Property Name="Wire" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LengthWire" Type="Decimal" Precision="32" Scale="2" />
+    <Property Name="TermA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StripA" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="JoinA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SpA" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CoverA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TermB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StripB" Type="Decimal" Precision="18" Scale="1" />
+    <Property Name="JoinB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SpB" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CoverB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="oper" Type="Int32" />
+    <Property Name="WdevA" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="WdevB" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Sort" Type="Int32" />
+    <Property Name="Ink" Type="Int32" />
+    <Property Name="Notes" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="EPA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="EPB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WireNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="WireBalance" Type="Int32" />
+    <Property Name="Circuit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Printed" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PrintedDate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ToX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FromX" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TABalance" Type="Int32" />
+    <Property Name="TBBalance" Type="Int32" />
+    <Property Name="TAOper" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="TBOper" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="TA" Type="Int32" />
+    <Property Name="TB" Type="Int32" />
+    <Property Name="Hold" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CWOStatus" Type="Int32" />
+    <Property Name="MaqMachineA" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="MaqMachineB" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="WireCut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="MaqA" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="MaqB" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="MaqCategory" Type="Int32" />
+    <Property Name="Category" Type="Int32" />
+    <Property Name="AplicatorA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AplicatorB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IDKeyA" Type="Int64" />
+    <Property Name="IDKeyB" Type="Int64" />
+    <Property Name="TermAStatus" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="TermBStatus" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="TimeA" Type="Int32" />
+    <Property Name="TimeB" Type="Int32" />
+    <Property Name="PWOStatus" Type="Int32" />
+    <Property Name="PWOA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PWOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PWORecA" Type="Int32" />
+    <Property Name="PWORecB" Type="Int32" />
+    <Property Name="CellA" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="CellB" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="PullToSeatA" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="PullToSeatB" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="PWOATemp" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="PWOBTemp" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="BWOA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BWOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SWOA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SWOB" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstPCOKCWO" Type="Boolean" />
+    <Property Name="FirstPCOKPWOA" Type="Boolean" />
+    <Property Name="FirstPCOKPWOB" Type="Boolean" />
+    <Property Name="FirstPCOKBWO" Type="Boolean" />
+    <Property Name="FirstPCOKSWO" Type="Boolean" />
+    <Property Name="InspectorCWO" Type="Int32" />
+    <Property Name="InspectorPWOA" Type="Int32" />
+    <Property Name="InspectorPWOB" Type="Int32" />
+    <Property Name="InspectorBWO" Type="Int32" />
+    <Property Name="InspectorSWO" Type="Int32" />
+    <Property Name="FirstPCOKCWODate" Type="DateTime" Precision="3" />
+    <Property Name="FirstPCOKPWOADate" Type="DateTime" Precision="3" />
+    <Property Name="FirstPCOKPWOBDate" Type="DateTime" Precision="3" />
+    <Property Name="FirstPCOKBWODate" Type="DateTime" Precision="3" />
+    <Property Name="FirstPCOKSWODate" Type="DateTime" Precision="3" />
+    <Property Name="OrderToPrint" Type="Int32" />
+    <Property Name="OrdenesPWO" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="PWOOrderToPrint" Type="Int32" />
+    <Property Name="CatAsignedCWO" Type="Int32" />
+    <Property Name="FlagWire" Type="Boolean" />
+    <Property Name="FlagTermA" Type="Boolean" />
+    <Property Name="FlagTermB" Type="Boolean" />
+    <Property Name="MaqUsed" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="IDSort" Type="Int32" />
+    <Property Name="TSetup" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TRuntime" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="scaneoprocess" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblItemsTag">
+    <Key>
+      <PropertyRef Name="TAG" />
+      <PropertyRef Name="Zero" />
+    </Key>
+    <Property Name="TAG" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Balance" Type="Decimal" Precision="32" Scale="5" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SubPN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Qty" Type="Decimal" Precision="32" Scale="5" />
+    <Property Name="QtyReserved" Type="Decimal" Precision="32" Scale="5" />
+    <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InitialWeight" Type="Decimal" Precision="32" Scale="5" />
+    <Property Name="EmptyWeight" Type="Decimal" Precision="32" Scale="5" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LoteNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="QtyFromPO" Type="Decimal" Precision="32" Scale="5" />
+    <Property Name="ContainerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PesoVerificado" Type="Boolean" />
+    <Property Name="CloseBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CloseDate" Type="DateTime" Precision="3" />
+    <Property Name="OutDate" Type="DateTime" Precision="3" />
+    <Property Name="InDate" Type="DateTime" Precision="3" />
+    <Property Name="ScaleQuantity" Type="Decimal" Precision="32" Scale="5" />
+    <Property Name="CaptureType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UsedIn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="AssignedTo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Zero" Type="Boolean" Nullable="false" />
+    <Property Name="idPOsReceptionsDet" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Loc" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="SEAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblBOMCWOes" EntityType="Self.tblBOMCWO" />
+    <EntitySet Name="tblBOMWIPs" EntityType="Self.tblBOMWIP" />
+    <EntitySet Name="tblCWOes" EntityType="Self.tblCWO" />
+    <EntitySet Name="tblCWOSerialNumbers" EntityType="Self.tblCWOSerialNumber" />
+    <EntitySet Name="tblItemsPOUserIDAuthorizations" EntityType="Self.tblItemsPOUserIDAuthorization" />
+    <EntitySet Name="tblItemsQBs" EntityType="Self.tblItemsQB" />
+    <EntitySet Name="tblMaqRates" EntityType="Self.tblMaqRate" />
+    <EntitySet Name="tblMasterDets" EntityType="Self.tblMasterDet" />
+    <EntitySet Name="tblMLFNotifications" EntityType="Self.tblMLFNotification" />
+    <EntitySet Name="tblPWOes" EntityType="Self.tblPWO" />
+    <EntitySet Name="tblWIPs" EntityType="Self.tblWIP" />
+    <EntitySet Name="tblWipDets" EntityType="Self.tblWipDet" />
+    <EntitySet Name="tblItemsTags" EntityType="Self.tblItemsTag" />
+  </EntityContainer>
+</Schema>

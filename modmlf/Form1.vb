@@ -596,7 +596,7 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [PoAU] FROM tblBOMC
             Dim Insert As String = ""
             If NewHoldWithOutCWO = False Then
                 Insert = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
-            Select tblBOMCWO.PN As [Component PN], tblBOMCWO.[Description] [Description],
+            Select distinct tblBOMCWO.PN As [Component PN], tblBOMCWO.[Description] [Description],
             (SELECT MIN(CONVERT(date,dateConfirmaAlm)) FROM tblCWO WHERE CWO in (
             Select CWO FROM tblBOMCWO aPn WHERE aPn.PN=tblBOMCWO.PN And Hold=1)
             ) [Fecha Corto],[AUs afectados],(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN (SELECT AU

@@ -80,6 +80,45 @@ Module CorreoFalla
             CorreoFalla.EnviaCorreoFalla("EnviaCorreoHoldMat", host, UserName)
         End Try
     End Sub
+    Public Sub EnviaCorreoHoldMatPorCompras(mensaje As String)
+        Try
+            Dim DestinatariosTO As String = CargaDestinatarios("ComprasMLFholdComp", "TO")
+            Dim DestinatariosCC As String = CargaDestinatarios("ComprasMLFholdComp", "CC")
+            Dim DestinatariosBCC As String = CargaDestinatarios("ComprasMLFholdComp", "BCC")
+            Dim EnviadoPor As String = "shp.app@specializedharness.com"
+            Dim Correo As String
+            Correo = mensaje
+
+            Correo += vbNewLine + vbNewLine + vbNewLine
+            Correo += "Por favor no responder este correo" + vbNewLine + "Gracias"
+
+            Dim _Message As New System.Net.Mail.MailMessage()
+            Dim _SMTP As New System.Net.Mail.SmtpClient
+
+            _SMTP.Credentials = New System.Net.NetworkCredential(EnviadoPor, "Row.6078$")
+            _SMTP.Host = "smtp.ipower.com"
+            _SMTP.Port = 587
+            _SMTP.EnableSsl = True
+
+            If DestinatariosCC <> "" Then _Message.CC.Add(DestinatariosCC)
+            If DestinatariosBCC <> "" Then _Message.Bcc.Add(DestinatariosBCC)
+            _Message.[To].Add(DestinatariosTO)
+            _Message.From = New System.Net.Mail.MailAddress(EnviadoPor, "", System.Text.Encoding.UTF8)
+            _Message.Subject = "Material sin stock en Hold"
+            _Message.SubjectEncoding = System.Text.Encoding.UTF8
+            _Message.Body = Correo
+            _Message.BodyEncoding = System.Text.Encoding.UTF8
+            _Message.Priority = System.Net.Mail.MailPriority.High
+
+            _Message.IsBodyHtml = False
+            'ENVIO
+            _SMTP.Send(_Message)
+            'MsgBox("Se ha Enviado el Email", MsgBoxStyle.Information, "Email enviado")
+        Catch ex As Exception
+            'MsgBox(ex.Message.ToString)
+            CorreoFalla.EnviaCorreoFalla("EnviaCorreoHoldMat", host, UserName)
+        End Try
+    End Sub
     Private Function CargaDestinatarios(ByVal Modulo As String, ByVal OpcionEnvio As String)
         Dim Destinatarios As String = ""
         Dim contador As Long = 0
