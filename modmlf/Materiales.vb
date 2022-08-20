@@ -134,7 +134,7 @@ Public Class Materiales
             cnn.Open()
             muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
             cnn.Close()
-            query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,Tsetup,TRuntime,null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+            query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
             cmd = New SqlCommand(query2, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -146,7 +146,7 @@ Public Class Materiales
                 Dim column As Integer = If(muestra = 1, 11, 8)
                 For i As Integer = 0 To tabl.Rows.Count - 1
                     tabl.Columns(column).ReadOnly = False
-                    tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
+                    tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
                     tabl.Rows(i).Item(column) = tAcumulado
                 Next
                 tAcumulado = 0

@@ -17,11 +17,11 @@ Public Class ModifyAndAddPN
                 IDemonChanges = New Principal
                 If IDemonChanges.ModificandoPN(dtpFProm.Value, txbNotasModify.Text, cmbPOModify.Text, txbNotas.Text, Me.PN, txbVendorModify.Text, If(chkParoAU.Checked = True, True, False)) Then
                     Dim tb As New DataTable
-                    tb = IDemonChanges.GetTable($"select distinct WIP from tblBOMWIP cw where cw.PN = '{Me.PN}' and cw.WIP in 
+                    tb = IDemonChanges.GetTable($"select distinct WIP from tblBOMWIP cw where cw.PN = '{Me.PN}' and (cw.WIP in 
                     (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
                     on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
                     where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
-                    and (ConfirmacionAlm='OnHold')) ")
+                    and (ConfirmacionAlm='OnHold')) or Wip in (select WIP from tblWipCortosPN where PN='{Me.PN}'))")
                     If tb.Rows.Count > 0 Then
                         For Each wip As DataRow In tb.Rows
                             IDemonChanges.NotesInWIP(wip.Item("WIP").ToString, txbNotasModify.Text + " " + txbNotas.Text, dtpFProm.Value.ToString)
@@ -67,15 +67,14 @@ Public Class ModifyAndAddPN
             Dim Wips As New StringBuilder("")
             Dim WipsWithOutCWO As New StringBuilder("")
             Dim Aus As New StringBuilder("")
+            Dim CountWipsPass As Integer = 0
             For Each row As DataGridViewRow In dgvCortosCompletos.Rows
                 If row.Cells(0).Value Then
-                    If CInt(row.Cells(5).Value.ToString) > 2 Then
+                    If CInt(row.Cells(5).Value.ToString) > 2 And CInt(row.Cells(5).Value.ToString) <> 12 Then
                         IDemonChanges.CheckCWOonPN(row.Cells(1).Value.ToString, txbNewPN.Text)
                         IDemonChanges.NotesInWIP(row.Cells("WIP").Value.ToString, txbNotasNew.Text + " " + txtNewRazon.Text, dtpFProm.Value.ToString)
                         IDemonChanges.LlenandoNotasCompras(dtpAgregando.Value.ToString, txbNotasNew.Text + " " + txtNewRazon.Text, txbNewPN.Text, row.Cells("WIP").Value.ToString)
-                        If Not IDemonChanges.CheckCortosPN(txbNewPN.Text, True, If(chkParoAUNew.Checked = True, True, False)) Then
-                            IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text, txbNotasNew.Text, True, If(chkParoAUNew.Checked, True, False))
-                        End If
+                        CountWipsPass += 1
                     Else
                         Aus.Append($"{row.Cells(2).Value},")
                         WipsWithOutCWO.Append($"'{row.Cells(1).Value}',")
@@ -83,10 +82,15 @@ Public Class ModifyAndAddPN
                     Wips.Append($"{row.Cells(1).Value},")
                 End If
             Next
+            If CountWipsPass > 0 Then
+                If Not IDemonChanges.CheckCortosPN(txbNewPN.Text, True, If(chkParoAUNew.Checked = True, True, False)) Then
+                    IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text, txbNotasNew.Text, True, If(chkParoAUNew.Checked, True, False))
+                End If
+            End If
             If Aus.Length > 0 And WipsWithOutCWO.Length > 0 Then
                 IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text,
-            txbNotasNew.Text, True, If(chkParoAUNew.Checked, True, False), True, WipsWithOutCWO.ToString.TrimEnd(","),
-            Aus.ToString.TrimEnd(","))
+                txbNotasNew.Text, True, If(chkParoAUNew.Checked, True, False), True, WipsWithOutCWO.ToString.TrimEnd(","),
+                Aus.ToString.TrimEnd(","))
                 Dim WipsClean As String = WipsWithOutCWO.ToString.Replace("'", "")
                 WipsClean = WipsClean.ToString.TrimEnd(",", "")
                 Dim _WipsClean As String() = WipsClean.Split(",")
@@ -100,7 +104,7 @@ Public Class ModifyAndAddPN
             If Wips.Length > 0 Then
                 'Aqui colocar codigo para envio de correo de numeros de parte puestos por compras
                 Dim mensaje As String = $"Se ha colocado por parte de compras el siguiente numero de parte: {txbNewPN.Text}" + vbNewLine + "Y los WIP's afectados son los siguientes: " + vbNewLine + $"{Wips.ToString.TrimEnd(",").Trim}."
-                EnviaCorreoHoldMatPorCompras(mensaje)
+                'EnviaCorreoHoldMatPorCompras(mensaje)
             End If
             Return True
         Catch Exc As Exception

@@ -102,7 +102,7 @@ Public Class Principal
             rdbOnHold.Checked = True
             Button2.BackColor = Color.Bisque
             btnCortosPN.Visible = False
-            BtnExportarCortos.Visible = True
+            gbFechas.Visible = True
             cargadatosCompras()
             Timer3.Enabled = True
             Timer3.Interval = 1800000
@@ -236,9 +236,7 @@ Public Class Principal
             Dim consulta As String = "SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
             (select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
             Vendor,Razon,Notas,ParoAU
-            FROM tblCortosPn WHERE Hold = 1 /*and CONVERT(date,[Fecha_Corto]) 
-            BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-            (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))*/"
+            FROM tblCortosPn WHERE Hold = 1"
             cmd = New SqlCommand(consulta, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -264,12 +262,17 @@ Public Class Principal
     Private Sub ExportInfo()
         Try
             Dim dt As New DataTable
-            Dim queryCortos As String = "SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
+            'Dim queryCortos As String = "SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
+            '(select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
+            'Vendor,Razon,Notas
+            'FROM tblCortosPn WHERE CONVERT(date,[Fecha_Corto]) 
+            'BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
+            '(SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))"
+            Dim queryCortos As String = $"SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
             (select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
             Vendor,Razon,Notas
             FROM tblCortosPn WHERE CONVERT(date,[Fecha_Corto]) 
-            BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-            (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))"
+            BETWEEN '{dtpBefore.Value}' AND '{dtpAfter.Value}' "
             cmd = New SqlCommand(queryCortos, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -316,19 +319,19 @@ Public Class Principal
                                   Vendor As String,
                                   ParoAU As Boolean)
         Try
+            '******************
+            'Validacion si tiene cortos en CWO o cortos sin CWO 
             cmd = New SqlCommand($"update tblBOMWIP set ProcFDisMat='{FechaProm}',
             NotasCompras='{Notas}',POAsigned='{If(PO = "", " ", $"{PO}")}',Razon='{Razon}'
-            where wip in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP 
-            inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
-            and (ConfirmacionAlm='OnHold')) and PN = '{PNChange}'", cnn)
+            where (wip in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP 
+            inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14))  
+            and (ConfirmacionAlm='OnHold')) or Wip in (select WIP from tblWipCortosPN where PN='{PNChange}') ) and PN = '{PNChange}'", cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
             'Agregando nuevo update a tabla tblCortosPn
-            cmd = New SqlCommand($"update tblCortosPn set ETA='{FechaProm}',PO_Asignada='{If(PO = "", " ", $"{PO}")}',Vendor='{Vendor}',Razon='{Razon}',Notas='{Notas}',ParoAU='{ParoAU}' where pn='{PNChange}' and Hold = 1 /*and CONVERT(date,[Fecha_Corto]) 
-            BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-            (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))*/", cnn)
+            cmd = New SqlCommand($"update tblCortosPn set ETA='{FechaProm}',PO_Asignada='{If(PO = "", " ", $"{PO}")}',Vendor='{Vendor}',Razon='{Razon}',Notas='{Notas}',ParoAU='{ParoAU}' where pn='{PNChange}' and Hold = 1", cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             cmd.ExecuteNonQuery()
@@ -348,28 +351,19 @@ Public Class Principal
             cmd.CommandType = CommandType.Text
             cnn.Open()
             dr = cmd.ExecuteReader
-            'Dim CWOs As List(Of DataRow) = New List(Of DataRow)
-            'Dim CWOs As List(Of String) = New List(Of String)
-            'Dim dto As New DataTable
-            'CWOs = dto.AsEnumerable().ToList()
-            'If dr.HasRows Then
-            '    While dr.Read
-            '        CWOs.Add(CStr(dr.GetValue(0)))
-            '    End While
-            'End If
             tbCWO.Load(dr)
             cnn.Close()
             If tbCWO.Rows.Count > 0 Then
                 For Each rows As DataRow In tbCWO.Rows
                     If CInt(rows.Item(1).ToString) < 30 Then
                         Materiales.UpdateHoldPN(rows.Item(0).ToString, oPn)
-                        query = $"update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where CWO='{rows.Item(0).ToString}')"
+                        query = $"update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where CWO='{rows.Item(0)}')"
                         cmd = New SqlCommand(query, cnn)
                         cmd.CommandType = CommandType.Text
                         cnn.Open()
                         cmd.ExecuteNonQuery()
                         cnn.Close()
-                        query = $"update tblCWO set wSort= 12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where CWO='{rows.Item(0).ToString}'"
+                        query = $"update tblCWO set wSort= 12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where CWO='{rows.Item(0)}'"
                         cmd = New SqlCommand(query, cnn)
                         cmd.CommandType = CommandType.Text
                         cnn.Open()
@@ -378,25 +372,6 @@ Public Class Principal
                     End If
                 Next
             End If
-            'dt = GetTable("")
-            'If CWOs IsNot Nothing Then
-            '    CWOs.ForEach(Function(c)
-            '                     Materiales.UpdateHoldPN(c.ToString, oPn)
-            '                     query = $"update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where CWO='{c}')"
-            '                     cmd = New SqlCommand(query, cnn)
-            '                     cmd.CommandType = CommandType.Text
-            '                     cnn.Open()
-            '                     cmd.ExecuteNonQuery()
-            '                     cnn.Close()
-            '                     query = $"update tblCWO set wSort= case when wsort = 30 then wsort else 12 end where CWO='{c}'"
-            '                     cmd = New SqlCommand(query, cnn)
-            '                     cmd.CommandType = CommandType.Text
-            '                     cnn.Open()
-            '                     cmd.ExecuteNonQuery()
-            '                     cnn.Close()
-            '                     Return Nothing
-            '                 End Function)
-            'End If
         Catch ex As Exception
             cnn.Close()
         End Try
@@ -446,7 +421,7 @@ Public Class Principal
         Get
             Try
                 Dim da1 As New SqlDataAdapter
-                query = "select distinct w.WIP,w.AU,w.Rev,w.Qty [Cantidad],wSort from tblWIP w inner join tblBOMWIP bw on w.WIP=bw.WIP where w.Status = 'OPEN' and (wSort < 29 and wSort <> 12) and bw.PN like @filtro and bw.Balance > 0"
+                query = "select distinct w.WIP,w.AU,w.Rev,w.Qty [Cantidad],wSort from tblWIP w inner join tblBOMWIP bw on w.WIP=bw.WIP where w.Status = 'OPEN' and ((wSort < 29 and wSort <> 12) or (wSort=12 and w.WIP in (select distinct WIP from tblBOMCWO where PN like @filtro and Hold=0))) and bw.PN like @filtro and bw.Balance > 0"
                 da1 = New SqlDataAdapter(query, cnn)
                 da1.SelectCommand.Parameters.AddWithValue("@filtro", String.Format("%{0}%", SearchPn))
                 Dim table As New DataTable
@@ -463,9 +438,7 @@ Public Class Principal
         Try
             If FlagPurchasing = False Then
                 Dim eta As String = "", id As Integer = 0, po_asigned As String = "", Vendor As String = "", Razon As String = "", Notas As String = "", Hold As Integer = 0
-                Dim aConsulta As String = $"SELECT ID,ETA,PO_Asignada,Vendor,Razon,Notas,Hold FROM tblCortosPn WHERE PN ='{oPN}' AND hold =1 /*AND CONVERT(date,[Fecha_Corto]) 
-        BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-        (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))*/"
+                Dim aConsulta As String = $"SELECT ID,ETA,PO_Asignada,Vendor,Razon,Notas,Hold FROM tblCortosPn WHERE PN ='{oPN}' AND hold =1"
                 cmd = New SqlCommand(aConsulta, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -498,7 +471,7 @@ Public Class Principal
             SELECT MIN(CONVERT(date,DueDateCustomer)) FROM tblBOMCWO cc INNER JOIN tblWIP wip ON cc.WIP=wip.WIP INNER JOIN tblCWO cw ON cw.CWO=cc.CWO WHERE 
             (wip.WSort = 3 OR wip.WSort=12 OR wip.WSort=14 OR wip.WSort=25) AND (cw.Wsort IN (12,13,14)) 
             AND (ConfirmacionAlm='OnHold') AND cc.Hold=1 AND cc.PN=tblBOMCWO.PN) [AU Date], 
-            '{Convert.ToDateTime(eta)}' [ETA],(SELECT MAX(Qty) FROM tblBOM WHERE PN=tblBOMCWO.PN AND AU in (SELECT AU FROM tblBOMCWO c WHERE 
+            '{eta}' [ETA],(SELECT MAX(Qty) FROM tblBOM WHERE PN=tblBOMCWO.PN AND AU in (SELECT AU FROM tblBOMCWO c WHERE 
             c.WIP IN (SELECT DISTINCT w.WIP FROM tblCWO AS c INNER JOIN tblWipDet AS d ON c.CWO=d.CWO INNER JOIN tblWIP AS w ON w.WIP=d.WIP INNER JOIN tblTiemposEstCWO AS t ON t.CWO=c.CWO 
             WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort in (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
             AND c.Hold=1 AND c.PN=tblBOMCWO.PN)) [Qty PN],'{po_asigned}' [PO Asignada],'{Vendor}' [Vendor], '{Razon}' [Razon], '{Notas}' [Notas],{Hold} [Hold],1 PoAU
@@ -535,9 +508,7 @@ Public Class Principal
                     cnn.Close()
                 End If
             ElseIf FlagPurchasing = True Then
-                Dim oConsulta As String = $"select IsNull(ID,NULL) from tblCortosPn where PN = '{oPN}' and Hold = 1 /*and CONVERT(date,[Fecha_Corto]) 
-                         BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-                         (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))*/"
+                Dim oConsulta As String = $"select IsNull(ID,NULL) from tblCortosPn where PN = '{oPN}' and Hold = 1"
                 cmd = New SqlCommand(oConsulta, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -545,7 +516,7 @@ Public Class Principal
                 cnn.Close()
                 If res > 0 Then
                     DeleteFromTblCortos(res)
-                    Dim oInsert As String = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[PoAU])
+                    Dim oInsert As String = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
         SELECT DISTINCT tblBOMCWO.PN AS [Component PN], tblBOMCWO.[Description] [Description],(SELECT MIN(CONVERT(date,dateConfirmaAlm)) FROM tblCWO WHERE CWO in (
         SELECT CWO FROM tblBOMCWO aPn WHERE aPn.PN=tblBOMCWO.PN and Hold=1)) [Fecha Corto],[AUs afectados],(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN (SELECT AU
         FROM tblBOMCWO bcm WHERE tblBOMCWO.WIP IN (SELECT DISTINCT w.WIP FROM tblCWO AS c INNER JOIN tblWipDet AS d ON c.CWO=d.CWO INNER JOIN tblWIP AS w ON w.WIP=d.WIP INNER JOIN tblTiemposEstCWO AS t ON t.CWO=c.CWO 
@@ -571,7 +542,7 @@ where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (1
 and (ConfirmacionAlm='OnHold'))) [Razon],(select distinct NotasCompras from tblBOMWIP cw where cw.PN = tblBOMCWO.PN and cw.WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
 on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
 where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
-and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [PoAU] FROM tblBOMCWO INNER JOIN tblBOMWIP bw ON tblBOMCWO.WIP=bw.WIP
+and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [ParoAU] FROM tblBOMCWO INNER JOIN tblBOMWIP bw ON tblBOMCWO.WIP=bw.WIP
         CROSS APPLY(SELECT dbo.[Return_AUS](tblBOMCWO.PN))Tab([AUs afectados]) WHERE tblBOMCWO.WIP IN (SELECT DISTINCT w.WIP FROM tblCWO AS c INNER JOIN tblWipDet AS d 
         ON c.CWO=d.CWO INNER JOIN tblWIP AS w ON w.WIP=d.WIP INNER JOIN tblTiemposEstCWO AS t ON t.CWO=c.CWO WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort IN (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
         AND tblBOMCWO.Hold=1 AND tblBOMCWO.PN='{oPN}' ORDER BY tblBOMCWO.PN"
@@ -645,46 +616,65 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [PoAU] FROM tblBOMC
                         cnn.Close()
                     Next
                 End If
-                Insert = $"insert into tblWipCortosPN (PN,WIP)
+                If listCleanWips.ToString.TrimEnd(",").Trim.Length > 0 Then
+                    Insert = $"insert into tblWipCortosPN (PN,WIP)
                            select distinct b.PN,a.WIP from tblWIP a inner join tblBOMWIP b on a.WIP=b.WIP where a.WIP in (
                            {listCleanWips.ToString.TrimEnd(",").Trim}
                            ) and b.PN='{oPN}'"
-                cmd = New SqlCommand()
-                cmd.CommandType = CommandType.Text
-                cmd.Connection = cnn
-                cmd.CommandText = Insert
-                cnn.Open()
-                If cmd.ExecuteNonQuery() > 0 Then
-                    cnn.Close()
-                    Dim Aus_Afectados As String = "", id As Integer = 0 ', po_asigned As String = "", Vendor As String = "", Razon As String = "", Notas As String = "", Hold As Integer = 0
-                    Dim aConsulta As String = $"SELECT ID,Aus_Afectados FROM tblCortosPn WHERE PN ='{oPN}' AND hold =1"
-                    cmd = New SqlCommand(aConsulta, cnn)
-                    cmd.CommandType = CommandType.Text
-                    cnn.Open()
-                    dr = cmd.ExecuteReader
-                    If dr.HasRows Then
-                        While dr.Read
-                            id = CInt(dr.GetValue(0))
-                            Aus_Afectados = dr.GetValue(1).ToString
-                        End While
-                        cnn.Close()
-                        DeleteFromTblCortos(id)
-                        AusAfectados = AusAfectados + "," + Aus_Afectados
-                    End If
-                    cnn.Close()
-                    Insert = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
-                             values ('{oPN}',(select distinct [description] from tblItemsQB where PN='{oPN}'),GETDATE(),'{AusAfectados}',(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN ({AusAfectados})),(select SUM(Convert(Int, Balance)) 
-                             from tblBOMWIP where WIP in ({lstWips}) and PN='{oPN}'),(Select MIN(Convert(Date, DueDateCustomer)) FROM tblWIP where WIP in ({lstWips})),'{eta}',(SELECT MAX(Qty) FROM tblBOM WHERE PN='{oPN}' AND AU in ({AusAfectados}))
-                             ,'{po_asigned}','{Vendor}','{Razon}','{notas}',1,{If(ParoAU, 1, 0)})"
                     cmd = New SqlCommand()
                     cmd.CommandType = CommandType.Text
                     cmd.Connection = cnn
                     cmd.CommandText = Insert
                     cnn.Open()
-                    cmd.ExecuteNonQuery()
+                    If cmd.ExecuteNonQuery() > 0 Then
+                        cnn.Close()
+                        Dim Aus_Afectados As String = "", id As Integer = 0, AuQty As Integer = 0 ', Vendor As String = "", Razon As String = "", Notas As String = "", Hold As Integer = 0
+                        Dim aConsulta As String = $"SELECT ID,Aus_Afectados,AU_Qty FROM tblCortosPn WHERE PN ='{oPN}' AND hold =1"
+                        cmd = New SqlCommand(aConsulta, cnn)
+                        cmd.CommandType = CommandType.Text
+                        cnn.Open()
+                        dr = cmd.ExecuteReader
+                        Dim AuFinnally As New StringBuilder("")
+                        If dr.HasRows Then
+                            While dr.Read
+                                id = CInt(dr.GetValue(0))
+                                Aus_Afectados = $"{dr.GetValue(1)},"
+                                AuQty = $"{dr.GetValue(2)},"
+                            End While
+                            cnn.Close()
+                            DeleteFromTblCortos(id)
+
+                            Dim Aus As List(Of String) = New List(Of String)
+                            Aus_Afectados = Aus_Afectados.ToString.TrimEnd(",", "")
+                            Dim _AUsClean As String() = Aus_Afectados.Split(",")
+                            Aus.AddRange(_AUsClean)
+
+                            AusAfectados = AusAfectados.ToString.TrimEnd(",", "")
+                            Dim _AUsSendClean As String() = AusAfectados.Split(",")
+                            Aus.AddRange(_AUsSendClean)
+
+                            Dim AuObj = Aus.Distinct().ToList
+                            If AuObj IsNot Nothing Then
+                                AuObj.ForEach(Function(au) AuFinnally.Append($"{au},"))
+                            End If
+
+                            'AusAfectados = AusAfectados + "," + Aus_Afectados
+                        End If
+                        cnn.Close()
+                        Insert = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
+                             values ('{oPN}',(select distinct [description] from tblItemsQB where PN='{oPN}'),GETDATE(),'{AuFinnally.ToString.TrimEnd(",").Trim()}',(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN ({AuFinnally.ToString.TrimEnd(",").Trim()})),(select SUM(Convert(Int, Balance)) 
+                             from tblBOMWIP where WIP in ({lstWips}) and PN='{oPN}') + {AuQty},(Select MIN(Convert(Date, DueDateCustomer)) FROM tblWIP where WIP in ({lstWips})),'{eta}',(SELECT MAX(Qty) FROM tblBOM WHERE PN='{oPN}' AND AU in ({AuFinnally.ToString.TrimEnd(",").Trim()}))
+                             ,'{po_asigned}','{Vendor}','{Razon}','{notas}',1,{If(ParoAU, 1, 0)})"
+                        cmd = New SqlCommand()
+                        cmd.CommandType = CommandType.Text
+                        cmd.Connection = cnn
+                        cmd.CommandText = Insert
+                        cnn.Open()
+                        cmd.ExecuteNonQuery()
+                        cnn.Close()
+                    End If
                     cnn.Close()
                 End If
-                cnn.Close()
             End If
         Catch ex As Exception
             cnn.Close()
@@ -715,21 +705,61 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [PoAU] FROM tblBOMC
             If resultado > 0 Then
                 CheckCortosPN(PartNumber)
             Else
-                oQuery = $"select Count(*) from tblCortosPn where PN = '{PartNumber}' and Hold = 1 and CONVERT(date,[Fecha_Corto]) 
-                         BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-                         (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))
-                         "
+                oQuery = $"select Count(*) from tblCortosPn where PN = '{PartNumber}' and Hold = 1"
                 cmd = New SqlCommand(oQuery, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
                 resultado = CInt(cmd.ExecuteScalar)
                 cnn.Close()
-                If resultado > 0 Then
-                    oQuery = $"update tblCortosPn set Hold = 0 where pn='{PartNumber}' and CONVERT(date,[Fecha_Corto]) 
-                             BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-                             (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))"
+                oQuery = $"select WIP from tblWipCortosPN Where PN = '{PartNumber}'"
+                Dim oWipsTab As New DataTable
+                cmd = New SqlCommand(oQuery, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                oWipsTab.Load(dr)
+                cnn.Close()
+                If resultado > 0 And oWipsTab.Rows.Count = 0 Then
+                    oQuery = $"update tblCortosPn set Hold = 0 where pn='{PartNumber}'"
                     cmd = New SqlCommand(oQuery, cnn)
                     cmd.CommandType = CommandType.Text
+                    cnn.Open()
+                    cmd.ExecuteNonQuery()
+                    cnn.Close()
+                ElseIf resultado > 0 And oWipsTab.Rows.Count > 0 Then
+                    Dim id As Integer = 0, DateCorto As String = "", eta As String = "", po_asigned As String = "", Vendor As String = "", Razon As String = "", notas As String = ""
+                    Dim aConsulta As String = $"SELECT ID,Fecha_Corto,ETA,PO_Asignada,Vendor,Razon,Notas FROM tblCortosPn WHERE PN ='{PartNumber}' AND hold =1"
+                    cmd = New SqlCommand(aConsulta, cnn)
+                    cmd.CommandType = CommandType.Text
+                    cnn.Open()
+                    dr = cmd.ExecuteReader
+                    If dr.HasRows Then
+                        While dr.Read
+                            id = CInt(dr.GetValue(0))
+                            DateCorto = dr.GetValue(1).ToString
+                            eta = dr.GetValue(2).ToString
+                            po_asigned = dr.GetValue(3).ToString
+                            Vendor = dr.GetValue(4).ToString
+                            Razon = dr.GetValue(5).ToString
+                            notas = dr.GetValue(6).ToString
+                        End While
+                        cnn.Close()
+                        DeleteFromTblCortos(id)
+                    End If
+                    cnn.Close()
+                    Dim oWips = (From row In oWipsTab.AsEnumerable() Select row.Item("WIP")).ToList()
+                    Dim Wips As StringBuilder = New StringBuilder("")
+                    If oWips IsNot Nothing Then
+                        oWips.ForEach(Function(w) Wips.Append($"'{w}',"))
+                    End If
+                    oQuery = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
+                             values ('{PartNumber}',(select distinct [description] from tblItemsQB where PN='{PartNumber}'),'{DateCorto}','{AUforWIP(PartNumber)}',(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN ({AUforWIP(PartNumber)})),(select SUM(Convert(Int, Balance)) 
+                             from tblBOMWIP where WIP in ({Wips.ToString.TrimEnd(",").Trim()}) and PN='{PartNumber}'),(Select MIN(Convert(Date, DueDateCustomer)) FROM tblWIP where WIP in ({Wips.ToString.TrimEnd(",").Trim()})),'{eta}',(SELECT MAX(Qty) FROM tblBOM WHERE PN='{PartNumber}' AND AU in ({AUforWIP(PartNumber)}))
+                             ,'{po_asigned}','{Vendor}','{Razon}','{notas}',1,1)"
+                    cmd = New SqlCommand()
+                    cmd.CommandType = CommandType.Text
+                    cmd.Connection = cnn
+                    cmd.CommandText = oQuery
                     cnn.Open()
                     cmd.ExecuteNonQuery()
                     cnn.Close()
@@ -740,6 +770,28 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [PoAU] FROM tblBOMC
             MessageBox.Show(ex.ToString)
         End Try
     End Sub
+    Public ReadOnly Property AUforWIP(SearchPn As String)
+        Get
+            Try
+                Dim AUs As New StringBuilder("")
+                query = $"select distinct AU from tblWIP inner join tblWipCortosPN on tblWIP.WIP=tblWipCortosPN.WIP where tblWipCortosPN.PN= '{SearchPn}'"
+                cmd = New SqlCommand(query, cnn)
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                If dr.HasRows Then
+                    While dr.Read
+                        AUs.Append($"{dr.GetValue(0)},")
+                    End While
+                End If
+                cnn.Close()
+                Return AUs.ToString.TrimEnd(",").Trim()
+            Catch ex As Exception
+                cnn.Close()
+                MessageBox.Show(ex.ToString)
+                Return Nothing
+            End Try
+        End Get
+    End Property
     Private Sub cargadatosCompras()
         GroupBox3.Visible = False
         GroupBox2.Visible = False
@@ -1547,7 +1599,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 aux = Idsort.GetSort()
                 cmd.Parameters.Add("@requerimiento", SqlDbType.Int).Value = aux
                 cnn.Open()
-                dr = cmd.ExecuteReader
+                cmd.ExecuteNonQuery()
                 cnn.Close()
                 MsgBox("Se ha asignado requerimiento para el CWO: " + CWO.ToString + ", su numero de fila es " + aux.ToString + "", MsgBoxStyle.OkOnly)
                 ' ---------------------------
@@ -1588,7 +1640,11 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
     End Sub
     Public Sub poneokalm_apl(cwo As String, wip As String)
         If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
-            cmd = New SqlCommand("update tblCWO set WSort = 20,dateSolicitud= GETDATE() where CWO =@CWO", cnn)
+            Dim oPnCortos As DataTable = New DataTable
+            oPnCortos = GetTable($"select Count(*) [Count] from tblBOMCWO where CWO='{cwo}' and Hold = 1")
+            Dim countExist As Integer = CInt((From row In oPnCortos.AsEnumerable Select row.Item("Count")).Distinct.Sum(Function(c) CInt(c.ToString)))
+            Dim query As String = $"update tblCWO set {If(countExist > 0, "wSort=12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE(),dateSolicitud= GETDATE()", "WSort = 20,dateSolicitud= GETDATE()")} where CWO =@CWO"
+            cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
             cnn.Open()
@@ -1818,11 +1874,10 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             If aTable.Rows.Count > 0 Then
                 Dim CWOs = (From row In aTable.AsEnumerable() Select row("CWO")).Distinct().ToList()
                 If CWOs IsNot Nothing Then
-                    CWOs.ForEach(
-                        Function(c)
-                            UpdateCortoXPn(PN, c)
-                            Return Nothing
-                        End Function
+                    CWOs.ForEach(Function(c)
+                                     UpdateCortoXPn(PN, c)
+                                     Return Nothing
+                                 End Function
                                  )
                     CWOs.ForEach(
                     Function(CWO)
@@ -1913,27 +1968,27 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Dim cmd As String = ""
         If a = 1 Then
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
-                cmd = " where (w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27)) and c.Status = 'OPEN' and c.Id is null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc"
+                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"
             ElseIf opcion = 4 Or opcion = 7 Then 'Solicitar Mat/Apl XP
-                cmd = " where (w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27)) and c.Status = 'OPEN' and c.Id is null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc"
+                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then 'Solicitar Mat/Apl XP and KoA normal
-                cmd = " where (w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27)) and c.Status = 'OPEN' and c.Id is null order by c.Maq desc,c.Id asc"
+                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null order by c.Maq desc,c.Id asc,w.WIP"
             End If
         ElseIf a = 3 Then 'Listos Para Entrar
             If opcion = 1 Or opcion = 6 Then
-                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc"
+                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc"
             ElseIf opcion = 4 Or opcion = 7 Then
-                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,25,12,14) and c.Status = 'OPEN' and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc"
+                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,25,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
-                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' order by c.CWO /*w.CreatedDate*/"
+                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null order by c.CWO /*w.CreatedDate*/"
             End If
         ElseIf a = 4 Then 'Ya empezados
             If opcion = 1 Or opcion = 6 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 4 Or opcion = 7 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 29) and c.wsort = 25 and c.Status = 'OPEN' and c.dateSolicitud is not null order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
         ElseIf a = 5 Then 'Empezados y Detenidos
             If opcion = 1 Or opcion = 6 Then
@@ -2370,7 +2425,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Encabezado = Me.dgvWips.Columns(cdx).HeaderText
         End If
         If Encabezado = "CWO" Or Encabezado = "WIP" Or Encabezado = "wSort WIP" Or Encabezado = "wSort CWO" Then
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Hand
+            Cursor.Current = Cursors.Hand
         End If
     End Sub
     Private Sub dgvWips_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dgvWips.CellMouseLeave
@@ -2381,17 +2436,17 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Encabezado = Me.dgvWips.Columns(cdx).HeaderText
         End If
         If Encabezado = "CWO" Or Encabezado = "WIP" Or Encabezado = "wSort WIP" Or Encabezado = "wSort CWO" Then
-            System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+            Cursor.Current = Cursors.Default
         End If
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         GroupBox2.Visible = False
         DataGridView1.DataSource = Nothing
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Try
             Dim t As New DataTable
             query = "select Wsort,Definition [Definicion] from tblWsorts order by Wsort asc"
@@ -2413,16 +2468,16 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             MsgBox(ex.ToString)
             CorreoFalla.EnviaCorreoFalla("Button2_Click", host, UserName)
         End Try
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         GroupBox3.Visible = False
         dgvwSorts.DataSource = Nothing
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripTextBox5_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox5.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If opcion = 2 Or opcion = 5 Or opcion = 8 Then
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
@@ -2438,10 +2493,10 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             End If
         End If
         ContextMenuVerMW.Close()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripTextBox6_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox6.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If opcion = 3 Or opcion = 8 Then
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
@@ -2461,7 +2516,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             End If
         End If
         ContextMenuVerMW.Close()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub MonitorWIPS_Click(sender As Object, e As EventArgs) Handles MonitorWIPS.Click
         Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
@@ -2821,7 +2876,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
     ' -----------------
     ' Nuevo item para agregar los materiales una vez confirmados
     Private Sub AsignarMaterialToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AsignarMaterialToolStripMenuItem.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If opcion = 2 Or opcion = 8 Then
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
@@ -2839,10 +2894,10 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             End If
             ContextMenuVerMW.Close()
         End If
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If opcion = 6 Or opcion = 7 Then
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
@@ -2867,7 +2922,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                 End If
             End If
         End If
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Sub GetMaqsActive()
         Try
@@ -2889,7 +2944,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         End Try
     End Sub
     Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
@@ -2910,10 +2965,10 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         If rbYaempezados.Checked = True Then filtros(4)
         If rbEmpezadosyDetenidos.Checked = True Then filtros(5)
         If rdbOnHold.Checked = True Then filtros(6)
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem7_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem7.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
             Dim ver2 As Char = WIP(0)
@@ -2943,10 +2998,10 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             End If
         End If
         ContextMenuDisponibilidad.Close()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem8_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem8.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
             Dim ver2 As Char = WIP(0)
@@ -2968,10 +3023,10 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             End If
         End If
         ContextMenuDisponibilidad.Close()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem9_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem9.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
             Dim ver2 As Char = WIP(0)
@@ -2985,21 +3040,21 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             End If
         End If
         ContextMenuDisponibilidad.Close()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem10_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem10.Click 'Graficas
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Graficas.Show()
         Me.Hide()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem11.Click 'Hora X Hora
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         HoraXHora.Show()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem12_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem12.Click 'Listos, este sera solo para aplicadores, debido a que solo ellos confirman
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If opcion = 3 Then
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
@@ -3037,10 +3092,10 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             End If
         End If
         ContextMenuVerMW.Close()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem13_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem13.Click ' Detener, este sera para ambos dept
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Dim respuesta As String
         If opcion = 2 Then
             respuesta = MessageBox.Show("¿Seguro que desea poner estatus Corto a este CWO?", "Cortos", MessageBoxButtons.YesNo)
@@ -3083,7 +3138,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             End If
         End If
         ContextMenuVerMW.Close()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub Principal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         bgWorker.Dispose()
@@ -3391,7 +3446,9 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub BtnExportarCortos_Click(sender As Object, e As EventArgs) Handles BtnExportarCortos.Click
+        Cursor.Current = Cursors.WaitCursor
         ExportInfo()
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub dgvMatSinStockCompras_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvMatSinStockCompras.CellMouseDown
         If opcion = 2 Then

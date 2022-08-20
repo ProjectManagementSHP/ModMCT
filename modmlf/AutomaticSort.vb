@@ -110,7 +110,7 @@ Public Class AutomaticSort
         End Try
         Return False
     End Function
-    Function RemoveZeros()
+    Public Function RemoveZeros()
         Try
             Dim aCmdo As SqlCommand = New SqlCommand($"select Id,CWO from tblCWO where Maq={Me.Maq} and (Id is not null or Id>0) and Status='OPEN' ORDER BY tblCWO.Id ASC ", cnn)
             Dim aRead As SqlDataReader
