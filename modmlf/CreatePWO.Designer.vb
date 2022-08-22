@@ -49,20 +49,20 @@ Partial Class CreatePWO
         Me.Button3 = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.dgvPNTermsProcess = New System.Windows.Forms.DataGridView()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.dgvPNTermsProcess = New System.Windows.Forms.DataGridView()
+        Me.Label8 = New System.Windows.Forms.Label()
         CType(Me.dgvTerminalesXProcesar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetalleTerminales, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
-        CType(Me.dgvPNTermsProcess, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
+        CType(Me.dgvPNTermsProcess, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvTerminalesXProcesar
@@ -89,7 +89,8 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvTerminalesXProcesar.EnableHeadersVisualStyles = False
         Me.dgvTerminalesXProcesar.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvTerminalesXProcesar.Location = New System.Drawing.Point(12, 101)
+        Me.dgvTerminalesXProcesar.Location = New System.Drawing.Point(8, 66)
+        Me.dgvTerminalesXProcesar.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dgvTerminalesXProcesar.Name = "dgvTerminalesXProcesar"
         Me.dgvTerminalesXProcesar.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -103,7 +104,7 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar.RowHeadersVisible = False
         Me.dgvTerminalesXProcesar.RowHeadersWidth = 51
         Me.dgvTerminalesXProcesar.RowTemplate.Height = 24
-        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(764, 343)
+        Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(509, 223)
         Me.dgvTerminalesXProcesar.TabIndex = 5436
         '
         'dgvDetalleTerminales
@@ -132,7 +133,8 @@ Partial Class CreatePWO
         Me.dgvDetalleTerminales.DefaultCellStyle = DataGridViewCellStyle5
         Me.dgvDetalleTerminales.EnableHeadersVisualStyles = False
         Me.dgvDetalleTerminales.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvDetalleTerminales.Location = New System.Drawing.Point(18, 43)
+        Me.dgvDetalleTerminales.Location = New System.Drawing.Point(12, 28)
+        Me.dgvDetalleTerminales.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dgvDetalleTerminales.Name = "dgvDetalleTerminales"
         Me.dgvDetalleTerminales.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -146,16 +148,17 @@ Partial Class CreatePWO
         Me.dgvDetalleTerminales.RowHeadersVisible = False
         Me.dgvDetalleTerminales.RowHeadersWidth = 51
         Me.dgvDetalleTerminales.RowTemplate.Height = 24
-        Me.dgvDetalleTerminales.Size = New System.Drawing.Size(887, 389)
+        Me.dgvDetalleTerminales.Size = New System.Drawing.Size(591, 253)
         Me.dgvDetalleTerminales.TabIndex = 5437
         '
         'Button1
         '
         Me.Button1.BackColor = System.Drawing.Color.LightBlue
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button1.Location = New System.Drawing.Point(26, 42)
+        Me.Button1.Location = New System.Drawing.Point(17, 27)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(122, 31)
+        Me.Button1.Size = New System.Drawing.Size(81, 20)
         Me.Button1.TabIndex = 5438
         Me.Button1.Text = "OO MP"
         Me.Button1.UseVisualStyleBackColor = False
@@ -163,9 +166,10 @@ Partial Class CreatePWO
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(25, 92)
+        Me.CheckBox1.Location = New System.Drawing.Point(17, 60)
+        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(161, 24)
+        Me.CheckBox1.Size = New System.Drawing.Size(110, 17)
         Me.CheckBox1.TabIndex = 5439
         Me.CheckBox1.Text = "Push to first place"
         Me.CheckBox1.UseVisualStyleBackColor = True
@@ -174,9 +178,10 @@ Partial Class CreatePWO
         '
         Me.Button2.BackColor = System.Drawing.Color.LightBlue
         Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button2.Location = New System.Drawing.Point(45, 39)
+        Me.Button2.Location = New System.Drawing.Point(30, 25)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(122, 32)
+        Me.Button2.Size = New System.Drawing.Size(81, 21)
         Me.Button2.TabIndex = 5440
         Me.Button2.Text = "Create PWO"
         Me.Button2.UseVisualStyleBackColor = False
@@ -187,79 +192,89 @@ Partial Class CreatePWO
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(224, 25)
+        Me.GroupBox1.Location = New System.Drawing.Point(149, 16)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(226, 117)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Size = New System.Drawing.Size(151, 76)
         Me.GroupBox1.TabIndex = 5441
         Me.GroupBox1.TabStop = False
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(126, 71)
+        Me.Label4.Location = New System.Drawing.Point(84, 46)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(14, 20)
+        Me.Label4.Size = New System.Drawing.Size(10, 13)
         Me.Label4.TabIndex = 3
         Me.Label4.Text = "-"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(126, 37)
+        Me.Label3.Location = New System.Drawing.Point(84, 24)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(14, 20)
+        Me.Label3.Size = New System.Drawing.Size(10, 13)
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "-"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(22, 71)
+        Me.Label2.Location = New System.Drawing.Point(15, 46)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(55, 20)
+        Me.Label2.Size = New System.Drawing.Size(38, 13)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "TLEst:"
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(22, 37)
+        Me.Label1.Location = New System.Drawing.Point(15, 24)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(59, 20)
+        Me.Label1.Size = New System.Drawing.Size(42, 13)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "TL Qty:"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(536, 69)
+        Me.Label6.Location = New System.Drawing.Point(357, 45)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 20)
+        Me.Label6.Size = New System.Drawing.Size(50, 13)
         Me.Label6.TabIndex = 5443
         Me.Label6.Text = "Records:"
         '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(174, 49)
+        Me.Label7.Location = New System.Drawing.Point(116, 32)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(36, 20)
+        Me.Label7.Size = New System.Drawing.Size(25, 13)
         Me.Label7.TabIndex = 5444
         Me.Label7.Text = "AU:"
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(216, 46)
+        Me.TextBox1.Location = New System.Drawing.Point(144, 30)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(91, 26)
+        Me.TextBox1.Size = New System.Drawing.Size(62, 20)
         Me.TextBox1.TabIndex = 5445
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(761, 19)
+        Me.Label5.Location = New System.Drawing.Point(507, 12)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(73, 20)
+        Me.Label5.Size = New System.Drawing.Size(50, 13)
         Me.Label5.TabIndex = 5446
         Me.Label5.Text = "Records:"
         '
@@ -269,9 +284,10 @@ Partial Class CreatePWO
         Me.Button3.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button3.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.Button3.Location = New System.Drawing.Point(18, 451)
+        Me.Button3.Location = New System.Drawing.Point(12, 293)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(118, 95)
+        Me.Button3.Size = New System.Drawing.Size(79, 62)
         Me.Button3.TabIndex = 5447
         Me.Button3.Text = "Remove Selection"
         Me.Button3.UseVisualStyleBackColor = False
@@ -282,9 +298,11 @@ Partial Class CreatePWO
         Me.GroupBox2.Controls.Add(Me.Button2)
         Me.GroupBox2.Controls.Add(Me.CheckBox1)
         Me.GroupBox2.Controls.Add(Me.GroupBox1)
-        Me.GroupBox2.Location = New System.Drawing.Point(1242, 738)
+        Me.GroupBox2.Location = New System.Drawing.Point(828, 480)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(467, 156)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Size = New System.Drawing.Size(311, 101)
         Me.GroupBox2.TabIndex = 5448
         Me.GroupBox2.TabStop = False
         '
@@ -296,21 +314,68 @@ Partial Class CreatePWO
         Me.GroupBox3.Controls.Add(Me.dgvDetalleTerminales)
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.Button3)
-        Me.GroupBox3.Location = New System.Drawing.Point(787, 12)
+        Me.GroupBox3.Location = New System.Drawing.Point(525, 8)
+        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(922, 720)
+        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox3.Size = New System.Drawing.Size(615, 468)
         Me.GroupBox3.TabIndex = 5449
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Details:"
         '
-        'Label8
+        'GroupBox4
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 558)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(155, 40)
-        Me.Label8.TabIndex = 5448
-        Me.Label8.Text = "Number of terminals " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "selected:"
+        Me.GroupBox4.Controls.Add(Me.Label9)
+        Me.GroupBox4.Controls.Add(Me.Label10)
+        Me.GroupBox4.Controls.Add(Me.Label11)
+        Me.GroupBox4.Controls.Add(Me.Label12)
+        Me.GroupBox4.Location = New System.Drawing.Point(453, 393)
+        Me.GroupBox4.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox4.Size = New System.Drawing.Size(151, 71)
+        Me.GroupBox4.TabIndex = 5451
+        Me.GroupBox4.TabStop = False
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(84, 44)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(10, 13)
+        Me.Label9.TabIndex = 3
+        Me.Label9.Text = "-"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(84, 21)
+        Me.Label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(10, 13)
+        Me.Label10.TabIndex = 2
+        Me.Label10.Text = "-"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(9, 44)
+        Me.Label11.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(49, 13)
+        Me.Label11.TabIndex = 1
+        Me.Label11.Text = "TlSetUp:"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(7, 21)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(62, 13)
+        Me.Label12.TabIndex = 0
+        Me.Label12.Text = "TlRunTime:"
         '
         'dgvPNTermsProcess
         '
@@ -336,7 +401,8 @@ Partial Class CreatePWO
         Me.dgvPNTermsProcess.DefaultCellStyle = DataGridViewCellStyle8
         Me.dgvPNTermsProcess.EnableHeadersVisualStyles = False
         Me.dgvPNTermsProcess.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNTermsProcess.Location = New System.Drawing.Point(167, 448)
+        Me.dgvPNTermsProcess.Location = New System.Drawing.Point(111, 291)
+        Me.dgvPNTermsProcess.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dgvPNTermsProcess.Name = "dgvPNTermsProcess"
         Me.dgvPNTermsProcess.ReadOnly = True
         DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -350,63 +416,25 @@ Partial Class CreatePWO
         Me.dgvPNTermsProcess.RowHeadersVisible = False
         Me.dgvPNTermsProcess.RowHeadersWidth = 51
         Me.dgvPNTermsProcess.RowTemplate.Height = 24
-        Me.dgvPNTermsProcess.Size = New System.Drawing.Size(738, 150)
+        Me.dgvPNTermsProcess.Size = New System.Drawing.Size(492, 97)
         Me.dgvPNTermsProcess.TabIndex = 5450
         '
-        'GroupBox4
+        'Label8
         '
-        Me.GroupBox4.Controls.Add(Me.Label9)
-        Me.GroupBox4.Controls.Add(Me.Label10)
-        Me.GroupBox4.Controls.Add(Me.Label11)
-        Me.GroupBox4.Controls.Add(Me.Label12)
-        Me.GroupBox4.Location = New System.Drawing.Point(679, 604)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(226, 110)
-        Me.GroupBox4.TabIndex = 5451
-        Me.GroupBox4.TabStop = False
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(126, 67)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(14, 20)
-        Me.Label9.TabIndex = 3
-        Me.Label9.Text = "-"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(126, 33)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(14, 20)
-        Me.Label10.TabIndex = 2
-        Me.Label10.Text = "-"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(13, 67)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(71, 20)
-        Me.Label11.TabIndex = 1
-        Me.Label11.Text = "TlSetUp:"
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(10, 33)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(89, 20)
-        Me.Label12.TabIndex = 0
-        Me.Label12.Text = "TlRunTime:"
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(4, 363)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(103, 26)
+        Me.Label8.TabIndex = 5448
+        Me.Label8.Text = "Number of terminals " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "selected:"
         '
         'CreatePWO
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(1721, 920)
+        Me.ClientSize = New System.Drawing.Size(1147, 598)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.TextBox1)
@@ -415,6 +443,7 @@ Partial Class CreatePWO
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.dgvTerminalesXProcesar)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Name = "CreatePWO"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Create Press Work Order"
@@ -426,9 +455,9 @@ Partial Class CreatePWO
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
-        CType(Me.dgvPNTermsProcess, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
+        CType(Me.dgvPNTermsProcess, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

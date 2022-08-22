@@ -193,7 +193,7 @@ Public Class AutomaticSort
     Function GetSortPWO() As Integer
         Try
             Dim value As Integer, query As String = ""
-            query = $"select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblPWO where Cell={Cell} and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
+            query = $"select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblPWO where Cell='{Cell}' and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
             Dim cmd As SqlCommand = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()

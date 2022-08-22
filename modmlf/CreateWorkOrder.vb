@@ -151,13 +151,14 @@ Public Class CreateWorkOrder
                 oCmdo.Parameters.Add("@Id", SqlDbType.Int).Value = Sort.GetSortPWO()
             End If
             cnn.Open()
-            oCmdo.ExecuteNonQuery()
+            Return If(oCmdo.ExecuteNonQuery() > 0, True, False)
             cnn.Close()
-            Return True
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
             Return False
+        Finally
+            cnn.Close()
         End Try
     End Function
 End Class
