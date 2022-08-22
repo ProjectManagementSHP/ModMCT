@@ -134,7 +134,7 @@ Public Class Materiales
             cnn.Open()
             muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
             cnn.Close()
-            query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,Tsetup,TRuntime,null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+            query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
             cmd = New SqlCommand(query2, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -146,7 +146,7 @@ Public Class Materiales
                 Dim column As Integer = If(muestra = 1, 11, 8)
                 For i As Integer = 0 To tabl.Rows.Count - 1
                     tabl.Columns(column).ReadOnly = False
-                    tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
+                    tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
                     tabl.Rows(i).Item(column) = tAcumulado
                 Next
                 tAcumulado = 0
@@ -585,12 +585,14 @@ Public Class Materiales
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Try
             If holdoconfir = 1 Then
+                Dim lst As New List(Of String)
                 If TextBox2.Text <> "" Then
                     Dim mensaje As String = ""
                     If Label4.Text <> "" Then
                         If DataGridView1.Rows.Count > 0 Then
                             For o As Integer = 0 To DataGridView1.Rows.Count - 1
                                 If DataGridView1.Rows(o).Cells("chk").Value = True Then
+                                    lst.Add(DataGridView1.Rows(o).Cells("PN").Value.ToString)
                                     UpdateHoldPN(lblcwomat.Text, DataGridView1.Rows(o).Cells("PN").Value.ToString)
                                     If mensaje = "" Then
                                         If CheckMovNegative(DataGridView1.Rows(o).Cells("PN").Value.ToString, DataGridView1.Rows(o).Cells("Balance").Value.ToString) = True Then
@@ -611,12 +613,16 @@ Public Class Materiales
                         Else
                             mensaje = "Se notifica que se pone el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
                         Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        lst.ForEach(Function(pn)
+                                        Principal.CheckCortosPN(pn)
+                                        Return Nothing
+                                    End Function)
                         Principal.filtros(3)
                         holdoconfir = 0
                         Me.Dispose()
@@ -626,6 +632,7 @@ Public Class Materiales
                             For o As Integer = 0 To DataGridView1.Rows.Count - 1
                                 If DataGridView1.Rows(o).Cells("chk").Value = True Then
                                     UpdateHoldPN(lblcwomat.Text, DataGridView1.Rows(o).Cells("PN").Value.ToString)
+                                    lst.Add(DataGridView1.Rows(o).Cells("PN").Value.ToString)
                                     If mensaje = "" Then
                                         If CheckMovNegative(DataGridView1.Rows(o).Cells("PN").Value.ToString, DataGridView1.Rows(o).Cells("Balance").Value.ToString) = True Then
                                             mensaje = DataGridView1.Rows(o).Cells("PN").Value.ToString & " (Ajustes Neg)"
@@ -645,12 +652,16 @@ Public Class Materiales
                         Else
                             mensaje = "Se notifica que se pone el CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
                         Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        lst.ForEach(Function(pn)
+                                        Principal.CheckCortosPN(pn)
+                                        Return Nothing
+                                    End Function)
                         Principal.filtros(3)
                         holdoconfir = 0
                         Me.Dispose()
@@ -687,7 +698,9 @@ Public Class Materiales
             CorreoFalla.EnviaCorreoFalla("CheckMovNegative", host, UserName)
         End Try
     End Function
-    Sub UpdateHoldPN(CWO As String, PN As String)
+    Public Sub UpdateHoldPN(
+            CWO As String,
+            PN As String)
         Try
             query = "update tblBOMCWO set Hold=1 where CWO='" + CWO + "' and PN='" + PN + "'"
             cmd = New SqlCommand(query, cnn)

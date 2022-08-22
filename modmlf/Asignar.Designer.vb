@@ -67,10 +67,11 @@ Partial Class Asignar
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(10, 6)
+        Me.TabControl1.Location = New System.Drawing.Point(8, 5)
+        Me.TabControl1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(664, 289)
+        Me.TabControl1.Size = New System.Drawing.Size(498, 235)
         Me.TabControl1.TabIndex = 5450
         '
         'TabPage1
@@ -86,10 +87,11 @@ Partial Class Asignar
         Me.TabPage1.Controls.Add(Me.Label4)
         Me.TabPage1.Controls.Add(Me.lblwipporsolicitar)
         Me.TabPage1.Controls.Add(Me.lblcwoporsolicitar)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(656, 260)
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.TabPage1.Size = New System.Drawing.Size(490, 209)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Asignar"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -103,7 +105,7 @@ Partial Class Asignar
         Me.dgvSort.BackgroundColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGreen
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Arial Unicode MS", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -120,13 +122,13 @@ Partial Class Asignar
         Me.dgvSort.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvSort.EnableHeadersVisualStyles = False
         Me.dgvSort.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvSort.Location = New System.Drawing.Point(74, 72)
-        Me.dgvSort.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.dgvSort.Location = New System.Drawing.Point(56, 58)
+        Me.dgvSort.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dgvSort.Name = "dgvSort"
         Me.dgvSort.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Arial Unicode MS", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
@@ -135,7 +137,7 @@ Partial Class Asignar
         Me.dgvSort.RowHeadersVisible = False
         Me.dgvSort.RowHeadersWidth = 51
         Me.dgvSort.RowTemplate.Height = 24
-        Me.dgvSort.Size = New System.Drawing.Size(471, 130)
+        Me.dgvSort.Size = New System.Drawing.Size(353, 106)
         Me.dgvSort.TabIndex = 5454
         '
         'Button2
@@ -145,10 +147,10 @@ Partial Class Asignar
         Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(426, 217)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Button2.Location = New System.Drawing.Point(320, 176)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(184, 27)
+        Me.Button2.Size = New System.Drawing.Size(138, 22)
         Me.Button2.TabIndex = 5453
         Me.Button2.Text = "Efectuar Cambios"
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -160,9 +162,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblMaq.AutoSize = True
         Me.lblMaq.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMaq.Location = New System.Drawing.Point(543, 8)
+        Me.lblMaq.Location = New System.Drawing.Point(407, 6)
+        Me.lblMaq.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblMaq.Name = "lblMaq"
-        Me.lblMaq.Size = New System.Drawing.Size(15, 19)
+        Me.lblMaq.Size = New System.Drawing.Size(13, 16)
         Me.lblMaq.TabIndex = 5452
         Me.lblMaq.Text = "-"
         '
@@ -172,9 +175,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(448, 8)
+        Me.Label9.Location = New System.Drawing.Point(336, 6)
+        Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(80, 19)
+        Me.Label9.Size = New System.Drawing.Size(72, 16)
         Me.Label9.TabIndex = 5451
         Me.Label9.Text = "Maquina:"
         '
@@ -184,19 +188,21 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(122, 221)
+        Me.Label8.Location = New System.Drawing.Point(92, 180)
+        Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(186, 19)
+        Me.Label8.Size = New System.Drawing.Size(167, 16)
         Me.Label8.TabIndex = 5449
         Me.Label8.Text = "Nuevo orden de corte:"
         '
         'MaskedTextBox1
         '
         Me.MaskedTextBox1.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MaskedTextBox1.Location = New System.Drawing.Point(360, 218)
+        Me.MaskedTextBox1.Location = New System.Drawing.Point(270, 177)
+        Me.MaskedTextBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.MaskedTextBox1.Mask = "00"
         Me.MaskedTextBox1.Name = "MaskedTextBox1"
-        Me.MaskedTextBox1.Size = New System.Drawing.Size(35, 27)
+        Me.MaskedTextBox1.Size = New System.Drawing.Size(27, 23)
         Me.MaskedTextBox1.TabIndex = 5448
         Me.MaskedTextBox1.ValidatingType = GetType(Integer)
         '
@@ -206,9 +212,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(26, 37)
+        Me.Label2.Location = New System.Drawing.Point(20, 30)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(47, 19)
+        Me.Label2.Size = New System.Drawing.Size(38, 16)
         Me.Label2.TabIndex = 5439
         Me.Label2.Text = "WIP:"
         '
@@ -217,9 +224,11 @@ Partial Class Asignar
         Me.GroupBox3.Controls.Add(Me.btnenviarsolicitud)
         Me.GroupBox3.Controls.Add(Me.GroupBox2)
         Me.GroupBox3.Controls.Add(Me.GroupBox1)
-        Me.GroupBox3.Location = New System.Drawing.Point(6, 208)
+        Me.GroupBox3.Location = New System.Drawing.Point(4, 169)
+        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(73, 46)
+        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox3.Size = New System.Drawing.Size(55, 37)
         Me.GroupBox3.TabIndex = 5447
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Visible = False
@@ -231,10 +240,10 @@ Partial Class Asignar
         Me.btnenviarsolicitud.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnenviarsolicitud.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnenviarsolicitud.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnenviarsolicitud.Location = New System.Drawing.Point(-306, 178)
-        Me.btnenviarsolicitud.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.btnenviarsolicitud.Location = New System.Drawing.Point(-230, 145)
+        Me.btnenviarsolicitud.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.btnenviarsolicitud.Name = "btnenviarsolicitud"
-        Me.btnenviarsolicitud.Size = New System.Drawing.Size(151, 27)
+        Me.btnenviarsolicitud.Size = New System.Drawing.Size(113, 22)
         Me.btnenviarsolicitud.TabIndex = 5446
         Me.btnenviarsolicitud.Text = "Enviar solicitud"
         Me.btnenviarsolicitud.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -244,11 +253,11 @@ Partial Class Asignar
         '
         Me.GroupBox2.Controls.Add(Me.ComboBox1)
         Me.GroupBox2.Font = New System.Drawing.Font("Arial", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(354, 73)
-        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GroupBox2.Location = New System.Drawing.Point(266, 59)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.GroupBox2.Size = New System.Drawing.Size(222, 87)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Size = New System.Drawing.Size(166, 71)
         Me.GroupBox2.TabIndex = 5445
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Asignar hora:"
@@ -256,21 +265,21 @@ Partial Class Asignar
         'ComboBox1
         '
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(25, 35)
-        Me.ComboBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.ComboBox1.Location = New System.Drawing.Point(19, 28)
+        Me.ComboBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(173, 24)
+        Me.ComboBox1.Size = New System.Drawing.Size(131, 20)
         Me.ComboBox1.TabIndex = 5448
         '
         'GroupBox1
         '
         Me.GroupBox1.Controls.Add(Me.dtfechaasignada)
         Me.GroupBox1.Font = New System.Drawing.Font("Arial", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox1.Location = New System.Drawing.Point(6, 13)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.GroupBox1.Location = New System.Drawing.Point(4, 11)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.GroupBox1.Size = New System.Drawing.Size(142, 87)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Size = New System.Drawing.Size(106, 71)
         Me.GroupBox1.TabIndex = 5444
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Asignar fecha:"
@@ -280,11 +289,11 @@ Partial Class Asignar
         Me.dtfechaasignada.CustomFormat = ""
         Me.dtfechaasignada.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtfechaasignada.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtfechaasignada.Location = New System.Drawing.Point(51, 35)
-        Me.dtfechaasignada.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.dtfechaasignada.Location = New System.Drawing.Point(38, 28)
+        Me.dtfechaasignada.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dtfechaasignada.MinDate = New Date(2000, 1, 1, 0, 0, 0, 0)
         Me.dtfechaasignada.Name = "dtfechaasignada"
-        Me.dtfechaasignada.Size = New System.Drawing.Size(172, 25)
+        Me.dtfechaasignada.Size = New System.Drawing.Size(130, 21)
         Me.dtfechaasignada.TabIndex = 5442
         Me.dtfechaasignada.Value = New Date(2021, 9, 30, 0, 0, 0, 0)
         '
@@ -294,9 +303,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(22, 8)
+        Me.Label4.Location = New System.Drawing.Point(16, 6)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(57, 19)
+        Me.Label4.Size = New System.Drawing.Size(46, 16)
         Me.Label4.TabIndex = 5441
         Me.Label4.Text = "CWO:"
         '
@@ -306,9 +316,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblwipporsolicitar.AutoSize = True
         Me.lblwipporsolicitar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblwipporsolicitar.Location = New System.Drawing.Point(83, 37)
+        Me.lblwipporsolicitar.Location = New System.Drawing.Point(62, 30)
+        Me.lblwipporsolicitar.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblwipporsolicitar.Name = "lblwipporsolicitar"
-        Me.lblwipporsolicitar.Size = New System.Drawing.Size(15, 19)
+        Me.lblwipporsolicitar.Size = New System.Drawing.Size(13, 16)
         Me.lblwipporsolicitar.TabIndex = 5438
         Me.lblwipporsolicitar.Text = "-"
         '
@@ -318,19 +329,21 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblcwoporsolicitar.AutoSize = True
         Me.lblcwoporsolicitar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblcwoporsolicitar.Location = New System.Drawing.Point(94, 7)
+        Me.lblcwoporsolicitar.Location = New System.Drawing.Point(70, 6)
+        Me.lblcwoporsolicitar.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblcwoporsolicitar.Name = "lblcwoporsolicitar"
-        Me.lblcwoporsolicitar.Size = New System.Drawing.Size(15, 19)
+        Me.lblcwoporsolicitar.Size = New System.Drawing.Size(13, 16)
         Me.lblcwoporsolicitar.TabIndex = 5440
         Me.lblcwoporsolicitar.Text = "-"
         '
         'TabPage2
         '
         Me.TabPage2.Controls.Add(Me.GroupBox4)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 25)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(656, 260)
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.TabPage2.Size = New System.Drawing.Size(490, 209)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Detener"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -344,9 +357,11 @@ Partial Class Asignar
         Me.GroupBox4.Controls.Add(Me.Label3)
         Me.GroupBox4.Controls.Add(Me.Label5)
         Me.GroupBox4.Controls.Add(Me.Label6)
-        Me.GroupBox4.Location = New System.Drawing.Point(17, 19)
+        Me.GroupBox4.Location = New System.Drawing.Point(13, 15)
+        Me.GroupBox4.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(611, 225)
+        Me.GroupBox4.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox4.Size = New System.Drawing.Size(458, 183)
         Me.GroupBox4.TabIndex = 5448
         Me.GroupBox4.TabStop = False
         '
@@ -356,19 +371,20 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(16, 73)
+        Me.Label7.Location = New System.Drawing.Point(12, 59)
+        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(95, 24)
+        Me.Label7.Size = New System.Drawing.Size(69, 16)
         Me.Label7.TabIndex = 5448
         Me.Label7.Text = "Motivos:"
         '
         'txbNotas
         '
-        Me.txbNotas.Location = New System.Drawing.Point(20, 99)
-        Me.txbNotas.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.txbNotas.Location = New System.Drawing.Point(15, 80)
+        Me.txbNotas.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.txbNotas.Multiline = True
         Me.txbNotas.Name = "txbNotas"
-        Me.txbNotas.Size = New System.Drawing.Size(567, 63)
+        Me.txbNotas.Size = New System.Drawing.Size(426, 52)
         Me.txbNotas.TabIndex = 5447
         '
         'Label1
@@ -377,9 +393,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(322, 30)
+        Me.Label1.Location = New System.Drawing.Point(242, 24)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(47, 19)
+        Me.Label1.Size = New System.Drawing.Size(38, 16)
         Me.Label1.TabIndex = 5439
         Me.Label1.Text = "WIP:"
         '
@@ -390,10 +407,10 @@ Partial Class Asignar
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(243, 179)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Button1.Location = New System.Drawing.Point(182, 145)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(151, 27)
+        Me.Button1.Size = New System.Drawing.Size(113, 22)
         Me.Button1.TabIndex = 5446
         Me.Button1.Text = "Detener corte"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -405,9 +422,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(379, 30)
+        Me.Label3.Location = New System.Drawing.Point(284, 24)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(15, 19)
+        Me.Label3.Size = New System.Drawing.Size(13, 16)
         Me.Label3.TabIndex = 5438
         Me.Label3.Text = "-"
         '
@@ -417,9 +435,10 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(16, 30)
+        Me.Label5.Location = New System.Drawing.Point(12, 24)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(57, 19)
+        Me.Label5.Size = New System.Drawing.Size(46, 16)
         Me.Label5.TabIndex = 5441
         Me.Label5.Text = "CWO:"
         '
@@ -429,22 +448,23 @@ Partial Class Asignar
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(88, 29)
+        Me.Label6.Location = New System.Drawing.Point(66, 24)
+        Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(15, 19)
+        Me.Label6.Size = New System.Drawing.Size(13, 16)
         Me.Label6.TabIndex = 5440
         Me.Label6.Text = "-"
         '
         'Asignar
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(685, 300)
+        Me.ClientSize = New System.Drawing.Size(514, 244)
         Me.Controls.Add(Me.TabControl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Asignar"

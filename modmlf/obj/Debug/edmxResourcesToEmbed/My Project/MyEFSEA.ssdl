@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SEAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblBOMCWO">
+    <Key>
+      <PropertyRef Name="IdentificadorBOM" />
+    </Key>
+    <Property Name="IdentificadorBOM" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CWO" Type="nvarchar" MaxLength="50" />
+    <Property Name="WIP" Type="nvarchar" MaxLength="50" />
+    <Property Name="AU" Type="int" />
+    <Property Name="Rev" Type="nvarchar" MaxLength="50" />
+    <Property Name="PN" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="150" />
+    <Property Name="Qty" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+    <Property Name="Balance" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="TagAsignado" Type="int" />
+    <Property Name="Hold" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblBOMWIP">
+    <Key>
+      <PropertyRef Name="IDBOMWIP" />
+    </Key>
+    <Property Name="IDBOMWIP" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WIP" Type="nvarchar" MaxLength="50" />
+    <Property Name="AU" Type="int" />
+    <Property Name="Rev" Type="nvarchar" MaxLength="50" />
+    <Property Name="PN" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="150" />
+    <Property Name="Qty" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="Balance" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="10" />
+    <Property Name="MaterialGroup" Type="nvarchar" MaxLength="10" />
+    <Property Name="PercentIncrease" Type="int" />
+    <Property Name="PickList" Type="nvarchar" MaxLength="10" />
+    <Property Name="Route" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifyBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifyDate" Type="datetime" />
+    <Property Name="PO" Type="bigint" />
+    <Property Name="Week" Type="int" />
+    <Property Name="LeadTime" Type="int" />
+    <Property Name="RequieredDate" Type="date" />
+    <Property Name="ProcessDate" Type="date" />
+    <Property Name="FirstDayWeek" Type="date" />
+    <Property Name="Reference" Type="nvarchar" MaxLength="20" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="200" />
+    <Property Name="QtyExtra" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="ProcFDisMat" Type="datetime" />
+    <Property Name="NotasCompras" Type="nvarchar" MaxLength="150" />
+    <Property Name="POAsigned" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblCWO">
+    <Key>
+      <PropertyRef Name="CWO" />
+    </Key>
+    <Property Name="CWO" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" />
+    <Property Name="Maq" Type="nvarchar" MaxLength="50" />
+    <Property Name="Oper" Type="int" />
+    <Property Name="DueDate" Type="date" />
+    <Property Name="WireSetup" Type="int" />
+    <Property Name="ManualAplicator" Type="int" />
+    <Property Name="AutomaticAplicator" Type="int" />
+    <Property Name="AplicatorSetup" Type="int" />
+    <Property Name="SealSetup" Type="int" />
+    <Property Name="TotalSetupTime" Type="int" />
+    <Property Name="TotalAplicatorSetup" Type="int" />
+    <Property Name="EcRt" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="EpSu" Type="int" />
+    <Property Name="EpRt" Type="int" />
+    <Property Name="Id" Type="int" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="50" />
+    <Property Name="tlLengthcut" Type="bigint" />
+    <Property Name="SetupTRM" Type="nvarchar" MaxLength="50" />
+    <Property Name="tlQtyCut" Type="bigint" />
+    <Property Name="DiffWires" Type="bigint" />
+    <Property Name="wires" Type="int" />
+    <Property Name="EstCwo" Type="int" />
+    <Property Name="WSort" Type="int" />
+    <Property Name="StartDateCWO" Type="datetime" />
+    <Property Name="ApproveForProduction" Type="bit" />
+    <Property Name="TotalQtyCrimp" Type="int" />
+    <Property Name="WHMaterials" Type="bit" />
+    <Property Name="TCTools" Type="bit" />
+    <Property Name="RealStartDateCWO" Type="datetime" />
+    <Property Name="PrintedSNCWO" Type="bit" />
+    <Property Name="PrintedMaterialListCWO" Type="bit" />
+    <Property Name="RealStopDateCWO" Type="datetime" />
+    <Property Name="Status" Type="nvarchar" MaxLength="15" />
+    <Property Name="MaterialStatus" Type="nvarchar" MaxLength="20" />
+    <Property Name="CWOChoice" Type="bit" />
+    <Property Name="CloseDate" Type="datetime" />
+    <Property Name="Type" Type="nvarchar" MaxLength="20" />
+    <Property Name="HL" Type="bit" />
+    <Property Name="SemC" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaSolicitudMat" Type="nvarchar" MaxLength="50" />
+    <Property Name="ConfirmacionAlm" Type="nvarchar" MaxLength="50" />
+    <Property Name="ConfirmacionApl" Type="nvarchar" MaxLength="50" />
+    <Property Name="dateSolicitud" Type="datetime" />
+    <Property Name="dateConfirmaAlm" Type="datetime" />
+    <Property Name="dateConfirmaApl" Type="datetime" />
+    <Property Name="AsignadoA" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="70" />
+  </EntityType>
+  <EntityType Name="tblCWOSerialNumbers">
+    <Key>
+      <PropertyRef Name="IDCWO" />
+    </Key>
+    <Property Name="IDCWO" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="WireID" Type="nvarchar" MaxLength="50" />
+    <Property Name="CWO" Type="nvarchar" MaxLength="50" />
+    <Property Name="WIP" Type="nvarchar" MaxLength="50" />
+    <Property Name="WID" Type="int" />
+    <Property Name="Wire" Type="nvarchar" MaxLength="50" />
+    <Property Name="LengthWire" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="WireBalance" Type="nvarchar" MaxLength="50" />
+    <Property Name="TermA" Type="nvarchar" MaxLength="50" />
+    <Property Name="TermB" Type="nvarchar" MaxLength="50" />
+    <Property Name="CoverA" Type="nvarchar" MaxLength="50" />
+    <Property Name="CoverB" Type="nvarchar" MaxLength="50" />
+    <Property Name="JoinA" Type="nvarchar" MaxLength="50" />
+    <Property Name="JoinB" Type="nvarchar" MaxLength="50" />
+    <Property Name="StripA" Type="nvarchar" MaxLength="50" />
+    <Property Name="StripB" Type="nvarchar" MaxLength="50" />
+    <Property Name="EPA" Type="nvarchar" MaxLength="50" />
+    <Property Name="EPB" Type="nvarchar" MaxLength="50" />
+    <Property Name="CP" Type="nvarchar" MaxLength="50" />
+    <Property Name="AU" Type="bigint" />
+    <Property Name="Rev" Type="nvarchar" MaxLength="20" />
+    <Property Name="LabelCount" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cutting" Type="datetime" />
+    <Property Name="PressesA" Type="datetime" />
+    <Property Name="PressesB" Type="datetime" />
+    <Property Name="Splice" Type="datetime" />
+    <Property Name="SubStorage" Type="datetime" />
+    <Property Name="UserCutting" Type="int" />
+    <Property Name="UserPressesA" Type="int" />
+    <Property Name="UserPressesB" Type="int" />
+    <Property Name="UserSplice" Type="int" />
+    <Property Name="UserSubStorage" Type="int" />
+    <Property Name="PathCWO" Type="nvarchar" MaxLength="50" />
+    <Property Name="NumericalPath" Type="nvarchar" MaxLength="50" />
+    <Property Name="PrintedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="PrintedDate" Type="datetime" />
+    <Property Name="Page" Type="int" />
+    <Property Name="PWOA" Type="nvarchar" MaxLength="50" />
+    <Property Name="PWOB" Type="nvarchar" MaxLength="50" />
+    <Property Name="CellA" Type="nvarchar" MaxLength="10" />
+    <Property Name="CellB" Type="nvarchar" MaxLength="10" />
+    <Property Name="Circuit" Type="nvarchar" MaxLength="50" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="77" />
+  </EntityType>
+  <EntityType Name="tblItemsPOUserIDAuthorizations">
+    <Key>
+      <PropertyRef Name="IDUsuario" />
+    </Key>
+    <Property Name="IDUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Position" Type="nvarchar" MaxLength="50" />
+    <Property Name="Ext" Type="nvarchar" MaxLength="50" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Form" Type="nvarchar" MaxLength="100" />
+    <Property Name="Module" Type="nvarchar" MaxLength="80" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="150" />
+    <Property Name="Department" Type="nvarchar" MaxLength="50" />
+    <Property Name="DC" Type="nvarchar" MaxLength="50" />
+    <Property Name="Menu" Type="nvarchar" MaxLength="50" />
+    <Property Name="NumeroEmpleado" Type="int" />
+  </EntityType>
+  <EntityType Name="tblItemsQB">
+    <Key>
+      <PropertyRef Name="IDItem" />
+    </Key>
+    <Property Name="IDItem" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PN" Type="nvarchar" MaxLength="50" />
+    <Property Name="SubPN" Type="nvarchar" MaxLength="54" />
+    <Property Name="Description" Type="nvarchar" MaxLength="300" />
+    <Property Name="QtyOnHand" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="QtyOnOrder" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="QtyRMA" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="Reserved" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="20" />
+    <Property Name="PackageQuantity" Type="int" />
+    <Property Name="SubPNQtyOnHand" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="SubPNQtyOnOrder" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="StandarPack" Type="int" />
+    <Property Name="UnitWeight" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="PackWeight" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="EmptyPackWeight" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="MOQ" Type="int" />
+    <Property Name="BinBalance" Type="bit" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="ExchangeRate" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="UnitPriceMXN" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="PackPrice" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="SalePriceUnit" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="VendorPN" Type="nvarchar" MaxLength="50" />
+    <Property Name="ScanCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="MaterialGroup" Type="nvarchar" MaxLength="10" />
+    <Property Name="ProductType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="Specify" Type="nvarchar" MaxLength="50" />
+    <Property Name="LocationWH" Type="nvarchar" MaxLength="50" />
+    <Property Name="Dimension" Type="nvarchar" MaxLength="50" />
+    <Property Name="VendorCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Vendor" Type="nvarchar" MaxLength="150" />
+    <Property Name="LeadTime" Type="int" />
+    <Property Name="UPC" Type="nvarchar" MaxLength="50" />
+    <Property Name="Buyer" Type="nvarchar" MaxLength="50" />
+    <Property Name="Clasificacion" Type="nvarchar" MaxLength="30" />
+    <Property Name="PriceCodice" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="Fraccion" Type="nvarchar" MaxLength="30" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifyBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifyDate" Type="datetime" />
+    <Property Name="ListID" Type="nvarchar" MaxLength="50" />
+    <Property Name="TimeCreated" Type="nvarchar" MaxLength="50" />
+    <Property Name="Picture" Type="nvarchar" MaxLength="350" />
+    <Property Name="KindPurchasing" Type="bit" />
+    <Property Name="UMVendor" Type="nvarchar" MaxLength="50" />
+    <Property Name="UMInputSHP" Type="nvarchar" MaxLength="50" />
+    <Property Name="QtyInputSHP" Type="decimal" Precision="38" Scale="5" />
+    <Property Name="NoReturn" Type="bit" />
+    <Property Name="ExactlyQuantity" Type="bit" />
+    <Property Name="QAValidation" Type="bit" />
+    <Property Name="PriOption" Type="bit" />
+    <Property Name="Max" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Min" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Currency" Type="nvarchar" MaxLength="5" />
+    <Property Name="LP" Type="nvarchar" MaxLength="10" />
+    <Property Name="SubBOM" Type="bit" />
+    <Property Name="DescriptionOldSystem" Type="nvarchar" MaxLength="500" />
+    <Property Name="UnitPriceBOM" Type="decimal" Precision="18" Scale="5" />
+    <Property Name="CostInv" Type="decimal" Precision="18" Scale="5" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'SEA.dbo.tblItemsTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tblItemsTags">
+    <Key>
+      <PropertyRef Name="TAG" />
+      <PropertyRef Name="Zero" />
+    </Key>
+    <Property Name="TAG" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="PN" Type="nvarchar" MaxLength="50" />
+    <Property Name="Balance" Type="decimal" Precision="32" Scale="5" />
+    <Property Name="Location" Type="nvarchar" MaxLength="50" />
+    <Property Name="SubPN" Type="nvarchar" MaxLength="50" />
+    <Property Name="Qty" Type="decimal" Precision="32" Scale="5" />
+    <Property Name="QtyReserved" Type="decimal" Precision="32" Scale="5" />
+    <Property Name="ID" Type="nvarchar" MaxLength="50" />
+    <Property Name="PO" Type="nvarchar" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+    <Property Name="InitialWeight" Type="decimal" Precision="32" Scale="5" />
+    <Property Name="EmptyWeight" Type="decimal" Precision="32" Scale="5" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="LoteNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="QtyFromPO" Type="decimal" Precision="32" Scale="5" />
+    <Property Name="ContainerName" Type="nvarchar" MaxLength="50" />
+    <Property Name="PesoVerificado" Type="bit" />
+    <Property Name="CloseBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CloseDate" Type="datetime" />
+    <Property Name="OutDate" Type="datetime" />
+    <Property Name="InDate" Type="datetime" />
+    <Property Name="ScaleQuantity" Type="decimal" Precision="32" Scale="5" />
+    <Property Name="CaptureType" Type="nvarchar" MaxLength="20" />
+    <Property Name="UsedIn" Type="nvarchar" MaxLength="20" />
+    <Property Name="AssignedTo" Type="nvarchar" MaxLength="40" />
+    <Property Name="Zero" Type="bit" Nullable="false" />
+    <Property Name="idPOsReceptionsDet" Type="nvarchar" MaxLength="40" />
+    <Property Name="Loc" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="tblMaqRates">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Maq" Type="nvarchar" MaxLength="10" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaDNueva" Type="date" />
+    <Property Name="Cat" Type="int" />
+    <Property Name="Categoria" Type="nvarchar" MaxLength="75" />
+    <Property Name="MaxAWG" Type="int" />
+    <Property Name="MinAWG" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Impresion" Type="int" />
+    <Property Name="Sello" Type="int" />
+    <Property Name="0-0.99ppm" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="1-2.99ppm" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="3+4.99ppm" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="5+7.99ppm" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="8+9.99ppm" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="10+" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="ZonaCero" Type="bit" />
+    <Property Name="Host" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="tblMasterDet">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AU" Type="int" />
+    <Property Name="Rev" Type="nvarchar" MaxLength="12" />
+    <Property Name="FromX" Type="nvarchar" MaxLength="50" />
+    <Property Name="ToX" Type="nvarchar" MaxLength="50" />
+    <Property Name="WID" Type="int" />
+    <Property Name="Wire" Type="nvarchar" MaxLength="50" />
+    <Property Name="LengthWire" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TermA" Type="nvarchar" MaxLength="50" />
+    <Property Name="StripA" Type="decimal" Precision="18" Scale="1" />
+    <Property Name="JoinA" Type="nvarchar" MaxLength="50" />
+    <Property Name="SpA" Type="nvarchar" MaxLength="5" />
+    <Property Name="CoverA" Type="nvarchar" MaxLength="50" />
+    <Property Name="TermB" Type="nvarchar" MaxLength="50" />
+    <Property Name="StripB" Type="decimal" Precision="18" Scale="1" />
+    <Property Name="JoinB" Type="nvarchar" MaxLength="50" />
+    <Property Name="SpB" Type="nvarchar" MaxLength="5" />
+    <Property Name="CoverB" Type="nvarchar" MaxLength="50" />
+    <Property Name="WDevA" Type="nvarchar" MaxLength="10" />
+    <Property Name="WDevB" Type="nvarchar" MaxLength="10" />
+    <Property Name="Ink" Type="int" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="150" />
+    <Property Name="EPA" Type="nvarchar" MaxLength="50" />
+    <Property Name="CP" Type="nvarchar" MaxLength="50" />
+    <Property Name="EPB" Type="nvarchar" MaxLength="50" />
+    <Property Name="TA" Type="int" />
+    <Property Name="TB" Type="int" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifyBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ModifyDate" Type="datetime" />
+    <Property Name="Hold" Type="nvarchar" MaxLength="10" />
+    <Property Name="IDSort" Type="int" />
+  </EntityType>
+  <EntityType Name="tblMLFNotifications">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User" Type="nvarchar" MaxLength="20" />
+    <Property Name="Dep" Type="nvarchar" MaxLength="20" />
+    <Property Name="SendReceive" Type="int" />
+    <Property Name="TypeOfNotify" Type="int" />
+  </EntityType>
+  <EntityType Name="tblPWO">
+    <Key>
+      <PropertyRef Name="PWO" />
+    </Key>
+    <Property Name="PWO" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Cell" Type="nvarchar" MaxLength="5" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="Status" Type="nvarchar" MaxLength="10" />
+    <Property Name="ESetupTime" Type="int" />
+    <Property Name="ERunTime" Type="int" />
+    <Property Name="ETotalTime" Type="int" />
+    <Property Name="RealRunTime" Type="int" />
+    <Property Name="Efficiency" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="NumTravelers" Type="bigint" />
+    <Property Name="TotalCrimps" Type="bigint" />
+    <Property Name="Printed" Type="bit" />
+    <Property Name="WHMaterials" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="30" />
+    <Property Name="Id" Type="int" />
+    <Property Name="CloseDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tblWIP">
+    <Key>
+      <PropertyRef Name="WIP" />
+    </Key>
+    <Property Name="WIP" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AU" Type="int" />
+    <Property Name="Rev" Type="nvarchar" MaxLength="50" />
+    <Property Name="PN" Type="nvarchar" MaxLength="50" />
+    <Property Name="Qty" Type="int" />
+    <Property Name="BalanceProcess" Type="int" />
+    <Property Name="BalanceSubStorage" Type="int" />
+    <Property Name="BalanceAssy" Type="int" />
+    <Property Name="BalancePack" Type="int" />
+    <Property Name="BalanceShipped" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="EstimatedStartDateProces" Type="datetime" />
+    <Property Name="StartDateProces" Type="datetime" />
+    <Property Name="DueDateProcess" Type="datetime" />
+    <Property Name="DueDateAssy" Type="datetime" />
+    <Property Name="DueDateShipped" Type="datetime" />
+    <Property Name="DueDateCustomer" Type="datetime" />
+    <Property Name="ClosedDate" Type="datetime" />
+    <Property Name="Priority" Type="nvarchar" MaxLength="10" />
+    <Property Name="Instruction" Type="nvarchar" MaxLength="50" />
+    <Property Name="wSort" Type="numeric" Precision="2" Scale="0" />
+    <Property Name="Customer" Type="nvarchar" MaxLength="50" />
+    <Property Name="IT" Type="int" />
+    <Property Name="StartProd" Type="datetime" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="150" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="Hold" Type="nvarchar" MaxLength="10" />
+    <Property Name="Status" Type="nvarchar" MaxLength="10" />
+    <Property Name="WipState" Type="nvarchar" MaxLength="10" />
+    <Property Name="KindOfAU" Type="nvarchar" MaxLength="50" />
+    <Property Name="Family" Type="nvarchar" MaxLength="50" />
+    <Property Name="WeekProcess" Type="nvarchar" MaxLength="10" />
+    <Property Name="PWOSort" Type="int" />
+    <Property Name="RequiredPWO" Type="nvarchar" MaxLength="10" />
+    <Property Name="AddOperations" Type="bit" />
+    <Property Name="SerialNumbers" Type="bit" />
+    <Property Name="WHMaterialsSplice" Type="bit" />
+    <Property Name="WHMaterialsAssy" Type="bit" />
+    <Property Name="WHMaterialsPack" Type="bit" />
+    <Property Name="WHMaterialsCords" Type="bit" />
+    <Property Name="Printed" Type="bit" />
+    <Property Name="TimeTest" Type="decimal" Precision="38" Scale="2" />
+    <Property Name="Line" Type="nvarchar" MaxLength="10" />
+    <Property Name="ApprobationPur" Type="nvarchar" MaxLength="8" />
+    <Property Name="ApprobationPurBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApprobationPurDate" Type="datetime" />
+    <Property Name="PrintedOper" Type="bit" />
+    <Property Name="IDClass" Type="nvarchar" MaxLength="50" />
+    <Property Name="CS1" Type="bit" />
+    <Property Name="SaDueDate" Type="datetime" />
+    <Property Name="Type" Type="nvarchar" MaxLength="20" />
+    <Property Name="PR" Type="int" />
+    <Property Name="ProcFDispMat" Type="datetime" />
+    <Property Name="ProcNotas" Type="nvarchar" MaxLength="200" />
+    <Property Name="CutFProm" Type="datetime" />
+    <Property Name="CutNotas" Type="nvarchar" MaxLength="200" />
+    <Property Name="CancelDate" Type="datetime" />
+    <Property Name="CancelBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="Vol" Type="nvarchar" MaxLength="50" />
+    <Property Name="Atado" Type="int" />
+    <Property Name="Sem" Type="int" />
+    <Property Name="AlmFProm" Type="datetime" />
+    <Property Name="AlmNotas" Type="nvarchar" MaxLength="200" />
+    <Property Name="IngFProm" Type="datetime" />
+    <Property Name="IngNotas" Type="nvarchar" MaxLength="200" />
+    <Property Name="IngResponsable" Type="nvarchar" MaxLength="50" />
+    <Property Name="Corte" Type="int" />
+    <Property Name="MP" Type="int" />
+    <Property Name="SA" Type="int" />
+    <Property Name="Ens" Type="int" />
+    <Property Name="Shipping" Type="int" />
+    <Property Name="FGSHP" Type="int" />
+    <Property Name="FGSHPEP" Type="int" />
+    <Property Name="IEns" Type="int" />
+    <Property Name="A.Corte" Type="int" />
+    <Property Name="Balance" Type="int" />
+    <Property Name="EnsFProm" Type="datetime" />
+    <Property Name="EnsNotas" Type="nvarchar" MaxLength="200" />
+    <Property Name="MPFProm" Type="datetime" />
+    <Property Name="MPNotas" Type="nvarchar" MaxLength="200" />
+    <Property Name="ProcFDispMat2" Type="datetime" />
+    <Property Name="OnHold" Type="nchar" MaxLength="10" />
+    <Property Name="UsuarioHold" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="tblWipDet">
+    <Key>
+      <PropertyRef Name="WireID" />
+    </Key>
+    <Property Name="WireID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="WIP" Type="nvarchar" MaxLength="50" />
+    <Property Name="CWO" Type="nvarchar" MaxLength="50" />
+    <Property Name="AU" Type="bigint" />
+    <Property Name="Rev" Type="nvarchar" MaxLength="50" />
+    <Property Name="Balance" Type="bigint" />
+    <Property Name="WID" Type="int" />
+    <Property Name="Wire" Type="nvarchar" MaxLength="50" />
+    <Property Name="LengthWire" Type="decimal" Precision="32" Scale="2" />
+    <Property Name="TermA" Type="nvarchar" MaxLength="50" />
+    <Property Name="StripA" Type="decimal" Precision="18" Scale="1" />
+    <Property Name="JoinA" Type="nvarchar" MaxLength="50" />
+    <Property Name="SpA" Type="nvarchar" MaxLength="10" />
+    <Property Name="CoverA" Type="nvarchar" MaxLength="50" />
+    <Property Name="TermB" Type="nvarchar" MaxLength="50" />
+    <Property Name="StripB" Type="decimal" Precision="18" Scale="1" />
+    <Property Name="JoinB" Type="nvarchar" MaxLength="50" />
+    <Property Name="SpB" Type="nvarchar" MaxLength="10" />
+    <Property Name="CoverB" Type="nvarchar" MaxLength="50" />
+    <Property Name="oper" Type="int" />
+    <Property Name="WdevA" Type="nvarchar" MaxLength="10" />
+    <Property Name="WdevB" Type="nvarchar" MaxLength="10" />
+    <Property Name="Sort" Type="int" />
+    <Property Name="Ink" Type="int" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="150" />
+    <Property Name="EPA" Type="nvarchar" MaxLength="50" />
+    <Property Name="CP" Type="nvarchar" MaxLength="50" />
+    <Property Name="EPB" Type="nvarchar" MaxLength="50" />
+    <Property Name="WireNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="WireBalance" Type="int" />
+    <Property Name="Circuit" Type="nvarchar" MaxLength="50" />
+    <Property Name="Printed" Type="nvarchar" MaxLength="10" />
+    <Property Name="PrintedDate" Type="nvarchar" MaxLength="20" />
+    <Property Name="ToX" Type="nvarchar" MaxLength="50" />
+    <Property Name="FromX" Type="nvarchar" MaxLength="50" />
+    <Property Name="TABalance" Type="int" />
+    <Property Name="TBBalance" Type="int" />
+    <Property Name="TAOper" Type="nvarchar" MaxLength="10" />
+    <Property Name="TBOper" Type="nvarchar" MaxLength="10" />
+    <Property Name="TA" Type="int" />
+    <Property Name="TB" Type="int" />
+    <Property Name="Hold" Type="nvarchar" MaxLength="50" />
+    <Property Name="CWOStatus" Type="int" />
+    <Property Name="MaqMachineA" Type="nvarchar" MaxLength="5" />
+    <Property Name="MaqMachineB" Type="nvarchar" MaxLength="5" />
+    <Property Name="WireCut" Type="nvarchar" MaxLength="5" />
+    <Property Name="MaqA" Type="nvarchar" MaxLength="10" />
+    <Property Name="MaqB" Type="nvarchar" MaxLength="10" />
+    <Property Name="MaqCategory" Type="int" />
+    <Property Name="Category" Type="int" />
+    <Property Name="AplicatorA" Type="nvarchar" MaxLength="50" />
+    <Property Name="AplicatorB" Type="nvarchar" MaxLength="50" />
+    <Property Name="IDKeyA" Type="bigint" />
+    <Property Name="IDKeyB" Type="bigint" />
+    <Property Name="TermAStatus" Type="nvarchar" MaxLength="5" />
+    <Property Name="TermBStatus" Type="nvarchar" MaxLength="5" />
+    <Property Name="TimeA" Type="int" />
+    <Property Name="TimeB" Type="int" />
+    <Property Name="PWOStatus" Type="int" />
+    <Property Name="PWOA" Type="nvarchar" MaxLength="50" />
+    <Property Name="PWOB" Type="nvarchar" MaxLength="50" />
+    <Property Name="PWORecA" Type="int" />
+    <Property Name="PWORecB" Type="int" />
+    <Property Name="CellA" Type="nvarchar" MaxLength="15" />
+    <Property Name="CellB" Type="nvarchar" MaxLength="15" />
+    <Property Name="PullToSeatA" Type="nvarchar" MaxLength="5" />
+    <Property Name="PullToSeatB" Type="nvarchar" MaxLength="5" />
+    <Property Name="PWOATemp" Type="nvarchar" MaxLength="5" />
+    <Property Name="PWOBTemp" Type="nvarchar" MaxLength="5" />
+    <Property Name="BWOA" Type="nvarchar" MaxLength="50" />
+    <Property Name="BWOB" Type="nvarchar" MaxLength="50" />
+    <Property Name="SWOA" Type="nvarchar" MaxLength="50" />
+    <Property Name="SWOB" Type="nvarchar" MaxLength="50" />
+    <Property Name="FirstPCOKCWO" Type="bit" />
+    <Property Name="FirstPCOKPWOA" Type="bit" />
+    <Property Name="FirstPCOKPWOB" Type="bit" />
+    <Property Name="FirstPCOKBWO" Type="bit" />
+    <Property Name="FirstPCOKSWO" Type="bit" />
+    <Property Name="InspectorCWO" Type="int" />
+    <Property Name="InspectorPWOA" Type="int" />
+    <Property Name="InspectorPWOB" Type="int" />
+    <Property Name="InspectorBWO" Type="int" />
+    <Property Name="InspectorSWO" Type="int" />
+    <Property Name="FirstPCOKCWODate" Type="datetime" />
+    <Property Name="FirstPCOKPWOADate" Type="datetime" />
+    <Property Name="FirstPCOKPWOBDate" Type="datetime" />
+    <Property Name="FirstPCOKBWODate" Type="datetime" />
+    <Property Name="FirstPCOKSWODate" Type="datetime" />
+    <Property Name="OrderToPrint" Type="int" />
+    <Property Name="OrdenesPWO" Type="nvarchar" MaxLength="150" />
+    <Property Name="PWOOrderToPrint" Type="int" />
+    <Property Name="CatAsignedCWO" Type="int" />
+    <Property Name="FlagWire" Type="bit" />
+    <Property Name="FlagTermA" Type="bit" />
+    <Property Name="FlagTermB" Type="bit" />
+    <Property Name="MaqUsed" Type="nvarchar" MaxLength="15" />
+    <Property Name="IDSort" Type="int" />
+    <Property Name="TSetup" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="TRuntime" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="scaneoprocess" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="SEAModelStoreContainer">
+    <EntitySet Name="tblBOMCWO" EntityType="Self.tblBOMCWO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblBOMWIP" EntityType="Self.tblBOMWIP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCWO" EntityType="Self.tblCWO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblCWOSerialNumbers" EntityType="Self.tblCWOSerialNumbers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblItemsPOUserIDAuthorizations" EntityType="Self.tblItemsPOUserIDAuthorizations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblItemsQB" EntityType="Self.tblItemsQB" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMaqRates" EntityType="Self.tblMaqRates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMasterDet" EntityType="Self.tblMasterDet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMLFNotifications" EntityType="Self.tblMLFNotifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPWO" EntityType="Self.tblPWO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblWIP" EntityType="Self.tblWIP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblWipDet" EntityType="Self.tblWipDet" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblItemsTags" EntityType="Self.tblItemsTags" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tblItemsTags].[TAG] AS [TAG], 
+    [tblItemsTags].[PN] AS [PN], 
+    [tblItemsTags].[Balance] AS [Balance], 
+    [tblItemsTags].[Location] AS [Location], 
+    [tblItemsTags].[SubPN] AS [SubPN], 
+    [tblItemsTags].[Qty] AS [Qty], 
+    [tblItemsTags].[QtyReserved] AS [QtyReserved], 
+    [tblItemsTags].[ID] AS [ID], 
+    [tblItemsTags].[PO] AS [PO], 
+    [tblItemsTags].[Unit] AS [Unit], 
+    [tblItemsTags].[InitialWeight] AS [InitialWeight], 
+    [tblItemsTags].[EmptyWeight] AS [EmptyWeight], 
+    [tblItemsTags].[Status] AS [Status], 
+    [tblItemsTags].[LoteNumber] AS [LoteNumber], 
+    [tblItemsTags].[CreatedDate] AS [CreatedDate], 
+    [tblItemsTags].[QtyFromPO] AS [QtyFromPO], 
+    [tblItemsTags].[ContainerName] AS [ContainerName], 
+    [tblItemsTags].[PesoVerificado] AS [PesoVerificado], 
+    [tblItemsTags].[CloseBy] AS [CloseBy], 
+    [tblItemsTags].[CloseDate] AS [CloseDate], 
+    [tblItemsTags].[OutDate] AS [OutDate], 
+    [tblItemsTags].[InDate] AS [InDate], 
+    [tblItemsTags].[ScaleQuantity] AS [ScaleQuantity], 
+    [tblItemsTags].[CaptureType] AS [CaptureType], 
+    [tblItemsTags].[UsedIn] AS [UsedIn], 
+    [tblItemsTags].[AssignedTo] AS [AssignedTo], 
+    [tblItemsTags].[Zero] AS [Zero], 
+    [tblItemsTags].[idPOsReceptionsDet] AS [idPOsReceptionsDet], 
+    [tblItemsTags].[Loc] AS [Loc]
+    FROM [dbo].[tblItemsTags] AS [tblItemsTags]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

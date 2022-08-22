@@ -2,22 +2,24 @@
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Cursor.Current = Cursors.WaitCursor
         If opcion = 5 Then
+            Dim lst As New List(Of String)
             If dtpFProm.Value = "2021-01-01" Then
                 MsgBox("Debe agregar fecha promesa", MessageBoxIcon.Warning)
                 Me.Close()
             Else
-                'For Each band As DataGridViewBand In Principal.dgvMatSinStockCompras.Columns
-                '    band.[ReadOnly] = True
-                'Next
-                'Principal.dgvMatSinStockCompras.Columns("Fecha promesa PN").ReadOnly = False
-                'Principal.dgvMatSinStockCompras.BeginEdit(True)
                 With Principal
                     For jj = 0 To .dgvMatSinStockCompras.Rows.Count - 1
                         If .dgvMatSinStockCompras.Rows(jj).Cells("Chk").Value = True Then
-                            .notas(Principal.dgvMatSinStockCompras.Rows(jj).Cells("CWO").Value.ToString, dtpFProm.Text, txbNotas.Text, .dgvMatSinStockCompras.Rows(jj).Cells("WIP").Value.ToString, .dgvMatSinStockCompras.Rows(jj).Cells("ComponentPN").Value.ToString)
+                            Dim pn = .dgvMatSinStockCompras.Rows(jj).Cells("ComponentPN").Value.ToString
+                            .notas(Principal.dgvMatSinStockCompras.Rows(jj).Cells("CWO").Value.ToString, dtpFProm.Text, txbNotas.Text, .dgvMatSinStockCompras.Rows(jj).Cells("WIP").Value.ToString, pn)
                             .tblasig.Columns(17).ReadOnly = False
                             .tblasig.Rows(jj).Item(17) = Convert.ToDateTime(dtpFProm.Text.ToString)
                             '.dgvMatSinStockCompras.Rows(jj).Cells("Fecha promesa PN").Value = Convert.ToDateTime(dtpFProm.Text.ToString)
+                            If lst IsNot Nothing Then
+                                If lst.Where(Function(a) a.Equals(pn.ToString)).Count = 0 Then
+                                    lst.Add(.dgvMatSinStockCompras.Rows(jj).Cells("ComponentPN").Value.ToString)
+                                End If
+                            End If
                         End If
                     Next
                     .dgvMatSinStockCompras.DataSource = .tblasig
@@ -42,6 +44,10 @@
                     .NotifyIcon1.BalloonTipTitle = "Fecha promesa"
                     .NotifyIcon1.Visible = True
                     .NotifyIcon1.ShowBalloonTip(0)
+                    lst.ForEach(Function(pn)
+                                    Principal.CheckCortosPN(pn, True)
+                                    Return Nothing
+                                End Function)
                     .filtros(6)
                     For j = 0 To .dgvMatSinStockCompras.Rows.Count - 1
                         If .dgvMatSinStockCompras.Rows(j).Cells("Chk").Value = True Then
@@ -61,12 +67,11 @@
         ElseIf opcion = 2 Then
             If txbNotas.Text <> "" Then
                 Dim mensaje As String = "", Wips As String = "", CWos As String = "", AuxWip As String = "", AuxCwo As String = ""
-                'Dim WipsAProcesar As New List(Of String)
-                'Dim CwoAProcesar As New List(Of String)
                 With Principal
+                    Dim lst As New List(Of String)
                     For o As Integer = 0 To .dgvAfectados.Rows.Count - 1
                         If .dgvAfectados.Rows(o).Cells("aChk").Value = True Then
-                            If .CheckWSort(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString) = True Then
+                            If .CheckWSort(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString) Then
                                 If AuxWip = "" And AuxCwo = "" Then
                                     AuxCwo = .dgvAfectados.Rows(o).Cells("CWO").Value.ToString
                                     AuxWip = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString
@@ -87,38 +92,38 @@
                                     End If
                                 End If
                                 Materiales.UpdateHoldPN(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString, .dgvAfectados.Rows(o).Cells("PN").Value.ToString)
+                                lst.Add(.dgvAfectados.Rows(o).Cells("PN").Value.ToString)
                                 If mensaje = "" Then
-                                    If Materiales.CheckMovNegative(.dgvAfectados.Rows(o).Cells("PN").Value.ToString, .dgvAfectados.Rows(o).Cells("Qty").Value.ToString) = True Then
+                                    If Materiales.CheckMovNegative(.dgvAfectados.Rows(o).Cells("PN").Value.ToString, .dgvAfectados.Rows(o).Cells("Qty").Value.ToString) Then
                                         mensaje = .dgvAfectados.Rows(o).Cells("PN").Value.ToString & " (Ajustes Neg)"
                                     Else
                                         mensaje = .dgvAfectados.Rows(o).Cells("PN").Value.ToString
                                     End If
                                 ElseIf mensaje <> "" Then
-                                    If Materiales.CheckMovNegative(.dgvAfectados.Rows(o).Cells("PN").Value.ToString, .dgvAfectados.Rows(o).Cells("Qty").Value.ToString) = True Then
+                                    If Materiales.CheckMovNegative(.dgvAfectados.Rows(o).Cells("PN").Value.ToString, .dgvAfectados.Rows(o).Cells("Qty").Value.ToString) Then
                                         mensaje = mensaje + "; " + .dgvAfectados.Rows(o).Cells("PN").Value.ToString & " (Ajustes Neg)"
                                     Else
                                         mensaje = mensaje + "; " + .dgvAfectados.Rows(o).Cells("PN").Value.ToString
                                     End If
                                 End If
-                                'WipsAProcesar.Add(.dgvAfectados.Rows(o).Cells("WIP").Value.ToString)
-                                'CwoAProcesar.Add(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString)
                                 WIP = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString
                                 .notesWIPandCWOOnHold(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString, Convert.ToDateTime(Now), txbNotas.Text)
+                            Else
+                                MessageBox.Show($"Este CWO: { .dgvAfectados.Rows(o).Cells("CWO").Value.ToString} aun no es requerido por corte.")
                             End If
                         End If
                     Next
+                    lst.ForEach(Function(pn)
+                                    Principal.CheckCortosPN(pn)
+                                    Return Nothing
+                                End Function)
                     mensaje = mensaje + " se han puesto en Cortos por falta de material, en los WIP: " & Wips & " y CWO: " & CWos & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
-                    CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Descomentar cuando se suba
-                    ''For Each wipFromList In WipsAProcesar
-
-                    ''Next
-                    ''For Each cwoFromList In CwoAProcesar
-
-                    ''Next
+                    'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Descomentar cuando se suba
                     .NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                     .NotifyIcon1.BalloonTipTitle = "Material sin stock"
                     .NotifyIcon1.Visible = True
                     .NotifyIcon1.ShowBalloonTip(0)
+                    .dgvAfectados.DataSource = Nothing
                 End With
                 Me.Close()
             Else

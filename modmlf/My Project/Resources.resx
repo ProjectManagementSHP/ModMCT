@@ -118,16 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SHP Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SHP Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SHP Gray Large Logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SHP Gray Large Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SHP Gray Large Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\SHP Gray Large Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete_unapprove_discard_remove_x_red_icon-icons.com_55984" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete_unapprove_discard_remove_x_red_icon-icons.com_55984.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="1486505265-document-file-export-sending-exit-send_81434" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1486505265-document-file-export-sending-exit-send_81434.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SHP Gray Large Logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SHP Gray Large Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SHP Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SHP Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BotonCorto2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BotonCorto2.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="save_icon-icons.com_53618(1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save_icon-icons.com_53618(1).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botonexport" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonexport.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

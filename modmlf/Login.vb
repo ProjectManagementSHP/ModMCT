@@ -229,4 +229,7 @@ Public Class Login
             TextBox2.PasswordChar = "*"
         End If
     End Sub
+    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
+        Me.Close()
+    End Sub
 End Class
