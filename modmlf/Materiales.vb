@@ -613,7 +613,7 @@ Public Class Materiales
                         Else
                             mensaje = "Se notifica que se pone el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
@@ -652,7 +652,7 @@ Public Class Materiales
                         Else
                             mensaje = "Se notifica que se pone el CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
