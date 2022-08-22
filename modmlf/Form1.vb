@@ -3516,11 +3516,12 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         Dim limpiaChar As String = e.Name, extraVersion As String = ""
         limpiaChar = LTrim(RTrim(limpiaChar))
         limpiaChar = limpiaChar.Replace("_", ".")
-        For i As Integer = 0 To limpiaChar.Length - 1
-            If IsNumeric(limpiaChar(i)) Or limpiaChar(i) = "." Then
-                extraVersion += limpiaChar(i)
-            End If
-        Next
+        limpiaChar = Regex.Replace(limpiaChar, "[aeiouAEIOU]", "")
+        'For i As Integer = 0 To limpiaChar.Length - 1
+        '    If IsNumeric(limpiaChar(i)) Or limpiaChar(i) = "." Then
+        '        extraVersion += limpiaChar(i)
+        '    End If
+        'Next
         ver = extraVersion
         ActualizacionRequerida.BringToFront()
         ActualizacionRequerida.ShowDialog()
