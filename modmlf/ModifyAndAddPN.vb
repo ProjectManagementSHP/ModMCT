@@ -147,26 +147,32 @@ Public Class ModifyAndAddPN
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
-    Private Sub txbNewPN_TextChanged(sender As Object, e As EventArgs) Handles txbNewPN.TextChanged
+    Private Sub txbNewPN_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txbNewPN.KeyPress
         Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-        Dim tb As New DataTable
-        Dim filtro As String = CType(sender, TextBox).Text
-        If filtro.Trim() <> String.Empty Then
-            With dgvCortosCompletos
-                tb = Principal.FiltraPN(filtro)
-                .DataSource = tb
-                .AutoResizeColumns()
-            End With
-            cmbPONuevo.DataSource = Principal.CargaComboModificandoPN(filtro)
-            If cmbPONuevo.Text <> "" Then txbNuevoVendor.Text = Principal.CargaVendor(cmbPONuevo.Text.ToString, filtro)
-            Label9.Text = "Items: " + dgvCortosCompletos.Rows.Count.ToString
-            lblQtyTotal.Text = (From row In tb.AsEnumerable() Select row("Cantidad")).ToList() _
-                                                                                     .Sum(Function(i) i).ToString
-            lblQtyOnHand.Text = Principal.AllocatedAQty($"select distinct QtyOnHand from tblItemsQB where PN = '{filtro}'")
-        Else
-            If cmbPONuevo.Text <> "" Then cmbPONuevo.Text = ""
-            If txbNuevoVendor.Text <> "" Then txbNuevoVendor.Text = ""
-            If dgvCortosCompletos.Rows.Count > 0 Then dgvCortosCompletos.DataSource = Nothing
+        If e.KeyChar = Chr(13) Then
+            Dim tb As New DataTable
+            Dim filtro As String = CType(sender, TextBox).Text
+            If filtro.Trim() <> String.Empty Then
+                If Principal.FiltraPNMaterialGroup(filtro) Then
+                    With dgvCortosCompletos
+                        tb = Principal.FiltraPN(filtro)
+                        .DataSource = tb
+                        .AutoResizeColumns()
+                    End With
+                    cmbPONuevo.DataSource = Principal.CargaComboModificandoPN(filtro)
+                    If cmbPONuevo.Text <> "" Then txbNuevoVendor.Text = Principal.CargaVendor(cmbPONuevo.Text.ToString, filtro)
+                    Label9.Text = "Items: " + dgvCortosCompletos.Rows.Count.ToString
+                    lblQtyTotal.Text = (From row In tb.AsEnumerable() Select row("Cantidad")).ToList() _
+                                                                                         .Sum(Function(i) i).ToString
+                    lblQtyOnHand.Text = Principal.AllocatedAQty($"select distinct QtyOnHand from tblItemsQB where PN = '{filtro}'")
+                Else
+                    MessageBox.Show("El numero de parte buscado, no pertenece a corte, revisalo por favor.", "Busqueda PN", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            Else
+                If cmbPONuevo.Text <> "" Then cmbPONuevo.Text = ""
+                If txbNuevoVendor.Text <> "" Then txbNuevoVendor.Text = ""
+                If dgvCortosCompletos.Rows.Count > 0 Then dgvCortosCompletos.DataSource = Nothing
+            End If
         End If
         Cursor.Current = System.Windows.Forms.Cursors.Default
     End Sub

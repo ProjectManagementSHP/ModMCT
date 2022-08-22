@@ -25,6 +25,7 @@ Partial Class ModifyAndAddPN
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ModifyAndAddPN))
         Me.tbOpciones = New System.Windows.Forms.TabControl()
         Me.tbModify = New System.Windows.Forms.TabPage()
         Me.chkParoAU = New System.Windows.Forms.CheckBox()
@@ -515,6 +516,7 @@ Partial Class ModifyAndAddPN
         Me.Controls.Add(Me.tbOpciones)
         Me.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.Name = "ModifyAndAddPN"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

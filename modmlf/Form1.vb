@@ -265,6 +265,8 @@ Public Class Principal
                     .Columns("ETA").DefaultCellStyle.Format = ("dd-MMM-yy")
                     .AutoResizeColumns()
                 End With
+            Else
+                dgvCortosCompletos.DataSource = Nothing
             End If
             Label5.Text = "Items: " + dgvCortosCompletos.Rows.Count.ToString
         Catch ex As Exception
@@ -276,12 +278,6 @@ Public Class Principal
     Private Sub ExportInfo()
         Try
             Dim dt As New DataTable
-            'Dim queryCortos As String = "SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
-            '(select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
-            'Vendor,Razon,Notas
-            'FROM tblCortosPn WHERE CONVERT(date,[Fecha_Corto]) 
-            'BETWEEN (SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(GETDATE())-1),GETDATE()),101)) AND 
-            '(SELECT CONVERT(VARCHAR(25),DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))),DATEADD(mm,1,GETDATE())),101))"
             Dim queryCortos As String = $"SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
             (select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
             Vendor,Razon,Notas
@@ -448,6 +444,21 @@ Public Class Principal
             End Try
         End Get
     End Property
+    Public Function FiltraPNMaterialGroup(SearchPn As String) As Boolean
+        Try
+            Dim query As String = $"select case when MaterialGroup = 'MG01' then 'True' else 'False' end from tblItemsMaterialGroup where MaterialGroup = (select distinct MaterialGroup from tblitemsqb where pn = '{SearchPn}')"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            Return CStr(cmd.ExecuteScalar())
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.ToString)
+            Return Nothing
+        Finally
+            cnn.Close()
+        End Try
+    End Function
     Public Function CheckCortosPN(oPN As String, Optional ByVal FlagPurchasing As Boolean = False, Optional ByVal ParoAU As Boolean = False)
         Try
             If FlagPurchasing = False Then
