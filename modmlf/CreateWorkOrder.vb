@@ -23,12 +23,15 @@ Public Class CreateWorkOrder
             End Try
         End Get
     End Property
-    Public Function GetListForProcess() As List(Of ChargeInfo)
-        Return _ListForProcess
-    End Function
-    Public Sub SetListForProcess(value As List(Of ChargeInfo))
-        _ListForProcess = value
-    End Sub
+    Public Property ListForProcess As List(Of ChargeInfo)
+        Get
+            Return _ListForProcess
+        End Get
+        Set(value As List(Of ChargeInfo))
+            _ListForProcess = value
+        End Set
+    End Property
+
     Public Function GetSerialNewPWO(PrevPWO As String) As String
         Dim Numero, Ascii1, Ascii2, Ascii3, Ascii4 As Integer
         Dim NumeroString, Letras, Letra1, Letra2, Letra3, Letra4, NewSerial, TnewSerial As String
