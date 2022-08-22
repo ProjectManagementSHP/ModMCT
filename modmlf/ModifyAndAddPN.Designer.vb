@@ -27,6 +27,7 @@ Partial Class ModifyAndAddPN
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.tbOpciones = New System.Windows.Forms.TabControl()
         Me.tbModify = New System.Windows.Forms.TabPage()
+        Me.chkParoAU = New System.Windows.Forms.CheckBox()
         Me.dtpFProm = New System.Windows.Forms.DateTimePicker()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.txbNotasModify = New System.Windows.Forms.TextBox()
@@ -40,6 +41,7 @@ Partial Class ModifyAndAddPN
         Me.lblPn = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.tbNew = New System.Windows.Forms.TabPage()
+        Me.chkParoAUNew = New System.Windows.Forms.CheckBox()
         Me.lblQtyOnHand = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.lblQtyTotal = New System.Windows.Forms.Label()
@@ -62,8 +64,6 @@ Partial Class ModifyAndAddPN
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.chkParoAU = New System.Windows.Forms.CheckBox()
-        Me.chkParoAUNew = New System.Windows.Forms.CheckBox()
         Me.tbOpciones.SuspendLayout()
         Me.tbModify.SuspendLayout()
         Me.tbNew.SuspendLayout()
@@ -96,23 +96,35 @@ Partial Class ModifyAndAddPN
         Me.tbModify.Controls.Add(Me.cmbPOModify)
         Me.tbModify.Controls.Add(Me.lblPn)
         Me.tbModify.Controls.Add(Me.Label1)
-        Me.tbModify.Location = New System.Drawing.Point(4, 32)
+        Me.tbModify.Location = New System.Drawing.Point(4, 25)
         Me.tbModify.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.tbModify.Name = "tbModify"
         Me.tbModify.Padding = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.tbModify.Size = New System.Drawing.Size(483, 667)
+        Me.tbModify.Size = New System.Drawing.Size(483, 674)
         Me.tbModify.TabIndex = 0
         Me.tbModify.Text = "Modificar"
         Me.tbModify.UseVisualStyleBackColor = True
         '
+        'chkParoAU
+        '
+        Me.chkParoAU.AutoSize = True
+        Me.chkParoAU.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.chkParoAU.Location = New System.Drawing.Point(27, 603)
+        Me.chkParoAU.Name = "chkParoAU"
+        Me.chkParoAU.Size = New System.Drawing.Size(78, 20)
+        Me.chkParoAU.TabIndex = 25
+        Me.chkParoAU.Text = "Paro AU"
+        Me.chkParoAU.UseVisualStyleBackColor = True
+        '
         'dtpFProm
         '
+        Me.dtpFProm.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dtpFProm.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dtpFProm.Location = New System.Drawing.Point(27, 558)
         Me.dtpFProm.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dtpFProm.MinDate = New Date(2021, 1, 1, 0, 0, 0, 0)
         Me.dtpFProm.Name = "dtpFProm"
-        Me.dtpFProm.Size = New System.Drawing.Size(417, 30)
+        Me.dtpFProm.Size = New System.Drawing.Size(417, 23)
         Me.dtpFProm.TabIndex = 24
         Me.dtpFProm.Value = New Date(2021, 1, 1, 0, 0, 0, 0)
         '
@@ -121,7 +133,7 @@ Partial Class ModifyAndAddPN
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(23, 522)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(228, 35)
+        Me.Label6.Size = New System.Drawing.Size(110, 16)
         Me.Label6.TabIndex = 23
         Me.Label6.Text = "Fecha Estimada"
         '
@@ -139,7 +151,7 @@ Partial Class ModifyAndAddPN
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(23, 341)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(101, 35)
+        Me.Label5.Size = New System.Drawing.Size(48, 16)
         Me.Label5.TabIndex = 21
         Me.Label5.Text = "Notas:"
         '
@@ -157,7 +169,7 @@ Partial Class ModifyAndAddPN
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(23, 175)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(107, 35)
+        Me.Label4.Size = New System.Drawing.Size(52, 16)
         Me.Label4.TabIndex = 9
         Me.Label4.Text = "Razon:"
         '
@@ -166,7 +178,7 @@ Partial Class ModifyAndAddPN
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(257, 92)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(78, 23)
+        Me.Label3.Size = New System.Drawing.Size(57, 16)
         Me.Label3.TabIndex = 8
         Me.Label3.Text = "Vendor:"
         '
@@ -175,7 +187,7 @@ Partial Class ModifyAndAddPN
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(23, 92)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 23)
+        Me.Label2.Size = New System.Drawing.Size(32, 16)
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "PO:"
         '
@@ -183,7 +195,7 @@ Partial Class ModifyAndAddPN
         '
         Me.txbVendorModify.Location = New System.Drawing.Point(261, 118)
         Me.txbVendorModify.Name = "txbVendorModify"
-        Me.txbVendorModify.Size = New System.Drawing.Size(167, 30)
+        Me.txbVendorModify.Size = New System.Drawing.Size(167, 23)
         Me.txbVendorModify.TabIndex = 6
         '
         'cmbPOModify
@@ -191,7 +203,7 @@ Partial Class ModifyAndAddPN
         Me.cmbPOModify.FormattingEnabled = True
         Me.cmbPOModify.Location = New System.Drawing.Point(27, 118)
         Me.cmbPOModify.Name = "cmbPOModify"
-        Me.cmbPOModify.Size = New System.Drawing.Size(190, 31)
+        Me.cmbPOModify.Size = New System.Drawing.Size(190, 24)
         Me.cmbPOModify.TabIndex = 5
         '
         'lblPn
@@ -200,7 +212,7 @@ Partial Class ModifyAndAddPN
         Me.lblPn.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPn.Location = New System.Drawing.Point(87, 52)
         Me.lblPn.Name = "lblPn"
-        Me.lblPn.Size = New System.Drawing.Size(20, 27)
+        Me.lblPn.Size = New System.Drawing.Size(13, 18)
         Me.lblPn.TabIndex = 4
         Me.lblPn.Text = "-"
         '
@@ -210,7 +222,7 @@ Partial Class ModifyAndAddPN
         Me.Label1.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(85, 13)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(298, 27)
+        Me.Label1.Size = New System.Drawing.Size(196, 18)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "Modificar Numero de Parte"
         '
@@ -236,21 +248,32 @@ Partial Class ModifyAndAddPN
         Me.tbNew.Controls.Add(Me.Label8)
         Me.tbNew.Controls.Add(Me.txbNewPN)
         Me.tbNew.Controls.Add(Me.Label7)
-        Me.tbNew.Location = New System.Drawing.Point(4, 32)
+        Me.tbNew.Location = New System.Drawing.Point(4, 25)
         Me.tbNew.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
         Me.tbNew.Name = "tbNew"
         Me.tbNew.Padding = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.tbNew.Size = New System.Drawing.Size(483, 667)
+        Me.tbNew.Size = New System.Drawing.Size(483, 674)
         Me.tbNew.TabIndex = 1
         Me.tbNew.Text = "Agregar"
         Me.tbNew.UseVisualStyleBackColor = True
+        '
+        'chkParoAUNew
+        '
+        Me.chkParoAUNew.AutoSize = True
+        Me.chkParoAUNew.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.chkParoAUNew.Location = New System.Drawing.Point(12, 624)
+        Me.chkParoAUNew.Name = "chkParoAUNew"
+        Me.chkParoAUNew.Size = New System.Drawing.Size(78, 20)
+        Me.chkParoAUNew.TabIndex = 5453
+        Me.chkParoAUNew.Text = "Paro AU"
+        Me.chkParoAUNew.UseVisualStyleBackColor = True
         '
         'lblQtyOnHand
         '
         Me.lblQtyOnHand.AutoSize = True
         Me.lblQtyOnHand.Location = New System.Drawing.Point(416, 259)
         Me.lblQtyOnHand.Name = "lblQtyOnHand"
-        Me.lblQtyOnHand.Size = New System.Drawing.Size(17, 23)
+        Me.lblQtyOnHand.Size = New System.Drawing.Size(13, 16)
         Me.lblQtyOnHand.TabIndex = 5452
         Me.lblQtyOnHand.Text = "-"
         '
@@ -259,7 +282,7 @@ Partial Class ModifyAndAddPN
         Me.Label16.AutoSize = True
         Me.Label16.Location = New System.Drawing.Point(250, 259)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(135, 23)
+        Me.Label16.Size = New System.Drawing.Size(97, 16)
         Me.Label16.TabIndex = 5451
         Me.Label16.Text = "Cantidad O.H:"
         '
@@ -268,7 +291,7 @@ Partial Class ModifyAndAddPN
         Me.lblQtyTotal.AutoSize = True
         Me.lblQtyTotal.Location = New System.Drawing.Point(152, 259)
         Me.lblQtyTotal.Name = "lblQtyTotal"
-        Me.lblQtyTotal.Size = New System.Drawing.Size(17, 23)
+        Me.lblQtyTotal.Size = New System.Drawing.Size(13, 16)
         Me.lblQtyTotal.TabIndex = 5450
         Me.lblQtyTotal.Text = "-"
         '
@@ -277,18 +300,19 @@ Partial Class ModifyAndAddPN
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(8, 259)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(138, 23)
+        Me.Label15.Size = New System.Drawing.Size(100, 16)
         Me.Label15.TabIndex = 5449
         Me.Label15.Text = "Cantidad total:"
         '
         'dtpAgregando
         '
+        Me.dtpAgregando.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dtpAgregando.Format = System.Windows.Forms.DateTimePickerFormat.Custom
         Me.dtpAgregando.Location = New System.Drawing.Point(188, 585)
         Me.dtpAgregando.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dtpAgregando.MinDate = New Date(2021, 1, 1, 0, 0, 0, 0)
         Me.dtpAgregando.Name = "dtpAgregando"
-        Me.dtpAgregando.Size = New System.Drawing.Size(266, 30)
+        Me.dtpAgregando.Size = New System.Drawing.Size(266, 23)
         Me.dtpAgregando.TabIndex = 5448
         Me.dtpAgregando.Value = New Date(2021, 1, 1, 0, 0, 0, 0)
         '
@@ -297,7 +321,7 @@ Partial Class ModifyAndAddPN
         Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(8, 591)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(152, 23)
+        Me.Label10.Size = New System.Drawing.Size(110, 16)
         Me.Label10.TabIndex = 5447
         Me.Label10.Text = "Fecha Estimada"
         '
@@ -315,7 +339,7 @@ Partial Class ModifyAndAddPN
         Me.Label11.AutoSize = True
         Me.Label11.Location = New System.Drawing.Point(8, 471)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(101, 35)
+        Me.Label11.Size = New System.Drawing.Size(48, 16)
         Me.Label11.TabIndex = 5445
         Me.Label11.Text = "Notas:"
         '
@@ -333,7 +357,7 @@ Partial Class ModifyAndAddPN
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(7, 379)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(107, 35)
+        Me.Label12.Size = New System.Drawing.Size(52, 16)
         Me.Label12.TabIndex = 5443
         Me.Label12.Text = "Razon:"
         '
@@ -342,7 +366,7 @@ Partial Class ModifyAndAddPN
         Me.Label13.AutoSize = True
         Me.Label13.Location = New System.Drawing.Point(250, 307)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(78, 23)
+        Me.Label13.Size = New System.Drawing.Size(57, 16)
         Me.Label13.TabIndex = 5442
         Me.Label13.Text = "Vendor:"
         '
@@ -351,7 +375,7 @@ Partial Class ModifyAndAddPN
         Me.Label14.AutoSize = True
         Me.Label14.Location = New System.Drawing.Point(8, 307)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(45, 23)
+        Me.Label14.Size = New System.Drawing.Size(32, 16)
         Me.Label14.TabIndex = 5441
         Me.Label14.Text = "PO:"
         '
@@ -359,7 +383,7 @@ Partial Class ModifyAndAddPN
         '
         Me.txbNuevoVendor.Location = New System.Drawing.Point(245, 333)
         Me.txbNuevoVendor.Name = "txbNuevoVendor"
-        Me.txbNuevoVendor.Size = New System.Drawing.Size(226, 30)
+        Me.txbNuevoVendor.Size = New System.Drawing.Size(226, 23)
         Me.txbNuevoVendor.TabIndex = 5440
         '
         'cmbPONuevo
@@ -367,7 +391,7 @@ Partial Class ModifyAndAddPN
         Me.cmbPONuevo.FormattingEnabled = True
         Me.cmbPONuevo.Location = New System.Drawing.Point(11, 333)
         Me.cmbPONuevo.Name = "cmbPONuevo"
-        Me.cmbPONuevo.Size = New System.Drawing.Size(190, 31)
+        Me.cmbPONuevo.Size = New System.Drawing.Size(190, 24)
         Me.cmbPONuevo.TabIndex = 5439
         '
         'Label9
@@ -375,7 +399,7 @@ Partial Class ModifyAndAddPN
         Me.Label9.AutoSize = True
         Me.Label9.Location = New System.Drawing.Point(344, 78)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(65, 23)
+        Me.Label9.Size = New System.Drawing.Size(45, 16)
         Me.Label9.TabIndex = 5438
         Me.Label9.Text = "Items:"
         '
@@ -435,7 +459,7 @@ Partial Class ModifyAndAddPN
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(96, 45)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(42, 23)
+        Me.Label8.Size = New System.Drawing.Size(30, 16)
         Me.Label8.TabIndex = 10
         Me.Label8.Text = "PN:"
         '
@@ -444,7 +468,7 @@ Partial Class ModifyAndAddPN
         Me.txbNewPN.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txbNewPN.Location = New System.Drawing.Point(151, 42)
         Me.txbNewPN.Name = "txbNewPN"
-        Me.txbNewPN.Size = New System.Drawing.Size(220, 30)
+        Me.txbNewPN.Size = New System.Drawing.Size(220, 23)
         Me.txbNewPN.TabIndex = 9
         '
         'Label7
@@ -453,13 +477,14 @@ Partial Class ModifyAndAddPN
         Me.Label7.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(84, 9)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(287, 27)
+        Me.Label7.Size = New System.Drawing.Size(188, 18)
         Me.Label7.TabIndex = 4
         Me.Label7.Text = "Agregar Numero de Parte"
         '
         'Button2
         '
         Me.Button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button2.Image = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
         Me.Button2.Location = New System.Drawing.Point(323, 714)
         Me.Button2.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -470,6 +495,7 @@ Partial Class ModifyAndAddPN
         '
         'Button1
         '
+        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Image = Global.modmlf.My.Resources.Resources.save_icon_icons_com_53618_1_
         Me.Button1.Location = New System.Drawing.Point(75, 709)
         Me.Button1.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -478,29 +504,9 @@ Partial Class ModifyAndAddPN
         Me.Button1.TabIndex = 1
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'chkParoAU
-        '
-        Me.chkParoAU.AutoSize = True
-        Me.chkParoAU.Location = New System.Drawing.Point(27, 603)
-        Me.chkParoAU.Name = "chkParoAU"
-        Me.chkParoAU.Size = New System.Drawing.Size(109, 27)
-        Me.chkParoAU.TabIndex = 25
-        Me.chkParoAU.Text = "Paro AU"
-        Me.chkParoAU.UseVisualStyleBackColor = True
-        '
-        'chkParoAUNew
-        '
-        Me.chkParoAUNew.AutoSize = True
-        Me.chkParoAUNew.Location = New System.Drawing.Point(12, 624)
-        Me.chkParoAUNew.Name = "chkParoAUNew"
-        Me.chkParoAUNew.Size = New System.Drawing.Size(109, 27)
-        Me.chkParoAUNew.TabIndex = 5453
-        Me.chkParoAUNew.Text = "Paro AU"
-        Me.chkParoAUNew.UseVisualStyleBackColor = True
-        '
         'ModifyAndAddPN
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(11.0!, 23.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.ClientSize = New System.Drawing.Size(491, 781)

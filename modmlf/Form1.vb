@@ -20,7 +20,7 @@ Public Class Principal
     Public tblasig As New DataTable
     Private tblUsersPriv As New DataTable
     Dim oh, alm, piso, rework As Decimal
-    'Public WithEvents FSW As New System.IO.FileSystemWatcher
+    Public WithEvents FSW As New System.IO.FileSystemWatcher
     Private bgWorker As New BackgroundWorker
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Cursor.Current = Cursors.WaitCursor
@@ -44,6 +44,8 @@ Public Class Principal
             TabPage2.Visible = False
             TabPage2.Parent = Nothing
             btnCortosPN.Visible = False
+            gbFechas.Visible = False
+            btnAgregarNewElemento.Visible = False
         ElseIf opcion = 2 Then
             pnluserandtitle.BackColor = Color.LightBlue
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
@@ -58,6 +60,9 @@ Public Class Principal
             TabPage2.Visible = True
             TabPage2.Parent = TabControl1
             Button2.BackColor = Color.LightBlue
+            btnCortosPN.Visible = False
+            gbFechas.Visible = False
+            btnAgregarNewElemento.Visible = False
             cargadatosCompras()
         ElseIf opcion = 3 Then
             pnluserandtitle.BackColor = Color.LightGray
@@ -71,6 +76,8 @@ Public Class Principal
             TabPage2.Parent = Nothing
             Button2.BackColor = Color.LightGray
             btnCortosPN.Visible = False
+            gbFechas.Visible = False
+            btnAgregarNewElemento.Visible = False
         ElseIf opcion = 4 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -84,6 +91,8 @@ Public Class Principal
             TabPage2.Parent = Nothing
             Button2.BackColor = Color.LightGreen
             btnCortosPN.Visible = False
+            gbFechas.Visible = False
+            btnAgregarNewElemento.Visible = False
         ElseIf opcion = 5 Then
             pnluserandtitle.BackColor = Color.Bisque
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
@@ -103,6 +112,7 @@ Public Class Principal
             Button2.BackColor = Color.Bisque
             btnCortosPN.Visible = False
             gbFechas.Visible = True
+            btnAgregarNewElemento.Visible = True
             cargadatosCompras()
             Timer3.Enabled = True
             Timer3.Interval = 1800000
@@ -121,6 +131,8 @@ Public Class Principal
             TabPage2.Parent = TabControl1
             Button2.BackColor = Color.LightGreen
             btnCortosPN.Visible = False
+            gbFechas.Visible = False
+            btnAgregarNewElemento.Visible = False
             cargadatosCompras()
         ElseIf opcion = 7 Then
             pnluserandtitle.BackColor = Color.LightGreen
@@ -137,6 +149,8 @@ Public Class Principal
             TabPage2.Parent = TabControl1
             Button2.BackColor = Color.LightGreen
             btnCortosPN.Visible = False
+            gbFechas.Visible = False
+            btnAgregarNewElemento.Visible = False
             cargadatosCompras()
         End If
     End Sub
@@ -339,7 +353,7 @@ Public Class Principal
             Return True
         Catch ex As Exception
             cnn.Close()
-            MessageBox.Show(ex.ToString, "Error Loading Terminales")
+            MessageBox.Show(ex.ToString, "Error Modify PN")
             Return False
         End Try
     End Function
@@ -455,7 +469,7 @@ Public Class Principal
                     End While
                     cnn.Close()
                     DeleteFromTblCortos(id)
-                    aConsulta = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold])
+                    aConsulta = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
             SELECT DISTINCT tblBOMCWO.PN AS [Component PN], tblBOMCWO.[Description] [Description],
             (SELECT MIN(CONVERT(date,dateConfirmaAlm)) FROM tblCWO WHERE CWO in (
             SELECT CWO FROM tblBOMCWO aPn WHERE aPn.PN=tblBOMCWO.PN and Hold=1)
@@ -639,9 +653,10 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [ParoAU] FROM tblBO
                             While dr.Read
                                 id = CInt(dr.GetValue(0))
                                 Aus_Afectados = $"{dr.GetValue(1)},"
-                                AuQty = $"{dr.GetValue(2)},"
+                                AuQty = CInt(dr.GetValue(2))
                             End While
                             cnn.Close()
+
                             DeleteFromTblCortos(id)
 
                             Dim Aus As List(Of String) = New List(Of String)
@@ -3492,25 +3507,25 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             MessageBox.Show(vbCrLf + "MLF Software" + vbNewLine + "© SPECIALIZED HARNESS PRODUCTS S DE RL DE CV" + vbCr + "All Rights Reserved" + vbLf + "Software Version " & System.Windows.Forms.Application.ProductVersion & "" + vbCr + "Oct/2021", "MLF Software", MessageBoxButtons.OK)
         End If
     End Sub
-    'Public Sub AutoUpdate()
-    '    FSW.Path = "\\10.17.182.22\sea-s\MLF\Application Files"
-    '    FSW.IncludeSubdirectories = True
-    '    FSW.EnableRaisingEvents = True
-    'End Sub
-    'Private Sub FSW_Created(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Created
-    '    Dim limpiaChar As String = e.Name, extraVersion As String = ""
-    '    limpiaChar = LTrim(RTrim(limpiaChar))
-    '    limpiaChar = limpiaChar.Replace("_", ".")
-    '    For i As Integer = 0 To limpiaChar.Length - 1
-    '        If IsNumeric(limpiaChar(i)) Or limpiaChar(i) = "." Then
-    '            extraVersion += limpiaChar(i)
-    '        End If
-    '    Next
-    '    ver = extraVersion
-    '    ActualizacionRequerida.BringToFront()
-    '    ActualizacionRequerida.ShowDialog()
-    '    If flagActualizacion = 1 Then
-    '        Application.Exit()
-    '    End If
-    'End Sub
+    Public Sub AutoUpdate()
+        FSW.Path = "\\10.17.182.22\sea-s\MLF\Application Files"
+        FSW.IncludeSubdirectories = True
+        FSW.EnableRaisingEvents = True
+    End Sub
+    Private Sub FSW_Created(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Created
+        Dim limpiaChar As String = e.Name, extraVersion As String = ""
+        limpiaChar = LTrim(RTrim(limpiaChar))
+        limpiaChar = limpiaChar.Replace("_", ".")
+        For i As Integer = 0 To limpiaChar.Length - 1
+            If IsNumeric(limpiaChar(i)) Or limpiaChar(i) = "." Then
+                extraVersion += limpiaChar(i)
+            End If
+        Next
+        ver = extraVersion
+        ActualizacionRequerida.BringToFront()
+        ActualizacionRequerida.ShowDialog()
+        If flagActualizacion = 1 Then
+            Application.Exit()
+        End If
+    End Sub
 End Class

@@ -119,39 +119,33 @@ Module CorreoFalla
             CorreoFalla.EnviaCorreoFalla("EnviaCorreoHoldMat", host, UserName)
         End Try
     End Sub
-    Private Function CargaDestinatarios(ByVal Modulo As String, ByVal OpcionEnvio As String)
+    Private Function CargaDestinatarios(Modulo As String, OpcionEnvio As String)
         Dim Destinatarios As String = ""
-        Dim contador As Long = 0
-        Using TE As New DataTable
-            Try
-                Dim Query As String = "SELECT Email FROM tblUserEmails WHERE Module=@Module AND Active=1 AND OptionToSend=@OptionToSend"
-                cmd = New SqlCommand(Query, cnn)
-                cmd.CommandType = CommandType.Text
-                cmd.Parameters.Add("@Module", SqlDbType.NVarChar).Value = Modulo
-                cmd.Parameters.Add("@OptionToSend", SqlDbType.NVarChar).Value = OpcionEnvio
-                If edo = "Open" Then cnn.Close()
-                edo = cnn.State.ToString
-                If edo = "Close" Then cnn.Open()
-                edo = cnn.State.ToString
-                cnn.Open()
-                dr = cmd.ExecuteReader
-                TE.Load(dr)
-                edo = cnn.State.ToString
-                If edo = "Open" Then cnn.Close()
-            Catch ex As Exception
-                'MessageBox.Show(ex.Message, "Error Loading tblMaster")
-                If edo = "Open" Then cnn.Close()
-                'EnviaCorreoFalla("CargaDestinatarios", host, UserName)
-            End Try
+        Try
+            Dim Query As String = $"declare @Email as nvarchar(500)
+		                                set @Email=''
+			                             select @Email=@Email + T.Email + ',' from
+			                             (SELECT Email FROM tblUserEmails WHERE Module='{Modulo}' AND Active=1 AND OptionToSend='{OpcionEnvio}') as T
+		                                if @Ws <> ''
+			                             begin
+				                          set @Email=LEFT(@Email, len(@Email) - 1)
+				                          select @Email [Email]
+			                             end
+		                                else
+			                             begin
+				                          set @Email= 'S/A'
+				                          select @Email [Email]
+		                                end"
+            cmd = New SqlCommand(Query, cnn)
+            cmd.CommandType = CommandType.Text
             edo = cnn.State.ToString
             If edo = "Open" Then cnn.Close()
-            If TE.Rows.Count > 0 Then
-                For NM As Integer = 0 To TE.Rows.Count - 1
-                    Destinatarios += TE.Rows(NM).Item("Email").ToString
-                    If NM < TE.Rows.Count - 1 Then Destinatarios += ","
-                Next
-            End If
-        End Using
+            cnn.Open()
+            Destinatarios = CStr(cmd.ExecuteScalar())
+            cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+        End Try
         Return Destinatarios
     End Function
 End Module

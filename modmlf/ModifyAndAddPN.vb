@@ -104,7 +104,7 @@ Public Class ModifyAndAddPN
             If Wips.Length > 0 Then
                 'Aqui colocar codigo para envio de correo de numeros de parte puestos por compras
                 Dim mensaje As String = $"Se ha colocado por parte de compras el siguiente numero de parte: {txbNewPN.Text}" + vbNewLine + "Y los WIP's afectados son los siguientes: " + vbNewLine + $"{Wips.ToString.TrimEnd(",").Trim}."
-                'EnviaCorreoHoldMatPorCompras(mensaje)
+                EnviaCorreoHoldMatPorCompras(mensaje)
             End If
             Return True
         Catch Exc As Exception
