@@ -414,7 +414,7 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
-
+            InfoTablas.ForEach(Function(o) MessageBox.Show(o.PN.ToString + vbNewLine + o.Rows.ToString + vbNewLine + o.Balance.ToString))
         Else
             MessageBox.Show("Seleccione primero una terminal para poder crear PWO.")
         End If
