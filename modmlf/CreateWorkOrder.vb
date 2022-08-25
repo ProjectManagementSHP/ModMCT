@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Text
 Imports System.Text.RegularExpressions
 
 Public Class CreateWorkOrder
@@ -22,7 +23,14 @@ Public Class CreateWorkOrder
             cnn.Close()
         End Try
     End Function
-
+    Public Property NoDemon As DataGridView
+        Get
+            Return GridDemon
+        End Get
+        Set
+            GridDemon = Value
+        End Set
+    End Property
     Public Property ListForProcess As List(Of ChargeInfo)
         Get
             Return _ListForProcess
@@ -99,7 +107,7 @@ Public Class CreateWorkOrder
             Return Nothing
         End Try
     End Function
-    Public Function GetIdBomPwo(PrevPWO As String, id As String)
+    Public Function GetIdBomPwo(PrevPWO As String)
         Dim Numero, ascii1, ascii2, ascii3, ascii4 As Integer
         Dim NumeroString, Letras, letra1, letra2, letra3, letra4 As String, NewSerial As String = ""
         Try
@@ -150,35 +158,196 @@ Public Class CreateWorkOrder
                     letra3 = Convert.ToChar(ascii3).ToString
                     letra4 = Convert.ToChar(ascii4).ToString
                     Letras = letra1 + letra2 + letra3 + letra4
-                    NewSerial = id + Letras + NumeroString
+                    NewSerial = "IBP" + Letras + NumeroString
                 End If
             ElseIf PrevPWO = "" Then
                 Letras = "AAAA"
                 NumeroString = "0000001"
-                NewSerial = id + Letras + NumeroString
+                NewSerial = "IBP" + Letras + NumeroString
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
         Return NewSerial
     End Function
-    Public Sub GetSetWorkOrder()
+    Public Function GetSetWorkOrder()
         _IdSerial = GetSerialNewPWO(GetSelectIDPWO().ToString)
         If _IdSerial.ToString.Length > 0 Then
             If InsertNewWorkOrder Then
-
+                CreateBOMWorkOrder()
+                SetCC()
+            Else
+                Return False
             End If
+        Else
+            Return False
         End If
-    End Sub
+    End Function
     Private Sub CreateBOMWorkOrder()
         Try
-
+            Dim First = (From d In _ListForProcess Order By d.Rows Ascending Select d.Rows).First()
+            Dim auxRow As Integer = 0
+            Dim dtDemon As New DataTable
+            dtDemon = (DirectCast(GridDemon.DataSource, DataTable))
+            Dim objMerge As New DataTable
+            _ListForProcess.ForEach(Function(Term)
+                                        Dim CountInteraction As Integer = 0
+                                        Dim AppendInfo As New StringBuilder("")
+                                        For Each row As DataRow In dtDemon.Rows
+                                            CountInteraction += 1
+                                            If First = Term.Rows Then
+                                                auxRow = Term.Rows
+                                                If CountInteraction >= 1 And CountInteraction <= Term.Rows Then
+                                                    If Term.PN.Equals(row.Item(3).ToString) Then
+                                                        AppendInfo.Append($"'{row.Item("WireID")}',")
+                                                    End If
+                                                    If Term.PN.Equals(row.Item(5).ToString) Then
+                                                        AppendInfo.Append($"'{row.Item("WireID")}',")
+                                                    End If
+                                                    If CountInteraction = Term.Rows Then
+                                                        Exit For
+                                                    Else
+                                                        Continue For
+                                                    End If
+                                                End If
+                                            ElseIf auxRow < Term.Rows Then
+                                                If CountInteraction >= auxRow And CountInteraction <= Term.Rows Then
+                                                    If Term.PN.Equals(row.Item(3).ToString) Then
+                                                        AppendInfo.Append($"'{row.Item("WireID")}',")
+                                                    End If
+                                                    If Term.PN.Equals(row.Item(5).ToString) Then
+                                                        AppendInfo.Append($"'{row.Item("WireID")}',")
+                                                    End If
+                                                    If CountInteraction = Term.Rows Then
+                                                        auxRow = Term.Rows
+                                                        Exit For
+                                                    Else
+                                                        Continue For
+                                                    End If
+                                                End If
+                                            End If
+                                        Next
+                                        If AppendInfo.Length > 0 Then
+                                            If objMerge IsNot Nothing Then
+                                                objMerge = MergeDataBOM(AppendInfo.ToString.TrimEnd(",").Trim, Term.PN.ToString).Copy()
+                                            Else
+                                                objMerge.Merge(MergeDataBOM(AppendInfo.ToString.TrimEnd(",").Trim, Term.PN.ToString), True)
+                                            End If
+                                        End If
+                                        Return Nothing
+                                    End Function)
+            If objMerge IsNot Nothing Then
+                For Each row As DataRow In objMerge.Rows
+                    InsertItem(row.Item("WIP").ToString, row.Item("Term").ToString, CInt(row.Item("Bal").ToString))
+                Next
+            End If
         Catch ex As Exception
-
+            cnn.Close()
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+        End Try
+    End Sub
+    Public Function MergeDataBOM(Id As String, PN As String) As DataTable
+        Try
+            Dim reader As SqlDataReader
+            Dim command As New SqlCommand($";WITH BomPwo (WIP,Term) as (
+            (select WIP, TermA [Term] from tblWipDet where WireID in ({Id}) and (TermA='{PN}' and MaqA='MM')) union 
+            (select WIP, TermB [Term] from tblWipDet where WireID in ({Id}) and (TermB='{PN}' and MaqB='MM')))
+            select WIP,Term,(select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet where WireID in ({Id}) and (TermA='{PN}' and MaqA='MM') and WIP=BomPwo.WIP group by MaqA having MaqA = 'MM'),0)) +
+            (Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet where WireID in ({Id}) and (TermB='{PN}' and MaqB='MM') and WIP=BomPwo.WIP group by MaqB having MaqB = 'MM'),0))) [Bal] from BomPwo", cnn)
+            command.CommandType = CommandType.Text
+            cnn.Open()
+            reader = command.ExecuteReader
+            Dim tb As New DataTable
+            tb.Load(reader)
+            cnn.Close()
+            If tb IsNot Nothing Then
+                Return tb
+            End If
+        Catch ex As Exception
+            cnn.Close()
+            MsgBox(ex.Message + vbNewLine + ex.ToString)
+            Return Nothing
+        End Try
+        Return Nothing
+    End Function
+    Private Sub InsertItem(Wip As String, PN As String, Qty As Integer)
+        Try
+            Dim insertBom As String = $"insert into tblBOMPWO (IdentificadorBOM,PWO,WIP,AU,Rev,PN,Qty,Unit,Description,Balance,CreatedDate) Values (@IDBOMProcesos,@PWO,@WIP,(select AU from tblWIP where WIP=@WIP),(select Rev from tblWIP where WIP=@WIP),@PN,@Qty,'ea',(select top 1 Description from tblItemsQB where pn = @PN),@Qty,GETDATE())"
+            Dim command As SqlCommand = New SqlCommand(insertBom, cnn)
+            command.CommandType = CommandType.Text
+            command.Parameters.Add("@IDBOMProcesos", SqlDbType.NVarChar).Value = GetIdBomPwo(GetSelectIDPWO()(True).ToString)
+            command.Parameters.Add("@PWO", SqlDbType.NVarChar).Value = _IdSerial
+            command.Parameters.Add("@PN", SqlDbType.NVarChar).Value = PN
+            command.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = Wip
+            command.Parameters.Add("@Qty", SqlDbType.Decimal).Value = Qty
+            cnn.Open()
+            command.ExecuteNonQuery()
+            cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+        End Try
+    End Sub
+    Private Sub UpdatePWOForWipdet(side As Char, Cell As String, WireID As String)
+        Try
+            Dim Bom As String = $"update tblWipDet set PWO{side}='{_IdSerial}',Cell{side}='{Cell}' where WireID='{WireID}'"
+            Dim command As SqlCommand = New SqlCommand(Bom, cnn)
+            command.CommandType = CommandType.Text
+            cnn.Open()
+            command.ExecuteNonQuery()
+            cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
     Public Sub SetCC()
-
+        Try
+            Dim First = (From d In _ListForProcess Order By d.Rows Ascending Select d.Rows).First()
+            Dim auxRow As Integer = 0
+            Dim dtDemon As New DataTable
+            dtDemon = (DirectCast(GridDemon.DataSource, DataTable))
+            _ListForProcess.ForEach(Function(Term)
+                                        Dim CountInteraction As Integer = 0
+                                        For Each row As DataRow In dtDemon.Rows
+                                            CountInteraction += 1
+                                            If First = Term.Rows Then
+                                                auxRow = Term.Rows
+                                                If CountInteraction >= 1 And CountInteraction <= Term.Rows Then
+                                                    If Term.PN.Equals(row.Item(3).ToString) Then
+                                                        UpdatePWOForWipdet("A", Term.Cell.ToString.ToUpper, row.Item("WireId").ToString)
+                                                    End If
+                                                    If Term.PN.Equals(row.Item(5).ToString) Then
+                                                        UpdatePWOForWipdet("B", Term.Cell.ToString.ToUpper, row.Item("WireId").ToString)
+                                                    End If
+                                                    If CountInteraction = Term.Rows Then
+                                                        Exit For
+                                                    Else
+                                                        Continue For
+                                                    End If
+                                                End If
+                                            ElseIf auxRow < Term.Rows Then
+                                                If CountInteraction >= auxRow And CountInteraction <= Term.Rows Then
+                                                    If Term.PN.Equals(row.Item(3).ToString) Then
+                                                        UpdatePWOForWipdet("A", Term.Cell.ToString.ToUpper, row.Item("WireId").ToString)
+                                                    End If
+                                                    If Term.PN.Equals(row.Item(5).ToString) Then
+                                                        UpdatePWOForWipdet("B", Term.Cell.ToString.ToUpper, row.Item("WireId").ToString)
+                                                    End If
+                                                    If CountInteraction = Term.Rows Then
+                                                        auxRow = Term.Rows
+                                                        Exit For
+                                                    Else
+                                                        Continue For
+                                                    End If
+                                                End If
+                                            End If
+                                        Next
+                                        Return Nothing
+                                    End Function)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+        End Try
     End Sub
     Private ReadOnly Property InsertNewWorkOrder
         Get
