@@ -1996,7 +1996,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
                 cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"
             ElseIf opcion = 4 Or opcion = 7 Then 'Solicitar Mat/Apl XP
-                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"
+                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') and c.Maq in (0,5) order by c.Maq desc,c.Id asc,w.WIP"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then 'Solicitar Mat/Apl XP and KoA normal
                 cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null order by c.Maq desc,c.Id asc,w.WIP"
             End If
