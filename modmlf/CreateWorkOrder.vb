@@ -47,8 +47,8 @@ Public Class CreateWorkOrder
         PrevPWO = Mid(PrevPWO, 5)
         Try
             If PrevPWO <> "" Then
-                Letras = Microsoft.VisualBasic.Left(PrevPWO, 4)
-                Numero = Convert.ToInt64(Microsoft.VisualBasic.Right(PrevPWO, 9))
+                Letras = Left(PrevPWO, 4)
+                Numero = Convert.ToInt64(Right(PrevPWO, 9))
                 If Numero < 999999999 Then
                     Numero += 1
                     NumeroString = Numero.ToString
@@ -174,16 +174,19 @@ Public Class CreateWorkOrder
         _IdSerial = GetSerialNewPWO(GetSelectIDPWO().ToString)
         If _IdSerial.ToString.Length > 0 Then
             If InsertNewWorkOrder Then
-                CreateBOMWorkOrder()
-                SetCC()
+                If CreateBOMWorkOrder() AndAlso SetCC() Then
+
+                Else
+
+                End If
             Else
-                Return False
+
             End If
         Else
-            Return False
+
         End If
     End Function
-    Private Sub CreateBOMWorkOrder()
+    Private Function CreateBOMWorkOrder()
         Try
             Dim First = (From d In _ListForProcess Order By d.Rows Ascending Select d.Rows).First()
             Dim auxRow As Integer = 0
@@ -244,8 +247,10 @@ Public Class CreateWorkOrder
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+            Return False
         End Try
-    End Sub
+        Return True
+    End Function
     Public Function MergeDataBOM(Id As String, PN As String) As DataTable
         Try
             Dim reader As SqlDataReader
@@ -275,7 +280,7 @@ Public Class CreateWorkOrder
             Dim insertBom As String = $"insert into tblBOMPWO (IdentificadorBOM,PWO,WIP,AU,Rev,PN,Qty,Unit,Description,Balance,CreatedDate) Values (@IDBOMProcesos,@PWO,@WIP,(select AU from tblWIP where WIP=@WIP),(select Rev from tblWIP where WIP=@WIP),@PN,@Qty,'ea',(select top 1 Description from tblItemsQB where pn = @PN),@Qty,GETDATE())"
             Dim command As SqlCommand = New SqlCommand(insertBom, cnn)
             command.CommandType = CommandType.Text
-            command.Parameters.Add("@IDBOMProcesos", SqlDbType.NVarChar).Value = GetIdBomPwo(GetSelectIDPWO()(True).ToString)
+            command.Parameters.Add("@IDBOMProcesos", SqlDbType.NVarChar).Value = GetIdBomPwo(GetSelectIDPWO(False).ToString)
             command.Parameters.Add("@PWO", SqlDbType.NVarChar).Value = _IdSerial
             command.Parameters.Add("@PN", SqlDbType.NVarChar).Value = PN
             command.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = Wip
@@ -301,7 +306,7 @@ Public Class CreateWorkOrder
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
-    Public Sub SetCC()
+    Public Function SetCC()
         Try
             Dim First = (From d In _ListForProcess Order By d.Rows Ascending Select d.Rows).First()
             Dim auxRow As Integer = 0
@@ -347,8 +352,10 @@ Public Class CreateWorkOrder
                                     End Function)
         Catch ex As Exception
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+            Return False
         End Try
-    End Sub
+        Return True
+    End Function
     Private ReadOnly Property InsertNewWorkOrder
         Get
             Try

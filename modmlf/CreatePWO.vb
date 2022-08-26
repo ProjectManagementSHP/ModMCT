@@ -157,6 +157,7 @@ Public Class CreatePWO
             Dim dr As SqlDataReader
             Dim aTable As New DataTable
             Dim cmd As SqlCommand = New SqlCommand(consulta, cnn)
+            cmd.CommandTimeout = 480000
             cnn.Open()
             dr = cmd.ExecuteReader
             aTable.Load(dr)

@@ -90,7 +90,7 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar.EnableHeadersVisualStyles = False
         Me.dgvTerminalesXProcesar.GridColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvTerminalesXProcesar.Location = New System.Drawing.Point(8, 66)
-        Me.dgvTerminalesXProcesar.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.dgvTerminalesXProcesar.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvTerminalesXProcesar.Name = "dgvTerminalesXProcesar"
         Me.dgvTerminalesXProcesar.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -134,7 +134,7 @@ Partial Class CreatePWO
         Me.dgvDetalleTerminales.EnableHeadersVisualStyles = False
         Me.dgvDetalleTerminales.GridColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvDetalleTerminales.Location = New System.Drawing.Point(12, 28)
-        Me.dgvDetalleTerminales.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.dgvDetalleTerminales.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvDetalleTerminales.Name = "dgvDetalleTerminales"
         Me.dgvDetalleTerminales.ReadOnly = True
         DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -156,7 +156,7 @@ Partial Class CreatePWO
         Me.Button1.BackColor = System.Drawing.Color.LightBlue
         Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button1.Location = New System.Drawing.Point(17, 27)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(81, 20)
         Me.Button1.TabIndex = 5438
@@ -167,7 +167,7 @@ Partial Class CreatePWO
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Location = New System.Drawing.Point(17, 60)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(110, 17)
         Me.CheckBox1.TabIndex = 5439
@@ -179,7 +179,7 @@ Partial Class CreatePWO
         Me.Button2.BackColor = System.Drawing.Color.LightBlue
         Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button2.Location = New System.Drawing.Point(30, 25)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(81, 21)
         Me.Button2.TabIndex = 5440
@@ -193,9 +193,9 @@ Partial Class CreatePWO
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Location = New System.Drawing.Point(149, 16)
-        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Size = New System.Drawing.Size(151, 76)
         Me.GroupBox1.TabIndex = 5441
         Me.GroupBox1.TabStop = False
@@ -263,7 +263,7 @@ Partial Class CreatePWO
         'TextBox1
         '
         Me.TextBox1.Location = New System.Drawing.Point(144, 30)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(62, 20)
         Me.TextBox1.TabIndex = 5445
@@ -285,7 +285,7 @@ Partial Class CreatePWO
         Me.Button3.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.SystemColors.ControlLightLight
         Me.Button3.Location = New System.Drawing.Point(12, 293)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(2)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(79, 62)
         Me.Button3.TabIndex = 5447
@@ -299,9 +299,9 @@ Partial Class CreatePWO
         Me.GroupBox2.Controls.Add(Me.CheckBox1)
         Me.GroupBox2.Controls.Add(Me.GroupBox1)
         Me.GroupBox2.Location = New System.Drawing.Point(828, 480)
-        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Size = New System.Drawing.Size(311, 101)
         Me.GroupBox2.TabIndex = 5448
         Me.GroupBox2.TabStop = False
@@ -315,9 +315,9 @@ Partial Class CreatePWO
         Me.GroupBox3.Controls.Add(Me.Label5)
         Me.GroupBox3.Controls.Add(Me.Button3)
         Me.GroupBox3.Location = New System.Drawing.Point(525, 8)
-        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox3.Size = New System.Drawing.Size(615, 468)
         Me.GroupBox3.TabIndex = 5449
         Me.GroupBox3.TabStop = False
@@ -330,9 +330,9 @@ Partial Class CreatePWO
         Me.GroupBox4.Controls.Add(Me.Label11)
         Me.GroupBox4.Controls.Add(Me.Label12)
         Me.GroupBox4.Location = New System.Drawing.Point(453, 393)
-        Me.GroupBox4.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox4.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Padding = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.GroupBox4.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox4.Size = New System.Drawing.Size(151, 71)
         Me.GroupBox4.TabIndex = 5451
         Me.GroupBox4.TabStop = False
@@ -402,7 +402,7 @@ Partial Class CreatePWO
         Me.dgvPNTermsProcess.EnableHeadersVisualStyles = False
         Me.dgvPNTermsProcess.GridColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvPNTermsProcess.Location = New System.Drawing.Point(111, 291)
-        Me.dgvPNTermsProcess.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.dgvPNTermsProcess.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNTermsProcess.Name = "dgvPNTermsProcess"
         Me.dgvPNTermsProcess.ReadOnly = True
         DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -443,7 +443,7 @@ Partial Class CreatePWO
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.dgvTerminalesXProcesar)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "CreatePWO"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Create Press Work Order"
