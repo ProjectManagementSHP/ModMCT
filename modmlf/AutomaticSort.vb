@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Public Class AutomaticSort
-    Inherits CreateWorkOrder
+    'Inherits CreateWorkOrder
     Public conexion As New SqlConnection(strconexion)
     Public Maq As Integer
     Public Cell As String

@@ -5,9 +5,15 @@ Imports System.Text.RegularExpressions
 Public Class CreateWorkOrder
     Private _IdSerial As String
     Private _ListForProcess As List(Of ChargeInfo)
-    Public FlagSort As Boolean
-    Public GridDemon As DataGridView
+    Private FlagSort As Boolean
+    Private GridDemon As DataGridView
+    Public Sub New(IGrid As DataGridView, ListOfTerm As List(Of ChargeInfo))
+        NoDemon = IGrid
+        ListForProcess = ListOfTerm
+    End Sub
+    Public Sub New()
 
+    End Sub
     Public Function GetSelectIDPWO(Optional Pwo As Boolean = True) As Object
         Try
             Dim cmd As New SqlCommand($"select MAX({If(Pwo, "PWO", "IdentificadorBOM")}) from {If(Pwo, "tblPWO", "tblBOMPWO")}", cnn) With {
@@ -23,12 +29,28 @@ Public Class CreateWorkOrder
             cnn.Close()
         End Try
     End Function
+    Public Property _PushFirstPlace As Boolean
+        Get
+            Return FlagSort
+        End Get
+        Set
+            FlagSort = Value
+        End Set
+    End Property
     Public Property NoDemon As DataGridView
         Get
             Return GridDemon
         End Get
         Set
             GridDemon = Value
+        End Set
+    End Property
+    Public Property SerialPWO As String
+        Get
+            Return _IdSerial
+        End Get
+        Set
+            _IdSerial = Value
         End Set
     End Property
     Public Property ListForProcess As List(Of ChargeInfo)
@@ -166,25 +188,23 @@ Public Class CreateWorkOrder
                 NewSerial = "IBP" + Letras + NumeroString
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
         Return NewSerial
     End Function
     Public Function GetSetWorkOrder()
-        _IdSerial = GetSerialNewPWO(GetSelectIDPWO().ToString)
-        If _IdSerial.ToString.Length > 0 Then
-            If InsertNewWorkOrder Then
-                If CreateBOMWorkOrder() AndAlso SetCC() Then
-
-                Else
-
-                End If
+        Dim flag As Boolean
+        SerialPWO = GetSerialNewPWO(GetSelectIDPWO().ToString)
+        If SerialPWO.ToString.Length > 0 Then
+            If InsertNewWorkOrder() AndAlso CreateBOMWorkOrder() AndAlso SetCC() Then
+                flag = True
             Else
-
+                flag = False
             End If
         Else
-
+            flag = False
         End If
+        Return flag
     End Function
     Private Function CreateBOMWorkOrder()
         Try
@@ -231,9 +251,10 @@ Public Class CreateWorkOrder
                                             End If
                                         Next
                                         If AppendInfo.Length > 0 Then
-                                            If objMerge IsNot Nothing Then
+                                            If objMerge Is Nothing Then
                                                 objMerge = MergeDataBOM(AppendInfo.ToString.TrimEnd(",").Trim, Term.PN.ToString).Copy()
                                             Else
+                                                'Dim objCopyTb =
                                                 objMerge.Merge(MergeDataBOM(AppendInfo.ToString.TrimEnd(",").Trim, Term.PN.ToString), True)
                                             End If
                                         End If
@@ -293,9 +314,9 @@ Public Class CreateWorkOrder
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
-    Private Sub UpdatePWOForWipdet(side As Char, Cell As String, WireID As String)
+    Private Sub UpdatePWOForWipdet(side As String, Cell As String, WireID As String)
         Try
-            Dim Bom As String = $"update tblWipDet set PWO{side}='{_IdSerial}',Cell{side}='{Cell}' where WireID='{WireID}'"
+            Dim Bom As String = $"update tblWipDet set PWO{side}='{SerialPWO}',Cell{side}='{Cell}' where WireID='{WireID}'"
             Dim command As SqlCommand = New SqlCommand(Bom, cnn)
             command.CommandType = CommandType.Text
             cnn.Open()
@@ -356,49 +377,47 @@ Public Class CreateWorkOrder
         End Try
         Return True
     End Function
-    Private ReadOnly Property InsertNewWorkOrder
-        Get
-            Try
-                Dim ESetupTime As Integer = _ListForProcess.Count * 12
-                Dim ERunTime As Integer = _ListForProcess.[Select](Function(i) i.RunTime).Sum(Function(a) a)
-                Dim SumBalances As Integer = _ListForProcess.[Select](Function(i) i.Balance).Sum(Function(a) a)
-                Dim CellMaxCurrent As String = _ListForProcess.Max(Function(c) c.Cell)
-                CellMaxCurrent = Regex.Replace(CellMaxCurrent, "[aeiouAEIOU]", "")
-                Dim Sort As AutomaticSort = New AutomaticSort(CellMaxCurrent.Trim().ToUpper())
-                Dim dtDemon As New DataTable
-                dtDemon = (DirectCast(GridDemon.DataSource, DataTable))
-                Dim NumTravelers = (From row In dtDemon.AsEnumerable() Select row("WireID")).ToList().Count
-                Dim oCmdo As New SqlCommand("INSERT INTO tblPWO (
-                                         PWO,Cell,Status,ESetupTime,ERunTime,ETotalTime,NumTravelers,TotalCrimps,CreatedDate,CreatedBy,Id
+    Private Function InsertNewWorkOrder()
+        Try
+            Dim ESetupTime As Integer = _ListForProcess.Count * 12
+            Dim ERunTime As Integer = _ListForProcess.[Select](Function(i) i.RunTime).Sum(Function(a) a)
+            Dim SumBalances As Integer = _ListForProcess.[Select](Function(i) i.Balance).Sum(Function(a) a)
+            Dim CellMaxCurrent As String = _ListForProcess.Max(Function(c) c.Cell)
+            CellMaxCurrent = Regex.Replace(CellMaxCurrent, "[aeiouAEIOU]", "")
+            Dim Sort As AutomaticSort = New AutomaticSort(CellMaxCurrent.Trim().ToUpper())
+            Dim dtDemon As New DataTable
+            dtDemon = (DirectCast(GridDemon.DataSource, DataTable))
+            Dim NumTravelers = (From row In dtDemon.AsEnumerable() Select row("WireID")).ToList().Count
+            Dim oCmdo As New SqlCommand("INSERT INTO tblPWO (
+                                         PWO,Cell,Status,ESetupTime,ERunTime,ETotalTime,NumTravelers,TotalCrimps,CreatedDate,CreatedBy,Id,wSort
                                          )
                                          VALUES (
-                                         @PWO,@Cell,'OPEN',@ESetupTime,@ERunTime,@ETotalTime,@NumTravelers,@TotalCrimps,GETDATE(),@CreatedBy,@Id
+                                         @PWO,@Cell,'OPEN',@ESetupTime,@ERunTime,@ETotalTime,@NumTravelers,@TotalCrimps,GETDATE(),@CreatedBy,@Id,3
                                          )", cnn)
-                oCmdo.CommandType = CommandType.Text
-                oCmdo.Parameters.Add("@PWO", SqlDbType.NVarChar).Value = _IdSerial
-                oCmdo.Parameters.Add("@Cell", SqlDbType.NVarChar).Value = CellMaxCurrent.Trim().ToUpper()
-                oCmdo.Parameters.Add("@ESetupTime", SqlDbType.Int).Value = ESetupTime
-                oCmdo.Parameters.Add("@ERunTime", SqlDbType.Int).Value = ERunTime
-                oCmdo.Parameters.Add("@ETotalTime", SqlDbType.Int).Value = ERunTime + ESetupTime
-                oCmdo.Parameters.Add("@NumTravelers", SqlDbType.Int).Value = NumTravelers
-                oCmdo.Parameters.Add("@TotalCrimps", SqlDbType.Int).Value = SumBalances
-                oCmdo.Parameters.Add("@CreatedBy", SqlDbType.NVarChar).Value = UserName
-                If FlagSort = True Then
-                    Sort.PushFirstPlacePWO()
-                    oCmdo.Parameters.Add("@Id", SqlDbType.Int).Value = 1
-                Else
-                    oCmdo.Parameters.Add("@Id", SqlDbType.Int).Value = Sort.GetSortPWO()
-                End If
-                cnn.Open()
-                Return If(oCmdo.ExecuteNonQuery() > 0, True, False)
-                cnn.Close()
-            Catch ex As Exception
-                cnn.Close()
-                MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
-                Return False
-            Finally
-                cnn.Close()
-            End Try
-        End Get
-    End Property
+            oCmdo.CommandType = CommandType.Text
+            oCmdo.Parameters.Add("@PWO", SqlDbType.NVarChar).Value = SerialPWO
+            oCmdo.Parameters.Add("@Cell", SqlDbType.NVarChar).Value = CellMaxCurrent.Trim().ToUpper()
+            oCmdo.Parameters.Add("@ESetupTime", SqlDbType.Int).Value = ESetupTime
+            oCmdo.Parameters.Add("@ERunTime", SqlDbType.Int).Value = ERunTime
+            oCmdo.Parameters.Add("@ETotalTime", SqlDbType.Int).Value = ERunTime + ESetupTime
+            oCmdo.Parameters.Add("@NumTravelers", SqlDbType.Int).Value = NumTravelers
+            oCmdo.Parameters.Add("@TotalCrimps", SqlDbType.Int).Value = SumBalances
+            oCmdo.Parameters.Add("@CreatedBy", SqlDbType.NVarChar).Value = UserName
+            If _PushFirstPlace Then
+                Sort.PushFirstPlacePWO()
+                oCmdo.Parameters.Add("@Id", SqlDbType.Int).Value = 1
+            Else
+                oCmdo.Parameters.Add("@Id", SqlDbType.Int).Value = Sort.GetSortPWO()
+            End If
+            cnn.Open()
+            Return If(oCmdo.ExecuteNonQuery() > 0, True, False)
+            cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+            Return False
+        Finally
+            cnn.Close()
+        End Try
+    End Function
 End Class

@@ -35,7 +35,7 @@ Partial Class CreatePWO
         Me.dgvTerminalesXProcesar = New System.Windows.Forms.DataGridView()
         Me.dgvDetalleTerminales = New System.Windows.Forms.DataGridView()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.ChPushToFirstPlace = New System.Windows.Forms.CheckBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -163,16 +163,16 @@ Partial Class CreatePWO
         Me.Button1.Text = "OO MP"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'CheckBox1
+        'ChPushToFirstPlace
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(17, 60)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(110, 17)
-        Me.CheckBox1.TabIndex = 5439
-        Me.CheckBox1.Text = "Push to first place"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.ChPushToFirstPlace.AutoSize = True
+        Me.ChPushToFirstPlace.Location = New System.Drawing.Point(17, 60)
+        Me.ChPushToFirstPlace.Margin = New System.Windows.Forms.Padding(2)
+        Me.ChPushToFirstPlace.Name = "ChPushToFirstPlace"
+        Me.ChPushToFirstPlace.Size = New System.Drawing.Size(110, 17)
+        Me.ChPushToFirstPlace.TabIndex = 5439
+        Me.ChPushToFirstPlace.Text = "Push to first place"
+        Me.ChPushToFirstPlace.UseVisualStyleBackColor = True
         '
         'Button2
         '
@@ -296,7 +296,7 @@ Partial Class CreatePWO
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.Button2)
-        Me.GroupBox2.Controls.Add(Me.CheckBox1)
+        Me.GroupBox2.Controls.Add(Me.ChPushToFirstPlace)
         Me.GroupBox2.Controls.Add(Me.GroupBox1)
         Me.GroupBox2.Location = New System.Drawing.Point(828, 480)
         Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2)
@@ -466,7 +466,7 @@ Partial Class CreatePWO
     Friend WithEvents dgvTerminalesXProcesar As DataGridView
     Friend WithEvents dgvDetalleTerminales As DataGridView
     Friend WithEvents Button1 As Button
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents ChPushToFirstPlace As CheckBox
     Friend WithEvents Button2 As Button
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents Label4 As Label

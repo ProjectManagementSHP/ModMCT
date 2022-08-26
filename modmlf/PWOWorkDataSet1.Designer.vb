@@ -460,13 +460,13 @@ Partial Public Class DataSet1
         
         Private columnPN As Global.System.Data.DataColumn
         
-        Private columnQty As Global.System.Data.DataColumn
-        
         Private columnQtyOnHand As Global.System.Data.DataColumn
         
         Private columnQtyOnOrder As Global.System.Data.DataColumn
         
         Private columnDueDate As Global.System.Data.DataColumn
+        
+        Private columnQty As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -513,14 +513,6 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property QtyColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnQty
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public ReadOnly Property QtyOnHandColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnQtyOnHand
@@ -540,6 +532,14 @@ Partial Public Class DataSet1
         Public ReadOnly Property DueDateColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnDueDate
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property QtyColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnQty
             End Get
         End Property
         
@@ -580,9 +580,9 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddtblBOMPWORow(ByVal PN As String, ByVal Qty As Decimal, ByVal QtyOnHand As Decimal, ByVal QtyOnOrder As Decimal, ByVal DueDate As Date) As tblBOMPWORow
+        Public Overloads Function AddtblBOMPWORow(ByVal PN As String, ByVal QtyOnHand As Decimal, ByVal QtyOnOrder As Decimal, ByVal DueDate As Date, ByVal Qty As Integer) As tblBOMPWORow
             Dim rowtblBOMPWORow As tblBOMPWORow = CType(Me.NewRow,tblBOMPWORow)
-            Dim columnValuesArray() As Object = New Object() {PN, Qty, QtyOnHand, QtyOnOrder, DueDate}
+            Dim columnValuesArray() As Object = New Object() {PN, QtyOnHand, QtyOnOrder, DueDate, Qty}
             rowtblBOMPWORow.ItemArray = columnValuesArray
             Me.Rows.Add(rowtblBOMPWORow)
             Return rowtblBOMPWORow
@@ -606,10 +606,10 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub InitVars()
             Me.columnPN = MyBase.Columns("PN")
-            Me.columnQty = MyBase.Columns("Qty")
             Me.columnQtyOnHand = MyBase.Columns("QtyOnHand")
             Me.columnQtyOnOrder = MyBase.Columns("QtyOnOrder")
             Me.columnDueDate = MyBase.Columns("DueDate")
+            Me.columnQty = MyBase.Columns("Qty")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -617,18 +617,19 @@ Partial Public Class DataSet1
         Private Sub InitClass()
             Me.columnPN = New Global.System.Data.DataColumn("PN", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnPN)
-            Me.columnQty = New Global.System.Data.DataColumn("Qty", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnQty)
             Me.columnQtyOnHand = New Global.System.Data.DataColumn("QtyOnHand", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnQtyOnHand)
             Me.columnQtyOnOrder = New Global.System.Data.DataColumn("QtyOnOrder", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnQtyOnOrder)
             Me.columnDueDate = New Global.System.Data.DataColumn("DueDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDueDate)
+            Me.columnQty = New Global.System.Data.DataColumn("Qty", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnQty)
             Me.columnPN.MaxLength = 50
             Me.columnQtyOnHand.ReadOnly = true
             Me.columnQtyOnOrder.ReadOnly = true
             Me.columnDueDate.ReadOnly = true
+            Me.columnQty.ReadOnly = true
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2305,21 +2306,6 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property Qty() As Decimal
-            Get
-                Try 
-                    Return CType(Me(Me.tabletblBOMPWO.QtyColumn),Decimal)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Qty' in table 'tblBOMPWO' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tabletblBOMPWO.QtyColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Property QtyOnHand() As Decimal
             Get
                 Try 
@@ -2365,6 +2351,21 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Qty() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tabletblBOMPWO.QtyColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Qty' in table 'tblBOMPWO' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tabletblBOMPWO.QtyColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsPNNull() As Boolean
             Return Me.IsNull(Me.tabletblBOMPWO.PNColumn)
         End Function
@@ -2373,18 +2374,6 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetPNNull()
             Me(Me.tabletblBOMPWO.PNColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsQtyNull() As Boolean
-            Return Me.IsNull(Me.tabletblBOMPWO.QtyColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetQtyNull()
-            Me(Me.tabletblBOMPWO.QtyColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2421,6 +2410,18 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetDueDateNull()
             Me(Me.tabletblBOMPWO.DueDateColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsQtyNull() As Boolean
+            Return Me.IsNull(Me.tabletblBOMPWO.QtyColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetQtyNull()
+            Me(Me.tabletblBOMPWO.QtyColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3413,10 +3414,10 @@ Namespace DataSet1TableAdapters
             tableMapping.SourceTable = "Table"
             tableMapping.DataSetTable = "tblBOMPWO"
             tableMapping.ColumnMappings.Add("PN", "PN")
-            tableMapping.ColumnMappings.Add("Qty", "Qty")
             tableMapping.ColumnMappings.Add("QtyOnHand", "QtyOnHand")
             tableMapping.ColumnMappings.Add("QtyOnOrder", "QtyOnOrder")
             tableMapping.ColumnMappings.Add("DueDate", "DueDate")
+            tableMapping.ColumnMappings.Add("Qty", "Qty")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -3433,12 +3434,12 @@ Namespace DataSet1TableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "select PN,Qty,(select distinct QtyOnHand from tblItemsQB where pn = tblBOMPWO.PN "& _ 
-                "group by PN,QtyOnHand) [QtyOnHand],(select IsNull(Sum(QtyBalance),0) from tblIte"& _ 
-                "msPOsDet a inner join tblItemsPOs b on a.IDPO=b.IDPO where a.PN = tblBOMPWO.PN a"& _ 
-                "nd b.Status='open' and (QtyReceivedJuarez is null or QtyReceivedJuarez < QtyBala"& _ 
-                "nce)) [QtyOnOrder],(select DueDate from tblPWO where PWO = tblBOMPWO.PWO)[DueDat"& _ 
-                "e] from tblBOMPWO where PWO =@PWO"
+            Me._commandCollection(0).CommandText = "select PN, CONVERT(int,SUM(balance)) [Qty],(select distinct QtyOnHand from tblIte"& _ 
+                "msQB where pn = tblBOMPWO.PN group by PN,QtyOnHand) [QtyOnHand],(select IsNull(S"& _ 
+                "um(QtyBalance),0) from tblItemsPOsDet a inner join tblItemsPOs b on a.IDPO=b.IDP"& _ 
+                "O where a.PN = tblBOMPWO.PN and b.Status='open' and (QtyReceivedJuarez is null o"& _ 
+                "r QtyReceivedJuarez < QtyBalance)) [QtyOnOrder],(select DueDate from tblPWO wher"& _ 
+                "e PWO = tblBOMPWO.PWO)[DueDate] from tblBOMPWO where PWO = @PWO group by PN,PWO"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
@@ -3810,8 +3811,8 @@ Namespace DataSet1TableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "select IsNull(ESetupTime,0) [Setup],IsNull(ERunTime,0) [RT],IsNull(ETotalTime,0) "& _ 
-                "[Total] from tblPWO where PWO = @PWO"
+            Me._commandCollection(0).CommandText = "select IsNull(ESetupTime,0)  [Setup],IsNull(ERunTime,0)  [RT],IsNull(ETotalTime,0"& _ 
+                ")  [Total] from tblPWO where PWO = @PWO"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub

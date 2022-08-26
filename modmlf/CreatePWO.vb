@@ -190,6 +190,11 @@ selected: " + InfoTablas.Count.ToString
         Label3.Text = "-"
         Label4.Text = "-"
     End Sub
+    Private Sub MainRecordClean()
+        Label6.Text = "Records:"
+        dgvTerminalesXProcesar.DataSource = Nothing
+        InfoTablas.Clear()
+    End Sub
     Private Sub SelectedTermProcess(PN As String, Cell As String, Balance As Integer)
         Try
             Dim aConsulta As String = "select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,((TABalance + TBBalance) * 3 + 12) / 60 [Test],'' [Celda],WireID,MaqA,MaqB from tblWipDet" &
@@ -415,7 +420,23 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
-            InfoTablas.ForEach(Function(o) MessageBox.Show(o.PN.ToString + vbNewLine + o.Rows.ToString + vbNewLine + o.Balance.ToString))
+            'InfoTablas.ForEach(Function(o) MessageBox.Show(o.PN.ToString + vbNewLine + o.Rows.ToString + vbNewLine + o.Balance.ToString))
+            Dim NewPwo As New CreateWorkOrder(dgvDetalleTerminales, InfoTablas) With {
+                ._PushFirstPlace = If(ChPushToFirstPlace.Checked, True, False)
+            }
+            If NewPwo.GetSetWorkOrder() Then
+                Dim PWO = NewPwo.SerialPWO
+                MessageBox.Show($"Se a creado con exito el PWO: {PWO}")
+                Dim Report As New ReportePWO(PWO.ToString) With {
+                    .Text = PWO.ToString
+                }
+                Report.ShowDialog()
+                CleanningState()
+                MainRecordClean()
+                DisableButton()
+            Else
+                MessageBox.Show($"Hubo un problema al crear PWO, contacta con ingenieria o sistemas para resolver el problema.")
+            End If
         Else
             MessageBox.Show("Seleccione primero una terminal para poder crear PWO.")
         End If
