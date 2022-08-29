@@ -192,6 +192,22 @@ Public Class CreateWorkOrder
         End Try
         Return NewSerial
     End Function
+    Public Sub MaterialReserve(Optional FlagReserve As Boolean = True)
+        Try
+            ListForProcess.ForEach(Function(Term)
+                                       Dim insertItem As String = If(FlagReserve, $"insert into tblPWOTemp (PN) Values ('{Term.PN}')", $"delete from tblPWOTemp where PN='{Term.PN}'")
+                                       Dim command As SqlCommand = New SqlCommand(insertItem, cnn)
+                                       command.CommandType = CommandType.Text
+                                       cnn.Open()
+                                       command.ExecuteNonQuery()
+                                       cnn.Close()
+                                       Return Nothing
+                                   End Function)
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+        End Try
+    End Sub
     Public Function GetSetWorkOrder()
         Dim flag As Boolean
         SerialPWO = GetSerialNewPWO(GetSelectIDPWO().ToString)
@@ -251,7 +267,7 @@ Public Class CreateWorkOrder
                                             End If
                                         Next
                                         If AppendInfo.Length > 0 Then
-                                            If objMerge Is Nothing Then
+                                            If objMerge.Rows.Count = 0 Then
                                                 objMerge = MergeDataBOM(AppendInfo.ToString.TrimEnd(",").Trim, Term.PN.ToString).Copy()
                                             Else
                                                 'Dim objCopyTb =

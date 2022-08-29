@@ -29,7 +29,9 @@ Partial Class ReportePWO
         Dim ReportDataSource4 As Microsoft.Reporting.WinForms.ReportDataSource = New Microsoft.Reporting.WinForms.ReportDataSource()
         Dim ReportDataSource5 As Microsoft.Reporting.WinForms.ReportDataSource = New Microsoft.Reporting.WinForms.ReportDataSource()
         Dim ReportDataSource6 As Microsoft.Reporting.WinForms.ReportDataSource = New Microsoft.Reporting.WinForms.ReportDataSource()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ReportePWO))
         Me.TblBOMPWOBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DataSet11 = New modmlf.DataSet1()
         Me.TblPWOBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DataTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.TblWIPBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -42,20 +44,24 @@ Partial Class ReportePWO
         Me.TblWipDetTableAdapter1 = New modmlf.DataSet1TableAdapters.tblWipDetTableAdapter()
         Me.TblWIPTableAdapter1 = New modmlf.DataSet1TableAdapters.tblWIPTableAdapter()
         Me.TblPWO1TableAdapter1 = New modmlf.DataSet1TableAdapters.tblPWO1TableAdapter()
-        Me.DataSet11 = New modmlf.DataSet1()
         CType(Me.TblBOMPWOBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataSet11, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TblPWOBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataTableBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TblWIPBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TblWipDetBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TblPWO1BindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataSet11, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TblBOMPWOBindingSource
         '
         Me.TblBOMPWOBindingSource.DataMember = "tblBOMPWO"
         Me.TblBOMPWOBindingSource.DataSource = Me.DataSet11
+        '
+        'DataSet11
+        '
+        Me.DataSet11.DataSetName = "DataSet1"
+        Me.DataSet11.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'TblPWOBindingSource
         '
@@ -134,26 +140,22 @@ Partial Class ReportePWO
         '
         Me.TblPWO1TableAdapter1.ClearBeforeFill = True
         '
-        'DataSet11
-        '
-        Me.DataSet11.DataSetName = "DataSet1"
-        Me.DataSet11.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
         'ReportePWO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.ReportViewer1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "ReportePWO"
         Me.Text = "ReportePWO"
         CType(Me.TblBOMPWOBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataSet11, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TblPWOBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataTableBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TblWIPBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TblWipDetBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TblPWO1BindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataSet11, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

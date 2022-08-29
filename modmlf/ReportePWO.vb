@@ -2,6 +2,7 @@
     Dim PWOReceived As String
     Private Sub ReportePWO_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadInformation()
+        Text = PWOReceived.ToString
         Me.ReportViewer1.RefreshReport()
     End Sub
     Public Sub New(PWO As String)

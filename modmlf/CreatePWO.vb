@@ -1,9 +1,8 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Text.RegularExpressions
 
 Public Class CreatePWO
     Dim AU As Integer = 0
-    Dim InfoTablas As List(Of ChargeInfo) = New List(Of ChargeInfo)
+    Dim InfoTablas As New List(Of ChargeInfo)
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Cursor.Current = Cursors.WaitCursor
         AU = 0
@@ -27,132 +26,126 @@ Public Class CreatePWO
         Try
             'Al query principal, falta agregar que PWO sea nulo o que no tenga PWO
             Dim consulta As String = $"(select distinct TermA [Term],(
-        select SUM(TABalance) + SUM(TBBalance) from tblWipDet det
-        where ((det.TermA = tblWipDet.TermA and MaqA='MM' and PWOA is null) or 
-        (det.TermB=tblWipDet.TermA and MaqB='MM'and PWOB is null)) and wip in (
-        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 
-        {If(AU = 0, " ", $" and AU={AU}")})
-        ) [Qty],((
-		(
-        select SUM(TABalance) + SUM(TBBalance) from tblWipDet det
-        where ((det.TermA = tblWipDet.TermA and MaqA='MM' and PWOA is null) or 
-        (det.TermB=tblWipDet.TermA and MaqB='MM'and PWOB is null)) and wip in (
-        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30
-		{If(AU = 0, " ", $" and AU={AU}")}
-        )
-        ) * 3 + 12) / 60
-		) [Test], (
-        select case when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') > 0
-        then
-        (select top 1 Celda from tblToolCribAplicators where AplPn = (select top 1 AplPn
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%'))
-        when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') = 0
-        then
-        ((select case when (select count(distinct Substring(Aplicator,1,3)) 
-        from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
-        ) > 1 then 
-        (select top 1 Celda from tblToolCribAplicators where AplPn =(select top 1 Substring(Aplicator,1,3) from tblTermSpecs 
-        where PN=tblWipDet.TermA and Aplicator not like 'P%')
-        )when (
-        select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
-        ) = 1 then(
-        select top 1 Celda from tblToolCribAplicators where AplPn =(select distinct Substring(Aplicator,1,3) from tblTermSpecs 
-        where PN=tblWipDet.TermA and Aplicator not like 'P%')
-        )end))end
-        ) [Celda],
-        (
-        select case when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') > 0
-        then
-        (select top 1 AplPn
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%')
-        when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') = 0
-        then
-        ((select case when (select count(distinct Substring(Aplicator,1,3)) 
-        from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
-        ) > 1 then 
-        (select top 1 Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
-        )when (
-        select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
-        ) = 1 then(
-        select distinct Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
-        )end))end
-        ) [Aplicator] 
-        from tblWipDet where WIP in (
-        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}
-        ) and MaqA='MM' and TermA like 'T%' and PWOA is null) 
-        union
-        (select distinct TermB [Term],(
-        select SUM(TABalance) + SUM(TBBalance) from tblWipDet det 
-        where ((det.TermA = tblWipDet.TermB and MaqA='MM' and PWOA is null) or 
-        (det.TermB=tblWipDet.TermB and MaqB='MM' and PWOB is null)) and wip in (
-        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 
-        {If(AU = 0, " ", $" and AU={AU}")})
-        ) [Qty],(
-		((
-        select SUM(TABalance) + SUM(TBBalance) from tblWipDet det 
-        where ((det.TermA = tblWipDet.TermB and MaqA='MM' and PWOA is null) or 
-        (det.TermB=tblWipDet.TermB and MaqB='MM' and PWOB is null)) and wip in (
-        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 
-        {If(AU = 0, " ", $" and AU={AU}")}
-        )) * 3 + 12) / 60
-		) [Test], (
-        select case when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') > 0
-        then
-        (select top 1 Celda from tblToolCribAplicators where AplPn = (select top 1 AplPn
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%'))
-        when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') = 0
-        then
-        ((select case when (select count(distinct Substring(Aplicator,1,3)) 
-        from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
-        ) > 1 then 
-        (select top 1 Celda from tblToolCribAplicators where AplPn =(select top 1 Substring(Aplicator,1,3) from tblTermSpecs 
-        where PN=tblWipDet.TermB and Aplicator not like 'P%')
-        )when (
-        select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
-        ) = 1 then(
-        select top 1 Celda from tblToolCribAplicators where AplPn =(select distinct Substring(Aplicator,1,3) from tblTermSpecs 
-        where PN=tblWipDet.TermB and Aplicator not like 'P%')
-        )end))end
-        ) [Celda],(
-        select case when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') > 0
-        then
-        (select top 1 AplPn
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%')
-        when (select COUNT(AplPn)
-        from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
-        on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') = 0
-        then
-        ((select case when (select count(distinct Substring(Aplicator,1,3)) 
-        from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
-        ) > 1 then 
-        (select top 1 Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
-        )when (
-        select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
-        ) = 1 then(
-        select distinct Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
-        )end))end
-        ) [Aplicator] 
-        from tblWipDet where WIP in (
-        select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}
-        ) and MaqB='MM' and TermB like 'T%' and PWOB is null)"
+select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet det where (det.TermA=tblWipDet.TermA and det.MaqA='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOA is null group by MaqA having MaqA = 'MM'),0)) +
+(Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet det where (det.TermB=tblWipDet.TermA and det.MaqB='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOB is null group by MaqB having MaqB = 'MM'),0))
+) [Qty],((
+(
+select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet det where (det.TermA=tblWipDet.TermA and det.MaqA='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOA is null group by MaqA having MaqA = 'MM'),0)) +
+(Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet det where (det.TermB=tblWipDet.TermA and det.MaqB='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOB is null group by MaqB having MaqB = 'MM'),0))
+) * 3 + 12) / 60
+) [Test], (
+select case when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') > 0
+then
+(select top 1 Celda from tblToolCribAplicators where AplPn = (select top 1 AplPn
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%'))
+when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') = 0
+then
+((select case when (select count(distinct Substring(Aplicator,1,3)) 
+from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
+) > 1 then 
+(select top 1 Celda from tblToolCribAplicators where AplPn =(select top 1 Substring(Aplicator,1,3) from tblTermSpecs 
+where PN=tblWipDet.TermA and Aplicator not like 'P%')
+)when (
+select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
+) = 1 then(
+select top 1 Celda from tblToolCribAplicators where AplPn =(select distinct Substring(Aplicator,1,3) from tblTermSpecs 
+where PN=tblWipDet.TermA and Aplicator not like 'P%')
+)end))end
+) [Celda],
+(
+select case when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') > 0
+then
+(select top 1 AplPn
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%')
+when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermA and AplPn not like 'P%') = 0
+then
+((select case when (select count(distinct Substring(Aplicator,1,3)) 
+from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
+) > 1 then 
+(select top 1 Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
+)when (
+select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
+) = 1 then(
+select distinct Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermA and Aplicator not like 'P%'
+)end))end
+) [Aplicator] 
+from tblWipDet where WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30  {If(AU = 0, " ", $" and AU={AU}")}
+) and MaqA='MM' and TermA like 'T%' and PWOA is null) 
+union
+(select distinct TermB [Term],(
+select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet det where (det.TermA=tblWipDet.TermB and det.MaqA='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOA is null group by MaqA having MaqA = 'MM'),0)) +
+(Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet det where (det.TermB=tblWipDet.TermB and det.MaqB='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOB is null group by MaqB having MaqB = 'MM'),0))
+) [Qty],(
+((
+select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet det where (det.TermA=tblWipDet.TermB and det.MaqA='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOA is null group by MaqA having MaqA = 'MM'),0)) +
+(Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet det where (det.TermB=tblWipDet.TermB and det.MaqB='MM') and WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOB is null group by MaqB having MaqB = 'MM'),0))) * 3 + 12) / 60
+) [Test], (
+select case when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') > 0
+then
+(select top 1 Celda from tblToolCribAplicators where AplPn = (select top 1 AplPn
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%'))
+when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') = 0
+then
+((select case when (select count(distinct Substring(Aplicator,1,3)) 
+from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
+) > 1 then 
+(select top 1 Celda from tblToolCribAplicators where AplPn =(select top 1 Substring(Aplicator,1,3) from tblTermSpecs 
+where PN=tblWipDet.TermB and Aplicator not like 'P%')
+)when (
+select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
+) = 1 then(
+select top 1 Celda from tblToolCribAplicators where AplPn =(select distinct Substring(Aplicator,1,3) from tblTermSpecs 
+where PN=tblWipDet.TermB and Aplicator not like 'P%')
+)end))end
+) [Celda],(
+select case when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') > 0
+then
+(select top 1 AplPn
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%')
+when (select COUNT(AplPn)
+from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
+on appl.AplPn = tool.Serie where tool.TerminalPN=tblWipDet.TermB and AplPn not like 'P%') = 0
+then
+((select case when (select count(distinct Substring(Aplicator,1,3)) 
+from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
+) > 1 then 
+(select top 1 Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
+)when (
+select count(distinct Substring(Aplicator,1,3)) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
+) = 1 then(
+select distinct Substring(Aplicator,1,3) from tblTermSpecs where PN=tblWipDet.TermB and Aplicator not like 'P%'
+)end))end
+) [Aplicator] 
+from tblWipDet where WIP in (
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}
+) and MaqB='MM' and TermB like 'T%' and PWOB is null)"
             Dim len = consulta.Length
             Dim dr As SqlDataReader
             Dim aTable As New DataTable
@@ -193,6 +186,7 @@ selected: " + InfoTablas.Count.ToString
     Private Sub MainRecordClean()
         Label6.Text = "Records:"
         dgvTerminalesXProcesar.DataSource = Nothing
+        dgvDetalleTerminales.DataSource = Nothing
         InfoTablas.Clear()
     End Sub
     Private Sub SelectedTermProcess(PN As String, Cell As String, Balance As Integer)
@@ -253,8 +247,11 @@ selected: " + InfoTablas.Count.ToString
     Private Sub ChargeSpecsTerms()
         Try
             With dgvPNTermsProcess
-                Dim auxList = InfoTablas.[Select](Function(i) New With {i.PN, i.Balance, i.RunTime
-                                                                        }).ToList()
+                Dim auxList = InfoTablas.[Select](Function(i) New With {
+                                                      i.PN,
+                                                      i.Balance,
+                                                      i.RunTime
+                                                   }).ToList()
                 .DataSource = auxList
                 .AutoResizeColumns()
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -289,12 +286,13 @@ selected: " + InfoTablas.Count.ToString
                                                         Return Nothing
                                                     End Function
     Private FillListInfoTablas As Action(Of String, Integer, String, Integer) = Function(b, c, d, e)
-                                                                                    Dim oCreate As ChargeInfo = New ChargeInfo
-                                                                                    oCreate.PN = b
-                                                                                    oCreate.Rows = c
-                                                                                    oCreate.Cell = d
-                                                                                    oCreate.Balance = e
-                                                                                    oCreate.RunTime = e * 3 / 60
+                                                                                    Dim oCreate As New ChargeInfo With {
+                                                                                        .PN = b,
+                                                                                        .Rows = c,
+                                                                                        .Cell = d,
+                                                                                        .Balance = e,
+                                                                                        .RunTime = e * 3 / 60
+                                                                                    }
                                                                                     InfoTablas.Add(oCreate)
                                                                                     Return Nothing
                                                                                 End Function
@@ -345,11 +343,7 @@ selected: " + InfoTablas.Count.ToString
         End If
     End Sub
     Private Sub DisableButton()
-        If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 1 Then
-            Button3.Visible = True
-        Else
-            Button3.Visible = False
-        End If
+        Button3.Visible = If(dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 1, True, False)
     End Sub
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
         If e.KeyChar = Chr(13) Then
@@ -420,10 +414,10 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
-            'InfoTablas.ForEach(Function(o) MessageBox.Show(o.PN.ToString + vbNewLine + o.Rows.ToString + vbNewLine + o.Balance.ToString))
             Dim NewPwo As New CreateWorkOrder(dgvDetalleTerminales, InfoTablas) With {
                 ._PushFirstPlace = If(ChPushToFirstPlace.Checked, True, False)
             }
+            NewPwo.MaterialReserve()
             If NewPwo.GetSetWorkOrder() Then
                 Dim PWO = NewPwo.SerialPWO
                 MessageBox.Show($"Se a creado con exito el PWO: {PWO}")
@@ -431,6 +425,7 @@ selected: " + InfoTablas.Count.ToString
                     .Text = PWO.ToString
                 }
                 Report.ShowDialog()
+                NewPwo.MaterialReserve(False)
                 CleanningState()
                 MainRecordClean()
                 DisableButton()
@@ -452,5 +447,8 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub Button1_MouseLeave(sender As Object, e As EventArgs) Handles Button1.MouseLeave
         Cursor.Current = Cursors.Default
+    End Sub
+    Private Sub dgvDetalleTerminales_ColumnAdded(sender As Object, e As DataGridViewColumnEventArgs) Handles dgvDetalleTerminales.ColumnAdded
+        e.Column.SortMode = DataGridViewColumnSortMode.NotSortable
     End Sub
 End Class
