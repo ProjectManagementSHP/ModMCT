@@ -56,6 +56,8 @@ Partial Class CreatePWO
         Me.Label12 = New System.Windows.Forms.Label()
         Me.dgvPNTermsProcess = New System.Windows.Forms.DataGridView()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.Button4 = New System.Windows.Forms.Button()
         CType(Me.dgvTerminalesXProcesar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetalleTerminales, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -429,12 +431,35 @@ Partial Class CreatePWO
         Me.Label8.TabIndex = 5448
         Me.Label8.Text = "Number of terminals " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "selected:"
         '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(217, 415)
+        Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(226, 20)
+        Me.TextBox2.TabIndex = 5450
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.Color.LightBlue
+        Me.Button4.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Button4.Location = New System.Drawing.Point(125, 399)
+        Me.Button4.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(81, 73)
+        Me.Button4.TabIndex = 5451
+        Me.Button4.Text = "Reimprimir PWO"
+        Me.Button4.UseVisualStyleBackColor = False
+        '
         'CreatePWO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScroll = True
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.ClientSize = New System.Drawing.Size(1147, 598)
+        Me.Controls.Add(Me.Button4)
+        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.TextBox1)
@@ -444,6 +469,7 @@ Partial Class CreatePWO
         Me.Controls.Add(Me.dgvTerminalesXProcesar)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.MaximizeBox = False
         Me.Name = "CreatePWO"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Create Press Work Order"
@@ -487,4 +513,6 @@ Partial Class CreatePWO
     Friend WithEvents Label11 As Label
     Friend WithEvents Label12 As Label
     Friend WithEvents dgvPNTermsProcess As DataGridView
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents Button4 As Button
 End Class

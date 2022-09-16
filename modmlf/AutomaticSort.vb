@@ -219,7 +219,7 @@ Public Class AutomaticSort
     End Sub
     Sub PushFirstPlacePWO()
         Try
-            Using cmd As New SqlCommand("update tblPWO set Id= Id + 1 where Cell=" + Cell.ToString + " and Status='OPEN' and Id > 0 ", cnn)
+            Using cmd As New SqlCommand("update tblPWO set Id= Id + 1 where Cell='" + Cell.ToString + "' and Status='OPEN' and Id > 0 ", cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
                 cmd.ExecuteNonQuery()

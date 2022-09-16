@@ -5,22 +5,31 @@ Public Class CreatePWO
     Dim InfoTablas As New List(Of ChargeInfo)
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Cursor.Current = Cursors.WaitCursor
-        AU = 0
-        If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
-            Dim res = MessageBox.Show("Ya se estan visualizando terminales en por procesar, si deseas dejar de visualizar las terminales seleccionadas, pulsa Yes, si deseas continuar pulsa no.", "Recargando informacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
-            If res = 6 Then
-                dgvDetalleTerminales.DataSource = Nothing
-                InfoTablas.Clear()
+        GetDataByUser()
+        Cursor.Current = Cursors.Default
+    End Sub
+    Private Sub GetDataByUser()
+        Try
+            AU = 0
+            If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
+                Dim res = MessageBox.Show("Ya se estan visualizando terminales en por procesar, si deseas dejar de visualizar las terminales seleccionadas, pulsa Yes, si deseas continuar pulsa no.", "Recargando informacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                If res = 6 Then
+                    dgvDetalleTerminales.DataSource = Nothing
+                    InfoTablas.Clear()
+                    If TextBox1.Text <> "" Then TextBox1.Clear()
+                    'stateRes = Await Task.Run(Function() ChargeGrid())
+                    ChargeGrid()
+                    CleanningState()
+                End If
+            Else
                 If TextBox1.Text <> "" Then TextBox1.Clear()
+                'stateRes = Await Task.Run(Function() ChargeGrid())
                 ChargeGrid()
                 CleanningState()
             End If
-        Else
-            If TextBox1.Text <> "" Then TextBox1.Clear()
-            ChargeGrid()
-            CleanningState()
-        End If
-        Cursor.Current = Cursors.Default
+        Catch ex As Exception
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
+        End Try
     End Sub
     Private Sub ChargeGrid()
         Try
@@ -36,7 +45,7 @@ select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet det where 
 select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOA is null group by MaqA having MaqA = 'MM'),0)) +
 (Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet det where (det.TermB=tblWipDet.TermA and det.MaqB='MM') and WIP in (
 select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOB is null group by MaqB having MaqB = 'MM'),0))
-) * 3 + 12) / 60
+) * 7 / 60) + 5
 ) [Test], (
 select case when (select COUNT(AplPn)
 from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
@@ -97,7 +106,7 @@ select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >=
 select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet det where (det.TermA=tblWipDet.TermB and det.MaqA='MM') and WIP in (
 select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOA is null group by MaqA having MaqA = 'MM'),0)) +
 (Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet det where (det.TermB=tblWipDet.TermB and det.MaqB='MM') and WIP in (
-select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOB is null group by MaqB having MaqB = 'MM'),0))) * 3 + 12) / 60
+select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) and PWOB is null group by MaqB having MaqB = 'MM'),0))) * 7 / 60) + 5
 ) [Test], (
 select case when (select COUNT(AplPn)
 from tblToolCribAplicators appl inner join tblToolCribAplicatorsRelationsWithTerminals tool 
@@ -182,6 +191,7 @@ selected: " + InfoTablas.Count.ToString
         Label9.Text = "-"
         Label3.Text = "-"
         Label4.Text = "-"
+        ChPushToFirstPlace.Checked = False
     End Sub
     Private Sub MainRecordClean()
         Label6.Text = "Records:"
@@ -191,7 +201,7 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub SelectedTermProcess(PN As String, Cell As String, Balance As Integer)
         Try
-            Dim aConsulta As String = "select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,((TABalance + TBBalance) * 3 + 12) / 60 [Test],'' [Celda],WireID,MaqA,MaqB from tblWipDet" &
+            Dim aConsulta As String = $"select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,CONVERT(float,ROUND(CAST(((case when TermA = '{PN}' and MaqA='MM' then TABalance else 0 end + case when TermB = '{PN}' and MaqB='MM' then TBBalance else 0 end) * 7) AS DECIMAL(18,0)) / 60,2,1)) [Test],'{Cell}' [Celda],WireID,MaqA,MaqB from tblWipDet" &
                                       $" where ((TermA = '{PN}' and MaqA='MM') or (TermB='{PN}' and MaqB='MM')) and" &
                                       $" WIP in (select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) 
                                       and ((PWOA is null and MaqA='MM') or (PWOB is null and MaqB='MM'))" &
@@ -213,9 +223,9 @@ selected: " + InfoTablas.Count.ToString
                             .AutoResizeColumns()
                             .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                             .ClearSelection()
-                            SumQtyAndTest(tbAux)
                             Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
                             FillListInfoTablas(PN, last + aTable.Rows.Count, Cell, Balance)
+                            SumQtyAndTest(tbAux)
                         End With
                     End If
                 Else
@@ -226,8 +236,8 @@ selected: " + InfoTablas.Count.ToString
                         .AutoResizeColumns()
                         .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                         .ClearSelection()
-                        SumQtyAndTest(aTable)
                         FillListInfoTablas(PN, aTable.Rows.Count, Cell, Balance)
+                        SumQtyAndTest(aTable)
                     End With
                 End If
             Else
@@ -257,7 +267,7 @@ selected: " + InfoTablas.Count.ToString
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                 .ClearSelection()
                 Dim SumRunTime = InfoTablas.[Select](Function(i) i.RunTime).Sum(Function(a) a)
-                Dim SetupTime As Integer = InfoTablas.Count * 12
+                Dim SetupTime As Integer = InfoTablas.Count * 5
                 Label10.Text = SumRunTime
                 Label9.Text = SetupTime
                 Label4.Text = SumRunTime + SetupTime
@@ -275,9 +285,16 @@ selected: " + InfoTablas.Count.ToString
                                                                              End Function
     Private SumQtyAndTest As Action(Of DataTable) = Function(a)
                                                         Try
-                                                            Dim Qty = (From row In a.AsEnumerable() Select row("TABalance")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                            Qty += (From row In a.AsEnumerable() Select row("TBBalance")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                            Dim Test = (From row In a.AsEnumerable() Select row("Test")).ToList().Sum(Function(i) CInt(i.ToString()))
+                                                            Dim Qty = 0
+                                                            Dim Test = 0
+                                                            Dim objT = a.AsEnumerable()
+                                                            InfoTablas.ForEach(Function(oPn)
+                                                                                   Qty += objT.Where(Function(o) o.Item("TermA").Equals(oPn.PN)).[Select](Function(o) o.Item("TABalance")).Sum(Function(o) CInt(o.ToString)) '(From row In a.AsEnumerable() Select row("TABalance")).ToList().Sum(Function(i) CInt(i.ToString()))
+                                                                                   Qty += objT.Where(Function(o) o.Item("TermB").Equals(oPn.PN)).[Select](Function(o) o.Item("TBBalance")).Sum(Function(o) CInt(o.ToString)) '(From row In a.AsEnumerable() Select row("TBBalance")).ToList().Sum(Function(i) CInt(i.ToString()))
+                                                                                   Return Nothing
+                                                                               End Function
+                                                                   )
+                                                            Test = (From row In a.AsEnumerable() Select row("Test")).ToList().Sum(Function(i) CInt(i.ToString()))
                                                             Label3.Text = Qty.ToString
                                                             Label4.Text = Test.ToString
                                                         Catch ex As Exception
@@ -291,7 +308,7 @@ selected: " + InfoTablas.Count.ToString
                                                                                         .Rows = c,
                                                                                         .Cell = d,
                                                                                         .Balance = e,
-                                                                                        .RunTime = e * 3 / 60
+                                                                                        .RunTime = e * 7 / 60
                                                                                     }
                                                                                     InfoTablas.Add(oCreate)
                                                                                     Return Nothing
@@ -321,7 +338,7 @@ selected: " + InfoTablas.Count.ToString
                                 End If
                             End If
                         ElseIf auxRow < Term.Rows Then
-                            If CountInteraction >= auxRow And CountInteraction <= Term.Rows Then
+                            If CountInteraction > auxRow And CountInteraction <= Term.Rows Then
                                 If Term.PN.Equals(row.Cells(3).Value) Then
                                     row.Cells(3).Style.BackColor = Color.LightBlue
                                 End If
@@ -343,7 +360,7 @@ selected: " + InfoTablas.Count.ToString
         End If
     End Sub
     Private Sub DisableButton()
-        Button3.Visible = If(dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 1, True, False)
+        Button3.Visible = dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 1
     End Sub
     Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
         If e.KeyChar = Chr(13) Then
@@ -375,7 +392,7 @@ selected: " + InfoTablas.Count.ToString
             Dim auxTerm As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString
             Dim auxCell As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Celda").Value.ToString
             Dim auxBalance As Integer = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Qty").Value.ToString
-            If (InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(auxTerm)).Count) > 0 Then
+            If InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(auxTerm)).Count > 0 Then
                 MessageBox.Show($"Esta terminal: {auxTerm} ya esta en la lista en por procesar, no es posible agregarla de nuevo.")
             Else
                 SelectedTermProcess(auxTerm, auxCell, auxBalance)
@@ -413,9 +430,10 @@ selected: " + InfoTablas.Count.ToString
 selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
+        Cursor.Current = Cursors.WaitCursor
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
             Dim NewPwo As New CreateWorkOrder(dgvDetalleTerminales, InfoTablas) With {
-                ._PushFirstPlace = If(ChPushToFirstPlace.Checked, True, False)
+                ._PushFirstPlace = ChPushToFirstPlace.Checked
             }
             NewPwo.MaterialReserve()
             If NewPwo.GetSetWorkOrder() Then
@@ -426,15 +444,16 @@ selected: " + InfoTablas.Count.ToString
                 }
                 Report.ShowDialog()
                 NewPwo.MaterialReserve(False)
-                CleanningState()
                 MainRecordClean()
                 DisableButton()
+                CleanningState()
             Else
-                MessageBox.Show($"Hubo un problema al crear PWO, contacta con ingenieria o sistemas para resolver el problema.")
+                MessageBox.Show("Hubo un problema al crear PWO, contacta con ingenieria o sistemas para resolver el problema.")
             End If
         Else
             MessageBox.Show("Seleccione primero una terminal para poder crear PWO.")
         End If
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub Button3_MouseHover(sender As Object, e As EventArgs) Handles Button3.MouseHover
         Cursor.Current = Cursors.Hand
@@ -450,5 +469,11 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub dgvDetalleTerminales_ColumnAdded(sender As Object, e As DataGridViewColumnEventArgs) Handles dgvDetalleTerminales.ColumnAdded
         e.Column.SortMode = DataGridViewColumnSortMode.NotSortable
+    End Sub
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Dim Report As New ReportePWO(TextBox2.Text) With {
+                    .Text = TextBox2.Text.ToString
+                }
+        Report.ShowDialog()
     End Sub
 End Class

@@ -8,7 +8,7 @@
   <Shapes>
     <Shape ID="DesignTable:tblBOMPWO" ZOrder="6" X="306" Y="180" Height="172" Width="219" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:tblPWO" ZOrder="1" X="597" Y="181" Height="134" Width="190" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
-    <Shape ID="DesignTable:DataTable1" ZOrder="5" X="825" Y="181" Height="134" Width="210" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
+    <Shape ID="DesignTable:DataTable1" ZOrder="5" X="825" Y="181" Height="153" Width="210" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="102" />
     <Shape ID="DesignTable:tblWIP" ZOrder="4" X="1065" Y="183" Height="191" Width="184" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
     <Shape ID="DesignTable:tblWipDet" ZOrder="3" X="1285" Y="181" Height="229" Width="205" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
     <Shape ID="DesignTable:tblPWO1" ZOrder="2" X="591" Y="370" Height="115" Width="197" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />

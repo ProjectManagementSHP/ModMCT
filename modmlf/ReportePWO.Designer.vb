@@ -113,7 +113,7 @@ Partial Class ReportePWO
         Me.ReportViewer1.Location = New System.Drawing.Point(0, 0)
         Me.ReportViewer1.Name = "ReportViewer1"
         Me.ReportViewer1.ServerReport.BearerToken = Nothing
-        Me.ReportViewer1.Size = New System.Drawing.Size(800, 450)
+        Me.ReportViewer1.Size = New System.Drawing.Size(942, 569)
         Me.ReportViewer1.TabIndex = 0
         '
         'DataTable1TableAdapter1
@@ -144,10 +144,12 @@ Partial Class ReportePWO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(942, 569)
         Me.Controls.Add(Me.ReportViewer1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "ReportePWO"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "ReportePWO"
         CType(Me.TblBOMPWOBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataSet11, System.ComponentModel.ISupportInitialize).EndInit()

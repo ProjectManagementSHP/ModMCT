@@ -1052,6 +1052,8 @@ Partial Public Class DataSet1
         
         Private columnTotal As Global.System.Data.DataColumn
         
+        Private columnTotalHrs As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
@@ -1112,6 +1114,14 @@ Partial Public Class DataSet1
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property TotalHrsColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTotalHrs
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1148,9 +1158,9 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddDataTable1Row(ByVal Setup As Integer, ByVal RT As Integer, ByVal Total As Integer) As DataTable1Row
+        Public Overloads Function AddDataTable1Row(ByVal Setup As Integer, ByVal RT As Integer, ByVal Total As Integer, ByVal TotalHrs As Double) As DataTable1Row
             Dim rowDataTable1Row As DataTable1Row = CType(Me.NewRow,DataTable1Row)
-            Dim columnValuesArray() As Object = New Object() {Setup, RT, Total}
+            Dim columnValuesArray() As Object = New Object() {Setup, RT, Total, TotalHrs}
             rowDataTable1Row.ItemArray = columnValuesArray
             Me.Rows.Add(rowDataTable1Row)
             Return rowDataTable1Row
@@ -1176,6 +1186,7 @@ Partial Public Class DataSet1
             Me.columnSetup = MyBase.Columns("Setup")
             Me.columnRT = MyBase.Columns("RT")
             Me.columnTotal = MyBase.Columns("Total")
+            Me.columnTotalHrs = MyBase.Columns("TotalHrs")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1187,9 +1198,12 @@ Partial Public Class DataSet1
             MyBase.Columns.Add(Me.columnRT)
             Me.columnTotal = New Global.System.Data.DataColumn("Total", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnTotal)
+            Me.columnTotalHrs = New Global.System.Data.DataColumn("TotalHrs", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTotalHrs)
             Me.columnSetup.ReadOnly = true
             Me.columnRT.ReadOnly = true
             Me.columnTotal.ReadOnly = true
+            Me.columnTotalHrs.ReadOnly = true
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2584,6 +2598,21 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property TotalHrs() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableDataTable1.TotalHrsColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'TotalHrs' in table 'DataTable1' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableDataTable1.TotalHrsColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsSetupNull() As Boolean
             Return Me.IsNull(Me.tableDataTable1.SetupColumn)
         End Function
@@ -2616,6 +2645,18 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetTotalNull()
             Me(Me.tableDataTable1.TotalColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsTotalHrsNull() As Boolean
+            Return Me.IsNull(Me.tableDataTable1.TotalHrsColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetTotalHrsNull()
+            Me(Me.tableDataTable1.TotalHrsColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3795,6 +3836,7 @@ Namespace DataSet1TableAdapters
             tableMapping.ColumnMappings.Add("Setup", "Setup")
             tableMapping.ColumnMappings.Add("RT", "RT")
             tableMapping.ColumnMappings.Add("Total", "Total")
+            tableMapping.ColumnMappings.Add("TotalHrs", "TotalHrs")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -3811,8 +3853,9 @@ Namespace DataSet1TableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "select IsNull(ESetupTime,0)  [Setup],IsNull(ERunTime,0)  [RT],IsNull(ETotalTime,0"& _ 
-                ")  [Total] from tblPWO where PWO = @PWO"
+            Me._commandCollection(0).CommandText = "select IsNull(ESetupTime,0)  [Setup],IsNull(ERunTime,0) [RT],IsNull(ETotalTime,0)"& _ 
+                "  [Total],CONVERT(float,ROUND(CAST(IsNull(ETotalTime,0) AS DECIMAL(18,0)) / 60,2"& _ 
+                ",1)) [TotalHrs] from tblPWO where PWO = @PWO"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
@@ -4007,8 +4050,8 @@ Namespace DataSet1TableAdapters
             Me._adapter.InsertCommand.Connection = Me.Connection
             Me._adapter.InsertCommand.CommandText = "INSERT INTO [tblWIP] ([WIP], [AU], [Rev], [Customer], [Qty]) VALUES (@WIP, @AU, @"& _ 
                 "Rev, @Customer, @Qty);"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"SELECT WIP, AU, Rev, Customer, Qty, (SELECT COUNT(WireID"& _ 
-                ") AS Expr1 FROM tblWipDet WHERE (PWOA = @PWO) OR (PWOB = @PWO)) AS Travelers FRO"& _ 
-                "M tblWIP WHERE (WIP = @WIP)"
+                ") AS Expr1 FROM tblWipDet WHERE (PWOA = @PWO) AND (WIP = t.WIP) OR (WIP = t.WIP)"& _ 
+                " AND (PWOB = @PWO)) AS Travelers FROM tblWIP AS t WHERE (WIP = @WIP)"
             Me._adapter.InsertCommand.CommandType = Global.System.Data.CommandType.Text
             Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@WIP", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "WIP", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@AU", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "AU", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
@@ -4024,8 +4067,8 @@ Namespace DataSet1TableAdapters
                 "v] = @Original_Rev)) AND ((@IsNull_Customer = 1 AND [Customer] IS NULL) OR ([Cus"& _ 
                 "tomer] = @Original_Customer)) AND ((@IsNull_Qty = 1 AND [Qty] IS NULL) OR ([Qty]"& _ 
                 " = @Original_Qty)));"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"SELECT WIP, AU, Rev, Customer, Qty, (SELECT COUNT(WireID) "& _ 
-                "AS Expr1 FROM tblWipDet WHERE (PWOA = @PWO) OR (PWOB = @PWO)) AS Travelers FROM "& _ 
-                "tblWIP WHERE (WIP = @WIP)"
+                "AS Expr1 FROM tblWipDet WHERE (PWOA = @PWO) AND (WIP = t.WIP) OR (WIP = t.WIP) A"& _ 
+                "ND (PWOB = @PWO)) AS Travelers FROM tblWIP AS t WHERE (WIP = @WIP)"
             Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.Text
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@WIP", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "WIP", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
             Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@AU", Global.System.Data.SqlDbType.Int, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "AU", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
@@ -4058,8 +4101,8 @@ Namespace DataSet1TableAdapters
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "Select WIP,AU,Rev,Customer,Qty,(select Count(WireID) from tblWipDet where (PWOA ="& _ 
-                "@PWO or PWOB = @PWO)) [Travelers] from tblWIP where WIP in (select WIP from tblB"& _ 
-                "OMPWO where PWO = @PWO)"
+                "@PWO or PWOB = @PWO) and WIP=t.WIP) [Travelers] from tblWIP t where WIP in (sele"& _ 
+                "ct WIP from tblBOMPWO where PWO = @PWO)"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub

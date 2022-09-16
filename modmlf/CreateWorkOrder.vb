@@ -194,15 +194,17 @@ Public Class CreateWorkOrder
     End Function
     Public Sub MaterialReserve(Optional FlagReserve As Boolean = True)
         Try
-            ListForProcess.ForEach(Function(Term)
-                                       Dim insertItem As String = If(FlagReserve, $"insert into tblPWOTemp (PN) Values ('{Term.PN}')", $"delete from tblPWOTemp where PN='{Term.PN}'")
-                                       Dim command As SqlCommand = New SqlCommand(insertItem, cnn)
-                                       command.CommandType = CommandType.Text
-                                       cnn.Open()
-                                       command.ExecuteNonQuery()
-                                       cnn.Close()
-                                       Return Nothing
-                                   End Function)
+            Dim oChange As Action(Of ChargeInfo) = Function(Term)
+                                                       Dim insertItem As String = If(FlagReserve, $"insert into tblPWOTemp (PN) Values ('{Term.PN}')", $"delete from tblPWOTemp where PN='{Term.PN}'")
+                                                       Dim command As SqlCommand = New SqlCommand(insertItem, cnn)
+                                                       command.CommandType = CommandType.Text
+                                                       cnn.Open()
+                                                       command.ExecuteNonQuery()
+                                                       cnn.Close()
+                                                       Return Nothing
+                                                   End Function
+
+            ListForProcess.ForEach(oChange)
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
@@ -211,18 +213,14 @@ Public Class CreateWorkOrder
     Public Function GetSetWorkOrder()
         Dim flag As Boolean
         SerialPWO = GetSerialNewPWO(GetSelectIDPWO().ToString)
-        If SerialPWO.ToString.Length > 0 Then
-            If InsertNewWorkOrder() AndAlso CreateBOMWorkOrder() AndAlso SetCC() Then
-                flag = True
-            Else
-                flag = False
-            End If
+        If SerialPWO.ToString.Length > 0 AndAlso (InsertNewWorkOrder() AndAlso CreateBOMWorkOrder() AndAlso SetCC()) Then
+            flag = True
         Else
             flag = False
         End If
         Return flag
     End Function
-    Private Function CreateBOMWorkOrder()
+    Public Function CreateBOMWorkOrder()
         Try
             Dim First = (From d In _ListForProcess Order By d.Rows Ascending Select d.Rows).First()
             Dim auxRow As Integer = 0
@@ -288,7 +286,7 @@ Public Class CreateWorkOrder
         End Try
         Return True
     End Function
-    Public Function MergeDataBOM(Id As String, PN As String) As DataTable
+    Private Function MergeDataBOM(Id As String, PN As String) As DataTable
         Try
             Dim reader As SqlDataReader
             Dim command As New SqlCommand($";WITH BomPwo (WIP,Term) as (
@@ -317,8 +315,9 @@ Public Class CreateWorkOrder
             Dim insertBom As String = $"insert into tblBOMPWO (IdentificadorBOM,PWO,WIP,AU,Rev,PN,Qty,Unit,Description,Balance,CreatedDate) Values (@IDBOMProcesos,@PWO,@WIP,(select AU from tblWIP where WIP=@WIP),(select Rev from tblWIP where WIP=@WIP),@PN,@Qty,'ea',(select top 1 Description from tblItemsQB where pn = @PN),@Qty,GETDATE())"
             Dim command As SqlCommand = New SqlCommand(insertBom, cnn)
             command.CommandType = CommandType.Text
+            command.CommandTimeout = 120000
             command.Parameters.Add("@IDBOMProcesos", SqlDbType.NVarChar).Value = GetIdBomPwo(GetSelectIDPWO(False).ToString)
-            command.Parameters.Add("@PWO", SqlDbType.NVarChar).Value = _IdSerial
+            command.Parameters.Add("@PWO", SqlDbType.NVarChar).Value = SerialPWO
             command.Parameters.Add("@PN", SqlDbType.NVarChar).Value = PN
             command.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = Wip
             command.Parameters.Add("@Qty", SqlDbType.Decimal).Value = Qty
@@ -393,9 +392,9 @@ Public Class CreateWorkOrder
         End Try
         Return True
     End Function
-    Private Function InsertNewWorkOrder()
+    Public Function InsertNewWorkOrder()
         Try
-            Dim ESetupTime As Integer = _ListForProcess.Count * 12
+            Dim ESetupTime As Integer = _ListForProcess.Count * 5
             Dim ERunTime As Integer = _ListForProcess.[Select](Function(i) i.RunTime).Sum(Function(a) a)
             Dim SumBalances As Integer = _ListForProcess.[Select](Function(i) i.Balance).Sum(Function(a) a)
             Dim CellMaxCurrent As String = _ListForProcess.Max(Function(c) c.Cell)
