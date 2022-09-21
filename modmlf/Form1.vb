@@ -1418,7 +1418,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             End If
         End If
         ContextMenuDisponibilidad.Close()
-        filtros(1)
+        'filtros(1)
     End Sub
     Private Sub dgvWips_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.CellMouseDown
         If e.RowIndex <> -1 And e.ColumnIndex <> -1 Then
@@ -1848,7 +1848,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
             cnn.Open()
-            dr = cmd.ExecuteReader
+            cmd.ExecuteNonQuery()
             cnn.Close()
             ' ---------------------------
             If Not opcion = 8 Then
@@ -3079,12 +3079,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
-            If rbsolicitar.Checked = True Then filtros(1)
-            If rbSolicitado.Checked = True Then filtros(2)
-            If rbListosParaEntrar.Checked = True Then filtros(3)
-            If rbYaempezados.Checked = True Then filtros(4)
-            If rbEmpezadosyDetenidos.Checked = True Then filtros(5)
-            If rdbOnHold.Checked = True Then filtros(6)
+            FilterInfo()
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("cambioMaquinaXCWO", host, UserName)
@@ -3175,23 +3170,18 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             End If
         End If
         ContextMenuDisponibilidad.Close()
-        If rbsolicitar.Checked = True Then filtros(1)
-        If rbSolicitado.Checked = True Then filtros(2)
-        If rbListosParaEntrar.Checked = True Then filtros(3)
-        If rbYaempezados.Checked = True Then filtros(4)
-        If rbEmpezadosyDetenidos.Checked = True Then filtros(5)
-        If rdbOnHold.Checked = True Then filtros(6)
+        FilterInfo()
         Cursor.Current = Cursors.Default
     End Sub
-    Private Sub ToolStripMenuItem7_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem7.Click
+    Private Sub ToolStripMenuItem7_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem7.Click 'Cambiar orden
         Cursor.Current = Cursors.WaitCursor
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
             Dim ver2 As Char = WIP(0)
-            If ver = "C" And ver2 = "W" Then
-                If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
+            If (ver = "C" Or ver = "P") And ver2 = "W" Then
+                If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8 Then
                     With Asignar
-                        .Text = "Orden de Corte"
+                        .Text = If(opcion = 8, "Orden de MP", "Orden de Corte")
                         .lblcwoporsolicitar.Text = CWO
                         .lblwipporsolicitar.Text = WIP
                         .lblMaq.Text = maq
@@ -3202,7 +3192,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                         .MaskedTextBox1.Clear()
                         .MaskedTextBox1.Focus()
                         With .dgvSort
-                            .DataSource = GetTable("select CWO,Id [Orden] from tblCWO where (Id > 0 or Id is not null) and Maq=" + maq.ToString + " and Status='OPEN' order by Id asc")
+                            .DataSource = GetTable($"select {If(opcion = 8, "P", "C")}WO,Id [Orden] from tbl{If(opcion = 8, "P", "C")}WO where (Id > 0 or Id is not null) and {If(opcion = 8, $"Cell='{Cell}'", $"Maq={maq}")} and Status='OPEN' order by Id asc")
                             .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                             .AutoResizeColumns()
                         End With
@@ -3716,7 +3706,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         If cabecera = "wSort WIP" Then
             lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
         ElseIf cabecera = "wSort PWO" Then
-            lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
+            lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort PWO").Value.ToString)
         ElseIf cabecera = "PWO" Then
             llenanotas(dgvPWO.Rows(e.RowIndex).Cells("PWO").Value.ToString, 1)
             lblWIPorCWO.Text = dgvPWO.Rows(e.RowIndex).Cells("PWO").Value.ToString

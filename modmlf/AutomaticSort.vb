@@ -9,12 +9,16 @@ Public Class AutomaticSort
     Public LongitudArray As Integer
     Public Grid As DataGridView
     Public CWOForChange As String
-    Public Sub New(NewSort As Integer, OldSort As Integer, LongArray As Integer, Grid As DataGridView, Maquina As Integer, CWO As String)
+    Public Sub New(NewSort As Integer, OldSort As Integer, LongArray As Integer, Grid As DataGridView, Maquina As Object, CWO As String)
         Me.NewSort = NewSort
         Me.OldSort = OldSort
         Me.LongitudArray = LongArray
         Me.Grid = Grid
-        Me.Maq = Maquina
+        If IsNumeric(Maquina) Then
+            Me.Maq = Integer.Parse(Maquina)
+        Else
+            Me.Cell = Convert.ToString(Maquina)
+        End If
         Me.CWOForChange = CWO
     End Sub
     Public Sub New(Maquina As Integer)
@@ -31,7 +35,7 @@ Public Class AutomaticSort
         Me.Cell = Cell
         Me.OldSort = oldsort
     End Sub
-    Function Compare() As Boolean
+    Public Function Compare() As Boolean
         If Me.NewSort > 0 Then
             If Me.NewSort < Me.OldSort Then
                 Return True
@@ -43,10 +47,10 @@ Public Class AutomaticSort
         End If
         Return Nothing
     End Function
-    Sub SetArray()
+    Public Sub SetArray()
         Dim arrayCWO(LongitudArray - 1) As String, arraySort(LongitudArray - 1) As Integer, tempSort As Integer, tempCWO As String
         For i As Integer = 0 To Grid.Rows.Count - 1
-            Dim auxString As String = Grid.Rows(i).Cells("CWO").Value.ToString, auxSort As Integer = CInt(Val(Grid.Rows(i).Cells("Orden").Value.ToString))
+            Dim auxString As String = Grid.Rows(i).Cells(0).Value.ToString, auxSort As Integer = CInt(Val(Grid.Rows(i).Cells(1).Value.ToString))
             arrayCWO(i) = auxString
             arraySort(i) = auxSort
         Next
@@ -153,9 +157,9 @@ Public Class AutomaticSort
         End Try
         Return Nothing
     End Function
-    Function GetIdSort()
+    Public Function GetIdSort()
         Try
-            Dim aCmdo As SqlCommand = New SqlCommand($"select Id from tblCWO where CWO='{Me.CWOForChange}'", cnn)
+            Dim aCmdo As SqlCommand = New SqlCommand($"select Id from tbl{If(opcion = 8, "P", "C")}WO where {If(opcion = 8, "P", "C")}WO='{Me.CWOForChange}'", cnn)
             aCmdo.CommandType = CommandType.Text
             cnn.Open()
             Return If(CInt(aCmdo.ExecuteScalar) = Me.NewSort, True, False)

@@ -21,24 +21,21 @@ Public Class Asignar
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim LongitudArray As Integer = dgvSort.Rows.Count()
-        Dim auto As AutomaticSort = New AutomaticSort(MaskedTextBox1.Text, cola, LongitudArray, dgvSort, maq, lblcwoporsolicitar.Text)
+        Dim auto As AutomaticSort = New AutomaticSort(MaskedTextBox1.Text, cola, LongitudArray, dgvSort, If(opcion = 8, Cell, maq), lblcwoporsolicitar.Text)
         If auto.Compare() Then
             If Not auto.CheckZeros() Then
                 auto.RemoveZeros()
                 If Not auto.GetIdSort Then
-                    dgvSort.DataSource = Principal.GetTable("select CWO,Id [Orden] from tblCWO where (Id > 0 or Id is not null) and Maq=" + maq.ToString + " and Status='OPEN' order by Id asc")
+                    dgvSort.DataSource = Principal.GetTable($"select {If(opcion = 8, "P", "C")}WO,Id [Orden] from tbl{If(opcion = 8, "P", "C")}WO where (Id > 0 or Id is not null) and {If(opcion = 8, $"Cell='{Cell}'", $"Maq={maq}")} and Status='OPEN' order by Id asc")
                     LongitudArray = dgvSort.Rows.Count()
-                    auto = New AutomaticSort(MaskedTextBox1.Text, cola, LongitudArray, dgvSort, maq, lblcwoporsolicitar.Text)
+                    auto = New AutomaticSort(MaskedTextBox1.Text, cola, LongitudArray, dgvSort, If(opcion = 8, Cell, maq), lblcwoporsolicitar.Text)
                     auto.SetArray()
                 End If
             Else
                 auto.SetArray()
             End If
             MsgBox("Se han efectuado los cambios")
-            If Principal.rbsolicitar.Checked = True Then Principal.filtros(1)
-            If Principal.rbSolicitado.Checked = True Then Principal.filtros(2)
-            If Principal.rbListosParaEntrar.Checked = True Then Principal.filtros(3)
-            If Principal.rbYaempezados.Checked = True Then Principal.filtros(4)
+            Principal.FilterInfo()
             Me.Dispose()
             Me.Close()
         Else
