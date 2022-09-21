@@ -28,7 +28,7 @@ Partial Class CambioMaquina
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lblwipporsolicitar = New System.Windows.Forms.Label()
         Me.gbCompras = New System.Windows.Forms.GroupBox()
-        Me.btnpasarseporlosbuebostodoelsistem = New System.Windows.Forms.Button()
+        Me.btnConfirmar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.txbNotas = New System.Windows.Forms.TextBox()
@@ -46,9 +46,9 @@ Partial Class CambioMaquina
         Me.Label4.Location = New System.Drawing.Point(10, 5)
         Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(46, 16)
+        Me.Label4.Size = New System.Drawing.Size(36, 16)
         Me.Label4.TabIndex = 5449
-        Me.Label4.Text = "CWO:"
+        Me.Label4.Text = "WO:"
         '
         'lblcwoporsolicitar
         '
@@ -93,7 +93,7 @@ Partial Class CambioMaquina
         '
         Me.gbCompras.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.gbCompras.BackColor = System.Drawing.Color.Transparent
-        Me.gbCompras.Controls.Add(Me.btnpasarseporlosbuebostodoelsistem)
+        Me.gbCompras.Controls.Add(Me.btnConfirmar)
         Me.gbCompras.Controls.Add(Me.Label1)
         Me.gbCompras.Controls.Add(Me.ComboBox1)
         Me.gbCompras.Controls.Add(Me.txbNotas)
@@ -103,14 +103,14 @@ Partial Class CambioMaquina
         Me.gbCompras.TabIndex = 5450
         Me.gbCompras.TabStop = False
         '
-        'btnpasarseporlosbuebostodoelsistem
+        'btnConfirmar
         '
-        Me.btnpasarseporlosbuebostodoelsistem.Location = New System.Drawing.Point(72, 119)
-        Me.btnpasarseporlosbuebostodoelsistem.Name = "btnpasarseporlosbuebostodoelsistem"
-        Me.btnpasarseporlosbuebostodoelsistem.Size = New System.Drawing.Size(81, 27)
-        Me.btnpasarseporlosbuebostodoelsistem.TabIndex = 5457
-        Me.btnpasarseporlosbuebostodoelsistem.Text = "Confirmar"
-        Me.btnpasarseporlosbuebostodoelsistem.UseVisualStyleBackColor = True
+        Me.btnConfirmar.Location = New System.Drawing.Point(72, 119)
+        Me.btnConfirmar.Name = "btnConfirmar"
+        Me.btnConfirmar.Size = New System.Drawing.Size(81, 27)
+        Me.btnConfirmar.TabIndex = 5457
+        Me.btnConfirmar.Text = "Confirmar"
+        Me.btnConfirmar.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -129,7 +129,7 @@ Partial Class CambioMaquina
         '
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Location = New System.Drawing.Point(93, 19)
-        Me.ComboBox1.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.ComboBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(80, 21)
         Me.ComboBox1.TabIndex = 5451
@@ -137,7 +137,7 @@ Partial Class CambioMaquina
         'txbNotas
         '
         Me.txbNotas.Location = New System.Drawing.Point(13, 42)
-        Me.txbNotas.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.txbNotas.Margin = New System.Windows.Forms.Padding(2)
         Me.txbNotas.Multiline = True
         Me.txbNotas.Name = "txbNotas"
         Me.txbNotas.Size = New System.Drawing.Size(200, 72)
@@ -184,7 +184,7 @@ Partial Class CambioMaquina
         Me.Controls.Add(Me.lblwipporsolicitar)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "CambioMaquina"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Cambio Maquina"
@@ -205,5 +205,5 @@ Partial Class CambioMaquina
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents btnpasarseporlosbuebostodoelsistem As Button
+    Friend WithEvents btnConfirmar As Button
 End Class

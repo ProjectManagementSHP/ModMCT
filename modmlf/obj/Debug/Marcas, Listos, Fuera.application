@@ -14,14 +14,14 @@
     <framework targetVersion="4.8" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Marcas, Listos, Fuera.exe.manifest" size="13547">
+    <dependentAssembly dependencyType="install" codebase="Marcas, Listos, Fuera.exe.manifest" size="56666">
       <assemblyIdentity name="Marcas, Listos, Fuera.exe" version="3.2.1.59" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ozOtyRDlrK010qRcsBAEa8oFh9wDcSSuP99d6JQf2Kg=</dsig:DigestValue>
+        <dsig:DigestValue>bbaIGzy16su0LoOAGHrwS3h04yCAw6fQK08PcDtMTZE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

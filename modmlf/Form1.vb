@@ -37,6 +37,7 @@ Public Class Principal
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "Corte"
             rbsolicitar.Checked = True
             Button2.BackColor = Color.LightGreen
@@ -54,6 +55,7 @@ Public Class Principal
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
             dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
             lbldept.Text = "Almacen"
             rbListosParaEntrar.Checked = True
             ToolStripMenuItem10.Visible = False
@@ -69,6 +71,7 @@ Public Class Principal
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
             DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
             lbldept.Text = "Aplicadores"
             rbListosParaEntrar.Checked = True
             ToolStripMenuItem10.Visible = False
@@ -84,6 +87,7 @@ Public Class Principal
             DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "XP"
             rbsolicitar.Checked = True
             ToolStripMenuItem10.Visible = False
@@ -101,6 +105,7 @@ Public Class Principal
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             lbldept.Text = "Compras"
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
             dgvMatSinStockCompras.Visible = True
@@ -124,6 +129,7 @@ Public Class Principal
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "Planeacion Corte"
             ToolStripMenuItem10.Visible = True
             rbListosParaEntrar.Checked = True
@@ -142,12 +148,32 @@ Public Class Principal
             dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
             lbldept.Text = "Planeacion XP"
             ToolStripMenuItem10.Visible = True
             rbListosParaEntrar.Checked = True
             TabPage2.Visible = True
             TabPage2.Parent = TabControl1
             Button2.BackColor = Color.LightGreen
+            btnCortosPN.Visible = False
+            gbFechas.Visible = False
+            btnAgregarNewElemento.Visible = False
+            cargadatosCompras()
+        ElseIf opcion = 8 Then 'Planeacion PWO
+            pnluserandtitle.BackColor = Color.FromArgb(236, 154, 114)
+            dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
+            DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
+            dgvwSorts.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
+            dgvMatSinStockCompras.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
+            dgvAfectados.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
+            dgvCortosCompletos.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
+            dgvPWO.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
+            lbldept.Text = "Planeacion PWO"
+            ToolStripMenuItem10.Visible = True
+            rbListosParaEntrar.Checked = True
+            TabPage2.Visible = True
+            TabPage2.Parent = TabControl1
+            Button2.BackColor = Color.FromArgb(236, 154, 114)
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
@@ -172,26 +198,62 @@ Public Class Principal
         GroupBox3.Visible = False
         Timer1.Enabled = True
         Timer1.Interval = 3000
-        If opcion = 5 Then btnAgregarNewElemento.Visible = True
+        btnAgregarNewElemento.Visible = opcion = 5
+        CrearPWOToolStripMenuItem.Visible = opcion = 8
+        SelectWorkOrder_View()
         cargachart()
         GridCharge()
         ChargeInfoCortos()
         'AutoUpdate()
     End Sub
-    Private Sub llenagrid(query As String)
-        Dim tabla As New DataTable
+    Sub SelectWorkOrder_View()
+        If opcion = 8 Then
+            CWOtab.Visible = False
+            CWOtab.Parent = Nothing
+            PWOTab.Visible = True
+            PWOTab.Parent = tabWorkOrders
+            tabWorkOrders.SelectedTab = PWOTab
+        ElseIf opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
+            PWOTab.Visible = False
+            CWOtab.Visible = True
+            PWOTab.Parent = Nothing
+            CWOtab.Parent = tabWorkOrders
+            tabWorkOrders.SelectedTab = CWOtab
+        Else
+            CWOtab.Visible = True
+            PWOTab.Visible = True
+            PWOTab.Parent = tabWorkOrders
+            CWOtab.Parent = tabWorkOrders
+            tabWorkOrders.SelectedTab = CWOtab
+        End If
+    End Sub
+    Private Sub llenagrid(CWOq As String, PWOq As String)
+        Dim CWO As New DataTable
+        Dim PWO As New DataTable
         Try
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cmd.CommandTimeout = 600000
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tabla.Load(dr)
-            edo = cnn.State.ToString
-            If edo = "Open" Then cnn.Close()
-            If tabla.Rows.Count > 0 Then
+            If Not opcion = 8 Then
+                cmd = New SqlCommand(CWOq, cnn)
+                cmd.CommandType = CommandType.Text
+                cmd.CommandTimeout = 600000
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                CWO.Load(dr)
+                edo = cnn.State.ToString
+                If edo = "Open" Then cnn.Close()
+            End If
+            If opcion <> 1 AndAlso opcion <> 4 AndAlso opcion <> 6 AndAlso opcion <> 7 Then
+                cmd = New SqlCommand(PWOq, cnn)
+                cmd.CommandType = CommandType.Text
+                cmd.CommandTimeout = 600000
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                PWO.Load(dr)
+                edo = cnn.State.ToString
+                If edo = "Open" Then cnn.Close()
+            End If
+            If CWO.Rows.Count > 0 Then
                 With dgvWips
-                    .DataSource = tabla
+                    .DataSource = CWO
                     .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                     .AutoResizeColumns()
                     .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -210,6 +272,28 @@ Public Class Principal
             Else
                 dgvWips.DataSource = Nothing
                 Label3.Text = "Items: " & dgvWips.Rows.Count
+            End If
+            If PWO.Rows.Count > 0 Then
+                With dgvPWO
+                    .DataSource = PWO
+                    .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                    .AutoResizeColumns()
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .Columns("DueDateProcess").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    .Columns("DateCreatedWIP").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    If opcion = 5 Then
+                        .Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = ("dd-MMM-yy")
+                        .Columns("Fecha Materiales").DefaultCellStyle.Format = ("dd-MMM-yy")
+                    End If
+                    .Columns(0).Frozen = True
+                    .Columns(1).Frozen = True
+                    Label9.Text = "Items: " & dgvPWO.Rows.Count
+                    btnRefrescaGrid.Visible = True
+                End With
+                pintaceldas()
+            Else
+                dgvPWO.DataSource = Nothing
+                Label9.Text = "Items: " & dgvPWO.Rows.Count
             End If
         Catch ex As Exception
             cnn.Close()
@@ -243,6 +327,10 @@ Public Class Principal
         systemType = dgvCortosCompletos.GetType()
         propertyInfo = systemType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
         propertyInfo.SetValue(dgvCortosCompletos, True, Nothing)
+        '--------------------------------------------
+        systemType = dgvPWO.GetType()
+        propertyInfo = systemType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
+        propertyInfo.SetValue(dgvPWO, True, Nothing)
     End Sub
     Public Sub ChargeInfoCortos()
         Try
@@ -253,6 +341,7 @@ Public Class Principal
             FROM tblCortosPn WHERE Hold = 1"
             cmd = New SqlCommand(consulta, cnn)
             cmd.CommandType = CommandType.Text
+            cmd.CommandTimeout = 120000
             cnn.Open()
             dr = cmd.ExecuteReader
             dt.Load(dr)
@@ -1142,6 +1231,7 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [ParoAU] FROM tblBO
             Dim getTableMaqs As DataTable = New DataTable(), dr1 As SqlDataReader
             Dim cm As SqlCommand = New SqlCommand(getMaqActives, conex)
             cm.CommandType = CommandType.Text
+            cm.CommandTimeout = 120000
             conex.Open()
             dr1 = cm.ExecuteReader
             getTableMaqs.Load(dr1)
@@ -1158,6 +1248,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 Try
                     Dim cmdo As SqlCommand = New SqlCommand(consulta, conex)
                     cmdo.CommandType = CommandType.Text
+                    cmdo.CommandTimeout = 120000
                     Dim data As SqlDataReader
                     conex.Open()
                     data = cmdo.ExecuteReader
@@ -1188,6 +1279,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 Try
                     Dim cmdo1 As SqlCommand = New SqlCommand(consulta, conex)
                     cmdo1.CommandType = CommandType.Text
+                    cmdo1.CommandTimeout = 120000
                     Dim data1 As SqlDataReader
                     conex.Open()
                     data1 = cmdo1.ExecuteReader
@@ -1218,6 +1310,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 Try
                     Dim cmdo2 As SqlCommand = New SqlCommand(consulta, conex)
                     cmdo2.CommandType = CommandType.Text
+                    cmdo2.CommandTimeout = 120000
                     Dim data3 As SqlDataReader
                     conex.Open()
                     data3 = cmdo2.ExecuteReader
@@ -1283,11 +1376,12 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 End If
             Next
         End If
-        If (opcion = 6 Or opcion = 7 Or opcion = 8) And rbListosParaEntrar.Checked = True Then
+        If (opcion = 6 Or opcion = 7) And rbListosParaEntrar.Checked Then
             Dim t As New DataTable
             Try
                 Dim cmdo1 As SqlCommand = New SqlCommand("select distinct CWO from tblCWO where Wsort = 20 and (PrintedSNCWO is null or PrintedSNCWO=0)", cnn)
                 cmdo1.CommandType = CommandType.Text
+                cmdo1.CommandTimeout = 120000
                 Dim data1 As SqlDataReader
                 cnn.Open()
                 data1 = cmdo1.ExecuteReader
@@ -1315,8 +1409,8 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
             Dim ver2 As Char = WIP(0)
-            If ver = "C" And ver2 = "W" Then
-                If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
+            If (ver = "C" Or ver = "P") And ver2 = "W" Then
+                If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8 Then
                     actualizafecharequerimiento(CWO)
                 End If
             Else
@@ -1350,180 +1444,249 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             End If
         End If
     End Sub
-    Private Sub dgvWips_MouseClick(sender As Object, e As MouseEventArgs) Handles dgvWips.MouseClick
-        If dgvWips.RowCount > 0 Then
-            If opcion = 1 Or opcion = 4 Then
-                If rbsolicitar.Checked = True And (sort = 27 Or sort = 3) Then
-                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                        ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
-                        ToolStripTextBox1.Visible = True
-                        ToolStripMenuItem2.Visible = False
-                        ToolStripMenuItem4.Visible = False
-                        ToolStripMenuItem7.Visible = False
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem15.Visible = False
-                    End If
-                ElseIf (rbSolicitado.Checked = True Or rbListosParaEntrar.Checked = True Or rbYaempezados.Checked = True) And (opcion = 1 Or opcion = 4) Then
-                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                        ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
-                        ToolStripTextBox1.Visible = False
-                        ToolStripMenuItem2.Visible = False
-                        ToolStripMenuItem4.Visible = True
-                        ToolStripMenuItem7.Visible = True
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem15.Visible = False
-                    End If
-                ElseIf rbEmpezadosyDetenidos.Checked = True Then
-                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                        ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
-                        ToolStripTextBox1.Visible = False
-                        ToolStripMenuItem2.Visible = False
-                        ToolStripMenuItem4.Visible = True
-                        ToolStripMenuItem7.Visible = True
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem15.Visible = False
-                    End If
-                End If
-            ElseIf opcion = 6 Or opcion = 7 Then
-                If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                    ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
-                    If rbsolicitar.Checked = True Then
-                        ToolStripTextBox1.Visible = True
-                        ToolStripMenuItem7.Visible = False
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem2.Visible = True
-                        ToolStripMenuItem4.Visible = False
-                        ToolStripMenuItem15.Visible = False
-                    ElseIf rbSolicitado.Checked = True Then
-                        ToolStripTextBox1.Visible = False
-                        ToolStripMenuItem2.Visible = True
-                        ToolStripMenuItem4.Visible = True
-                        ToolStripMenuItem7.Visible = True
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem15.Visible = True
-                    ElseIf rbYaempezados.Checked = True Then
-                        ToolStripTextBox1.Visible = False
-                        ToolStripMenuItem2.Visible = True
-                        ToolStripMenuItem4.Visible = False
-                        ToolStripMenuItem7.Visible = True
-                        ToolStripMenuItem8.Visible = True
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem15.Visible = True
+    Private Sub EventMenuWork(sender As Object, e As MouseEventArgs, dgv As DataGridView)
+        Try
+            If dgv.RowCount > 0 Then
+                If opcion = 1 Or opcion = 4 Then
+                    If rbsolicitar.Checked And (sort = 27 Or sort = 3) Then
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripTextBox1.Visible = True
+                            ToolStripMenuItem2.Visible = False
+                            ToolStripMenuItem4.Visible = False
+                            ToolStripMenuItem7.Visible = False
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = False
+                        End If
+                    ElseIf (rbSolicitado.Checked Or rbListosParaEntrar.Checked Or rbYaempezados.Checked) And (opcion = 1 Or opcion = 4) Then
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = False
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = False
+                        End If
                     ElseIf rbEmpezadosyDetenidos.Checked = True Then
-                        ToolStripTextBox1.Visible = False
-                        ToolStripMenuItem2.Visible = False
-                        ToolStripMenuItem4.Visible = True
-                        ToolStripMenuItem7.Visible = False
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = True
-                        ToolStripMenuItem15.Visible = True
-                    ElseIf rbListosParaEntrar.Checked = True Then
-                        ToolStripTextBox1.Visible = False
-                        ToolStripMenuItem2.Visible = True
-                        ToolStripMenuItem4.Visible = True
-                        ToolStripMenuItem7.Visible = True
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem15.Visible = True
-                    ElseIf rdbOnHold.Checked = True Then
-                        ToolStripTextBox1.Visible = False
-                        ToolStripMenuItem2.Visible = True
-                        ToolStripMenuItem4.Visible = True
-                        ToolStripMenuItem7.Visible = True
-                        ToolStripMenuItem8.Visible = False
-                        ToolStripMenuItem9.Visible = False
-                        ToolStripMenuItem15.Visible = True
-                    End If
-                End If
-            ElseIf opcion = 2 Then
-                If (rbSolicitado.Checked = True Or rdbOnHold.Checked = True) And dgvWips.Rows.Count > 0 Then
-                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                        ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
-                        ToolStripMenuItem14.Visible = False
-                        If sort = 12 Then
-                            ToolStripMenuItem12.Visible = True
-                        Else
-                            ToolStripMenuItem12.Visible = False
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = False
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = False
                         End If
-                        ToolStripMenuItem13.Visible = True
-                        ToolStripTextBox5.Visible = True
-                        ToolStripTextBox6.Visible = False
-                        ToolStripTextBox7.Visible = False
-                        If sort = 20 Or sort = 11 Or sort = 13 Or sort = 25 Then
+                    End If
+                ElseIf opcion = 6 Or opcion = 7 Then
+                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                        ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                        If rbsolicitar.Checked = True Then
+                            ToolStripTextBox1.Visible = True
+                            ToolStripMenuItem7.Visible = False
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = False
+                            ToolStripMenuItem15.Visible = False
+                        ElseIf rbSolicitado.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rbYaempezados.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = False
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = True
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rbEmpezadosyDetenidos.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = False
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = False
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = True
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rbListosParaEntrar.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rdbOnHold.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                        End If
+                    End If
+                ElseIf opcion = 2 Then
+                    If (rbSolicitado.Checked Or rdbOnHold.Checked) And dgvWips.Rows.Count > 0 Then
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripMenuItem14.Visible = False
+                            If sort = 12 Then
+                                ToolStripMenuItem12.Visible = True
+                            Else
+                                ToolStripMenuItem12.Visible = False
+                            End If
+                            ToolStripMenuItem13.Visible = True
+                            ToolStripTextBox5.Visible = True
+                            ToolStripTextBox6.Visible = False
+                            ToolStripTextBox7.Visible = False
+                            If sort = 20 Or sort = 11 Or sort = 13 Or sort = 25 Then
+                                AsignarMaterialToolStripMenuItem.Visible = True
+                            Else
+                                AsignarMaterialToolStripMenuItem.Visible = False
+                            End If
+                            ToolStripMenuItem15.Visible = False
+                            DesviarTerminalToolStripMenuItem.Visible = False
+                        End If
+                    ElseIf (rbListosParaEntrar.Checked = True Or rbYaempezados.Checked = True) Then
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripMenuItem14.Visible = False
+                            If sort = 12 Then
+                                ToolStripMenuItem12.Visible = True
+                                ToolStripMenuItem13.Visible = False
+                            ElseIf sort = 14 Then
+                                ToolStripMenuItem13.Visible = False
+                                ToolStripMenuItem12.Visible = False
+                            Else
+                                ToolStripMenuItem12.Visible = False
+                                ToolStripMenuItem13.Visible = True
+                            End If
+                            ToolStripTextBox5.Visible = True
+                            ToolStripTextBox6.Visible = False
+                            ToolStripTextBox7.Visible = False
                             AsignarMaterialToolStripMenuItem.Visible = True
-                        Else
+                            ToolStripMenuItem15.Visible = False
+                            DesviarTerminalToolStripMenuItem.Visible = False
+                        End If
+                    End If
+                ElseIf opcion = 3 And sort <> 27 Then
+                    If (rbListosParaEntrar.Checked = True Or rbYaempezados.Checked = True) And dgvWips.Rows.Count > 0 Then
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripMenuItem14.Visible = False
+                            If sort = 14 Then
+                                ToolStripMenuItem12.Visible = True
+                                ToolStripMenuItem13.Visible = False
+                            ElseIf sort = 12 Then
+                                ToolStripMenuItem13.Visible = False
+                                ToolStripMenuItem12.Visible = False
+                            Else
+                                ToolStripMenuItem12.Visible = False
+                                ToolStripMenuItem13.Visible = True
+                            End If
+                            ToolStripTextBox5.Visible = False
+                            ToolStripTextBox6.Visible = True
+                            ToolStripTextBox7.Visible = False
                             AsignarMaterialToolStripMenuItem.Visible = False
+                            ToolStripMenuItem15.Visible = False
+                            DesviarTerminalToolStripMenuItem.Visible = True
                         End If
-                        ToolStripMenuItem15.Visible = False
-                        DesviarTerminalToolStripMenuItem.Visible = False
                     End If
-                ElseIf (rbListosParaEntrar.Checked = True Or rbYaempezados.Checked = True) Then
-                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                        ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
-                        ToolStripMenuItem14.Visible = False
-                        If sort = 12 Then
-                            ToolStripMenuItem12.Visible = True
-                            ToolStripMenuItem13.Visible = False
-                        ElseIf sort = 14 Then
-                            ToolStripMenuItem13.Visible = False
+                ElseIf opcion = 5 Then
+                    If rdbOnHold.Checked = True And dgvWips.Rows.Count > 0 Then
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripMenuItem14.Visible = False
                             ToolStripMenuItem12.Visible = False
-                        Else
-                            ToolStripMenuItem12.Visible = False
-                            ToolStripMenuItem13.Visible = True
+                            ToolStripMenuItem13.Visible = False
+                            ToolStripTextBox5.Visible = True
+                            ToolStripTextBox6.Visible = False
+                            AsignarMaterialToolStripMenuItem.Visible = False
+                            ToolStripTextBox7.Visible = False
+                            ToolStripMenuItem15.Visible = False
+                            DesviarTerminalToolStripMenuItem.Visible = False
                         End If
-                        ToolStripTextBox5.Visible = True
-                        ToolStripTextBox6.Visible = False
-                        ToolStripTextBox7.Visible = False
-                        AsignarMaterialToolStripMenuItem.Visible = True
-                        ToolStripMenuItem15.Visible = False
-                        DesviarTerminalToolStripMenuItem.Visible = False
                     End If
-                End If
-            ElseIf opcion = 3 And sort <> 27 Then
-                If (rbListosParaEntrar.Checked = True Or rbYaempezados.Checked = True) And dgvWips.Rows.Count > 0 Then
+                ElseIf opcion = 8 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                        ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
-                        ToolStripMenuItem14.Visible = False
-                        If sort = 14 Then
-                            ToolStripMenuItem12.Visible = True
-                            ToolStripMenuItem13.Visible = False
-                        ElseIf sort = 12 Then
-                            ToolStripMenuItem13.Visible = False
-                            ToolStripMenuItem12.Visible = False
-                        Else
-                            ToolStripMenuItem12.Visible = False
-                            ToolStripMenuItem13.Visible = True
+                        ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                        If rbsolicitar.Checked = True Then
+                            ToolStripTextBox1.Visible = True
+                            ToolStripMenuItem7.Visible = False
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = False
+                            ToolStripMenuItem15.Visible = False
+                        ElseIf rbSolicitado.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rbYaempezados.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = False
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = True
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rbEmpezadosyDetenidos.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = False
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = False
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = True
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rbListosParaEntrar.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                        ElseIf rdbOnHold.Checked = True Then
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
                         End If
-                        ToolStripTextBox5.Visible = False
-                        ToolStripTextBox6.Visible = True
-                        ToolStripTextBox7.Visible = False
-                        AsignarMaterialToolStripMenuItem.Visible = False
-                        ToolStripMenuItem15.Visible = False
-                        DesviarTerminalToolStripMenuItem.Visible = True
-                    End If
-                End If
-            ElseIf opcion = 5 Then
-                If rdbOnHold.Checked = True And dgvWips.Rows.Count > 0 Then
-                    If e.Button = System.Windows.Forms.MouseButtons.Right Then
-                        ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
-                        ToolStripMenuItem14.Visible = False
-                        ToolStripMenuItem12.Visible = False
-                        ToolStripMenuItem13.Visible = False
-                        ToolStripTextBox5.Visible = True
-                        ToolStripTextBox6.Visible = False
-                        AsignarMaterialToolStripMenuItem.Visible = False
-                        ToolStripTextBox7.Visible = False
-                        ToolStripMenuItem15.Visible = False
-                        DesviarTerminalToolStripMenuItem.Visible = False
                     End If
                 End If
             End If
-        End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Public FilterInfo As Action = Function()
+                                      If rbsolicitar.Checked Then filtros(1)
+                                      If rbSolicitado.Checked Then filtros(2)
+                                      If rbListosParaEntrar.Checked Then filtros(3)
+                                      If rbYaempezados.Checked Then filtros(4)
+                                      If rbEmpezadosyDetenidos.Checked Then filtros(5)
+                                      If rdbOnHold.Checked Then filtros(6)
+                                      Return Nothing
+                                  End Function
+    Private Sub dgvWips_MouseClick(sender As Object, e As MouseEventArgs) Handles dgvWips.MouseClick
+        EventMenuWork(sender, e, dgvWips)
     End Sub 'En este poner lo que vaya a ver compras en onhold
     Public Sub DetenerCWO(CWO As String, notes As String, flag As Integer)
         Try
@@ -1578,84 +1741,95 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
     End Sub
     Public Sub actualizafecharequerimiento(CWO As String)
         Try
-            Dim Idsort As AutomaticSort = New AutomaticSort(maq), query As String, aux As Integer
-            If sort = 27 Then
-                query = "update tblCWO set Id= @requerimiento, dateSolicitud = GETDATE() where CWO= @CWO"
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
-                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            Dim Idsort As AutomaticSort, query As String = "", aux As Integer = 0
+            'If sort = 27 Then
+            If Microsoft.VisualBasic.Left(CWO, 1) = "C" Then
+                Idsort = New AutomaticSort(maq)
                 aux = Idsort.GetSort()
-                cmd.Parameters.Add("@requerimiento", SqlDbType.Int).Value = aux
-                cnn.Open()
-                cmd.ExecuteNonQuery()
-                cnn.Close()
-                MsgBox("Se ha asignado requerimiento para el CWO: " + CWO.ToString + ", su numero de fila es " + aux.ToString + "", MsgBoxStyle.OkOnly)
-                ' ---------------------------
-                Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=2 where Dep in ('Almacen','Aplicadores')", cnn)
-                    cmd.CommandType = CommandType.Text
-                    cnn.Open()
-                    cmd.ExecuteNonQuery()
-                    cnn.Close()
-                End Using
-                ' ---------------------------
-                query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por Corte 1era vez',GETDATE(),'MLF')"
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
-                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
-                cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
-                cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
-                cnn.Open()
-                cmd.ExecuteNonQuery()
-                cnn.Close()
-                query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por Corte 1era vez, CWO= " + CWO + "',GETDATE(),'MLF')"
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
-                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
-                cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
-                cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
-                cnn.Open()
-                cmd.ExecuteNonQuery()
-                cnn.Close()
-                NotesInWIP(WIP, "Solicitado por Corte 1era vez, CWO= " + CWO + "", Convert.ToDateTime(Now))
+                query = $"update tblCWO set Id= {aux}, dateSolicitud = GETDATE() where CWO= @CWO"
             Else
-                query = "update tblCWO set Id= @requerimiento, dateSolicitud = GETDATE() where CWO= @CWO"
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
-                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
-                aux = Idsort.GetSort()
-                cmd.Parameters.Add("@requerimiento", SqlDbType.Int).Value = aux
-                cnn.Open()
-                cmd.ExecuteNonQuery()
-                cnn.Close()
-                MsgBox("Se ha asignado requerimiento para el CWO: " + CWO.ToString + ", su numero de fila es " + aux.ToString + "", MsgBoxStyle.OkOnly)
-                ' ---------------------------
-                Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=1 where Dep in ('Almacen','Aplicadores')", cnn)
+                Idsort = New AutomaticSort(Cell, cola)
+                'Idsort.ReOrderSort()
+                If Not Idsort.CheckZeros() Then
+                    Idsort.RemoveZeros()
+                End If
+                query = $"update tblPWO set dateSolicitud = GETDATE() where PWO= @CWO"
+            End If
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            MsgBox($"Se ha asignado requerimiento para el WO: {CWO}{If(Microsoft.VisualBasic.Left(CWO, 1) = "C", "su numero de fila es " + aux.ToString + "", "")}", MsgBoxStyle.OkOnly)
+            ' ---------------------------
+            If Microsoft.VisualBasic.Left(CWO, 1) = "C" Then
+                Using cmd As New SqlCommand("update tblMLFNotifications Set SendReceive=1, TypeOfNotify = 2 where Dep in ('Almacen','Aplicadores')", cnn)
                     cmd.CommandType = CommandType.Text
                     cnn.Open()
                     cmd.ExecuteNonQuery()
                     cnn.Close()
                 End Using
-                ' ---------------------------
-                query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por Corte 1era vez',GETDATE(),'MLF')"
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
-                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
-                cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
-                cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
-                cnn.Open()
-                cmd.ExecuteNonQuery()
-                cnn.Close()
-                query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por Corte 1era vez, CWO= " + CWO + "',GETDATE(),'MLF')"
-                cmd = New SqlCommand(query, cnn)
-                cmd.CommandType = CommandType.Text
-                cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
-                cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
-                cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
-                cnn.Open()
-                cmd.ExecuteNonQuery()
-                cnn.Close()
-                NotesInWIP(WIP, "Solicitado por Corte 1era vez, CWO= " + CWO + "", Convert.ToDateTime(Now))
             End If
+            ' ---------------------------
+            query = $"insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por {If(Microsoft.VisualBasic.Left(CWO, 1) = "C", $"Corte 1era vez, CWO = {CWO}", $"MP 1era vez, PWO = {CWO}")}',GETDATE(),'MLF')"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            query = $"insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por {If(Microsoft.VisualBasic.Left(CWO, 1) = "C", $"Corte 1era vez, CWO = {CWO}", $"MP 1era vez, PWO = {CWO}")}',GETDATE(),'MLF')"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
+            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+            cnn.Close()
+            NotesInWIP(WIP, $"Solicitado por {If(Microsoft.VisualBasic.Left(CWO, 1) = "C", $"Corte 1era vez, CWO = {CWO}", $"MP 1era vez, PWO = {CWO}")}", Convert.ToDateTime(Now))
+            'Else
+            '    query = "update tblCWO set Id= @requerimiento, dateSolicitud = GETDATE() where CWO= @CWO"
+            '    cmd = New SqlCommand(query, cnn)
+            '    cmd.CommandType = CommandType.Text
+            '    cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            '    aux = Idsort.GetSort()
+            '    cmd.Parameters.Add("@requerimiento", SqlDbType.Int).Value = aux
+            '    cnn.Open()
+            '    cmd.ExecuteNonQuery()
+            '    cnn.Close()
+            '    MsgBox("Se ha asignado requerimiento para el CWO: " + CWO.ToString + ", su numero de fila es " + aux.ToString + "", MsgBoxStyle.OkOnly)
+            '    ' ---------------------------
+            '    Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=1 where Dep in ('Almacen','Aplicadores')", cnn)
+            '        cmd.CommandType = CommandType.Text
+            '        cnn.Open()
+            '        cmd.ExecuteNonQuery()
+            '        cnn.Close()
+            '    End Using
+            '    ' ---------------------------
+            '    query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por Corte 1era vez',GETDATE(),'MLF')"
+            '    cmd = New SqlCommand(query, cnn)
+            '    cmd.CommandType = CommandType.Text
+            '    cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
+            '    cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            '    cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            '    cnn.Open()
+            '    cmd.ExecuteNonQuery()
+            '    cnn.Close()
+            '    query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,'Solicitado por Corte 1era vez, CWO= " + CWO + "',GETDATE(),'MLF')"
+            '    cmd = New SqlCommand(query, cnn)
+            '    cmd.CommandType = CommandType.Text
+            '    cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
+            '    cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+            '    cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+            '    cnn.Open()
+            '    cmd.ExecuteNonQuery()
+            '    cnn.Close()
+            '    NotesInWIP(WIP, "Solicitado por Corte 1era vez, CWO= " + CWO + "", Convert.ToDateTime(Now))
+            'End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
@@ -1665,11 +1839,11 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         filtros(1)
     End Sub
     Public Sub poneokalm_apl(cwo As String, wip As String)
-        If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
+        If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8 Then
             Dim oPnCortos As DataTable = New DataTable
-            oPnCortos = GetTable($"select Count(*) [Count] from tblBOMCWO where CWO='{cwo}' and Hold = 1")
+            oPnCortos = GetTable($"select Count(*) [Count] from {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "tblBOMCWO where C", "tblBOMPWO where P")}WO='{cwo}' and Hold = 1")
             Dim countExist As Integer = CInt((From row In oPnCortos.AsEnumerable Select row.Item("Count")).Distinct.Sum(Function(c) CInt(c.ToString)))
-            Dim query As String = $"update tblCWO set {If(countExist > 0, "wSort=12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE(),dateSolicitud= GETDATE()", "WSort = 20,dateSolicitud= GETDATE()")} where CWO =@CWO"
+            Dim query As String = $"update {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "tblCWO", "tblPWO")} set {If(countExist > 0, "wSort=12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE(),dateSolicitud= GETDATE()", "WSort = 20,dateSolicitud= GETDATE()")} where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "CWO", "PWO")} =@CWO"
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
@@ -1677,22 +1851,18 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             dr = cmd.ExecuteReader
             cnn.Close()
             ' ---------------------------
-            Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=5 where Dep='Corte'", cnn)
-                cmd.CommandType = CommandType.Text
-                cnn.Open()
-                cmd.ExecuteNonQuery()
-                cnn.Close()
-            End Using
+            If Not opcion = 8 Then
+                Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=5 where Dep='Corte'", cnn)
+                    cmd.CommandType = CommandType.Text
+                    cnn.Open()
+                    cmd.ExecuteNonQuery()
+                    cnn.Close()
+                End Using
+            End If
             ' ---------------------------
             wSortWIPAndACorte(wip)
-            If rbsolicitar.Checked = True Then filtros(1)
-            If rbSolicitado.Checked = True Then filtros(2)
-            If rbListosParaEntrar.Checked = True Then filtros(3)
-            If rbYaempezados.Checked = True Then filtros(4)
-            If rbEmpezadosyDetenidos.Checked = True Then filtros(5)
-            If rdbOnHold.Checked = True Then filtros(6)
-        ElseIf opcion = 2 Or opcion = 3 Then
-            Dim query As String = "update tblCWO 
+            ElseIf opcion = 2 Or opcion = 3 Then
+                Dim query As String = "update tblCWO 
 set WSort = case when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) = 0 then 20
 when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) > 0 then 25 
 else 25 end,
@@ -1735,19 +1905,14 @@ where CWO =@CWO"
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
-            If rbsolicitar.Checked = True Then filtros(1)
-            If rbSolicitado.Checked = True Then filtros(2)
-            If rbListosParaEntrar.Checked = True Then filtros(3)
-            If rbYaempezados.Checked = True Then filtros(4)
-            If rbEmpezadosyDetenidos.Checked = True Then filtros(5)
-            If rdbOnHold.Checked = True Then filtros(6)
         End If
+        FilterInfo()
     End Sub
     Private Sub wSortWIPAndACorte(wip As String)
-        Dim count As Integer = 0
+        Dim count As Integer = 0, t As New DataTable
         Try
             Dim queru As String = ""
-            Dim query As String = "select distinct c.cwo,c.wsort from tblWipDet as b inner join tblWIP as a on b.wip=a.wip inner join tblCWO as c on c.cwo=b.cwo where a.WIP=@wip", t As New DataTable
+            Dim query As String = If(opcion = 8, "select distinct b.PWO,b.wSort from tblWipDet a inner join tblPWO b on (b.PWO=a.PWOA or b.PWO=a.PWOB) where wip=@wip", "select distinct c.cwo,c.wsort from tblWipDet as b inner join tblWIP as a on b.wip=a.wip inner join tblCWO as c on c.cwo=b.cwo where a.WIP=@wip")
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
@@ -1757,7 +1922,7 @@ where CWO =@CWO"
             edo = cnn.State.ToString
             cnn.Close()
             Dim wSort = (From row In t.AsEnumerable() Select row("wsort")).Where(Function(d) d >= 20).ToList().Count()
-            queru = If(wSort > 0, "update tblWIP set Wsort = case when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 when Wsort=20 then Wsort when Wsort=3 then 20 when wsort=25 then wsort when wsort=29 then wsort else 20 end, [A.Corte] = case when [A.Corte] is null then Balance else [A.Corte] end where WIP= @wip", "update tblWIP set Wsort = case when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 else 20 end, [A.Corte] = case when [A.Corte] is null and (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) < Qty then Qty - (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) else [A.Corte] end where WIP= @wip")
+            queru = If(opcion = 8, "update tblWIP set Wsort = case when Wsort=12 or wSort=14 then Wsort when KindOfAU like '[XP%]' and MP = 0 and IEns > 0 then 75 when KindOfAU not like '[XP%]' and MP = 0 and Ens > 0 then 30 else wSort end where WIP = @wip", If(wSort > 0, "update tblWIP set Wsort = case when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 when Wsort=20 then Wsort when Wsort=3 then 20 when wsort=25 then wsort when wsort=29 then wsort else 20 end, [A.Corte] = case when [A.Corte] is null then Balance else [A.Corte] end where WIP= @wip", "update tblWIP set Wsort = case when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 else 20 end, [A.Corte] = case when [A.Corte] is null and (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) < Qty then Qty - (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) else [A.Corte] end where WIP= @wip"))
             Try
                 cmd = New SqlCommand(queru, cnn)
                 cmd.CommandType = CommandType.Text
@@ -1991,7 +2156,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Public Sub filtros(a As Integer)
         Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
-        Dim cmd As String = ""
+        Dim queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,a.DueDateProcess,a.CreatedDate [DateCreatedWIP],Sem from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+        Dim cmd As String = "", wherePWO As String = ""
         If a = 1 Then
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
                 cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"
@@ -2000,6 +2166,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then 'Solicitar Mat/Apl XP and KoA normal
                 cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null order by c.Maq desc,c.Id asc,w.WIP"
             End If
+            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort = '3' and c.dateSolicitud is null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 3 Then 'Listos Para Entrar
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc"
@@ -2008,6 +2175,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null order by c.CWO /*w.CreatedDate*/"
             End If
+            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (20,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 4 Then 'Ya empezados
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
@@ -2016,6 +2184,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
+            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 5 Then 'Empezados y Detenidos
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
@@ -2024,6 +2193,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
+            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (22,24) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 6 Then 'On Hold
             If opcion = 5 Then
                 cmd = " where (c.Wsort in (3,27,12,14,20,25)) And (c.Wsort in (27,11,12,13,14,20)) and (ConfirmacionAlm='OnHold') and w.WIP in (select distinct WIP from tblItemsQB as q inner join tblBOMCWO as bc on q.PN=bc.PN where WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (c.Wsort in (3,27,12,14,20)) And (c.Wsort in (27,11,12,13,14,20)) and (ConfirmacionAlm='OnHold')) and (q.QtyOnHand = 0 or bc.Balance > q.QtyOnHand or bc.Hold=1)) order by c.Maq desc,c.Id asc"
@@ -2034,14 +2204,18 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Else
                 cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
+            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         End If
         If opcion = 5 Then
             query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem,ProcFDispMat [Fecha Materiales],ProcNotas [Notas Compras],ProcFDispMat2 [Fecha Materiales despues de Hold] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+            queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,a.DueDateProcess,a.CreatedDate [DateCreatedWIP],Sem,ProcFDispMat [Fecha Materiales],ProcNotas [Notas Compras],ProcFDispMat2 [Fecha Materiales despues de Hold] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
             query += cmd
+            queryPWO += wherePWO
         Else
             query += cmd
+            queryPWO += wherePWO
         End If
-        llenagrid(query)
+        llenagrid(query, queryPWO)
     End Sub
     Private Sub rbsolicitar_CheckedChanged(sender As Object, e As EventArgs) Handles rbsolicitar.CheckedChanged
         Cursor.Current = Cursors.WaitCursor
@@ -2357,6 +2531,9 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 5 Then
                 Dept = "ProcNotas"
                 FDept = "ProcFDispMat2"
+            ElseIf opcion = 8 Then
+                Dept = "MPNotas"
+                FDept = "MPFProm"
             End If
             If Dept <> "" Then
                 If FProm = "" Then
@@ -2381,7 +2558,6 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema" + vbNewLine + ex.Message + vbNewLine + ", ya se a reportado a departamento de IT, gracias")
-            'CorreoFalla.EnviaCorreoFalla("NotesInWIP", host, UserName)
         End Try
     End Sub
     Private Sub llenanotas(WO As String, optionNotas As Integer)
@@ -2863,17 +3039,35 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             Return Nothing
         End Try
     End Function
-    Public Sub cambioMaquinaXCWO(MaqNew As Integer, NotesXCambio As String, CWOAceptChange As String, Optional ByVal flag As Integer = 0)
+    Public Sub cambioMaquinaXCWO(MaqNew As String, NotesXCambio As String, CWOAceptChange As String, Optional ByVal flag As Integer = 0)
         Try
-            NotesXCambio = "Cambio de maquina " & NotesXCambio
-            Dim sort As AutomaticSort = New AutomaticSort(MaqNew), query As String = If(flag = 1, "update tblCWO set Maq= " + MaqNew.ToString + ",Notes='" & NotesXCambio.ToString & "' where CWO='" + CWOAceptChange.ToString + "'", "update tblCWO set Maq= " + MaqNew.ToString + ",Notes='" & NotesXCambio.ToString & "',Id=" + sort.GetSort().ToString + " where CWO='" + CWOAceptChange.ToString + "'")
+            Dim CheckWO As Char = CWOAceptChange(0)
+            Dim sort As AutomaticSort
+            Dim query As String = ""
+            NotesXCambio = $"Cambio de {If(CheckWO = "C", "maquina", "celda")} " & NotesXCambio
+            If CheckWO = "C" Then
+                sort = New AutomaticSort(Integer.Parse(MaqNew))
+                query = If(flag = 1, $"update tblCWO set Maq={Integer.Parse(MaqNew)},Notes='{NotesXCambio}' where CWO='{CWOAceptChange}'", $"update tblCWO set Maq={Integer.Parse(MaqNew)},Notes='{NotesXCambio}',Id={sort.GetSort().ToString} where CWO='{CWOAceptChange}'")
+            ElseIf CheckWO = "P" Then
+                If MaqNew = "AMARILLO" Then
+                    MaqNew = "YEL"
+                ElseIf MaqNew = "AZUL" Then
+                    MaqNew = "BLU"
+                ElseIf MaqNew = "VERDE" Then
+                    MaqNew = "GRN"
+                ElseIf MaqNew = "PURPURA" Then
+                    MaqNew = "PUR"
+                End If
+                sort = New AutomaticSort(MaqNew)
+                query = $"update tblPWO set Cell='{MaqNew}',Notes='{NotesXCambio}',Id={sort.GetSortPWO().ToString} where PWO='{CWOAceptChange}'"
+            End If
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
-            If flag = 0 Then
-                sort = New AutomaticSort(maq, cola)
+            If flag = 0 Or opcion = 8 Then
+                sort = If(CheckWO = "C", New AutomaticSort(maq, cola), New AutomaticSort(Cell, cola))
                 sort.ReOrderSort()
                 If Not sort.CheckZeros() Then
                     sort.RemoveZeros()
@@ -2924,36 +3118,32 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
     End Sub
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
         Cursor.Current = Cursors.WaitCursor
-        If opcion = 6 Or opcion = 7 Then
-            If WIP <> "" And CWO <> "" Then
-                Dim ver As Char = CWO(0)
-                Dim ver2 As Char = WIP(0)
-                If ver = "C" And ver2 = "W" Then
+        If WIP <> "" And CWO <> "" Then
+            Dim ver As Char = CWO(0)
+            Dim ver2 As Char = WIP(0)
+            If (ver = "C" Or ver = "P") And ver2 = "W" Then
+                If opcion = 6 Or opcion = 7 Or opcion = 8 Then
                     With CambioMaquina
                         .lblcwoporsolicitar.Text = CWO
                         .lblwipporsolicitar.Text = WIP
-                        .Label5.Text = maq
+                        .Label5.Text = If(ver = "C", maq, Cell)
                         .Location = New Point(Cursor.Position.X, Cursor.Position.Y)
-                        GetMaqsActive()
-                        If rbsolicitar.Checked = True Then
-                            .Categoria = 1
-                        Else
-                            .Categoria = 0
-                        End If
+                        GetMaqsActive(If(ver = "C", True, False))
+                        .Categoria = If(rbsolicitar.Checked, 1, 0)
                         .ShowDialog()
                     End With
-                Else
-                    MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
-                    ContextMenuVerMW.Close()
                 End If
+            Else
+                MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
+                ContextMenuVerMW.Close()
             End If
         End If
         Cursor.Current = Cursors.Default
     End Sub
-    Sub GetMaqsActive()
+    Sub GetMaqsActive(OptionWorkOrder As Boolean)
         Try
             CambioMaquina.ComboBox1.Items.Clear()
-            Dim consulta As String = "Select Maq from tblMaqRates where Active = 1 order by CONVERT(int,Maq) asc"
+            Dim consulta As String = If(OptionWorkOrder, "Select Maq from tblMaqRates where Active = 1 order by CONVERT(int,Maq) asc", "select distinct Celda from tblToolCribAplicators where Celda <> 'NO S/N'")
             cmd = New SqlCommand(consulta, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -3508,6 +3698,83 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                 End If
             End If
         End If
+    End Sub
+    Private Sub CrearPWOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CrearPWOToolStripMenuItem.Click '
+        Dim PWO As New CreatePWO()
+        PWO.Show()
+    End Sub
+    Private Sub dgvPWO_MouseClick(sender As Object, e As MouseEventArgs) Handles dgvPWO.MouseClick
+        EventMenuWork(sender, e, dgvPWO)
+    End Sub
+    Private Sub dgvPWO_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPWO.CellClick
+        Dim cabecera As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If Not rdx = -1 Or cdx = -1 Then
+            cabecera = dgvPWO.Columns(cdx).HeaderText
+        End If
+        If cabecera = "wSort WIP" Then
+            lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
+        ElseIf cabecera = "wSort PWO" Then
+            lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
+        ElseIf cabecera = "PWO" Then
+            llenanotas(dgvPWO.Rows(e.RowIndex).Cells("PWO").Value.ToString, 1)
+            lblWIPorCWO.Text = dgvPWO.Rows(e.RowIndex).Cells("PWO").Value.ToString
+            lblWIP.Text = dgvPWO.Rows(e.RowIndex).Cells("WIP").Value.ToString
+        ElseIf cabecera = "WIP" Then
+            llenanotas(dgvPWO.Rows(e.RowIndex).Cells("WIP").Value.ToString, 2)
+            lblWIPorCWO.Text = dgvPWO.Rows(e.RowIndex).Cells("PWO").Value.ToString
+            lblWIP.Text = dgvPWO.Rows(e.RowIndex).Cells("WIP").Value.ToString
+        End If
+    End Sub
+    Private Sub dgvPWO_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvPWO.CellMouseDown
+        If e.RowIndex <> -1 And e.ColumnIndex <> -1 Then
+            If e.Button = MouseButtons.Right Then
+                Try
+                    dgvPWO.CurrentCell = dgvPWO.Rows(e.RowIndex).Cells(e.ColumnIndex)
+                    dgvPWO.Rows(e.RowIndex).Selected = True
+                    WIP = Convert.ToString(dgvPWO.Rows(e.RowIndex).Cells(0).Value)
+                    CWO = Convert.ToString(dgvPWO.Rows(e.RowIndex).Cells(1).Value)
+                    sort = Convert.ToString(dgvPWO.Rows(e.RowIndex).Cells(6).Value)
+                    Cell = Convert.ToString(dgvPWO.Rows(e.RowIndex).Cells(3).Value)
+                    If Not rbsolicitar.Checked = True And Not rbEmpezadosyDetenidos.Checked = True Then
+                        If dgvPWO.Rows(e.RowIndex).Cells(2).Value.ToString = "" Then
+                            cola = 0
+                        Else
+                            cola = Convert.ToString(dgvPWO.Rows(e.RowIndex).Cells(2).Value)
+                        End If
+                    End If
+                Catch ex As Exception
+                    MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
+                    CorreoFalla.EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                End Try
+            End If
+        End If
+    End Sub
+    Private Sub dgvPWO_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPWO.CellMouseLeave
+        Dim Encabezado As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If Not rdx = -1 Or cdx = -1 Then
+            Encabezado = dgvPWO.Columns(cdx).HeaderText
+        End If
+        If Encabezado = "PWO" Or Encabezado = "WIP" Or Encabezado = "wSort WIP" Or Encabezado = "wSort PWO" Then
+            Cursor.Current = Cursors.Default
+        End If
+    End Sub
+    Private Sub dgvPWO_CellMouseMove(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvPWO.CellMouseMove
+        Dim Encabezado As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If Not rdx = -1 Or cdx = -1 Then
+            Encabezado = dgvPWO.Columns(cdx).HeaderText
+        End If
+        If Encabezado = "PWO" Or Encabezado = "WIP" Or Encabezado = "wSort WIP" Or Encabezado = "wSort PWO" Then
+            Cursor.Current = Cursors.Hand
+        End If
+    End Sub
+    Private Sub dgvPWO_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvPWO.ColumnHeaderMouseClick
+        pintaceldas()
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If (ApplicationDeployment.IsNetworkDeployed) Then

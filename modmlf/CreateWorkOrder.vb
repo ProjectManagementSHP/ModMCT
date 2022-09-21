@@ -16,17 +16,17 @@ Public Class CreateWorkOrder
     End Sub
     Public Function GetSelectIDPWO(Optional Pwo As Boolean = True) As Object
         Try
-            Dim cmd As New SqlCommand($"select MAX({If(Pwo, "PWO", "IdentificadorBOM")}) from {If(Pwo, "tblPWO", "tblBOMPWO")}", cnn) With {
+            Dim cmd As New SqlCommand($"select MAX({If(Pwo, "PWO", "IdentificadorBOM")}) from {If(Pwo, "tblPWO", "tblBOMPWO")}", conexPWO) With {
             .CommandType = CommandType.Text
             }
-            cnn.Open()
+            conexPWO.Open()
             Return cmd.ExecuteScalar()
-            cnn.Close()
+            conexPWO.Close()
         Catch ex As Exception
-            cnn.Close()
+            conexPWO.Close()
             Return Nothing
         Finally
-            cnn.Close()
+            conexPWO.Close()
         End Try
     End Function
     Public Property _PushFirstPlace As Boolean
@@ -196,17 +196,17 @@ Public Class CreateWorkOrder
         Try
             Dim oChange As Action(Of ChargeInfo) = Function(Term)
                                                        Dim insertItem As String = If(FlagReserve, $"insert into tblPWOTemp (PN) Values ('{Term.PN}')", $"delete from tblPWOTemp where PN='{Term.PN}'")
-                                                       Dim command As SqlCommand = New SqlCommand(insertItem, cnn)
+                                                       Dim command As SqlCommand = New SqlCommand(insertItem, conexPWO)
                                                        command.CommandType = CommandType.Text
-                                                       cnn.Open()
+                                                       conexPWO.Open()
                                                        command.ExecuteNonQuery()
-                                                       cnn.Close()
+                                                       conexPWO.Close()
                                                        Return Nothing
                                                    End Function
 
             ListForProcess.ForEach(oChange)
         Catch ex As Exception
-            cnn.Close()
+            conexPWO.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
@@ -280,7 +280,7 @@ Public Class CreateWorkOrder
                 Next
             End If
         Catch ex As Exception
-            cnn.Close()
+            conexPWO.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
             Return False
         End Try
@@ -293,18 +293,18 @@ Public Class CreateWorkOrder
             (select WIP, TermA [Term] from tblWipDet where WireID in ({Id}) and (TermA='{PN}' and MaqA='MM')) union 
             (select WIP, TermB [Term] from tblWipDet where WireID in ({Id}) and (TermB='{PN}' and MaqB='MM')))
             select WIP,Term,(select (Select IsNull((select IsNull(SUM(TABalance),0) from tblWipDet where WireID in ({Id}) and (TermA='{PN}' and MaqA='MM') and WIP=BomPwo.WIP group by MaqA having MaqA = 'MM'),0)) +
-            (Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet where WireID in ({Id}) and (TermB='{PN}' and MaqB='MM') and WIP=BomPwo.WIP group by MaqB having MaqB = 'MM'),0))) [Bal] from BomPwo", cnn)
+            (Select IsNull((select IsNull(SUM(TBBalance),0) from tblWipDet where WireID in ({Id}) and (TermB='{PN}' and MaqB='MM') and WIP=BomPwo.WIP group by MaqB having MaqB = 'MM'),0))) [Bal] from BomPwo", conexPWO)
             command.CommandType = CommandType.Text
-            cnn.Open()
+            conexPWO.Open()
             reader = command.ExecuteReader
             Dim tb As New DataTable
             tb.Load(reader)
-            cnn.Close()
+            conexPWO.Close()
             If tb IsNot Nothing Then
                 Return tb
             End If
         Catch ex As Exception
-            cnn.Close()
+            conexPWO.Close()
             MsgBox(ex.Message + vbNewLine + ex.ToString)
             Return Nothing
         End Try
@@ -313,7 +313,7 @@ Public Class CreateWorkOrder
     Private Sub InsertItem(Wip As String, PN As String, Qty As Integer)
         Try
             Dim insertBom As String = $"insert into tblBOMPWO (IdentificadorBOM,PWO,WIP,AU,Rev,PN,Qty,Unit,Description,Balance,CreatedDate) Values (@IDBOMProcesos,@PWO,@WIP,(select AU from tblWIP where WIP=@WIP),(select Rev from tblWIP where WIP=@WIP),@PN,@Qty,'ea',(select top 1 Description from tblItemsQB where pn = @PN),@Qty,GETDATE())"
-            Dim command As SqlCommand = New SqlCommand(insertBom, cnn)
+            Dim command As SqlCommand = New SqlCommand(insertBom, conexPWO)
             command.CommandType = CommandType.Text
             command.CommandTimeout = 120000
             command.Parameters.Add("@IDBOMProcesos", SqlDbType.NVarChar).Value = GetIdBomPwo(GetSelectIDPWO(False).ToString)
@@ -321,24 +321,24 @@ Public Class CreateWorkOrder
             command.Parameters.Add("@PN", SqlDbType.NVarChar).Value = PN
             command.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = Wip
             command.Parameters.Add("@Qty", SqlDbType.Decimal).Value = Qty
-            cnn.Open()
+            conexPWO.Open()
             command.ExecuteNonQuery()
-            cnn.Close()
+            conexPWO.Close()
         Catch ex As Exception
-            cnn.Close()
+            conexPWO.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
     Private Sub UpdatePWOForWipdet(side As String, Cell As String, WireID As String)
         Try
             Dim Bom As String = $"update tblWipDet set PWO{side}='{SerialPWO}',Cell{side}='{Cell}' where WireID='{WireID}'"
-            Dim command As SqlCommand = New SqlCommand(Bom, cnn)
+            Dim command As SqlCommand = New SqlCommand(Bom, conexPWO)
             command.CommandType = CommandType.Text
-            cnn.Open()
+            conexPWO.Open()
             command.ExecuteNonQuery()
-            cnn.Close()
+            conexPWO.Close()
         Catch ex As Exception
-            cnn.Close()
+            conexPWO.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
@@ -397,8 +397,17 @@ Public Class CreateWorkOrder
             Dim ESetupTime As Integer = _ListForProcess.Count * 5
             Dim ERunTime As Integer = _ListForProcess.[Select](Function(i) i.RunTime).Sum(Function(a) a)
             Dim SumBalances As Integer = _ListForProcess.[Select](Function(i) i.Balance).Sum(Function(a) a)
-            Dim CellMaxCurrent As String = _ListForProcess.Max(Function(c) c.Cell)
-            CellMaxCurrent = Regex.Replace(CellMaxCurrent, "[aeiouAEIOU]", "")
+            Dim CellMaxCurrent As String = _ListForProcess.Max(Function(c) c.Cell.ToString.Trim.ToUpper)
+            If CellMaxCurrent = "AMARILLO" Then
+                CellMaxCurrent = "YEL"
+            ElseIf CellMaxCurrent = "AZUL" Then
+                CellMaxCurrent = "BLU"
+            ElseIf CellMaxCurrent = "VERDE" Then
+                CellMaxCurrent = "GRN"
+            ElseIf CellMaxCurrent = "PURPURA" Then
+                CellMaxCurrent = "PUR"
+            End If
+            'CellMaxCurrent = Regex.Replace(CellMaxCurrent, "[aeiouAEIOU]", "")
             Dim Sort As AutomaticSort = New AutomaticSort(CellMaxCurrent.Trim().ToUpper())
             Dim dtDemon As New DataTable
             dtDemon = (DirectCast(GridDemon.DataSource, DataTable))
@@ -408,7 +417,7 @@ Public Class CreateWorkOrder
                                          )
                                          VALUES (
                                          @PWO,@Cell,'OPEN',@ESetupTime,@ERunTime,@ETotalTime,@NumTravelers,@TotalCrimps,GETDATE(),@CreatedBy,@Id,3
-                                         )", cnn)
+                                         )", conexPWO)
             oCmdo.CommandType = CommandType.Text
             oCmdo.Parameters.Add("@PWO", SqlDbType.NVarChar).Value = SerialPWO
             oCmdo.Parameters.Add("@Cell", SqlDbType.NVarChar).Value = CellMaxCurrent.Trim().ToUpper()
@@ -424,15 +433,15 @@ Public Class CreateWorkOrder
             Else
                 oCmdo.Parameters.Add("@Id", SqlDbType.Int).Value = Sort.GetSortPWO()
             End If
-            cnn.Open()
+            conexPWO.Open()
             Return If(oCmdo.ExecuteNonQuery() > 0, True, False)
-            cnn.Close()
+            conexPWO.Close()
         Catch ex As Exception
-            cnn.Close()
+            conexPWO.Close()
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
             Return False
         Finally
-            cnn.Close()
+            conexPWO.Close()
         End Try
     End Function
 End Class

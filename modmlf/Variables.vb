@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Module Variables
 
-    ' Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
+    'Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
     Public strconexion As String = "Server=10.17.182.36\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
     'Private strconexion As String = "Server=10.17.182.255\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
     'Public strconexion As String = "Server=SHPLAPSIS01\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
@@ -10,6 +10,7 @@ Module Variables
     Public conexOne As New SqlConnection(strconexion) 'Graficas de Planeacion
     Public conexNotify As New SqlConnection(strconexion) 'notificaciones
     Public conexMensajeCortos As New SqlConnection(strconexion) 'notificaciones
+    Public conexPWO As New SqlConnection(strconexion) 'CreandoPWO
     Public tb As New DataTable
     Public cmd As SqlCommand
     Public dr As SqlDataReader
@@ -19,7 +20,7 @@ Module Variables
     Public opcion As Integer
     Public UserName As String = Environment.UserName
     Public campocortesolicitud As String
-    Public CWO As String, ver As String
+    Public CWO As String, ver As String, Cell As String
     Public WIP As String, PN As String
     Public ColaGrafica As Boolean = False
     Public FlagFechas As Boolean = False

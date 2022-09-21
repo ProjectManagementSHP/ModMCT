@@ -178,10 +178,6 @@ C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\D
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
-C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.DesviacionesTerm.resources
-C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.MensajePN.resources
-C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.CopyComplete
-C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.CreatePWO.resources
 C:\bin\debug\SqlServerTypes\x64\msvcr120.dll
 C:\bin\debug\SqlServerTypes\x64\SqlServerSpatial140.dll
 C:\bin\debug\SqlServerTypes\x86\msvcr120.dll
@@ -189,3 +185,4 @@ C:\bin\debug\SqlServerTypes\x86\SqlServerSpatial140.dll
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\RdlCompile.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\RdlCompile.compiled
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.ReportePWO.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.config

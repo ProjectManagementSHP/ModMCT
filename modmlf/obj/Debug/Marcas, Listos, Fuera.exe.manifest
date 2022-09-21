@@ -45,8 +45,6 @@
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ClosedXML.dll" size="1198592">
       <assemblyIdentity name="ClosedXML" version="0.96.0.0" publicKeyToken="FD1EB21B62AE805B" language="neutral" processorArchitecture="msil" />
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DocumentFormat.OpenXml.dll" size="6032816">
-      <assemblyIdentity name="DocumentFormat.OpenXml" version="2.17.1.0" publicKeyToken="8FB06CB64D019A17" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
@@ -57,8 +55,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DocumentFormat.OpenXml.dll" size="6024616">
-      <assemblyIdentity name="DocumentFormat.OpenXml" version="2.16.0.0" publicKeyToken="8FB06CB64D019A17" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DocumentFormat.OpenXml.dll" size="6032816">
+      <assemblyIdentity name="DocumentFormat.OpenXml" version="2.17.1.0" publicKeyToken="8FB06CB64D019A17" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>oQBwGd37WCRgczfssERs6d6bncsvdqUp2eKevRf/Bk0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EnvDTE.dll" size="254840">
       <assemblyIdentity name="EnvDTE" version="8.0.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
@@ -66,7 +74,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>44attfqfTbx+EdWaQqyKJBUxCwXTM+uvX7TnQk7qqrU=</dsig:DigestValue>
+        <dsig:DigestValue>KeS9Y1IRANzMaW4GAaIfZey4MJhqSGBwgi4e3Zq9t5s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -83,15 +91,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1108440">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1448408">
       <assemblyIdentity name="Marcas, Listos, Fuera" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>67G15S60tdOgE5gLUBj0w5WiKU/ULpMlq1ad95B3I6E=</dsig:DigestValue>
-        <dsig:DigestValue>/4xAuEhpToyPRv0DIF0HpRF4hg1jg7LMMgmeG504AKw=</dsig:DigestValue>
+        <dsig:DigestValue>A716bnVAUcmB5ZOxZhC/BgNL/1jyXOSIyy1qLHJtZfo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -860,31 +867,31 @@
       <dsig:DigestValue>hCAyWppI/SaoGJF0fAZuFD5n6zT4v/+eoe1NaUcah4I=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Marcas, Listos, Fuera.exe.config" size="532">
+  <file name="Marcas, Listos, Fuera.exe.config" size="857">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>LKjqjHqGpTuLmZy4dqnKV8JkM8/p4uEUkqtp9YJY/ZI=</dsig:DigestValue>
+      <dsig:DigestValue>DSplbT+JH2Wb1dpII6GfYfNB02rknyVs8tOZF96RDXQ=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Marcas, Listos, Fuera.pdb" size="491008">
+  <file name="Marcas, Listos, Fuera.pdb" size="767488">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>n9If2Va5lcjRxW/DpsGjGgfi47aezxWVVGSfer3OWcU=</dsig:DigestValue>
+      <dsig:DigestValue>svo5EkmZqD6IooAuu2OEZ7ykHS56KoZrzevpqv06HKA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Marcas, Listos, Fuera.xml" size="2069">
+  <file name="Marcas, Listos, Fuera.xml" size="7324">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>mo43ZiLL89ix0YEJ9aAP+0da0fvEa0jIkxWnCHs6ue8=</dsig:DigestValue>
+      <dsig:DigestValue>RY+8RRHMsHiB3RpHxCJEuZ7OlX8EPgzq3uSnvyOnmBY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="SqlServerTypes\Loader.cs" size="1739">
