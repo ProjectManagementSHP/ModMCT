@@ -1692,10 +1692,10 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         Try
             Dim query As String = ""
             If flag = 1 Then
-                query = "update tblCWO set Notes='Detenido', Wsort = 24, Id=null where CWO= @CWO"
+                query = $"update tbl{If(opcion = 8, "P", "C")}WO set Notes='Detenido', Wsort = 24, Id=null where {If(opcion = 8, "P", "C")}WO= @CWO"
             ElseIf flag = 2 Then
-                Dim sortNew As AutomaticSort = New AutomaticSort(maq)
-                query = "update tblCWO set Wsort = 25,Notes = case notes when 'Detenido' then null else notes end,Id=" + sortNew.GetSort().ToString + " where CWO= @CWO"
+                Dim sortNew As AutomaticSort = If(opcion = 8, New AutomaticSort(Cell), New AutomaticSort(maq))
+                query = $"update tbl{If(opcion = 8, "P", "C")}WO set Wsort = 25,Notes = case notes when 'Detenido' then null else notes end,Id={If(opcion = 8, sortNew.GetSortPWO(), sortNew.GetSort())} where {If(opcion = 8, "P", "C")}WO= @CWO"
             End If
             Using cmd As New SqlCommand(query, cnn)
                 cmd.CommandType = CommandType.Text
@@ -1705,7 +1705,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 cnn.Close()
             End Using
             If flag = 1 Then
-                Dim ReOrd As AutomaticSort = New AutomaticSort(maq, cola)
+                Dim ReOrd As AutomaticSort = If(opcion = 8, New AutomaticSort(Cell, cola), New AutomaticSort(maq, cola))
                 ReOrd.ReOrderSort()
                 If Not ReOrd.CheckZeros() Then
                     ReOrd.RemoveZeros()
@@ -1727,13 +1727,12 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
             cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
             cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
-            cmd.Parameters.Add("@notes", SqlDbType.NVarChar).Value = notes + " CWO: " + CWO
+            cmd.Parameters.Add("@notes", SqlDbType.NVarChar).Value = notes + " WO: " + CWO
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
             NotesInWIP(WIP, notes, "")
-            If rbYaempezados.Checked = True Then filtros(4)
-            If rbEmpezadosyDetenidos.Checked = True Then filtros(5)
+            FilterInfo()
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("DetenerCWO", host, UserName)
@@ -3184,7 +3183,8 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                         .Text = If(opcion = 8, "Orden de MP", "Orden de Corte")
                         .lblcwoporsolicitar.Text = CWO
                         .lblwipporsolicitar.Text = WIP
-                        .lblMaq.Text = maq
+                        .Label9.Text = If(opcion = 8, "Celda:", "Maquina:")
+                        .lblMaq.Text = If(opcion = 8, $"{Cell}", $"{maq}")
                         .TabPage2.Visible = False
                         .TabPage2.Parent = Nothing
                         .TabPage1.Parent = Asignar.TabControl1
@@ -3195,6 +3195,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                             .DataSource = GetTable($"select {If(opcion = 8, "P", "C")}WO,Id [Orden] from tbl{If(opcion = 8, "P", "C")}WO where (Id > 0 or Id is not null) and {If(opcion = 8, $"Cell='{Cell}'", $"Maq={maq}")} and Status='OPEN' order by Id asc")
                             .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                             .AutoResizeColumns()
+                            .ColumnHeadersDefaultCellStyle.BackColor = If(opcion = 8, Color.FromArgb(236, 154, 114), Color.LightGreen)
                         End With
                         .ShowDialog()
                     End With
@@ -3211,8 +3212,8 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
             Dim ver2 As Char = WIP(0)
-            If ver = "C" And ver2 = "W" Then
-                If opcion = 6 Or opcion = 7 Then
+            If (ver = "C" Or ver = "P") And ver2 = "W" Then
+                If opcion = 6 Or opcion = 7 Or opcion = 8 Then
                     With Asignar
                         .Text = "Detener"
                         .Label6.Text = CWO
@@ -3236,9 +3237,9 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
             Dim ver2 As Char = WIP(0)
-            If ver = "C" And ver2 = "W" Then
-                If opcion = 6 Or opcion = 7 Then
-                    DetenerCWO(CWO, "Vuelve a corte luego de detenerse", 2)
+            If (ver = "C" Or ver = "P") And ver2 = "W" Then
+                If opcion = 6 Or opcion = 7 Or opcion = 8 Then
+                    DetenerCWO(CWO, $"Vuelve a {If(opcion = 8, "MP", "corte")} luego de detenerse", 2)
                     MsgBox("Cambio efectuado")
                 End If
             Else
@@ -3573,7 +3574,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
     End Sub
     Private Sub ToolStripMenuItem15_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem15.Click
         Cursor.Current = Cursors.WaitCursor
-        If opcion = 6 Or opcion = 7 Then
+        If opcion = 6 Or opcion = 7 Or opcion = 8 Then
             DesviacionesCheck()
         End If
         Cursor.Current = Cursors.Default

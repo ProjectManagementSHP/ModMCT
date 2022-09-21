@@ -182,7 +182,7 @@ Public Class AutomaticSort
             cnn.Close()
         End Try
     End Sub
-    Function GetSort() As Integer
+    Public Function GetSort() As Integer
         Try
             Dim value As Integer, query As String = ""
             query = $"select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblCWO where Maq={Maq} and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
