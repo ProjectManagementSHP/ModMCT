@@ -183,7 +183,7 @@ Public Class Materiales
     Private Sub Llenagrid1() 'Aplicadores
         Dim tabla As New DataTable, tb As New DataTable
         Try
-            cmd = New SqlCommand("select Wire,TermA,SUBSTRING(isnull(AplicatorA,0),0,4)[AplicatorA],IDKeyA,MaqA,TermB,SUBSTRING(isnull(AplicatorB,0),0,4)[AplicatorB],IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA from tblWipDet inner join tblTermSpecs on tblTermSpecs.IDKey=tblWipDet.IDKeyA where CWO='" + lblcwomat.Text + "' group by Wire,TermA,AplicatorA,IDKeyA,MaqA,TermB,AplicatorB,IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA", cnn)
+            cmd = New SqlCommand($"select Wire,TermA,SUBSTRING(isnull(AplicatorA,0),0,4)[AplicatorA],IDKeyA,MaqA,TermB,SUBSTRING(isnull(AplicatorB,0),0,4)[AplicatorB],IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA from tblWipDet inner join tblTermSpecs on tblTermSpecs.IDKey=tblWipDet.IDKeyA where {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "P", $"PWOA='{lblcwomat.Text}' or PWOB='{lblcwomat.Text}'", $"CWO='{lblcwomat.Text}'")} group by Wire,TermA,AplicatorA,IDKeyA,MaqA,TermB,AplicatorB,IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA", cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             dr = cmd.ExecuteReader
@@ -194,11 +194,11 @@ Public Class Materiales
                 .DataSource = tabla
                 .AutoResizeColumns()
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                Label2.Text = "Items: " & dgvBOM.Rows.Count
+                Label2.Text = "Items: " & .Rows.Count
                 DataGridView1.Visible = False
             End With
             Recorregrid()
-            cmd = New SqlCommand("select AU,WID,Wire,LengthWire,TermA,MaqA,AplicatorA,TermB,MaqB,AplicatorB,WIP from tblWipDet where CWO = '" + lblcwomat.Text + "' order by WireID", cnn)
+            cmd = New SqlCommand($"select AU,WID,Wire,LengthWire,TermA,MaqA,AplicatorA,TermB,MaqB,AplicatorB,WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "P", $"PWOA='{lblcwomat.Text}' or PWOB='{lblcwomat.Text}'", $"CWO='{lblcwomat.Text}'")} order by WireID", cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             dr = cmd.ExecuteReader
@@ -390,6 +390,7 @@ Public Class Materiales
             vertagasignado = 1
             cmd = New SqlCommand($"select TAG,bw.PN,(select NULLif({If(opcion = 8, "Cell", "Maq")},'S/E') from tbl{If(opcion = 8, "P", "C")}WO where {If(opcion = 8, "P", "C")}WO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like '{If(opcion = 8, "P", "C")}%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOM{If(opcion = 8, "P", "C")}WO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.{If(opcion = 8, "P", "C")}WO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
             cmd.CommandType = CommandType.Text
+            cmd.CommandTimeout = 120000
             cnn.Open()
             dr = cmd.ExecuteReader
             tb.Load(dr)

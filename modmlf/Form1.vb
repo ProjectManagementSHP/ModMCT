@@ -15,12 +15,13 @@ Imports System.ComponentModel
 Imports System.Text.RegularExpressions
 Imports ClosedXML.Excel
 Imports System.Text
+Imports System.Drawing
 
 Public Class Principal
     Public tblasig As New DataTable
     Private tblUsersPriv As New DataTable
     Dim oh, alm, piso, rework As Decimal
-    Public WithEvents FSW As New System.IO.FileSystemWatcher
+    Public WithEvents FSW As New IO.FileSystemWatcher
     Private bgWorker As New BackgroundWorker
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Cursor.Current = Cursors.WaitCursor
@@ -201,10 +202,26 @@ Public Class Principal
         btnAgregarNewElemento.Visible = opcion = 5
         CrearPWOToolStripMenuItem.Visible = opcion = 8
         SelectWorkOrder_View()
-        cargachart()
+        Cargachart()
         GridCharge()
         ChargeInfoCortos()
         'AutoUpdate()
+    End Sub
+    'Private MouseMovementsUser As Action = Function()
+    '                                           Me.Controls.OfType(Of Control)().ToList().ForEach(Function(o)
+    '                                                                                                 o.MouseDown = Mouse_Down()
+    '                                                                                             End Function)
+
+    '                                           Return Nothing
+    '                                       End Function
+    Private Sub Mouse_Down(sender As Object, e As MouseEventArgs)
+        Throw New System.NotImplementedException
+    End Sub
+    Private Sub Mouse_Up(sender As Object, e As MouseEventArgs)
+        Throw New System.NotImplementedException
+    End Sub
+    Private Sub Mouse_Move(sender As Object, e As MouseEventArgs)
+        Throw New System.NotImplementedException
     End Sub
     Sub SelectWorkOrder_View()
         If opcion = 8 Then
@@ -227,7 +244,7 @@ Public Class Principal
             tabWorkOrders.SelectedTab = CWOtab
         End If
     End Sub
-    Private Sub llenagrid(CWOq As String, PWOq As String)
+    Private Sub Llenagrid(CWOq As String, PWOq As String)
         Dim CWO As New DataTable
         Dim PWO As New DataTable
         Try
@@ -268,7 +285,7 @@ Public Class Principal
                     Label3.Text = "Items: " & dgvWips.Rows.Count
                     btnRefrescaGrid.Visible = True
                 End With
-                pintaceldas()
+                Pintaceldas()
             Else
                 dgvWips.DataSource = Nothing
                 Label3.Text = "Items: " & dgvWips.Rows.Count
@@ -290,7 +307,7 @@ Public Class Principal
                     Label9.Text = "Items: " & dgvPWO.Rows.Count
                     btnRefrescaGrid.Visible = True
                 End With
-                pintaceldas()
+                Pintaceldas()
             Else
                 dgvPWO.DataSource = Nothing
                 Label9.Text = "Items: " & dgvPWO.Rows.Count
@@ -1221,7 +1238,7 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [ParoAU] FROM tblBO
             CorreoFalla.EnviaCorreoFalla("CheckValidaciones", host, UserName)
         End Try
     End Sub
-    Private Sub cargachart()
+    Private Sub Cargachart()
         If ColaGrafica = False Then
             Me.Chart1.Series("Carga en proceso de confirmacion").Points.Clear()
             Me.Chart1.Series("Carga Maquinas por entrar").Points.Clear()
@@ -1268,7 +1285,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 Catch ex As Exception
                     conex.Close()
                     CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
-                    cargachart()
+                    Cargachart()
                 End Try
             End Using
             'Carga de maquinas en proceso de corte
@@ -1299,7 +1316,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 Catch ex As Exception
                     conex.Close()
                     CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
-                    cargachart()
+                    Cargachart()
                 End Try
             End Using
             ' Carga de maquinas en proceso de confirmacion
@@ -1330,7 +1347,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 Catch ex As Exception
                     conex.Close()
                     CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
-                    cargachart()
+                    Cargachart()
                 End Try
             End Using
             '-------------------------------------------------------------------------
@@ -1353,7 +1370,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             ' ------------------------------------------------------------------
         End If
     End Sub
-    Private Sub pintaceldas()
+    Private Sub Pintaceldas()
         If rbsolicitar.Checked = True Or rdbOnHold.Checked = True Or rbListosParaEntrar.Checked = True Then
             For Each linea As DataGridViewRow In dgvWips.Rows
                 If linea.Cells(6).Value = 27 Or linea.Cells(7).Value = 27 Then
@@ -1874,8 +1891,8 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             End If
             ' ---------------------------
             wSortWIPAndACorte(wip)
-            ElseIf opcion = 2 Or opcion = 3 Then
-                Dim query As String = "update tblCWO 
+        ElseIf opcion = 2 Or opcion = 3 Then
+            Dim query As String = "update tblCWO 
 set WSort = case when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) = 0 then 20
 when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) > 0 then 25 
 else 25 end,
@@ -2165,7 +2182,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End Try
     End Sub
     Private Sub dgvWips_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.ColumnHeaderMouseClick
-        pintaceldas()
+        Pintaceldas()
     End Sub
     Public Sub filtros(a As Integer)
         Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
@@ -2228,7 +2245,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             query += cmd
             queryPWO += wherePWO
         End If
-        llenagrid(query, queryPWO)
+        Llenagrid(query, queryPWO)
     End Sub
     Private Sub rbsolicitar_CheckedChanged(sender As Object, e As EventArgs) Handles rbsolicitar.CheckedChanged
         Cursor.Current = Cursors.WaitCursor
@@ -2716,7 +2733,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
                 Dim ver2 As Char = WIP(0)
-                If ver = "C" And ver2 = "W" Then
+                If (ver = "C" Or ver = "P") And ver2 = "W" Then
                     With Materiales
                         .MaximumSize = New System.Drawing.Size(1075, 870)
                         .DataGridView3.Anchor = (AnchorStyles.Left Or AnchorStyles.Top Or AnchorStyles.Bottom)
@@ -3009,7 +3026,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
         Timer2.Stop()
-        cargachart()
+        Cargachart()
         Timer2.Enabled = True
         Timer2.Interval = 60000
     End Sub
@@ -3347,7 +3364,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                 If WIP <> "" And CWO <> "" Then
                     Dim ver As Char = CWO(0)
                     Dim ver2 As Char = WIP(0)
-                    If ver = "C" And ver2 = "W" Then
+                    If (ver = "C" Or ver = "P") And ver2 = "W" Then
                         Hold.lblcwoporsolicitar.Text = CWO
                         Hold.lblwipporsolicitar.Text = WIP
                         Hold.ShowDialog()
@@ -3707,6 +3724,8 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
     End Sub
     Private Sub CrearPWOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CrearPWOToolStripMenuItem.Click '
         Dim PWO As New CreatePWO()
+        PWO.Button1.BackColor = Color.FromArgb(236, 154, 114)
+        PWO.Button2.BackColor = Color.FromArgb(236, 154, 114)
         PWO.Show()
     End Sub
     Private Sub dgvPWO_MouseClick(sender As Object, e As MouseEventArgs) Handles dgvPWO.MouseClick
@@ -3780,7 +3799,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         End If
     End Sub
     Private Sub dgvPWO_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvPWO.ColumnHeaderMouseClick
-        pintaceldas()
+        Pintaceldas()
     End Sub
     Private Sub ImprimirReporteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirReporteToolStripMenuItem.Click
         Cursor.Current = Cursors.WaitCursor
@@ -3795,12 +3814,12 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         Cursor.Current = Cursors.WaitCursor
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        If (ApplicationDeployment.IsNetworkDeployed) Then
+        If ApplicationDeployment.IsNetworkDeployed Then
             With ApplicationDeployment.CurrentDeployment.CurrentVersion
                 MessageBox.Show(vbCrLf + "MLF Software" + vbNewLine + "© SPECIALIZED HARNESS PRODUCTS S DE RL DE CV" + vbCr + "All Rights Reserved" + vbLf + "Software Version " & .Major & "." & .Minor & "." & .Build & "." & .Revision & "" + vbCr + "Oct/2021", "MLF Software", MessageBoxButtons.OK)
             End With
         Else
-            MessageBox.Show(vbCrLf + "MLF Software" + vbNewLine + "© SPECIALIZED HARNESS PRODUCTS S DE RL DE CV" + vbCr + "All Rights Reserved" + vbLf + "Software Version " & System.Windows.Forms.Application.ProductVersion & "" + vbCr + "Oct/2021", "MLF Software", MessageBoxButtons.OK)
+            MessageBox.Show(vbCrLf + "MLF Software" + vbNewLine + "© SPECIALIZED HARNESS PRODUCTS S DE RL DE CV" + vbCr + "All Rights Reserved" + vbLf + "Software Version " & Application.ProductVersion & "" + vbCr + "Oct/2021", "MLF Software", MessageBoxButtons.OK)
         End If
     End Sub
     Public Sub AutoUpdate()
@@ -3810,15 +3829,15 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
     End Sub
     Private Sub FSW_Created(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Created
         Dim limpiaChar As String = e.Name, extraVersion As String = ""
-        limpiaChar = LTrim(RTrim(limpiaChar))
-        limpiaChar = limpiaChar.Replace("_", ".")
-        limpiaChar = Regex.Replace(limpiaChar, "[aeiouAEIOU]", "")
+        limpiaChar = LTrim(RTrim(limpiaChar.Replace("_", ".").Replace(",", "")))
+        'limpiaChar = 'limpiaChar.Replace("_", ".").Replace(",", "")
+        limpiaChar = Regex.Replace(limpiaChar, "[a-zA-Z]", "")
         'For i As Integer = 0 To limpiaChar.Length - 1
         '    If IsNumeric(limpiaChar(i)) Or limpiaChar(i) = "." Then
         '        extraVersion += limpiaChar(i)
         '    End If
         'Next
-        ver = extraVersion
+        ver = limpiaChar 'extraVersion
         ActualizacionRequerida.BringToFront()
         ActualizacionRequerida.ShowDialog()
         If flagActualizacion = 1 Then
