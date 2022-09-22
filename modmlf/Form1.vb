@@ -3153,14 +3153,15 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             MsgBox(ex.ToString)
         End Try
     End Sub
-    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click
+    Private Sub ToolStripMenuItem4_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem4.Click 'Ver materiales de WO
         Cursor.Current = Cursors.WaitCursor
-        If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
+        If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8 Then
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
                 Dim ver2 As Char = WIP(0)
-                If ver = "C" And ver2 = "W" Then
+                If (ver = "C" Or ver = "P") And ver2 = "W" Then
                     Materiales.lblcwomat.Text = CWO
+                    Materiales.MaximumSize = If(opcion = 8, New System.Drawing.Size(1492, 620), New System.Drawing.Size(1492, 859))
                     Materiales.ShowDialog()
                 Else
                     MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
