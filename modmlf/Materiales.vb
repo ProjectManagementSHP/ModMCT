@@ -544,7 +544,7 @@ Public Class Materiales
             comando = New SqlCommand(query, conexion)
             comando.CommandType = CommandType.Text
             conexion.Open()
-            res = If(CInt(comando.ExecuteScalar) > 0, True, False)
+            res = CInt(comando.ExecuteScalar) > 0
             conexion.Close()
             Return res
         Catch ex As Exception
@@ -693,7 +693,7 @@ Public Class Materiales
             cmd.Parameters.Add("@QTY", SqlDbType.Int).Value = qty
             cnn.Open()
             dr = cmd.ExecuteReader
-            resp = If(dr.HasRows, True, False)
+            resp = dr.HasRows
             cnn.Close()
             Return resp
         Catch ex As Exception
@@ -740,10 +740,10 @@ Public Class Materiales
         End If
     End Sub
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        If CheckBox1.Checked = True Then
+        If CheckBox1.Checked Then
             gbTAGS.Visible = True
             txbTAGSxentrar.Focus()
-        ElseIf CheckBox1.Checked = False Then
+        Else
             gbTAGS.Visible = False
         End If
     End Sub
@@ -1076,7 +1076,7 @@ Public Class Materiales
         TextBox1.Text = 10
         ItemsAdjustementTags(DataGridView1.Rows(e.RowIndex).Cells("PN").Value.ToString)
     End Sub
-    Sub ItemsAdjustementTags(PN As String)
+    Public Sub ItemsAdjustementTags(PN As String)
         Try
             Dim Query As String = "", dtAjus As New DataTable()
             PNAux = PN
@@ -1187,7 +1187,7 @@ Public Class Materiales
             read = commm.ExecuteReader()
             If read.HasRows Then
                 While read.Read
-                    res = If(CInt(read.GetValue(0)) = CInt(read.GetValue(1)), True, False)
+                    res = CInt(read.GetValue(0)) = CInt(read.GetValue(1))
                 End While
             Else
                 res = False

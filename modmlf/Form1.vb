@@ -1458,6 +1458,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     ElseIf (rbSolicitado.Checked Or rbListosParaEntrar.Checked Or rbYaempezados.Checked) And (opcion = 1 Or opcion = 4) Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -1469,6 +1470,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     ElseIf rbEmpezadosyDetenidos.Checked = True Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -1480,6 +1482,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     End If
                 ElseIf opcion = 6 Or opcion = 7 Then
@@ -1533,6 +1536,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     End If
                 ElseIf opcion = 2 Then
@@ -1556,6 +1560,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             End If
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     ElseIf (rbListosParaEntrar.Checked = True Or rbYaempezados.Checked = True) Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -1577,6 +1582,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             AsignarMaterialToolStripMenuItem.Visible = True
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     End If
                 ElseIf opcion = 3 And sort <> 27 Then
@@ -1600,6 +1606,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             AsignarMaterialToolStripMenuItem.Visible = False
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     End If
                 ElseIf opcion = 5 Then
@@ -1615,6 +1622,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripTextBox7.Visible = False
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     End If
                 ElseIf opcion = 8 Then
@@ -1628,6 +1636,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = False
                             ToolStripMenuItem15.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = True
                         ElseIf rbSolicitado.Checked = True Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
@@ -1636,6 +1645,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = True
                         ElseIf rbYaempezados.Checked = True Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
@@ -1644,6 +1654,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = True
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = True
                         ElseIf rbEmpezadosyDetenidos.Checked = True Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = False
@@ -1652,6 +1663,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = True
                             ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = True
                         ElseIf rbListosParaEntrar.Checked = True Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
@@ -1660,6 +1672,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = True
                         ElseIf rdbOnHold.Checked = True Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
@@ -1668,6 +1681,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = True
                         End If
                     End If
                 End If
@@ -3767,6 +3781,18 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
     End Sub
     Private Sub dgvPWO_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvPWO.ColumnHeaderMouseClick
         pintaceldas()
+    End Sub
+    Private Sub ImprimirReporteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirReporteToolStripMenuItem.Click
+        Cursor.Current = Cursors.WaitCursor
+        If CWO <> "" Then
+            Dim Report As New ReportePWO(CWO) With {
+                    .Text = CWO.ToString
+                }
+            Report.Show()
+        Else
+            MessageBox.Show("Selecciona un WO primero")
+        End If
+        Cursor.Current = Cursors.WaitCursor
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If (ApplicationDeployment.IsNetworkDeployed) Then
