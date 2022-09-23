@@ -624,7 +624,7 @@ Public Class Materiales
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
-                        Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        Principal.NotesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
                         lst.ForEach(Function(pn)
                                         Principal.CheckCortosPN(pn)
                                         Return Nothing
@@ -663,7 +663,7 @@ Public Class Materiales
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
-                        Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        Principal.NotesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
                         lst.ForEach(Function(pn)
                                         Principal.CheckCortosPN(pn)
                                         Return Nothing

@@ -61,7 +61,7 @@
             If dtpFProm.Value = "2021-01-01" Then
                 MsgBox("Debe agregar fecha promesa", MessageBoxIcon.Warning)
             Else
-                Principal.notesWIPandCWOOnHold(lblcwoporsolicitar.Text, dtpFProm.Text, txbNotas.Text)
+                Principal.NotesWIPandCWOOnHold(lblcwoporsolicitar.Text, dtpFProm.Text, txbNotas.Text)
                 Me.Close()
             End If
         ElseIf opcion = 2 Then
@@ -107,7 +107,7 @@
                                     End If
                                 End If
                                 WIP = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString
-                                .notesWIPandCWOOnHold(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString, Convert.ToDateTime(Now), txbNotas.Text)
+                                .NotesWIPandCWOOnHold(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString, Convert.ToDateTime(Now), txbNotas.Text)
                             Else
                                 MessageBox.Show($"Este CWO: { .dgvAfectados.Rows(o).Cells("CWO").Value.ToString} aun no es requerido por corte.")
                             End If

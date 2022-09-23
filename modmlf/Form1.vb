@@ -285,7 +285,7 @@ Public Class Principal
                     Label3.Text = "Items: " & dgvWips.Rows.Count
                     btnRefrescaGrid.Visible = True
                 End With
-                Pintaceldas()
+                Pintaceldas(dgvWips)
             Else
                 dgvWips.DataSource = Nothing
                 Label3.Text = "Items: " & dgvWips.Rows.Count
@@ -307,7 +307,7 @@ Public Class Principal
                     Label9.Text = "Items: " & dgvPWO.Rows.Count
                     btnRefrescaGrid.Visible = True
                 End With
-                Pintaceldas()
+                Pintaceldas(dgvPWO)
             Else
                 dgvPWO.DataSource = Nothing
                 Label9.Text = "Items: " & dgvPWO.Rows.Count
@@ -1370,9 +1370,9 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             ' ------------------------------------------------------------------
         End If
     End Sub
-    Private Sub Pintaceldas()
+    Private Sub Pintaceldas(dgv As DataGridView)
         If rbsolicitar.Checked = True Or rdbOnHold.Checked = True Or rbListosParaEntrar.Checked = True Then
-            For Each linea As DataGridViewRow In dgvWips.Rows
+            For Each linea As DataGridViewRow In dgv.Rows
                 If linea.Cells(6).Value = 27 Or linea.Cells(7).Value = 27 Then
                     linea.DefaultCellStyle.BackColor = Color.Orange
                     linea.DefaultCellStyle.ForeColor = Color.White
@@ -1603,7 +1603,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                         End If
                     End If
                 ElseIf opcion = 3 And sort <> 27 Then
-                    If (rbListosParaEntrar.Checked = True Or rbYaempezados.Checked = True) And dgvWips.Rows.Count > 0 Then
+                    If (rbListosParaEntrar.Checked Or rbYaempezados.Checked) And dgvWips.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
                             ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
                             ToolStripMenuItem14.Visible = False
@@ -1865,10 +1865,10 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             CorreoFalla.EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
         End Try
         '*********
-        poneokalm_apl(CWO, WIP)
+        Poneokalm_apl(CWO, WIP)
         filtros(1)
     End Sub
-    Public Sub poneokalm_apl(cwo As String, wip As String)
+    Public Sub Poneokalm_apl(cwo As String, wip As String)
         If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8 Then
             Dim oPnCortos As DataTable = New DataTable
             oPnCortos = GetTable($"select Count(*) [Count] from {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "tblBOMCWO where C", "tblBOMPWO where P")}WO='{cwo}' and Hold = 1")
@@ -1890,15 +1890,20 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 End Using
             End If
             ' ---------------------------
-            wSortWIPAndACorte(wip)
+            WSortWIPAndACorte(wip)
         ElseIf opcion = 2 Or opcion = 3 Then
-            Dim query As String = "update tblCWO 
+            Dim query As String = If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "update tblCWO 
 set WSort = case when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) = 0 then 20
 when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) > 0 then 25 
 else 25 end,
 ConfirmacionAlm= case ConfirmacionAlm when 'OnHold' then 'Confirmado' else ConfirmacionAlm end,
 ConfirmacionApl= case ConfirmacionApl when 'OnHold' then 'Confirmado' else ConfirmacionApl end 
-where CWO =@CWO"
+where CWO =@CWO", "update tblPWO 
+set WSort = case when (select Count(*) from tblBOMPWO where PWO = @CWO and Qty = Balance) > 0 then 20
+else 25 end,
+ConfirmacionAlm= case ConfirmacionAlm when 'OnHold' then 'Confirmado' else ConfirmacionAlm end,
+ConfirmacionApl= case ConfirmacionApl when 'OnHold' then 'Confirmado' else ConfirmacionApl end 
+where PWO = @CWO")
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
@@ -1929,7 +1934,15 @@ where CWO =@CWO"
                 End Function
                 )
             End If
-            cmd = New SqlCommand("update tblWIP set WSort = case when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort >= 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 25 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort < 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 20 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 12) >= 1 then 12 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 14) >= 1 then 14 else 25 end where WIP =@WIP", cnn)
+            Dim queryUpdate As String = If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "update tblWIP set WSort = case when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort >= 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 25 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort < 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 20 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 12) >= 1 then 12 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 14) >= 1 then 14 else 25 end where WIP =@WIP",
+                "update tblWIP set WSort = case when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 14) > 0 then 14 
+when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 12) > 0 then 12 
+when KindOfAU like '[XP]%' and MP = 0 and IEns > 0 then 75
+when KindOfAU like '[XP]%' and MP > 0 and IEns = 0 then 32
+when KindOfAU not like '[XP]%' and MP = 0 and Ens > 0 then 30
+when KindOfAU not like '[XP]%' and MP > 0 and Ens = 0 then 30
+else 25 end where WIP = @WIP")
+            cmd = New SqlCommand(queryUpdate, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = wip
             cnn.Open()
@@ -1938,7 +1951,7 @@ where CWO =@CWO"
         End If
         FilterInfo()
     End Sub
-    Private Sub wSortWIPAndACorte(wip As String)
+    Private Sub WSortWIPAndACorte(wip As String)
         Dim count As Integer = 0, t As New DataTable
         Try
             Dim queru As String = ""
@@ -2182,7 +2195,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End Try
     End Sub
     Private Sub dgvWips_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.ColumnHeaderMouseClick
-        Pintaceldas()
+        Pintaceldas(dgvWips)
     End Sub
     Public Sub filtros(a As Integer)
         Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
@@ -2205,7 +2218,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null order by c.CWO /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (20,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (20,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 4 Then 'Ya empezados
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
@@ -2214,7 +2227,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 5 Then 'Empezados y Detenidos
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
@@ -2234,7 +2247,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Else
                 cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         End If
         If opcion = 5 Then
             query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem,ProcFDispMat [Fecha Materiales],ProcNotas [Notas Compras],ProcFDispMat2 [Fecha Materiales despues de Hold] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
@@ -2355,7 +2368,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             CorreoFalla.EnviaCorreoFalla("notesWIPandCWOquitaOnHoldde26", host, UserName)
         End Try
     End Sub
-    Public Sub notesWIPandCWOOnHold(cwo As String, fecha As String, notes As String)
+    Public Sub NotesWIPandCWOOnHold(cwo As String, fecha As String, notes As String)
         Try
             query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@FProm,@note,GETDATE(),'MLF')"
             cmd = New SqlCommand(query, cnn)
@@ -2375,12 +2388,12 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
             cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
             cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = fecha
-            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes + " CWO: " + cwo
+            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes + " WO: " + cwo
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
             If opcion = 2 Then
-                NotesInWIP(WIP, notes + " CWO: " + cwo, fecha)
+                NotesInWIP(WIP, notes + " WO: " + cwo, fecha)
                 query = "update tblCWO set wSort=12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where CWO=@WO"
                 ' ---------------------------
                 Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=6 where Dep in ('Compras','Corte')", cnn)
@@ -2391,14 +2404,16 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                 End Using
                 ' ---------------------------
             ElseIf opcion = 3 Then
-                query = "update tblCWO set wSort=14,ConfirmacionApl='OnHold', dateConfirmaApl=GETDATE() where CWO=@WO"
+                query = $"update tbl{If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "C", "P")}WO set wSort=14,ConfirmacionApl='OnHold', dateConfirmaApl=GETDATE() where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "C", "P")}WO=@WO"
                 ' ---------------------------
-                Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=7 where Dep='Corte'", cnn)
-                    cmd.CommandType = CommandType.Text
-                    cnn.Open()
-                    cmd.ExecuteNonQuery()
-                    cnn.Close()
-                End Using
+                If Microsoft.VisualBasic.Left(cwo, 1) = "C" Then
+                    Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=7 where Dep='Corte'", cnn)
+                        cmd.CommandType = CommandType.Text
+                        cnn.Open()
+                        cmd.ExecuteNonQuery()
+                        cnn.Close()
+                    End Using
+                End If
                 ' ---------------------------
             End If
             cmd = New SqlCommand(query, cnn)
@@ -2408,9 +2423,9 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cmd.ExecuteNonQuery()
             cnn.Close()
             If opcion = 2 Then
-                query = "update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where CWO=@wo)"
+                query = $"update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "CWO=@wo", "PWOA=@wo or PWOB=@wo")})"
             ElseIf opcion = 3 Then
-                query = "update tblWIP set wSort=14 where WIP in (select distinct WIP from tblWipDet where CWO=@wo)"
+                query = $"update tblWIP set wSort=14 where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "CWO=@wo", "PWOA=@wo or PWOB=@wo")})"
             End If
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
@@ -3298,7 +3313,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
                 Dim ver2 As Char = WIP(0)
-                If ver = "C" And ver2 = "W" Then
+                If (ver = "C" Or ver = "P") And ver2 = "W" Then
                     query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,'Aplicadores','Confirmado',GETDATE(),'MLF')"
                     cmd = New SqlCommand(query, cnn)
                     cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = CWO
@@ -3315,7 +3330,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                     cnn.Open()
                     cmd.ExecuteNonQuery()
                     cnn.Close()
-                    poneokalm_apl(CWO, WIP)
+                    Poneokalm_apl(CWO, WIP)
                 Else
                     MessageBox.Show("La celda seleccionada no contiene un CWO o WIP")
                     ContextMenuVerMW.Close()
@@ -3325,7 +3340,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
             Dim respuesta As Integer
             respuesta = MessageBox.Show("¿Desea quitar status Cortos a este CWO?", "Cortos", MessageBoxButtons.YesNo)
             If respuesta = 6 Then
-                poneokalm_apl(CWO, WIP)
+                Poneokalm_apl(CWO, WIP)
             Else
                 ContextMenuVerMW.Close()
             End If
@@ -3799,7 +3814,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
         End If
     End Sub
     Private Sub dgvPWO_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvPWO.ColumnHeaderMouseClick
-        Pintaceldas()
+        Pintaceldas(dgvPWO)
     End Sub
     Private Sub ImprimirReporteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirReporteToolStripMenuItem.Click
         Cursor.Current = Cursors.WaitCursor

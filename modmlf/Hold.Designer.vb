@@ -41,40 +41,39 @@ Partial Class Hold
         Me.gbCompras.Controls.Add(Me.dtpFProm)
         Me.gbCompras.Controls.Add(Me.txbNotas)
         Me.gbCompras.Controls.Add(Me.Label1)
-        Me.gbCompras.Location = New System.Drawing.Point(19, 73)
-        Me.gbCompras.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.gbCompras.Location = New System.Drawing.Point(14, 59)
         Me.gbCompras.Name = "gbCompras"
-        Me.gbCompras.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.gbCompras.Size = New System.Drawing.Size(275, 165)
+        Me.gbCompras.Size = New System.Drawing.Size(206, 134)
         Me.gbCompras.TabIndex = 57
         Me.gbCompras.TabStop = False
         '
         'dtpFProm
         '
         Me.dtpFProm.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpFProm.Location = New System.Drawing.Point(99, 12)
-        Me.dtpFProm.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.dtpFProm.Location = New System.Drawing.Point(74, 10)
+        Me.dtpFProm.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.dtpFProm.MinDate = New Date(2021, 1, 1, 0, 0, 0, 0)
         Me.dtpFProm.Name = "dtpFProm"
-        Me.dtpFProm.Size = New System.Drawing.Size(148, 22)
+        Me.dtpFProm.Size = New System.Drawing.Size(112, 20)
         Me.dtpFProm.TabIndex = 20
         '
         'txbNotas
         '
-        Me.txbNotas.Location = New System.Drawing.Point(17, 41)
-        Me.txbNotas.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.txbNotas.Location = New System.Drawing.Point(13, 33)
+        Me.txbNotas.Margin = New System.Windows.Forms.Padding(2, 2, 2, 2)
         Me.txbNotas.Multiline = True
         Me.txbNotas.Name = "txbNotas"
-        Me.txbNotas.Size = New System.Drawing.Size(229, 114)
+        Me.txbNotas.Size = New System.Drawing.Size(173, 93)
         Me.txbNotas.TabIndex = 19
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(13, 11)
+        Me.Label1.Location = New System.Drawing.Point(10, 9)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(73, 18)
+        Me.Label1.Size = New System.Drawing.Size(60, 15)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "FPROM:"
         '
@@ -85,10 +84,9 @@ Partial Class Hold
         Me.btnGuardar.FlatAppearance.BorderSize = 0
         Me.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.btnGuardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGuardar.Location = New System.Drawing.Point(171, 246)
-        Me.btnGuardar.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.btnGuardar.Location = New System.Drawing.Point(128, 200)
         Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(123, 28)
+        Me.btnGuardar.Size = New System.Drawing.Size(92, 23)
         Me.btnGuardar.TabIndex = 59
         Me.btnGuardar.Text = "Guardar"
         Me.btnGuardar.UseVisualStyleBackColor = False
@@ -99,11 +97,12 @@ Partial Class Hold
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(7, 9)
+        Me.Label4.Location = New System.Drawing.Point(5, 7)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(57, 19)
+        Me.Label4.Size = New System.Drawing.Size(36, 16)
         Me.Label4.TabIndex = 5445
-        Me.Label4.Text = "CWO:"
+        Me.Label4.Text = "WO:"
         '
         'lblcwoporsolicitar
         '
@@ -111,9 +110,10 @@ Partial Class Hold
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblcwoporsolicitar.AutoSize = True
         Me.lblcwoporsolicitar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblcwoporsolicitar.Location = New System.Drawing.Point(72, 7)
+        Me.lblcwoporsolicitar.Location = New System.Drawing.Point(54, 6)
+        Me.lblcwoporsolicitar.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblcwoporsolicitar.Name = "lblcwoporsolicitar"
-        Me.lblcwoporsolicitar.Size = New System.Drawing.Size(15, 19)
+        Me.lblcwoporsolicitar.Size = New System.Drawing.Size(13, 16)
         Me.lblcwoporsolicitar.TabIndex = 5444
         Me.lblcwoporsolicitar.Text = "-"
         '
@@ -123,9 +123,10 @@ Partial Class Hold
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(8, 42)
+        Me.Label2.Location = New System.Drawing.Point(6, 34)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(47, 19)
+        Me.Label2.Size = New System.Drawing.Size(38, 16)
         Me.Label2.TabIndex = 5443
         Me.Label2.Text = "WIP:"
         '
@@ -135,18 +136,19 @@ Partial Class Hold
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblwipporsolicitar.AutoSize = True
         Me.lblwipporsolicitar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblwipporsolicitar.Location = New System.Drawing.Point(69, 42)
+        Me.lblwipporsolicitar.Location = New System.Drawing.Point(52, 34)
+        Me.lblwipporsolicitar.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblwipporsolicitar.Name = "lblwipporsolicitar"
-        Me.lblwipporsolicitar.Size = New System.Drawing.Size(15, 19)
+        Me.lblwipporsolicitar.Size = New System.Drawing.Size(13, 16)
         Me.lblwipporsolicitar.TabIndex = 5442
         Me.lblwipporsolicitar.Text = "-"
         '
         'Hold
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(329, 283)
+        Me.ClientSize = New System.Drawing.Size(247, 230)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.lblcwoporsolicitar)
         Me.Controls.Add(Me.Label2)
@@ -154,7 +156,6 @@ Partial Class Hold
         Me.Controls.Add(Me.btnGuardar)
         Me.Controls.Add(Me.gbCompras)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "Hold"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Hold"
