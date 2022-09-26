@@ -2729,7 +2729,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             If WIP <> "" And CWO <> "" Then
                 Dim ver As Char = CWO(0)
                 Dim ver2 As Char = WIP(0)
-                If ver = "C" And ver2 = "W" Then
+                If (ver = "C" Or ver = "P") And ver2 = "W" Then
                     p = 0
                     Materiales.lblcwomat.Text = CWO
                     Materiales.Show()

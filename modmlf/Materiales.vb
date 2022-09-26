@@ -103,7 +103,7 @@ Public Class Materiales
     End Sub
     Public SumVal As Func(Of Integer, Integer, Integer, Integer) = Function(a, b, result) result + a + b
     Private Sub Llenagrid() 'Solo ver materiales
-        Dim query As String = "Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],ISNULL(bw.TagAsignado,0) [TagAsignado],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOMCWO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
+        Dim query As String = $"Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],ISNULL(bw.TagAsignado,0) [TagAsignado],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOM{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO ='{lblcwomat.Text}' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
         Dim muestra As Integer = 0, query2 As String = ""
         Dim tabla As New DataTable(), tabl As New DataTable(), tb As New DataTable()
         Try
@@ -129,36 +129,38 @@ Public Class Materiales
             End With
             Pintandoceldas()
             btnExportar.Visible = If(opcion = 2 And DataGridView1.Rows.Count > 0, True, False)
-            cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
-            cnn.Close()
-            query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
-            cmd = New SqlCommand(query2, cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tabl.Load(dr)
-            cnn.Close()
-            If tabl.Rows.Count > 0 Then
-                tAcumulado = 0
-                Dim column As Integer = If(muestra = 1, 11, 8)
-                For i As Integer = 0 To tabl.Rows.Count - 1
-                    tabl.Columns(column).ReadOnly = False
-                    tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
-                    tabl.Rows(i).Item(column) = tAcumulado
-                Next
-                tAcumulado = 0
-                With DataGridView3
-                    .DataSource = tabl
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    .Visible = True
-                End With
+            If Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C" Then
+                cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
+                cnn.Close()
+                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+                cmd = New SqlCommand(query2, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                tabl.Load(dr)
+                cnn.Close()
+                If tabl.Rows.Count > 0 Then
+                    tAcumulado = 0
+                    Dim column As Integer = If(muestra = 1, 11, 8)
+                    For i As Integer = 0 To tabl.Rows.Count - 1
+                        tabl.Columns(column).ReadOnly = False
+                        tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
+                        tabl.Rows(i).Item(column) = tAcumulado
+                    Next
+                    tAcumulado = 0
+                    With DataGridView3
+                        .DataSource = tabl
+                        .AutoResizeColumns()
+                        .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                        .Visible = True
+                    End With
+                End If
             End If
             vertagasignado = 1
-            cmd = New SqlCommand("select TAG,bw.PN,(select NULLif(Maq,'S/E') from tblCWO where CWO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like 'C%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOMCWO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
+            cmd = New SqlCommand($"select TAG,bw.PN,(select NULLif({If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "Maq", "Cell")},'S/E') from tbl{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO where {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like '{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOM{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             dr = cmd.ExecuteReader
