@@ -66,7 +66,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            cargadatosCompras()
+            CargadatosCompras()
         ElseIf opcion = 3 Then
             pnluserandtitle.BackColor = Color.LightGray
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
@@ -119,7 +119,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = True
             btnAgregarNewElemento.Visible = True
-            cargadatosCompras()
+            CargadatosCompras()
             Timer3.Enabled = True
             Timer3.Interval = 1800000
         ElseIf opcion = 6 Then
@@ -140,7 +140,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            cargadatosCompras()
+            CargadatosCompras()
         ElseIf opcion = 7 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -159,7 +159,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            cargadatosCompras()
+            CargadatosCompras()
         ElseIf opcion = 8 Then 'Planeacion PWO
             pnluserandtitle.BackColor = Color.FromArgb(236, 154, 114)
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
@@ -178,7 +178,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            cargadatosCompras()
+            CargadatosCompras()
         End If
     End Sub
     Private Function cargausername(user As String) As String
@@ -565,7 +565,7 @@ Public Class Principal
             cnn.Close()
         End Try
     End Function
-    Public Function CheckCortosPN(oPN As String, Optional ByVal FlagPurchasing As Boolean = False, Optional ByVal ParoAU As Boolean = False)
+    Public Function CheckCortosPN(oPN As String, Optional FlagPurchasing As Boolean = False, Optional ParoAU As Boolean = False)
         Try
             If FlagPurchasing = False Then
                 Dim eta As String = "", id As Integer = 0, po_asigned As String = "", Vendor As String = "", Razon As String = "", Notas As String = "", Hold As Integer = 0
@@ -586,7 +586,8 @@ Public Class Principal
                     End While
                     cnn.Close()
                     DeleteFromTblCortos(id)
-                    aConsulta = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
+                    aConsulta = If(Microsoft.VisualBasic.Left(CWO, 1) = "C",
+                        $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
             SELECT DISTINCT tblBOMCWO.PN AS [Component PN], tblBOMCWO.[Description] [Description],
             (SELECT MIN(CONVERT(date,dateConfirmaAlm)) FROM tblCWO WHERE CWO in (
             SELECT CWO FROM tblBOMCWO aPn WHERE aPn.PN=tblBOMCWO.PN and Hold=1)
@@ -609,7 +610,31 @@ Public Class Principal
             FROM tblBOMCWO INNER JOIN tblBOMWIP bw ON tblBOMCWO.WIP=bw.WIP CROSS APPLY(SELECT dbo.[Return_AUS](tblBOMCWO.PN))Tab([AUs afectados])
             WHERE tblBOMCWO.WIP IN (SELECT DISTINCT w.WIP FROM tblCWO AS c INNER JOIN tblWipDet AS d ON c.CWO=d.CWO INNER JOIN tblWIP AS w ON w.WIP=d.WIP INNER JOIN tblTiemposEstCWO AS t ON t.CWO=c.CWO 
             WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort IN (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
-            AND tblBOMCWO.Hold=1 AND tblBOMCWO.PN='{oPN}' ORDER BY tblBOMCWO.PN"
+            AND tblBOMCWO.Hold=1 AND tblBOMCWO.PN='{oPN}' ORDER BY tblBOMCWO.PN",
+            $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
+            SELECT DISTINCT tblBOMPWO.PN AS [Component PN], tblBOMPWO.[Description] [Description],
+            (SELECT MIN(CONVERT(date,dateConfirmaAlm)) FROM tblPWO WHERE PWO in (
+            SELECT PWO FROM tblBOMPWO aPn WHERE aPn.PN=tblBOMPWO.PN and Hold=1)
+            ) [Fecha Corto],[AUs afectados],(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN (SELECT AU
+            FROM tblBOMPWO bcm WHERE tblBOMPWO.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d 
+            ON c.CWO=d.PWOA or c.PWO=d.PWOB INNER JOIN tblWIP AS w ON w.WIP=d.WIP 
+            WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort IN (12,13,14)) 
+            AND (ConfirmacionAlm='OnHold')) AND bcm.Hold=1 AND bcm.PN=tblBOMPWO.PN))[Cliente],(
+            SELECT SUM(CONVERT(int,Balance)) FROM tblBOMPWO c WHERE c.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d 
+            on c.PWO=d.PWOA or c.PWO=d.PWOB INNER JOIN tblWIP as w on w.WIP=d.WIP
+            WHERE (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+            AND (ConfirmacionAlm='OnHold')) AND c.Hold=1 AND c.PN=tblBOMPWO.PN) [AU Qty], (
+            SELECT MIN(CONVERT(date,DueDateCustomer)) FROM tblBOMPWO cc INNER JOIN tblWIP wip ON cc.WIP=wip.WIP INNER JOIN tblPWO cw ON cw.PWO=cc.PWO WHERE 
+            (wip.WSort = 3 OR wip.WSort=12 OR wip.WSort=14 OR wip.WSort=25) AND (cw.Wsort IN (12,13,14)) 
+            AND (ConfirmacionAlm='OnHold') AND cc.Hold=1 AND cc.PN=tblBOMPWO.PN) [AU Date], 
+            '{eta}' [ETA],(SELECT MAX(Qty) FROM tblBOM WHERE PN=tblBOMPWO.PN AND AU in (SELECT AU FROM tblBOMPWO c WHERE 
+            c.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d ON c.PWO=d.PWOA or c.PWO=d.PWOB INNER JOIN tblWIP AS w ON w.WIP=d.WIP
+            WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort in (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
+            AND c.Hold=1 AND c.PN=tblBOMPWO.PN)) [Qty PN],'{po_asigned}' [PO Asignada],'{Vendor}' [Vendor], '{Razon}' [Razon], '{Notas}' [Notas],{Hold} [Hold],1 PoAU
+            FROM tblBOMPWO INNER JOIN tblBOMWIP bw ON tblBOMPWO.WIP=bw.WIP CROSS APPLY(SELECT dbo.[Return_AUS_PWO](tblBOMPWO.PN))Tab([AUs afectados])
+            WHERE tblBOMPWO.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d ON c.PWO=d.PWOA or c.PWO=d.PWOB INNER JOIN tblWIP AS w ON w.WIP=d.WIP
+            WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort IN (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
+            AND tblBOMPWO.Hold=1 AND tblBOMPWO.PN='{oPN}' ORDER BY tblBOMPWO.PN")
                     cmd = New SqlCommand(aConsulta, cnn)
                     cmd.CommandType = CommandType.Text
                     cnn.Open()
@@ -617,7 +642,7 @@ Public Class Principal
                     cnn.Close()
                 Else
                     cnn.Close()
-                    aConsulta = $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
+                    aConsulta = If(Microsoft.VisualBasic.Left(CWO, 1) = "C", $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
         SELECT DISTINCT tblBOMCWO.PN AS [Component PN], tblBOMCWO.[Description] [Description],(SELECT MIN(CONVERT(date,dateConfirmaAlm)) FROM tblCWO WHERE CWO in (
         SELECT CWO FROM tblBOMCWO aPn WHERE aPn.PN=tblBOMCWO.PN and Hold=1)) [Fecha Corto],[AUs afectados],(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN (SELECT AU
         FROM tblBOMCWO bcm WHERE tblBOMCWO.WIP IN (SELECT DISTINCT w.WIP FROM tblCWO AS c INNER JOIN tblWipDet AS d ON c.CWO=d.CWO INNER JOIN tblWIP AS w ON w.WIP=d.WIP INNER JOIN tblTiemposEstCWO AS t ON t.CWO=c.CWO 
@@ -631,14 +656,29 @@ Public Class Principal
         AND (ConfirmacionAlm='OnHold')) AND c.Hold=1 AND c.PN=tblBOMCWO.PN)) [Qty PN],NULL [PO Asignada],NULL [Vendor], NULL [Razon],NULL [Notas],1 [Hold],1 [PoAU] FROM tblBOMCWO INNER JOIN tblBOMWIP bw ON tblBOMCWO.WIP=bw.WIP
         CROSS APPLY(SELECT dbo.[Return_AUS](tblBOMCWO.PN))Tab([AUs afectados]) WHERE tblBOMCWO.WIP IN (SELECT DISTINCT w.WIP FROM tblCWO AS c INNER JOIN tblWipDet AS d 
         ON c.CWO=d.CWO INNER JOIN tblWIP AS w ON w.WIP=d.WIP INNER JOIN tblTiemposEstCWO AS t ON t.CWO=c.CWO WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort IN (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
-        AND tblBOMCWO.Hold=1 AND tblBOMCWO.PN='{oPN}' ORDER BY tblBOMCWO.PN"
+        AND tblBOMCWO.Hold=1 AND tblBOMCWO.PN='{oPN}' ORDER BY tblBOMCWO.PN",
+        $"INSERT INTO tblCortosPn(PN,[Description],[Fecha_Corto],[Aus_afectados],[Cliente],[AU_Qty],[AU_Date],[ETA],[QtyPN],[PO_Asignada],[Vendor],[Razon],[Notas],[Hold],[ParoAU])
+        SELECT DISTINCT tblBOMPWO.PN AS [Component PN], tblBOMPWO.[Description] [Description],(SELECT MIN(CONVERT(date,dateConfirmaAlm)) FROM tblPWO WHERE PWO in (
+        SELECT PWO FROM tblBOMPWO aPn WHERE aPn.PN=tblBOMPWO.PN and Hold=1)) [Fecha Corto],[AUs afectados],(SELECT TOP 1 Cust FROM tblMaster WHERE AU IN (SELECT AU
+        FROM tblBOMPWO bcm WHERE tblBOMPWO.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d ON c.PWO=d.PWOA OR c.PWO=d.PWOB INNER JOIN tblWIP AS w ON w.WIP=d.WIP
+        WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort IN (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
+        AND bcm.Hold=1 AND bcm.PN=tblBOMPWO.PN))[Cliente],(SELECT SUM(CONVERT(int,Balance)) FROM tblBOMPWO c WHERE c.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d 
+        on c.PWO=d.PWOA OR c.PWO=d.PWOB INNER JOIN tblWIP as w on w.WIP=d.WIP WHERE (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+        AND (ConfirmacionAlm='OnHold')) AND c.Hold=1 AND c.PN=tblBOMPWO.PN) [AU Qty], (SELECT MIN(CONVERT(date,DueDateCustomer)) FROM tblBOMPWO cc INNER JOIN tblWIP wip ON cc.WIP=wip.WIP INNER JOIN tblPWO cw ON cw.PWO=cc.PWO WHERE 
+        (wip.WSort = 3 OR wip.WSort=12 OR wip.WSort=14 OR wip.WSort=25) AND (cw.Wsort IN (12,13,14)) AND (ConfirmacionAlm='OnHold') AND cc.Hold=1 AND cc.PN=tblBOMPWO.PN
+        ) [AU Date],NULL [ETA],(SELECT MAX(Qty) FROM tblBOM WHERE PN=tblBOMPWO.PN AND AU in (SELECT AU FROM tblBOMPWO c WHERE c.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d 
+        ON c.PWO=d.PWOA OR c.PWO=d.PWOB INNER JOIN tblWIP AS w ON w.WIP=d.WIP WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort in (12,13,14)) 
+        AND (ConfirmacionAlm='OnHold')) AND c.Hold=1 AND c.PN=tblBOMPWO.PN)) [Qty PN],NULL [PO Asignada],NULL [Vendor], NULL [Razon],NULL [Notas],1 [Hold],1 [PoAU] FROM tblBOMPWO INNER JOIN tblBOMWIP bw ON tblBOMPWO.WIP=bw.WIP
+        CROSS APPLY(SELECT dbo.[Return_AUS_PWO](tblBOMPWO.PN))Tab([AUs afectados]) WHERE tblBOMPWO.WIP IN (SELECT DISTINCT w.WIP FROM tblPWO AS c INNER JOIN tblWipDet AS d 
+        ON c.PWO=d.PWOA OR c.PWO=d.PWOB INNER JOIN tblWIP AS w ON w.WIP=d.WIP WHERE (w.WSort = 3 OR w.WSort=12 OR w.WSort=14 OR w.WSort=25) AND (c.Wsort IN (12,13,14)) AND (ConfirmacionAlm='OnHold')) 
+        AND tblBOMPWO.Hold=1 AND tblBOMPWO.PN='{oPN}' ORDER BY tblBOMPWO.PN")
                     cmd = New SqlCommand(aConsulta, cnn)
                     cmd.CommandType = CommandType.Text
                     cnn.Open()
                     cmd.ExecuteNonQuery()
                     cnn.Close()
                 End If
-            ElseIf FlagPurchasing = True Then
+            ElseIf FlagPurchasing Then
                 Dim oConsulta As String = $"select IsNull(ID,NULL) from tblCortosPn where PN = '{oPN}' and Hold = 1"
                 cmd = New SqlCommand(oConsulta, cnn)
                 cmd.CommandType = CommandType.Text
@@ -924,7 +964,7 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [ParoAU] FROM tblBO
             End Try
         End Get
     End Property
-    Private Sub cargadatosCompras()
+    Private Sub CargadatosCompras()
         GroupBox3.Visible = False
         GroupBox2.Visible = False
         Dim i As Integer
@@ -932,25 +972,62 @@ and (ConfirmacionAlm='OnHold'))) [Notas],1 [Hold],'{ParoAU}' [ParoAU] FROM tblBO
         Dim QtyTerm, QtySello, QtyWire As Integer
         Dim Allocated, InTransit, AllocatedFiltro As Decimal
         Dim termBuscar As String
-        Dim wip As String = "(select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold'))"
-        Dim Query As String = "SELECT tblBOMCWO.PN AS ComponentPN, 
-                               0 AS QTY, 
-                               0 AS OH, '' AS ' ', 
-                               0 AS ALM, 
-                               0 AS PISO, 
-                               0 AS [Re-Work], '' AS ' ', 
-                               0 AS 'Allocated', 
-                               0 AS Diff, 
-                               0 AS DifIncComp, 
-                               (SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMCWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN') AS InTransit,
-                               (SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMCWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  
-                               ORDER BY A.JuarezDueDate) AS NextFReciboMat, 
-                               tblBOMCWO.WIP,AU,(select Sem from tblWIP where tblWIP.WIP=tblBOMCWO.WIP) [Sem],CWO,(select MAX(ProcFDisMat) from tblBOMWIP where tblBOMWIP.WIP = tblBOMCWO.WIP and tblBOMWIP.PN=tblBOMCWO.PN) [Fecha promesa PN] 
-                               FROM tblBOMCWO 
-                               WHERE 
-                               tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
-                               where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold')) and tblBOMCWO.Hold=1 ORDER BY ComponentPN"
-
+        Dim wip As String = "((select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold')) union
+(select distinct w.WIP from tblPWO as c inner join tblWipDet as d on c.PWO=d.PWOA or c.PWO=d.PWOB inner join tblWIP as w on w.WIP=d.WIP where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort > 30 or w.wSort in (12,14)))) And (c.Wsort in (12,14)) and (ConfirmacionAlm='OnHold')))))" '"(select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold'))"
+        'Dim Query As String = "SELECT tblBOMCWO.PN AS ComponentPN, 
+        '                       0 AS QTY, 
+        '                       0 AS OH, '' AS ' ', 
+        '                       0 AS ALM, 
+        '                       0 AS PISO, 
+        '                       0 AS [Re-Work], '' AS ' ', 
+        '                       0 AS 'Allocated', 
+        '                       0 AS Diff, 
+        '                       0 AS DifIncComp, 
+        '                       (SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMCWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN') AS InTransit,
+        '                       (SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMCWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  
+        '                       ORDER BY A.JuarezDueDate) AS NextFReciboMat, 
+        '                       tblBOMCWO.WIP,AU,(select Sem from tblWIP where tblWIP.WIP=tblBOMCWO.WIP) [Sem],CWO,(select MAX(ProcFDisMat) from tblBOMWIP where tblBOMWIP.WIP = tblBOMCWO.WIP and tblBOMWIP.PN=tblBOMCWO.PN) [Fecha promesa PN] 
+        '                       FROM tblBOMCWO 
+        '                       WHERE 
+        '                       tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+        '                       where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold')) and tblBOMCWO.Hold=1 ORDER BY ComponentPN"
+        Dim Query As String = "(SELECT tblBOMCWO.PN AS ComponentPN, 
+                                0 AS QTY, 
+                                0 AS OH, '' AS ' ', 
+                                0 AS ALM, 
+                                0 AS PISO, 
+                                0 AS [Re-Work], '' AS ' ', 
+                                0 AS 'Allocated', 
+                                0 AS Diff, 
+                                0 AS DifIncComp, 
+                                (SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMCWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN') AS InTransit,
+                                (SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMCWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  
+                                ORDER BY A.JuarezDueDate) AS NextFReciboMat, 
+                                tblBOMCWO.WIP,AU,(select Sem from tblWIP where tblWIP.WIP=tblBOMCWO.WIP) [Sem],CWO [WO],
+                                (select MAX(ProcFDisMat) from tblBOMWIP where tblBOMWIP.WIP = tblBOMCWO.WIP and tblBOMWIP.PN=tblBOMCWO.PN)[Fecha promesa PN] 
+                                FROM tblBOMCWO WHERE 
+                                tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+                                where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold')) and tblBOMCWO.Hold=1 --ORDER BY ComponentPN
+                                )
+                                union
+                                (
+                                SELECT tblBOMPWO.PN AS ComponentPN, 
+                                0 AS QTY, 
+                                0 AS OH, '' AS ' ', 
+                                0 AS ALM, 
+                                0 AS PISO, 
+                                0 AS [Re-Work], '' AS ' ', 
+                                0 AS 'Allocated', 
+                                0 AS Diff, 
+                                0 AS DifIncComp, 
+                                (SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMPWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN') AS InTransit,
+                                (SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = tblBOMPWO.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  
+                                ORDER BY A.JuarezDueDate) AS NextFReciboMat, tblBOMPWO.WIP,AU,(select Sem from tblWIP where tblWIP.WIP=tblBOMPWO.WIP) [Sem],PWO [WO],
+                                (select MAX(ProcFDisMat) from tblBOMWIP where tblBOMWIP.WIP = tblBOMPWO.WIP and tblBOMWIP.PN=tblBOMPWO.PN)[Fecha promesa PN] 
+                                FROM tblBOMPWO WHERE 
+                                tblBOMPWO.WIP IN (select distinct w.WIP from tblPWO as c inner join tblWipDet as d on c.PWO=d.PWOA or c.PWO=d.PWOB inner join tblWIP as w on w.WIP=d.WIP 
+                                where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold')) and tblBOMPWO.Hold=1 --ORDER BY ComponentPN
+                                )"
         Using DTtermDist As New DataTable
             Try
                 cmd = New SqlCommand(Query, cnn)
@@ -2022,7 +2099,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                 aTable.Columns(6).ReadOnly = False
                 aTable.Columns(7).ReadOnly = False
                 aTable.Columns(8).ReadOnly = False
-                Dim wip As String = "(select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold'))"
+                Dim wip As String = "((select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold')) union
+(select distinct w.WIP from tblPWO as c inner join tblWipDet as d on c.PWO=d.PWOA or c.PWO=d.PWOB inner join tblWIP as w on w.WIP=d.WIP where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort > 30 or w.wSort in (12,14)))) And (c.Wsort in (12,14)) and (ConfirmacionAlm='OnHold')))))" '"(select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and (ConfirmacionAlm='OnHold'))"
                 wip = "(WIP in " & wip & ")"
                 Dim QtyTerm, QtySello, QtyWire As Integer
                 Dim Allocated, InTransit, AllocatedFiltro As Decimal
@@ -2097,7 +2175,10 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub QuitaCortoCWOyWIPxPN(PN As String, Optional ByVal qty As Integer = 0, Optional aTypeParcialorCompleto As Boolean = True)
         Try
-            Dim query As String = If(aTypeParcialorCompleto = True, $"select WIP,CWO,PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1", $"select WIP,CWO,PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1 group by wip,cwo,pn,balance having SUM(Balance) <={qty}")
+            'Dim query As String = If(aTypeParcialorCompleto, $"select WIP,CWO,PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1", $"select WIP,CWO,PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1 group by wip,cwo,pn,balance having SUM(Balance) <={qty}")
+            Dim query As String = $"select WIP,CWO [WO],PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1 {If(aTypeParcialorCompleto, $"group by wip,cwo,pn,balance having SUM(Balance) <={qty}", "")}
+                                    union 
+                                    select WIP,PWO [WO],PN,Balance from tblBOMPWO where PN='{PN}' and Hold=1 {If(aTypeParcialorCompleto, $"group by wip,Pwo,pn,balance having SUM(Balance) <={qty}", "")}"
             Dim aTable As New DataTable()
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
@@ -2106,7 +2187,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             aTable.Load(dr)
             cnn.Close()
             If aTable.Rows.Count > 0 Then
-                Dim CWOs = (From row In aTable.AsEnumerable() Select row("CWO")).Distinct().ToList()
+                Dim CWOs = (From row In aTable.AsEnumerable() Select row("WO")).Distinct().ToList()
                 If CWOs IsNot Nothing Then
                     CWOs.ForEach(Function(c)
                                      UpdateCortoXPn(PN, c)
@@ -2115,7 +2196,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                                  )
                     CWOs.ForEach(
                     Function(CWO)
-                        CheckCortosCWOorWIP(CWO, "CWO")
+                        CheckCortosCWOorWIP(CWO, If(Microsoft.VisualBasic.Left(CWO, 1) = "C", "CWO", "PWO"))
                         Return Nothing
                     End Function
                     )
@@ -2137,7 +2218,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub UpdateCortoXPn(PN As String, CWO As String)
         Try
-            Dim update As String = $"update tblBOMCWO set Hold=0 where CWO='{CWO}' and PN='{PN}'"
+            Dim update As String = $"update tblBOM{Microsoft.VisualBasic.Left(CWO, 1)}WO set Hold=0 where {Microsoft.VisualBasic.Left(CWO, 1)}WO='{CWO}' and PN='{PN}'"
             cmd = New SqlCommand(update, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -2151,7 +2232,9 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     Private Sub CheckCortosCWOorWIP(WO As String, RevWO As String)
         Try
             Dim update As String = ""
-            Dim Consulta As String = $"select Count({RevWO}) from tblBOMCWO where {RevWO}='{WO}' and Hold=1"
+            Dim Consulta As String = If(RevWO = "WIP", $";WITH Total (TotalWO) as (select Count(CWO) from tblBOMCWO where {RevWO}='{WO}' and Hold=1 
+                                                       union select Count(PWO) from tblBOMPWO where {RevWO}='{WO}' and Hold=1) select SUM(TotalWO) from Total",
+                                                       $"select Count({RevWO}) from tblBOM{Microsoft.VisualBasic.Left(RevWO, 1)}WO where {RevWO}='{WO}' and Hold=1")
             cmd = New SqlCommand(Consulta, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -2159,14 +2242,20 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                 cnn.Close()
             ElseIf CInt(cmd.ExecuteScalar) = 0 Then
                 cnn.Close()
-                If RevWO = "CWO" Then
-                    update = "update tblCWO 
+                If RevWO = "CWO" Or RevWO = "PWO" Then
+                    update = If(RevWO = "CWO",
+                          "update tblCWO 
                           set WSort = case when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) = 0 then 20
                           when (select COUNT(Cutting) from tblCWOSerialNumbers where CWO=@CWO and Cutting is not null) > 0 then 25 
                           else 25 end,
                           ConfirmacionAlm= case ConfirmacionAlm when 'OnHold' then 'Confirmado' else ConfirmacionAlm end,
                           ConfirmacionApl= case ConfirmacionApl when 'OnHold' then 'Confirmado' else ConfirmacionApl end 
-                          where CWO =@CWO"
+                          where CWO =@CWO", "update tblPWO 
+                          set WSort = case when (select Count(*) from tblBOMPWO where PWO = @CWO and Qty = Balance) > 0 then 20
+                          else 25 end,
+                          ConfirmacionAlm= case ConfirmacionAlm when 'OnHold' then 'Confirmado' else ConfirmacionAlm end,
+                          ConfirmacionApl= case ConfirmacionApl when 'OnHold' then 'Confirmado' else ConfirmacionApl end 
+                          where PWO = @CWO")
                     cmd = New SqlCommand(update, cnn)
                     cmd.CommandType = CommandType.Text
                     cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WO
@@ -2174,13 +2263,22 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                     cmd.ExecuteNonQuery()
                     cnn.Close()
                 ElseIf RevWO = "WIP" Then
-                    update = "update tblWIP set WSort = case when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort >= 25) =
+                    update = "update tblWIP set WSort = case when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or 
+                              PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 14) > 0 then 14 
+                              when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or 
+                              PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 12) > 0 then 12 
+                              when KindOfAU like '[XP]%' and MP = 0 and IEns > 0 then 75
+                              when KindOfAU like '[XP]%' and MP > 0 and IEns = 0 then 32
+                              when KindOfAU not like '[XP]%' and MP = 0 and Ens > 0 then 30
+                              when KindOfAU not like '[XP]%' and MP > 0 and Ens = 0 then 30 
+                              when (select COUNT(WSort) from tblCWO where 
+                              CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort >= 25) =
                               (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 25 
                               when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort < 25) = 
                              (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 20 
                              when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 12) >= 1 then 12 
                              when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 14) >= 1 then 14 
-                             else 25 end where WIP =@WIP"
+                             end where WIP =@WIP"
                     cmd = New SqlCommand(update, cnn)
                     cmd.CommandType = CommandType.Text
                     cmd.Parameters.Add("@WIP", SqlDbType.NVarChar).Value = WO
@@ -2227,7 +2325,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (25,12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort = 25)))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 5 Then 'Empezados y Detenidos
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
@@ -2394,14 +2492,16 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cnn.Close()
             If opcion = 2 Then
                 NotesInWIP(WIP, notes + " WO: " + cwo, fecha)
-                query = "update tblCWO set wSort=12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where CWO=@WO"
+                query = $"update tbl{If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "C", "P")}WO set wSort=12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "C", "P")}WO=@WO"
                 ' ---------------------------
-                Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=6 where Dep in ('Compras','Corte')", cnn)
-                    cmd.CommandType = CommandType.Text
-                    cnn.Open()
-                    cmd.ExecuteNonQuery()
-                    cnn.Close()
-                End Using
+                If Microsoft.VisualBasic.Left(cwo, 1) = "C" Then
+                    Using cmd As New SqlCommand("update tblMLFNotifications set SendReceive=1,TypeOfNotify=6 where Dep in ('Compras','Corte')", cnn)
+                        cmd.CommandType = CommandType.Text
+                        cnn.Open()
+                        cmd.ExecuteNonQuery()
+                        cnn.Close()
+                    End Using
+                End If
                 ' ---------------------------
             ElseIf opcion = 3 Then
                 query = $"update tbl{If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "C", "P")}WO set wSort=14,ConfirmacionApl='OnHold', dateConfirmaApl=GETDATE() where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "C", "P")}WO=@WO"
@@ -2433,7 +2533,6 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
-            'filtros(3)
         Catch ex As Exception
             MsgBox(ex.ToString)
             CorreoFalla.EnviaCorreoFalla("notesWIPandCWOOnHold", host, UserName)
@@ -2766,22 +2865,22 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub MonitorWIPS_Click(sender As Object, e As EventArgs) Handles MonitorWIPS.Click
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Try
             Process.Start("\\10.17.182.22\sea-s\MonitorWips\MonitorWips.application")
         Catch ex As Exception
             MsgBox("No tienes acceso a esta aplicacion, si deseas consultarla, favor de pedir los debidos accesos")
         End Try
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Try
             Process.Start("\\10.17.182.22\sea-s\ModMM\CSHP.application")
         Catch ex As Exception
             MsgBox("No tienes acceso a esta aplicacion, si deseas consultarla, favor de pedir los debidos accesos")
         End Try
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub NotifyIcon1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
         Me.Show()
@@ -3047,12 +3146,26 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Function ChargeGridAfectacion(PN As String) As DataTable
         Try
-            query = "select CONVERT(date,FechaSolicitudMat) [Fecha Solicitud CWO], b.CWO,a.PN,a.Balance [Qty],c.WIP,c.AU,c.Rev,c.ProcNotas [Notas Compras],
+            '            query = "select CONVERT(date,FechaSolicitudMat) [Fecha Solicitud CWO], b.CWO,a.PN,a.Balance [Qty],c.WIP,c.AU,c.Rev,c.ProcNotas [Notas Compras],
+            '(SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS c INNER JOIN tblItemsPOs AS d ON c.IDPO = d.IDPO WHERE c.PN=A.pn AND c.QtyBalance > 0 AND d.Status = 'OPEN') AS InTransit,
+            '(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = a.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  
+            'ORDER BY A.JuarezDueDate) AS NextFReciboMat,c.ProcFDispMat2 [Nueva fecha de compras]
+            'FROM tblBOMCWO a inner join tblCWO b on a.CWO=b.CWO inner join tblWIP c on c.WIP=a.WIP
+            'where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12) or (c.wSort < 30 and c.WSort <> 12)) and a.Balance > 0"
+            query = $"(select CONVERT(date,FechaSolicitudMat) [Fecha Solicitud WO], b.CWO [WO],a.PN,a.Balance [Qty],c.WIP,c.AU,c.Rev,c.ProcNotas [Notas Compras],
 (SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS c INNER JOIN tblItemsPOs AS d ON c.IDPO = d.IDPO WHERE c.PN=A.pn AND c.QtyBalance > 0 AND d.Status = 'OPEN') AS InTransit,
 (SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = a.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  
 ORDER BY A.JuarezDueDate) AS NextFReciboMat,c.ProcFDispMat2 [Nueva fecha de compras]
 FROM tblBOMCWO a inner join tblCWO b on a.CWO=b.CWO inner join tblWIP c on c.WIP=a.WIP
-where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12) or (c.wSort < 30 and c.WSort <> 12)) and a.Balance > 0"
+where a.PN='{PN}' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12) or (c.wSort < 30 and c.WSort <> 12)) and a.Balance > 0)
+union
+(select CONVERT(date,FechaSolicitudMat) [Fecha Solicitud WO], b.PWO [WO],a.PN,a.Balance [Qty],c.WIP,c.AU,c.Rev,c.ProcNotas [Notas Compras],
+(SELECT SUM(QtyBalance) FROM tblItemsPOsDet AS c INNER JOIN tblItemsPOs AS d ON c.IDPO = d.IDPO WHERE c.PN=A.pn AND c.QtyBalance > 0 AND d.Status = 'OPEN') AS InTransit,
+(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = a.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  
+ORDER BY A.JuarezDueDate) AS NextFReciboMat,c.ProcFDispMat2 [Nueva fecha de compras]
+FROM tblBOMPWO a inner join tblPWO b on a.PWO=b.PWO inner join tblWIP c on c.WIP=a.WIP
+where a.PN='{PN}' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12) or ((KindOfAU like '[XP]%' and c.wSort > 32) or (KindOfAU not like '[XP]%' and c.wSort > 30))) 
+and a.Balance > 0)"
             Dim tabla As New DataTable()
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
@@ -3357,7 +3470,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
                 If WIP <> "" And CWO <> "" Then
                     Dim ver As Char = CWO(0)
                     Dim ver2 As Char = WIP(0)
-                    If ver = "C" And ver2 = "W" Then
+                    If (ver = "C" Or ver = "P") And ver2 = "W" Then
                         p = 12
                         With Materiales
                             .MaximumSize = New System.Drawing.Size(1400, 620)
@@ -3473,7 +3586,7 @@ where a.PN='" + PN + "' and c.Status='OPEN' and ((b.WSort < 30 and b.WSort <> 12
     Private Sub btnRefrescaGrid_Click(sender As Object, e As EventArgs) Handles btnRefrescaGrid.Click
         Cursor.Current = Cursors.WaitCursor
         If Label8.Text = "Numeros de Parte cortos" Then
-            cargadatosCompras()
+            CargadatosCompras()
             dgvAfectados.DataSource = Nothing
         Else
             dgvMatSinStockCompras.DataSource = tblasig

@@ -305,7 +305,7 @@ Public Class Materiales
         End Try
     End Sub
     Private Sub Llenagrid3() 'Materiales sin stock para poner en hold
-        Dim query As String = "Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOMCWO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder"
+        Dim query As String = $"Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOM{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' and Hold = 0 group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder"
         Dim tabla As New DataTable
         Try
             cmd = New SqlCommand(query, cnn)
@@ -330,8 +330,14 @@ Public Class Materiales
                 btnExportar.Visible = If(opcion = 2 And DataGridView1.RowCount > 0, True, False)
             Else
                 DataGridView1.DataSource = Nothing
+                MessageBox.Show("No hay numeros de parte para colocar cortos.")
+                TabControl1.Parent = Nothing
+                p = 0
+                Me.Dispose()
+                Me.Close()
             End If
         Catch ex As Exception
+            cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("llenagrid3'Materiales'", host, UserName)
         End Try
@@ -617,11 +623,11 @@ Public Class Materiales
                                     End If
                                 End If
                             Next
-                            mensaje = mensaje + " se han puesto en Cortos por falta de material, en el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
+                            mensaje = mensaje + " se han puesto en Cortos por falta de material, en el WIP: " & Label4.Text & $" y {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
                         Else
-                            mensaje = "Se notifica que se pone el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
+                            mensaje = "Se notifica que se pone el WIP: " & Label4.Text & $" y {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
@@ -658,9 +664,9 @@ Public Class Materiales
                             Next
                             mensaje = mensaje + " se han puesto en Hold por falta de material, en el CWO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
                         Else
-                            mensaje = "Se notifica que se pone el CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
+                            mensaje = "Se notifica que se pone el WO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
@@ -691,6 +697,7 @@ Public Class Materiales
             Dim resp As Boolean
             query = "select case when Qty > (select SUM(QtyActual-QtyNew) from tblItemsAdjustmentTAGs where tblItemsTags.TAG=tblItemsAdjustmentTAGs.TAG and AdjusmentType='Negative') then 'Ajuste negativo' end [Ajuste],PN from tblItemsTags where PN=@PN and (Qty >= @QTY or qty <= @QTY) and qty= (case when Qty > (select SUM(QtyActual-QtyNew) from tblItemsAdjustmentTAGs where tblItemsTags.TAG=tblItemsAdjustmentTAGs.TAG and AdjusmentType='Negative') then Qty end)"
             cmd = New SqlCommand(query, cnn)
+            cmd.CommandTimeout = 120000
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@PN", SqlDbType.NVarChar).Value = PN
             cmd.Parameters.Add("@QTY", SqlDbType.Int).Value = qty
@@ -710,7 +717,7 @@ Public Class Materiales
             CWO As String,
             PN As String)
         Try
-            query = "update tblBOMCWO set Hold=1 where CWO='" + CWO + "' and PN='" + PN + "'"
+            query = $"update tblBOM{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO set Hold=1 where {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO='" + CWO + "' and PN='" + PN + "'"
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -723,7 +730,7 @@ Public Class Materiales
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim values As String = ""
         For jj = 0 To DataGridView1.Rows.Count - 1
-            If DataGridView1.Rows(jj).Cells("Chk").Value = True Then
+            If DataGridView1.Rows(jj).Cells("Chk").Value Then
                 If values <> "" Then
                     values = values + DataGridView1.Rows(jj).Cells("PN").Value.ToString + ", "
                 Else
@@ -735,9 +742,9 @@ Public Class Materiales
             holdoconfir = 1
             gbnotasconfirmando.Visible = True
             TextBox2.Text = values
-            Dim qtylen As Integer = Len(values)
+            'Dim qtylen As Integer = Len(values)
             TextBox2.Focus()
-            TextBox2.[Select](TextBox2.Text.Length, qtylen)
+            TextBox2.[Select](TextBox2.Text.Length, Len(values))
         Else
             MsgBox("Debe seleccionar minimo un numero de parte a agregar a las notas")
         End If
