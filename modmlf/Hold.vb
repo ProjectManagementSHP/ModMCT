@@ -11,7 +11,7 @@
                     For jj = 0 To .dgvMatSinStockCompras.Rows.Count - 1
                         If .dgvMatSinStockCompras.Rows(jj).Cells("Chk").Value = True Then
                             Dim pn = .dgvMatSinStockCompras.Rows(jj).Cells("ComponentPN").Value.ToString
-                            .notas(Principal.dgvMatSinStockCompras.Rows(jj).Cells("CWO").Value.ToString, dtpFProm.Text, txbNotas.Text, .dgvMatSinStockCompras.Rows(jj).Cells("WIP").Value.ToString, pn)
+                            .Notas(Principal.dgvMatSinStockCompras.Rows(jj).Cells("WO").Value.ToString, dtpFProm.Text, txbNotas.Text, .dgvMatSinStockCompras.Rows(jj).Cells("WIP").Value.ToString, pn)
                             .tblasig.Columns(17).ReadOnly = False
                             .tblasig.Rows(jj).Item(17) = Convert.ToDateTime(dtpFProm.Text.ToString)
                             '.dgvMatSinStockCompras.Rows(jj).Cells("Fecha promesa PN").Value = Convert.ToDateTime(dtpFProm.Text.ToString)
@@ -48,7 +48,7 @@
                                     Principal.CheckCortosPN(pn, True)
                                     Return Nothing
                                 End Function)
-                    .filtros(6)
+                    .Filtros(6)
                     For j = 0 To .dgvMatSinStockCompras.Rows.Count - 1
                         If .dgvMatSinStockCompras.Rows(j).Cells("Chk").Value = True Then
                             .dgvMatSinStockCompras.Rows(j).Cells("Chk").Value = False
@@ -71,18 +71,18 @@
                     Dim lst As New List(Of String)
                     For o As Integer = 0 To .dgvAfectados.Rows.Count - 1
                         If .dgvAfectados.Rows(o).Cells("aChk").Value = True Then
-                            If .CheckWSort(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString) Then
+                            If .CheckWSort(.dgvAfectados.Rows(o).Cells("WO").Value.ToString) Then
                                 If AuxWip = "" And AuxCwo = "" Then
-                                    AuxCwo = .dgvAfectados.Rows(o).Cells("CWO").Value.ToString
+                                    AuxCwo = .dgvAfectados.Rows(o).Cells("WO").Value.ToString
                                     AuxWip = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString
                                     Wips += .dgvAfectados.Rows(o).Cells("WIP").Value.ToString + ", "
-                                    CWos += .dgvAfectados.Rows(o).Cells("CWO").Value.ToString + ", "
+                                    CWos += .dgvAfectados.Rows(o).Cells("WO").Value.ToString + ", "
                                 Else
-                                    If AuxCwo = .dgvAfectados.Rows(o).Cells("CWO").Value.ToString Then
-                                        AuxCwo = .dgvAfectados.Rows(o).Cells("CWO").Value.ToString
+                                    If AuxCwo = .dgvAfectados.Rows(o).Cells("WO").Value.ToString Then
+                                        AuxCwo = .dgvAfectados.Rows(o).Cells("WO").Value.ToString
                                     Else
-                                        AuxCwo = .dgvAfectados.Rows(o).Cells("CWO").Value.ToString
-                                        CWos += .dgvAfectados.Rows(o).Cells("CWO").Value.ToString + ", "
+                                        AuxCwo = .dgvAfectados.Rows(o).Cells("WO").Value.ToString
+                                        CWos += .dgvAfectados.Rows(o).Cells("WO").Value.ToString + ", "
                                     End If
                                     If AuxWip = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString Then
                                         AuxWip = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString
@@ -91,7 +91,7 @@
                                         AuxWip = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString
                                     End If
                                 End If
-                                Materiales.UpdateHoldPN(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString, .dgvAfectados.Rows(o).Cells("PN").Value.ToString)
+                                Materiales.UpdateHoldPN(.dgvAfectados.Rows(o).Cells("WO").Value.ToString, .dgvAfectados.Rows(o).Cells("PN").Value.ToString)
                                 lst.Add(.dgvAfectados.Rows(o).Cells("PN").Value.ToString)
                                 If mensaje = "" Then
                                     If Materiales.CheckMovNegative(.dgvAfectados.Rows(o).Cells("PN").Value.ToString, .dgvAfectados.Rows(o).Cells("Qty").Value.ToString) Then
@@ -107,9 +107,9 @@
                                     End If
                                 End If
                                 WIP = .dgvAfectados.Rows(o).Cells("WIP").Value.ToString
-                                .NotesWIPandCWOOnHold(.dgvAfectados.Rows(o).Cells("CWO").Value.ToString, Convert.ToDateTime(Now), txbNotas.Text)
+                                .NotesWIPandCWOOnHold(.dgvAfectados.Rows(o).Cells("WO").Value.ToString, Convert.ToDateTime(Now), txbNotas.Text)
                             Else
-                                MessageBox.Show($"Este CWO: { .dgvAfectados.Rows(o).Cells("CWO").Value.ToString} aun no es requerido por corte.")
+                                MessageBox.Show($"Este WO: { .dgvAfectados.Rows(o).Cells("WO").Value} aun no es requerido por corte.")
                             End If
                         End If
                     Next
@@ -117,13 +117,14 @@
                                     Principal.CheckCortosPN(pn)
                                     Return Nothing
                                 End Function)
-                    mensaje = mensaje + " se han puesto en Cortos por falta de material, en los WIP: " & Wips & " y CWO: " & CWos & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
+                    mensaje = mensaje + " se han puesto en Cortos por falta de material, en los WIP: " & Wips & " y WO: " & CWos & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
                     'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Descomentar cuando se suba
                     .NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                     .NotifyIcon1.BalloonTipTitle = "Material sin stock"
                     .NotifyIcon1.Visible = True
                     .NotifyIcon1.ShowBalloonTip(0)
                     .dgvAfectados.DataSource = Nothing
+                    .btnCortosPN.Visible = False
                 End With
                 Me.Close()
             Else

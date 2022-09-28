@@ -12,7 +12,7 @@ Public Class Asignar
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If txbNotas.Text <> "" Then
             Principal.DetenerCWO(Label6.Text, txbNotas.Text, 1)
-            Principal.filtros(4)
+            Principal.Filtros(4)
             Me.Dispose()
             Me.Close()
         Else

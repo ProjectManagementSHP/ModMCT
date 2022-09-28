@@ -438,6 +438,7 @@ Partial Class CreatePWO
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(226, 20)
         Me.TextBox2.TabIndex = 5450
+        Me.TextBox2.Visible = False
         '
         'Button4
         '
@@ -450,6 +451,7 @@ Partial Class CreatePWO
         Me.Button4.TabIndex = 5451
         Me.Button4.Text = "Reimprimir PWO"
         Me.Button4.UseVisualStyleBackColor = False
+        Me.Button4.Visible = False
         '
         'CreatePWO
         '
