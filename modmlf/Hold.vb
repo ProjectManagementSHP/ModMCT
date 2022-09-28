@@ -44,13 +44,10 @@
                     .NotifyIcon1.BalloonTipTitle = "Fecha promesa"
                     .NotifyIcon1.Visible = True
                     .NotifyIcon1.ShowBalloonTip(0)
-                    lst.ForEach(Function(pn)
-                                    Principal.CheckCortosPN(pn, True)
-                                    Return Nothing
-                                End Function)
+                    lst.ForEach(Function(pn) Principal.CheckCortosPN(pn, True))
                     .Filtros(6)
                     For j = 0 To .dgvMatSinStockCompras.Rows.Count - 1
-                        If .dgvMatSinStockCompras.Rows(j).Cells("Chk").Value = True Then
+                        If .dgvMatSinStockCompras.Rows(j).Cells("Chk").Value Then
                             .dgvMatSinStockCompras.Rows(j).Cells("Chk").Value = False
                         End If
                     Next
