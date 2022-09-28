@@ -443,8 +443,12 @@ Public Class Principal
             NotasCompras='{Notas}',POAsigned='{If(PO = "", " ", $"{PO}")}',Razon='{Razon}'
             where (wip in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP 
             inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14))  
-            and (ConfirmacionAlm='OnHold')) or Wip in (select WIP from tblWipCortosPN where PN='{PNChange}') ) and PN = '{PNChange}'", cnn)
+            and (ConfirmacionAlm='OnHold')) 
+            or WIP in (select distinct w.WIP from tblPWO as c inner join tblWipDet as d on c.PWO=d.PWOA OR c.PWO=d.PWOB inner join tblWIP as w on w.WIP=d.WIP 
+            where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort > 30 or w.wSort in (12,14)))) And (c.Wsort in (12,14)) and (ConfirmacionAlm='OnHold'))))
+            or Wip in (select WIP from tblWipCortosPN where PN='{PNChange}')) and PN = '{PNChange}'", cnn)
             cmd.CommandType = CommandType.Text
+            cmd.CommandTimeout = 120000
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
@@ -2717,11 +2721,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = WIP
             cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
             cmd.Parameters.Add("@FProm", SqlDbType.NVarChar).Value = fecha
-            If notes Like $"*{PN}*" Then
-                cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
-            Else
-                cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes + " para PN= " + oPn
-            End If
+            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = If(notes Like $"*{PN}*", notes, notes + " para PN= " + oPn)
             cnn.Open()
             cmd.ExecuteNonQuery()
             cnn.Close()
