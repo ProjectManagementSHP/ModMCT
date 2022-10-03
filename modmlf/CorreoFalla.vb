@@ -92,13 +92,13 @@ Module CorreoFalla
             Correo += vbNewLine + vbNewLine + vbNewLine
             Correo += "Por favor no responder este correo" + vbNewLine + "Gracias"
 
-            Dim _Message As New System.Net.Mail.MailMessage()
-            Dim _SMTP As New System.Net.Mail.SmtpClient
-
-            _SMTP.Credentials = New System.Net.NetworkCredential(EnviadoPor, "Row.6078$")
-            _SMTP.Host = "smtp.ipower.com"
-            _SMTP.Port = 587
-            _SMTP.EnableSsl = True
+            Dim _Message As New Net.Mail.MailMessage()
+            Dim _SMTP As New Net.Mail.SmtpClient With {
+                .Credentials = New System.Net.NetworkCredential(EnviadoPor, "Row.6078$"),
+                .Host = "smtp.ipower.com",
+                .Port = 587,
+                .EnableSsl = True
+            }
 
             If DestinatariosCC <> "" Then _Message.CC.Add(DestinatariosCC)
             If DestinatariosBCC <> "" Then _Message.Bcc.Add(DestinatariosBCC)

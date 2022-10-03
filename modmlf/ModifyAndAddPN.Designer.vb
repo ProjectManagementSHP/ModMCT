@@ -432,7 +432,7 @@ Partial Class ModifyAndAddPN
         Me.dgvCortosCompletos.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvCortosCompletos.EnableHeadersVisualStyles = False
         Me.dgvCortosCompletos.GridColor = System.Drawing.SystemColors.ControlLightLight
-        Me.dgvCortosCompletos.Location = New System.Drawing.Point(7, 104)
+        Me.dgvCortosCompletos.Location = New System.Drawing.Point(7, 97)
         Me.dgvCortosCompletos.Name = "dgvCortosCompletos"
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control

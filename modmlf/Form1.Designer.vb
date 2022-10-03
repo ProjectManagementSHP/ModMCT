@@ -26,11 +26,11 @@ Partial Class Principal
         Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series5 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series6 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series8 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series9 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -50,6 +50,11 @@ Partial Class Principal
         Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series10 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series11 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series12 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.dgvWips = New System.Windows.Forms.DataGridView()
         Me.lblitems = New System.Windows.Forms.Label()
         Me.lblwsortasig = New System.Windows.Forms.Label()
@@ -104,9 +109,9 @@ Partial Class Principal
         Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
         Me.CrearPWOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -144,6 +149,11 @@ Partial Class Principal
         Me.PWOTab = New System.Windows.Forms.TabPage()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.dgvPWO = New System.Windows.Forms.DataGridView()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.TabControl2 = New System.Windows.Forms.TabControl()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
         CType(Me.dgvWips, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuDisponibilidad.SuspendLayout()
         Me.pnluserandtitle.SuspendLayout()
@@ -170,6 +180,11 @@ Partial Class Principal
         Me.CWOtab.SuspendLayout()
         Me.PWOTab.SuspendLayout()
         CType(Me.dgvPWO, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
+        CType(Me.Chart2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabControl2.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
         Me.SuspendLayout()
         '
         'dgvWips
@@ -372,43 +387,41 @@ Partial Class Principal
         '
         'Chart1
         '
-        Me.Chart1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Chart1.BorderlineColor = System.Drawing.Color.Red
-        ChartArea2.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
-        ChartArea2.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet
-        ChartArea2.AxisY.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet
-        ChartArea2.BackColor = System.Drawing.Color.White
-        ChartArea2.BackSecondaryColor = System.Drawing.Color.White
-        ChartArea2.Name = "ChartArea1"
-        ChartArea2.ShadowColor = System.Drawing.Color.Gray
-        Me.Chart1.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
-        Me.Chart1.Location = New System.Drawing.Point(4, 2)
+        ChartArea3.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
+        ChartArea3.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet
+        ChartArea3.AxisY.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet
+        ChartArea3.BackColor = System.Drawing.Color.White
+        ChartArea3.BackSecondaryColor = System.Drawing.Color.White
+        ChartArea3.Name = "ChartArea1"
+        ChartArea3.ShadowColor = System.Drawing.Color.Gray
+        Me.Chart1.ChartAreas.Add(ChartArea3)
+        Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
+        Legend3.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend3)
+        Me.Chart1.Location = New System.Drawing.Point(3, 3)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(2)
         Me.Chart1.Name = "Chart1"
-        Series4.ChartArea = "ChartArea1"
-        Series4.Legend = "Legend1"
-        Series4.Name = "Carga en proceso de confirmacion"
-        Series5.BorderColor = System.Drawing.Color.Black
-        Series5.BorderWidth = 3
-        Series5.ChartArea = "ChartArea1"
-        Series5.Color = System.Drawing.Color.ForestGreen
-        Series5.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Series5.IsValueShownAsLabel = True
-        Series5.Legend = "Legend1"
-        Series5.Name = "Carga Maquinas por entrar"
-        Series6.BorderColor = System.Drawing.Color.Black
-        Series6.ChartArea = "ChartArea1"
-        Series6.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Series6.Legend = "Legend1"
-        Series6.Name = "Carga Actual"
-        Me.Chart1.Series.Add(Series4)
-        Me.Chart1.Series.Add(Series5)
-        Me.Chart1.Series.Add(Series6)
-        Me.Chart1.Size = New System.Drawing.Size(1253, 218)
+        Series7.ChartArea = "ChartArea1"
+        Series7.Legend = "Legend1"
+        Series7.Name = "Carga en proceso de confirmacion"
+        Series8.BorderColor = System.Drawing.Color.Black
+        Series8.BorderWidth = 3
+        Series8.ChartArea = "ChartArea1"
+        Series8.Color = System.Drawing.Color.ForestGreen
+        Series8.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series8.IsValueShownAsLabel = True
+        Series8.Legend = "Legend1"
+        Series8.Name = "Carga Maquinas por entrar"
+        Series9.BorderColor = System.Drawing.Color.Black
+        Series9.ChartArea = "ChartArea1"
+        Series9.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series9.Legend = "Legend1"
+        Series9.Name = "Carga Actual"
+        Me.Chart1.Series.Add(Series7)
+        Me.Chart1.Series.Add(Series8)
+        Me.Chart1.Series.Add(Series9)
+        Me.Chart1.Size = New System.Drawing.Size(1253, 190)
         Me.Chart1.TabIndex = 5439
         Me.Chart1.Text = "Chart1"
         '
@@ -495,7 +508,6 @@ Partial Class Principal
         Me.rdbOnHold.Name = "rdbOnHold"
         Me.rdbOnHold.Size = New System.Drawing.Size(73, 20)
         Me.rdbOnHold.TabIndex = 5
-        Me.rdbOnHold.TabStop = True
         Me.rdbOnHold.Text = "Cortos"
         Me.rdbOnHold.UseVisualStyleBackColor = True
         '
@@ -508,7 +520,6 @@ Partial Class Principal
         Me.rbEmpezadosyDetenidos.Name = "rbEmpezadosyDetenidos"
         Me.rbEmpezadosyDetenidos.Size = New System.Drawing.Size(193, 20)
         Me.rbEmpezadosyDetenidos.TabIndex = 4
-        Me.rbEmpezadosyDetenidos.TabStop = True
         Me.rbEmpezadosyDetenidos.Text = "Empezados y Detenidos"
         Me.rbEmpezadosyDetenidos.UseVisualStyleBackColor = True
         '
@@ -521,7 +532,6 @@ Partial Class Principal
         Me.rbYaempezados.Name = "rbYaempezados"
         Me.rbYaempezados.Size = New System.Drawing.Size(127, 20)
         Me.rbYaempezados.TabIndex = 3
-        Me.rbYaempezados.TabStop = True
         Me.rbYaempezados.Text = "Ya empezados"
         Me.rbYaempezados.UseVisualStyleBackColor = True
         '
@@ -534,7 +544,6 @@ Partial Class Principal
         Me.rbListosParaEntrar.Name = "rbListosParaEntrar"
         Me.rbListosParaEntrar.Size = New System.Drawing.Size(150, 20)
         Me.rbListosParaEntrar.TabIndex = 2
-        Me.rbListosParaEntrar.TabStop = True
         Me.rbListosParaEntrar.Text = "Listos Para Entrar"
         Me.rbListosParaEntrar.UseVisualStyleBackColor = True
         '
@@ -547,7 +556,6 @@ Partial Class Principal
         Me.rbSolicitado.Name = "rbSolicitado"
         Me.rbSolicitado.Size = New System.Drawing.Size(95, 20)
         Me.rbSolicitado.TabIndex = 1
-        Me.rbSolicitado.TabStop = True
         Me.rbSolicitado.Text = "Solicitado"
         Me.rbSolicitado.UseVisualStyleBackColor = True
         Me.rbSolicitado.Visible = False
@@ -555,6 +563,7 @@ Partial Class Principal
         'rbsolicitar
         '
         Me.rbsolicitar.AutoSize = True
+        Me.rbsolicitar.Checked = True
         Me.rbsolicitar.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbsolicitar.Location = New System.Drawing.Point(12, 11)
         Me.rbsolicitar.Margin = New System.Windows.Forms.Padding(2)
@@ -692,7 +701,7 @@ Partial Class Principal
         Me.dgvMatSinStockCompras.RowHeadersVisible = False
         Me.dgvMatSinStockCompras.RowHeadersWidth = 51
         Me.dgvMatSinStockCompras.RowTemplate.Height = 24
-        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(621, 167)
+        Me.dgvMatSinStockCompras.Size = New System.Drawing.Size(635, 173)
         Me.dgvMatSinStockCompras.TabIndex = 5458
         '
         'Chk
@@ -800,7 +809,7 @@ Partial Class Principal
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MonitorWIPS, Me.ToolStripMenuItem1, Me.ToolStripMenuItem10, Me.ToolStripMenuItem11, Me.ToolStripMenuItem3, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.CrearPWOToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MonitorWIPS, Me.ToolStripMenuItem1, Me.ToolStripMenuItem10, Me.ToolStripMenuItem11, Me.ToolStripMenuItem3, Me.ToolStripMenuItem6, Me.CrearPWOToolStripMenuItem, Me.ToolStripMenuItem5})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
         Me.FileToolStripMenuItem.Text = "Ir a"
@@ -835,12 +844,6 @@ Partial Class Principal
         Me.ToolStripMenuItem3.Size = New System.Drawing.Size(171, 22)
         Me.ToolStripMenuItem3.Text = "Ver Manual de uso"
         '
-        'ToolStripMenuItem5
-        '
-        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(171, 22)
-        Me.ToolStripMenuItem5.Text = "Cambiar de usario"
-        '
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
@@ -852,6 +855,12 @@ Partial Class Principal
         Me.CrearPWOToolStripMenuItem.Name = "CrearPWOToolStripMenuItem"
         Me.CrearPWOToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.CrearPWOToolStripMenuItem.Text = "Crear PWO"
+        '
+        'ToolStripMenuItem5
+        '
+        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(171, 22)
+        Me.ToolStripMenuItem5.Text = "Cambiar de usario"
         '
         'AboutToolStripMenuItem
         '
@@ -892,23 +901,23 @@ Partial Class Principal
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Location = New System.Drawing.Point(7, 337)
+        Me.TabControl1.Location = New System.Drawing.Point(0, 337)
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(2)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1265, 246)
+        Me.TabControl1.Size = New System.Drawing.Size(1279, 252)
         Me.TabControl1.TabIndex = 5461
         '
         'TabPage1
         '
-        Me.TabPage1.Controls.Add(Me.Chart1)
+        Me.TabPage1.Controls.Add(Me.Panel3)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(2)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage1.Size = New System.Drawing.Size(1257, 220)
+        Me.TabPage1.Size = New System.Drawing.Size(1271, 226)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Grafica"
+        Me.TabPage1.Text = "Graficas"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'TabPage2
@@ -928,7 +937,7 @@ Partial Class Principal
         Me.TabPage2.Margin = New System.Windows.Forms.Padding(2)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage2.Size = New System.Drawing.Size(1257, 220)
+        Me.TabPage2.Size = New System.Drawing.Size(1271, 226)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "PN Cortos"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -939,7 +948,7 @@ Partial Class Principal
         Me.btnCortosPN.BackgroundImage = CType(resources.GetObject("btnCortosPN.BackgroundImage"), System.Drawing.Image)
         Me.btnCortosPN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnCortosPN.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.btnCortosPN.Location = New System.Drawing.Point(817, 6)
+        Me.btnCortosPN.Location = New System.Drawing.Point(831, 6)
         Me.btnCortosPN.Margin = New System.Windows.Forms.Padding(2)
         Me.btnCortosPN.Name = "btnCortosPN"
         Me.btnCortosPN.Size = New System.Drawing.Size(36, 37)
@@ -966,7 +975,7 @@ Partial Class Principal
         Me.btnexportaeficc.BackColor = System.Drawing.Color.White
         Me.btnexportaeficc.BackgroundImage = CType(resources.GetObject("btnexportaeficc.BackgroundImage"), System.Drawing.Image)
         Me.btnexportaeficc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.btnexportaeficc.Location = New System.Drawing.Point(553, 12)
+        Me.btnexportaeficc.Location = New System.Drawing.Point(567, 12)
         Me.btnexportaeficc.Margin = New System.Windows.Forms.Padding(2)
         Me.btnexportaeficc.Name = "btnexportaeficc"
         Me.btnexportaeficc.Size = New System.Drawing.Size(78, 27)
@@ -1005,7 +1014,7 @@ Partial Class Principal
         Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(644, 21)
+        Me.Label7.Location = New System.Drawing.Point(658, 21)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(134, 16)
@@ -1017,7 +1026,7 @@ Partial Class Principal
         Me.lblAfectados.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblAfectados.AutoSize = True
         Me.lblAfectados.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAfectados.Location = New System.Drawing.Point(1181, 24)
+        Me.lblAfectados.Location = New System.Drawing.Point(1195, 24)
         Me.lblAfectados.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.lblAfectados.Name = "lblAfectados"
         Me.lblAfectados.Size = New System.Drawing.Size(13, 16)
@@ -1062,7 +1071,7 @@ Partial Class Principal
         Me.dgvAfectados.DefaultCellStyle = DataGridViewCellStyle35
         Me.dgvAfectados.EnableHeadersVisualStyles = False
         Me.dgvAfectados.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvAfectados.Location = New System.Drawing.Point(639, 44)
+        Me.dgvAfectados.Location = New System.Drawing.Point(653, 44)
         Me.dgvAfectados.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvAfectados.Name = "dgvAfectados"
         DataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -1076,7 +1085,7 @@ Partial Class Principal
         Me.dgvAfectados.RowHeadersVisible = False
         Me.dgvAfectados.RowHeadersWidth = 51
         Me.dgvAfectados.RowTemplate.Height = 24
-        Me.dgvAfectados.Size = New System.Drawing.Size(603, 167)
+        Me.dgvAfectados.Size = New System.Drawing.Size(603, 173)
         Me.dgvAfectados.TabIndex = 5461
         '
         'aChk
@@ -1097,7 +1106,7 @@ Partial Class Principal
         Me.TabPage3.Margin = New System.Windows.Forms.Padding(2)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage3.Size = New System.Drawing.Size(1257, 220)
+        Me.TabPage3.Size = New System.Drawing.Size(1271, 226)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Relacion Numeros de parte cortos"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -1110,7 +1119,7 @@ Partial Class Principal
         Me.gbFechas.Controls.Add(Me.dtpBefore)
         Me.gbFechas.Controls.Add(Me.dtpAfter)
         Me.gbFechas.Controls.Add(Me.BtnExportarCortos)
-        Me.gbFechas.Location = New System.Drawing.Point(522, 0)
+        Me.gbFechas.Location = New System.Drawing.Point(536, 0)
         Me.gbFechas.Name = "gbFechas"
         Me.gbFechas.Size = New System.Drawing.Size(477, 55)
         Me.gbFechas.TabIndex = 5472
@@ -1190,7 +1199,7 @@ Partial Class Principal
         Me.btnAgregarNewElemento.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnAgregarNewElemento.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAgregarNewElemento.Image = Global.modmlf.My.Resources.Resources.BotonCorto2
-        Me.btnAgregarNewElemento.Location = New System.Drawing.Point(1004, 4)
+        Me.btnAgregarNewElemento.Location = New System.Drawing.Point(1018, 4)
         Me.btnAgregarNewElemento.Margin = New System.Windows.Forms.Padding(2)
         Me.btnAgregarNewElemento.Name = "btnAgregarNewElemento"
         Me.btnAgregarNewElemento.Size = New System.Drawing.Size(242, 45)
@@ -1253,7 +1262,7 @@ Partial Class Principal
         Me.dgvCortosCompletos.RowHeadersVisible = False
         Me.dgvCortosCompletos.RowHeadersWidth = 51
         Me.dgvCortosCompletos.RowTemplate.Height = 24
-        Me.dgvCortosCompletos.Size = New System.Drawing.Size(1239, 154)
+        Me.dgvCortosCompletos.Size = New System.Drawing.Size(1253, 160)
         Me.dgvCortosCompletos.TabIndex = 5436
         '
         'Timer3
@@ -1264,7 +1273,7 @@ Partial Class Principal
         Me.ContextMenuStripModificar.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ContextMenuStripModificar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TLModificar})
         Me.ContextMenuStripModificar.Name = "ContextMenuDesviacion"
-        Me.ContextMenuStripModificar.Size = New System.Drawing.Size(181, 48)
+        Me.ContextMenuStripModificar.Size = New System.Drawing.Size(126, 26)
         '
         'TLModificar
         '
@@ -1365,6 +1374,90 @@ Partial Class Principal
         Me.dgvPWO.Size = New System.Drawing.Size(1258, 173)
         Me.dgvPWO.TabIndex = 5436
         '
+        'Panel3
+        '
+        Me.Panel3.AutoScroll = True
+        Me.Panel3.Controls.Add(Me.TabControl2)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel3.Location = New System.Drawing.Point(2, 2)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(1267, 222)
+        Me.Panel3.TabIndex = 5501
+        '
+        'Chart2
+        '
+        Me.Chart2.BorderlineColor = System.Drawing.Color.Red
+        ChartArea4.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
+        ChartArea4.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet
+        ChartArea4.AxisY.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet
+        ChartArea4.BackColor = System.Drawing.Color.White
+        ChartArea4.BackSecondaryColor = System.Drawing.Color.White
+        ChartArea4.Name = "ChartArea1"
+        ChartArea4.ShadowColor = System.Drawing.Color.Gray
+        Me.Chart2.ChartAreas.Add(ChartArea4)
+        Me.Chart2.Dock = System.Windows.Forms.DockStyle.Fill
+        Legend4.Name = "Legend1"
+        Me.Chart2.Legends.Add(Legend4)
+        Me.Chart2.Location = New System.Drawing.Point(3, 3)
+        Me.Chart2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Chart2.Name = "Chart2"
+        Series10.ChartArea = "ChartArea1"
+        Series10.Legend = "Legend1"
+        Series10.Name = "Carga en proceso de confirmacion"
+        Series11.BorderColor = System.Drawing.Color.Black
+        Series11.BorderWidth = 3
+        Series11.ChartArea = "ChartArea1"
+        Series11.Color = System.Drawing.Color.ForestGreen
+        Series11.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series11.IsValueShownAsLabel = True
+        Series11.Legend = "Legend1"
+        Series11.Name = "Carga Celdas por entrar"
+        Series12.BorderColor = System.Drawing.Color.Black
+        Series12.ChartArea = "ChartArea1"
+        Series12.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Series12.Legend = "Legend1"
+        Series12.Name = "Carga Actual"
+        Me.Chart2.Series.Add(Series10)
+        Me.Chart2.Series.Add(Series11)
+        Me.Chart2.Series.Add(Series12)
+        Me.Chart2.Size = New System.Drawing.Size(1253, 190)
+        Me.Chart2.TabIndex = 5442
+        Me.Chart2.Text = "Chart2"
+        '
+        'TabControl2
+        '
+        Me.TabControl2.Controls.Add(Me.TabPage4)
+        Me.TabControl2.Controls.Add(Me.TabPage5)
+        Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl2.Location = New System.Drawing.Point(0, 0)
+        Me.TabControl2.Name = "TabControl2"
+        Me.TabControl2.SelectedIndex = 0
+        Me.TabControl2.Size = New System.Drawing.Size(1267, 222)
+        Me.TabControl2.TabIndex = 5443
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.Chart1)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(1259, 196)
+        Me.TabPage4.TabIndex = 0
+        Me.TabPage4.Text = "Graficas CWO"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.Chart2)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage5.Size = New System.Drawing.Size(1259, 196)
+        Me.TabPage5.TabIndex = 1
+        Me.TabPage5.Text = "Graficas PWO"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1425,6 +1518,11 @@ Partial Class Principal
         Me.PWOTab.ResumeLayout(False)
         Me.PWOTab.PerformLayout()
         CType(Me.dgvPWO, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
+        CType(Me.Chart2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabControl2.ResumeLayout(False)
+        Me.TabPage4.ResumeLayout(False)
+        Me.TabPage5.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1523,4 +1621,9 @@ Partial Class Principal
     Friend WithEvents Label9 As Label
     Friend WithEvents dgvPWO As DataGridView
     Friend WithEvents ImprimirReporteToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Chart2 As DataVisualization.Charting.Chart
+    Friend WithEvents TabControl2 As TabControl
+    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents TabPage5 As TabPage
 End Class

@@ -10,6 +10,7 @@ Public Class ModifyAndAddPN
         FlagFechas = False
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Cursor.Current = Cursors.WaitCursor
         If tbModify.Visible And tbNew.Visible = False Then
             If txbNotas.Text = "" And txbNotasModify.Text = "" And dtpFProm.Value = "2021-01-01" Then
                 MessageBox.Show("Debe colocar fecha y nota")
@@ -35,7 +36,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
                     Me.Close()
                 End If
             End If
-        ElseIf tbNew.Visible = True And tbModify.Visible = False Then
+        ElseIf tbNew.Visible And tbModify.Visible = False Then
             If txbNewPN.Text = "" And dgvCortosCompletos.RowCount = 0 Then
                 MessageBox.Show("Antes de continuar, favor de escribir un numero de parte y rellenar los campos.")
             Else
@@ -52,6 +53,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
                 End If
             End If
         End If
+        Cursor.Current = Cursors.Default
     End Sub
     Protected ReadOnly Property CheckWips
         Get
@@ -84,13 +86,13 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
                 End If
             Next
             If CountWipsPass > 0 Then
-                If Not IDemonChanges.CheckCortosPN(txbNewPN.Text, True, If(chkParoAUNew.Checked = True, True, False)) Then
+                If Not IDemonChanges.CheckCortosPN(txbNewPN.Text, True, chkParoAUNew.Checked) Then
                     IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text, txbNotasNew.Text, True, If(chkParoAUNew.Checked, True, False))
                 End If
             End If
             If Aus.Length > 0 And WipsWithOutCWO.Length > 0 Then
                 IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text,
-                txbNotasNew.Text, True, If(chkParoAUNew.Checked, True, False), True, WipsWithOutCWO.ToString.TrimEnd(","),
+                txbNotasNew.Text, True, chkParoAUNew.Checked, True, WipsWithOutCWO.ToString.TrimEnd(","),
                 Aus.ToString.TrimEnd(","))
                 Dim WipsClean As String = WipsWithOutCWO.ToString.Replace("'", "")
                 WipsClean = WipsClean.ToString.TrimEnd(",", "")
@@ -105,7 +107,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
             If Wips.Length > 0 Then
                 'Aqui colocar codigo para envio de correo de numeros de parte puestos por compras
                 Dim mensaje As String = $"Se ha colocado por parte de compras el siguiente numero de parte: {txbNewPN.Text}" + vbNewLine + "Y los WIP's afectados son los siguientes: " + vbNewLine + $"{Wips.ToString.TrimEnd(",").Trim}."
-                EnviaCorreoHoldMatPorCompras(mensaje)
+                'EnviaCorreoHoldMatPorCompras(mensaje)
             End If
             Return True
         Catch Exc As Exception
@@ -167,7 +169,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
                                                                                          .Sum(Function(i) i).ToString
                     lblQtyOnHand.Text = Principal.AllocatedAQty($"select distinct QtyOnHand from tblItemsQB where PN = '{filtro}'")
                 Else
-                    MessageBox.Show("El numero de parte buscado, no pertenece a corte, revisalo por favor.", "Busqueda PN", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    MessageBox.Show("El numero de parte buscado, no pertenece a Corte o MP, revisalo por favor.", "Busqueda PN", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
             Else
                 If cmbPONuevo.Text <> "" Then cmbPONuevo.Text = ""
