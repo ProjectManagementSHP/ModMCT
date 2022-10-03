@@ -40,16 +40,16 @@ Public Class Login
                 With OpcionesLog
                     .ShowDialog()
                 End With
+                Me.Hide()
                 Principal.Text = "Admin"
                 Principal.Show()
-                Me.Hide()
             ElseIf TextBox1.Text = "" And TextBox2.Text = "a10946830z" Then
                 With OpcionesLog
                     .ShowDialog()
                 End With
+                Me.Hide()
                 Principal.Text = "Direccion"
                 Principal.Show()
-                Me.Hide()
             Else
                 Dim User As LoginUser = New LoginUser(TextBox1.Text, TextBox2.Text, "MLF")
                 If User.IsAuthenticated() Then
@@ -61,51 +61,51 @@ Public Class Login
                                 With OpcionesLog
                                     .ShowDialog()
                                 End With
+                                Me.Hide()
                                 Principal.Text = "Desarrollo"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Almacen"
                                 opcion = 2
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Almacen"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Corte"
                                 opcion = 1
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Corte"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Aplicadores"
                                 opcion = 3
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Aplicadores"
                                 Principal.Show()
-                                Me.Hide()
                             Case "XP"
                                 opcion = 4
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "XP"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Compras"
                                 opcion = 5
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Compras"
                                 Principal.Show()
-                                Me.Hide()
                             Case "PlanCorte"
                                 opcion = 6
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Planeacion Corte"
                                 Principal.Show()
-                                Me.Hide()
                             Case "PlanXP"
                                 opcion = 7
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Planeacion XP"
                                 Principal.Show()
-                                Me.Hide()
                             Case Else
                                 MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
                         End Select

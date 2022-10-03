@@ -223,13 +223,13 @@ Public Class Principal
     '                                           Return Nothing
     '                                       End Function
     Private Sub Mouse_Down(sender As Object, e As MouseEventArgs)
-        Throw New System.NotImplementedException
+        Throw New NotImplementedException
     End Sub
     Private Sub Mouse_Up(sender As Object, e As MouseEventArgs)
-        Throw New System.NotImplementedException
+        Throw New NotImplementedException
     End Sub
     Private Sub Mouse_Move(sender As Object, e As MouseEventArgs)
-        Throw New System.NotImplementedException
+        Throw New NotImplementedException
     End Sub
     Sub SelectWorkOrder_View()
         If opcion = 8 Then
@@ -277,44 +277,20 @@ Public Class Principal
                 If edo = "Open" Then cnn.Close()
             End If
             If CWO.Rows.Count > 0 Then
-                With dgvWips
-                    .DataSource = CWO
-                    .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    '.Columns("DueDateProcess").DefaultCellStyle.Format = "dd-MMM-yy"
-                    '.Columns("DateCreatedWIP").DefaultCellStyle.Format = "dd-MMM-yy"
-                    If opcion = 5 Then
-                        '.Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = "dd-MMM-yy"
-                        '.Columns("Fecha Materiales").DefaultCellStyle.Format = "dd-MMM-yy"
-                    End If
-                    .Columns(0).Frozen = True
-                    .Columns(1).Frozen = True
-                    Label3.Text = "Items: " & .Rows.Count
-                    btnRefrescaGrid.Visible = True
-                End With
+                dgvWips.DataSource = CWO
+                ConfigGridSolution(dgvWips)
+                Label3.Text = "Items: " & dgvWips.Rows.Count
+                btnRefrescaGrid.Visible = True
                 Pintaceldas(dgvWips)
             Else
                 dgvWips.DataSource = Nothing
                 Label3.Text = "Items: " & dgvWips.Rows.Count
             End If
             If PWO.Rows.Count > 0 Then
-                With dgvPWO
-                    .DataSource = PWO
-                    .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    '.Columns("DueDateProcess").DefaultCellStyle.Format = "dd-MMM-yy"
-                    '.Columns("DateCreatedWIP").DefaultCellStyle.Format = "dd-MMM-yy"
-                    If opcion = 5 Then
-                        '.Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = "dd-MMM-yy"
-                        '.Columns("Fecha Materiales").DefaultCellStyle.Format = "dd-MMM-yy"
-                    End If
-                    .Columns(0).Frozen = True
-                    .Columns(1).Frozen = True
-                    Label9.Text = "Items: " & .Rows.Count
-                    btnRefrescaGrid.Visible = True
-                End With
+                dgvPWO.DataSource = PWO
+                ConfigGridSolution(dgvPWO)
+                Label9.Text = "Items: " & dgvPWO.Rows.Count
+                btnRefrescaGrid.Visible = True
                 Pintaceldas(dgvPWO)
             Else
                 dgvPWO.DataSource = Nothing
@@ -326,6 +302,26 @@ Public Class Principal
             CorreoFalla.EnviaCorreoFalla("llenagrid", host, UserName)
         End Try
     End Sub
+    Private ConfigGridSolution As Action(Of DataGridView) = Function(Grid)
+                                                                Try
+                                                                    If Grid IsNot Nothing Then
+                                                                        Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                                                                        Grid.AutoResizeColumns()
+                                                                        Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                                                                        Grid.Columns("DueDateProcess").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                        Grid.Columns("DateCreatedWIP").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                        If opcion = 5 Then
+                                                                            Grid.Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                            Grid.Columns("Fecha Materiales").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                        End If
+                                                                        Grid.Columns(0).Frozen = True
+                                                                        Grid.Columns(1).Frozen = True
+                                                                    End If
+                                                                Catch ex As Exception
+                                                                    MessageBox.Show(ex.ToString)
+                                                                End Try
+                                                                Return Nothing
+                                                            End Function
     Private Sub GridCharge()
         Dim systemType As Type
         Dim propertyInfo As PropertyInfo
@@ -556,7 +552,7 @@ Public Class Principal
                          and ((wSort < 29 and wSort <> 12) or (wSort=12 and w.WIP in (select distinct WIP from tblBOMCWO where PN like @filtro and Hold=0))) and bw.PN like @filtro and bw.Balance > 0
                          union
                          select distinct w.WIP,w.AU,w.Rev,w.Qty [Cantidad],wSort from tblWIP w inner join tblBOMWIP bw on w.WIP=bw.WIP where w.Status = 'OPEN' and 
-                         ((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort > 30 or w.wSort in (12,14)))) or 
+                         ((KindOfAU like '[XP]%' and (w.wSort >= 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort >= 30 or w.wSort in (12,14)))) or 
                          (wSort=12 and w.WIP in (select distinct WIP from tblBOMPWO where PN like @filtro and Hold=0))) and bw.PN like @filtro and bw.Balance > 0 "
                 da1 = New SqlDataAdapter(query, cnn)
                 da1.SelectCommand.Parameters.AddWithValue("@filtro", String.Format("%{0}%", SearchPn))
@@ -2208,7 +2204,7 @@ where PWO = @CWO")
             cmd.ExecuteNonQuery()
             cnn.Close()
             If opcion = 2 Then
-                query = "update tblBOMCWO set Hold=0 where CWO='" + cwo + "' and Hold=1"
+                query = $"update tblBOM{Microsoft.VisualBasic.Left(cwo, 1)}WO set Hold=0 where {Microsoft.VisualBasic.Left(cwo, 1)}WO='" + cwo + "' and Hold=1"
                 cmd = New SqlCommand(query, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -2216,7 +2212,7 @@ where PWO = @CWO")
                 cnn.Close()
                 Dim dt = New DataTable()
                 Dim list As List(Of DataRow) = New List(Of DataRow)
-                query = "select PN from tblBOMCWO where CWO = '" + cwo + "' and PN not like 'S%'"
+                query = $"select PN from tblBOM{Microsoft.VisualBasic.Left(cwo, 1)}WO where {Microsoft.VisualBasic.Left(cwo, 1)}WO = '" + cwo + "' and PN not like 'S%'"
                 cmd = New SqlCommand(query, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -2814,7 +2810,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ' ---------------------------
         Catch ex As Exception
             MsgBox(ex.ToString)
-            CorreoFalla.EnviaCorreoFalla("notas", host, UserName)
+            EnviaCorreoFalla("notas", host, UserName)
         End Try
         Cursor.Current = Cursors.Default
     End Sub

@@ -268,7 +268,6 @@ Public Class CreateWorkOrder
                                             If objMerge.Rows.Count = 0 Then
                                                 objMerge = MergeDataBOM(AppendInfo.ToString.TrimEnd(",").Trim, Term.PN.ToString).Copy()
                                             Else
-                                                'Dim objCopyTb =
                                                 objMerge.Merge(MergeDataBOM(AppendInfo.ToString.TrimEnd(",").Trim, Term.PN.ToString), True)
                                             End If
                                         End If
@@ -398,7 +397,7 @@ Public Class CreateWorkOrder
             Dim ERunTime As Integer = _ListForProcess.[Select](Function(i) i.RunTime).Sum(Function(a) a)
             Dim SumBalances As Integer = _ListForProcess.[Select](Function(i) i.Balance).Sum(Function(a) a)
             Dim CellMaxCurrent As String = _ListForProcess.Max(Function(c) c.Cell.ToString.Trim.ToUpper)
-            If CellMaxCurrent = "AMARILLO" Then
+            If CellMaxCurrent = "AMARILLO" Or CellMaxCurrent = "YEL" Then
                 CellMaxCurrent = "YEL"
             ElseIf CellMaxCurrent = "AZUL" Then
                 CellMaxCurrent = "BLU"
@@ -434,7 +433,7 @@ Public Class CreateWorkOrder
                 oCmdo.Parameters.Add("@Id", SqlDbType.Int).Value = Sort.GetSortPWO()
             End If
             conexPWO.Open()
-            Return If(oCmdo.ExecuteNonQuery() > 0, True, False)
+            Return oCmdo.ExecuteNonQuery() > 0
             conexPWO.Close()
         Catch ex As Exception
             conexPWO.Close()

@@ -201,7 +201,7 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub SelectedTermProcess(PN As String, Cell As String, Balance As Integer)
         Try
-            Dim aConsulta As String = $"select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,CONVERT(float,ROUND(CAST(((case when TermA = '{PN}' and MaqA='MM' then TABalance else 0 end + case when TermB = '{PN}' and MaqB='MM' then TBBalance else 0 end) * 7) AS DECIMAL(18,0)) / 60,2,1)) [Test],'{Cell}' [Celda],WireID,MaqA,MaqB from tblWipDet" &
+            Dim aConsulta As String = $"select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,CONVERT(float,ROUND(CAST(((case when TermA = '{PN}' and MaqA='MM' then TABalance else 0 end + case when TermB = '{PN}' and MaqB='MM' then TBBalance else 0 end) * 7) AS DECIMAL(18,0)) / 60,2,1)) [Test],'{If(Cell = "AMARILLO", "YEL", Cell)}' [Celda],WireID,MaqA,MaqB from tblWipDet" &
                                       $" where ((TermA = '{PN}' and MaqA='MM') or (TermB='{PN}' and MaqB='MM')) and" &
                                       $" WIP in (select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) 
                                       and ((PWOA is null and MaqA='MM') or (PWOB is null and MaqB='MM'))" &
@@ -216,17 +216,15 @@ selected: " + InfoTablas.Count.ToString
             If aTable.Rows.Count > 0 Then
                 If dgvDetalleTerminales.Rows.Count > 0 Then
                     If InfoTablas.Count > 0 Then
-                        With dgvDetalleTerminales
-                            tbAux = MergedObjTables(aTable, dgvDetalleTerminales)
-                            .DataSource = tbAux
-                            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-                            .AutoResizeColumns()
-                            .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                            .ClearSelection()
-                            Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
-                            FillListInfoTablas(PN, last + aTable.Rows.Count, Cell, Balance)
-                            SumQtyAndTest(tbAux)
-                        End With
+                        tbAux = MergedObjTables(aTable, dgvDetalleTerminales)
+                        dgvDetalleTerminales.DataSource = tbAux
+                        dgvDetalleTerminales.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                        dgvDetalleTerminales.AutoResizeColumns()
+                        dgvDetalleTerminales.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                        dgvDetalleTerminales.ClearSelection()
+                        Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
+                        FillListInfoTablas(PN, last + aTable.Rows.Count, Cell, Balance)
+                        SumQtyAndTest(tbAux)
                     End If
                 Else
                     With dgvDetalleTerminales
@@ -279,8 +277,8 @@ selected: " + InfoTablas.Count.ToString
 
     Private MergedObjTables As Func(Of DataTable, DataGridView, DataTable) = Function(x, y)
                                                                                  Dim dt As New DataTable
-                                                                                 dt = (DirectCast(y.DataSource, DataTable))
-                                                                                 dt.Merge(x)
+                                                                                 dt = DirectCast(y.DataSource, DataTable)
+                                                                                 dt.Merge(x, True, MissingSchemaAction.AddWithKey)
                                                                                  Return dt
                                                                              End Function
     Private SumQtyAndTest As Action(Of DataTable) = Function(a)
@@ -475,5 +473,13 @@ selected: " + InfoTablas.Count.ToString
                     .Text = TextBox2.Text.ToString
                 }
         Report.ShowDialog()
+    End Sub
+    Private Sub CreatePWO_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If dgvPNTermsProcess.Rows.Count > 0 Then
+            Dim res = MessageBox.Show("Ya se estan visualizando terminales en por procesar, si deseas salir, pulsa Yes, si deseas continuar pulsa no.", "Cerrando Creacion PWO", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            If Not res = 6 Then
+                e.Cancel = True
+            End If
+        End If
     End Sub
 End Class

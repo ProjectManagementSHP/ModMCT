@@ -8,13 +8,13 @@
                 Me.Close()
             Else
                 With Principal
+                    Me.Hide()
                     For jj = 0 To .dgvMatSinStockCompras.Rows.Count - 1
                         If .dgvMatSinStockCompras.Rows(jj).Cells("Chk").Value = True Then
                             Dim pn = .dgvMatSinStockCompras.Rows(jj).Cells("ComponentPN").Value.ToString
                             .Notas(Principal.dgvMatSinStockCompras.Rows(jj).Cells("WO").Value.ToString, dtpFProm.Text, txbNotas.Text, .dgvMatSinStockCompras.Rows(jj).Cells("WIP").Value.ToString, pn)
-                            .tblasig.Columns(17).ReadOnly = False
-                            .tblasig.Rows(jj).Item(17) = Convert.ToDateTime(dtpFProm.Text.ToString)
-                            '.dgvMatSinStockCompras.Rows(jj).Cells("Fecha promesa PN").Value = Convert.ToDateTime(dtpFProm.Text.ToString)
+                            .tblasig.Columns(18).ReadOnly = False
+                            .tblasig.Rows(jj).Item(18) = Convert.ToDateTime(dtpFProm.Text.ToString)
                             If lst IsNot Nothing Then
                                 If lst.Where(Function(a) a.Equals(pn.ToString)).Count = 0 Then
                                     lst.Add(.dgvMatSinStockCompras.Rows(jj).Cells("ComponentPN").Value.ToString)
@@ -52,6 +52,7 @@
                         End If
                     Next
                 End With
+                MessageBox.Show("Actualizados los cambios")
                 Me.Close()
             End If
         ElseIf opcion = 3 Then
@@ -67,7 +68,7 @@
                 With Principal
                     Dim lst As New List(Of String)
                     For o As Integer = 0 To .dgvAfectados.Rows.Count - 1
-                        If .dgvAfectados.Rows(o).Cells("aChk").Value = True Then
+                        If .dgvAfectados.Rows(o).Cells("aChk").Value Then
                             If .CheckWSort(.dgvAfectados.Rows(o).Cells("WO").Value.ToString) Then
                                 If AuxWip = "" And AuxCwo = "" Then
                                     AuxCwo = .dgvAfectados.Rows(o).Cells("WO").Value.ToString
