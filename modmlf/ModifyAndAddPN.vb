@@ -151,7 +151,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
         Me.Close()
     End Sub
     Private Sub txbNewPN_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txbNewPN.KeyPress
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If e.KeyChar = Chr(13) Then
             Dim tb As New DataTable
             Dim filtro As String = CType(sender, TextBox).Text
@@ -177,7 +177,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
                 If dgvCortosCompletos.Rows.Count > 0 Then dgvCortosCompletos.DataSource = Nothing
             End If
         End If
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub dtpFProm_MouseDown(sender As Object, e As MouseEventArgs) Handles dtpFProm.MouseDown
         If e.Button = MouseButtons.Left Then

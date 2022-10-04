@@ -576,7 +576,7 @@ Public Class Principal
                          and ((wSort < 29 and wSort <> 12) or (wSort=12 and w.WIP in (select distinct WIP from tblBOMCWO where PN like @filtro and Hold=0))) and bw.PN like @filtro and bw.Balance > 0
                          union
                          select distinct w.WIP,w.AU,w.Rev,w.Qty [Cantidad],wSort from tblWIP w inner join tblBOMWIP bw on w.WIP=bw.WIP where w.Status = 'OPEN' and 
-                         ((KindOfAU like '[XP]%' and (w.wSort >= 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort >= 30 or w.wSort in (12,14)))) or 
+                         ((KindOfAU like '[XP]%' and ((w.wSort >= 32  and w.wSort < 70) or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort >= 30 or w.wSort in (12,14)))) or 
                          (wSort=12 and w.WIP in (select distinct WIP from tblBOMPWO where PN like @filtro and Hold=0))) and bw.PN like @filtro and bw.Balance > 0 "
                 da1 = New SqlDataAdapter(query, cnn)
                 da1.SelectCommand.Parameters.AddWithValue("@filtro", String.Format("%{0}%", SearchPn))

@@ -642,6 +642,7 @@ Public Class Materiales
                                     End Function)
                         Principal.Filtros(3)
                         holdoconfir = 0
+                        MessageBox.Show("Numeros de Parte colocados en status corto con exito")
                         Me.Dispose()
                         Me.Close()
                     Else
@@ -681,6 +682,7 @@ Public Class Materiales
                                     End Function)
                         Principal.Filtros(3)
                         holdoconfir = 0
+                        MessageBox.Show("Numeros de Parte colocados en status corto con exito")
                         Me.Dispose()
                         Me.Close()
                     End If
