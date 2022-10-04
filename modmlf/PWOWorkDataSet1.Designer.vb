@@ -1675,8 +1675,6 @@ Partial Public Class DataSet1
         
         Private columnWID As Global.System.Data.DataColumn
         
-        Private columnBalance As Global.System.Data.DataColumn
-        
         Private columnWire As Global.System.Data.DataColumn
         
         Private columnLengthWire As Global.System.Data.DataColumn
@@ -1686,6 +1684,8 @@ Partial Public Class DataSet1
         Private columnTermB As Global.System.Data.DataColumn
         
         Private columnCP As Global.System.Data.DataColumn
+        
+        Private columnBalance As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -1740,14 +1740,6 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property BalanceColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnBalance
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public ReadOnly Property WireColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnWire
@@ -1783,6 +1775,14 @@ Partial Public Class DataSet1
         Public ReadOnly Property CPColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnCP
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property BalanceColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnBalance
             End Get
         End Property
         
@@ -1823,9 +1823,9 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddtblWipDetRow(ByVal WIP As String, ByVal WID As Integer, ByVal Balance As Long, ByVal Wire As String, ByVal LengthWire As Decimal, ByVal TermA As String, ByVal TermB As String, ByVal CP As String) As tblWipDetRow
+        Public Overloads Function AddtblWipDetRow(ByVal WIP As String, ByVal WID As Integer, ByVal Wire As String, ByVal LengthWire As Decimal, ByVal TermA As String, ByVal TermB As String, ByVal CP As String, ByVal Balance As Integer) As tblWipDetRow
             Dim rowtblWipDetRow As tblWipDetRow = CType(Me.NewRow,tblWipDetRow)
-            Dim columnValuesArray() As Object = New Object() {WIP, WID, Balance, Wire, LengthWire, TermA, TermB, CP}
+            Dim columnValuesArray() As Object = New Object() {WIP, WID, Wire, LengthWire, TermA, TermB, CP, Balance}
             rowtblWipDetRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowtblWipDetRow)
             Return rowtblWipDetRow
@@ -1850,12 +1850,12 @@ Partial Public Class DataSet1
         Friend Sub InitVars()
             Me.columnWIP = MyBase.Columns("WIP")
             Me.columnWID = MyBase.Columns("WID")
-            Me.columnBalance = MyBase.Columns("Balance")
             Me.columnWire = MyBase.Columns("Wire")
             Me.columnLengthWire = MyBase.Columns("LengthWire")
             Me.columnTermA = MyBase.Columns("TermA")
             Me.columnTermB = MyBase.Columns("TermB")
             Me.columnCP = MyBase.Columns("CP")
+            Me.columnBalance = MyBase.Columns("Balance")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1865,8 +1865,6 @@ Partial Public Class DataSet1
             MyBase.Columns.Add(Me.columnWIP)
             Me.columnWID = New Global.System.Data.DataColumn("WID", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnWID)
-            Me.columnBalance = New Global.System.Data.DataColumn("Balance", GetType(Long), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnBalance)
             Me.columnWire = New Global.System.Data.DataColumn("Wire", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnWire)
             Me.columnLengthWire = New Global.System.Data.DataColumn("LengthWire", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
@@ -1877,11 +1875,14 @@ Partial Public Class DataSet1
             MyBase.Columns.Add(Me.columnTermB)
             Me.columnCP = New Global.System.Data.DataColumn("CP", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnCP)
+            Me.columnBalance = New Global.System.Data.DataColumn("Balance", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnBalance)
             Me.columnWIP.MaxLength = 50
             Me.columnWire.MaxLength = 50
             Me.columnTermA.MaxLength = 50
             Me.columnTermB.MaxLength = 50
             Me.columnCP.MaxLength = 50
+            Me.columnBalance.ReadOnly = true
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2869,21 +2870,6 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property Balance() As Long
-            Get
-                Try 
-                    Return CType(Me(Me.tabletblWipDet.BalanceColumn),Long)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'Balance' in table 'tblWipDet' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tabletblWipDet.BalanceColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Property Wire() As String
             Get
                 Try 
@@ -2959,6 +2945,21 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Balance() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tabletblWipDet.BalanceColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Balance' in table 'tblWipDet' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tabletblWipDet.BalanceColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsWIPNull() As Boolean
             Return Me.IsNull(Me.tabletblWipDet.WIPColumn)
         End Function
@@ -2979,18 +2980,6 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetWIDNull()
             Me(Me.tabletblWipDet.WIDColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsBalanceNull() As Boolean
-            Return Me.IsNull(Me.tabletblWipDet.BalanceColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetBalanceNull()
-            Me(Me.tabletblWipDet.BalanceColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3051,6 +3040,18 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetCPNull()
             Me(Me.tabletblWipDet.CPColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsBalanceNull() As Boolean
+            Return Me.IsNull(Me.tabletblWipDet.BalanceColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetBalanceNull()
+            Me(Me.tabletblWipDet.BalanceColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -4493,12 +4494,12 @@ Namespace DataSet1TableAdapters
             tableMapping.DataSetTable = "tblWipDet"
             tableMapping.ColumnMappings.Add("WIP", "WIP")
             tableMapping.ColumnMappings.Add("WID", "WID")
-            tableMapping.ColumnMappings.Add("Balance", "Balance")
             tableMapping.ColumnMappings.Add("Wire", "Wire")
             tableMapping.ColumnMappings.Add("LengthWire", "LengthWire")
             tableMapping.ColumnMappings.Add("TermA", "TermA")
             tableMapping.ColumnMappings.Add("TermB", "TermB")
             tableMapping.ColumnMappings.Add("CP", "CP")
+            tableMapping.ColumnMappings.Add("Balance", "Balance")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -4515,8 +4516,9 @@ Namespace DataSet1TableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "select WIP,WID,Balance,Wire,LengthWire,TermA,TermB,CP from tblWipDet where (PWOA "& _ 
-                "= @PWO or PWOB = @PWO)"
+            Me._commandCollection(0).CommandText = "select WIP,WID,case when PWOA=@PWO then TA else 0 end + case when PWOB=@PWO then "& _ 
+                "TB else 0 end [Balance],Wire,LengthWire,TermA,TermB,CP from tblWipDet where (PWO"& _ 
+                "A = @PWO or PWOB = @PWO)"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "PWOA", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub

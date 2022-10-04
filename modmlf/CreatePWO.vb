@@ -201,7 +201,16 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub SelectedTermProcess(PN As String, Cell As String, Balance As Integer)
         Try
-            Dim aConsulta As String = $"select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,CONVERT(float,ROUND(CAST(((case when TermA = '{PN}' and MaqA='MM' then TABalance else 0 end + case when TermB = '{PN}' and MaqB='MM' then TBBalance else 0 end) * 7) AS DECIMAL(18,0)) / 60,2,1)) [Test],'{If(Cell = "AMARILLO", "YEL", Cell)}' [Celda],WireID,MaqA,MaqB from tblWipDet" &
+            If Cell = "AMARILLO" Or Cell = "YEL" Then
+                Cell = "YEL"
+            ElseIf Cell = "AZUL" Then
+                Cell = "BLU"
+            ElseIf Cell = "VERDE" Then
+                Cell = "GRN"
+            ElseIf Cell = "PURPURA" Then
+                Cell = "PUR"
+            End If
+            Dim aConsulta As String = $"select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,CONVERT(float,ROUND(CAST(((case when TermA = '{PN}' and MaqA='MM' then TABalance else 0 end + case when TermB = '{PN}' and MaqB='MM' then TBBalance else 0 end) * 7) AS DECIMAL(18,0)) / 60,2,1)) [Test],'{Cell}' [Celda],WireID,MaqA,MaqB from tblWipDet" &
                                       $" where ((TermA = '{PN}' and MaqA='MM') or (TermB='{PN}' and MaqB='MM')) and" &
                                       $" WIP in (select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) 
                                       and ((PWOA is null and MaqA='MM') or (PWOB is null and MaqB='MM'))" &
@@ -387,13 +396,45 @@ selected: " + InfoTablas.Count.ToString
     Private Sub dgvTerminalesXProcesar_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTerminalesXProcesar.CellDoubleClick
         If e.RowIndex >= 0 Then
             Cursor.Current = Cursors.WaitCursor
-            Dim auxTerm As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString
-            Dim auxCell As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Celda").Value.ToString
-            Dim auxBalance As Integer = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Qty").Value.ToString
-            If InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(auxTerm)).Count > 0 Then
-                MessageBox.Show($"Esta terminal: {auxTerm} ya esta en la lista en por procesar, no es posible agregarla de nuevo.")
-            Else
-                SelectedTermProcess(auxTerm, auxCell, auxBalance)
+            If e.ColumnIndex = 0 Then
+                Dim auxTerm As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Term").Value.ToString
+                Dim auxCell As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Celda").Value.ToString
+                Dim auxBalance As Integer = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Qty").Value.ToString
+                If InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(auxTerm)).Count > 0 Then
+                    MessageBox.Show($"Esta terminal: {auxTerm} ya esta en la lista en por procesar, no es posible agregarla de nuevo.")
+                Else
+                    SelectedTermProcess(auxTerm, auxCell, auxBalance)
+                End If
+            ElseIf e.ColumnIndex = 3 Then
+                Dim lbmTermsCheck As Action(Of String, Boolean) = Function(Cell, flag)
+                                                                      For Each rows As DataGridViewRow In dgvTerminalesXProcesar.Rows
+                                                                          If rows.Cells("Celda").Value.ToString.Equals(Cell) Then
+                                                                              If flag Then
+                                                                                  If Not InfoTablas.Where(Function(Terminal) Terminal.PN.Equals(rows.Cells("Term").Value.ToString)).Count > 0 Then
+                                                                                      SelectedTermProcess(rows.Cells("Term").Value.ToString, rows.Cells("Celda").Value.ToString, rows.Cells("Qty").Value.ToString)
+                                                                                  End If
+                                                                              Else
+                                                                                  SelectedTermProcess(rows.Cells("Term").Value.ToString, rows.Cells("Celda").Value.ToString, rows.Cells("Qty").Value.ToString)
+                                                                              End If
+                                                                          End If
+                                                                      Next
+                                                                      Return Nothing
+                                                                  End Function
+                Dim resp As Integer
+                Dim CellSelected As String = dgvTerminalesXProcesar.Rows(e.RowIndex).Cells("Celda").Value.ToString
+                If dgvDetalleTerminales.Rows.Count > 0 Then
+                    resp = MessageBox.Show($"Seleccionaste terminales agrupadas por celda, pero ya existen terminales en consultas, deseas agregar las ya seleccionadas? si es asi pulsa Yes, de lo contrario, pulsa No", "Agrupacion por Celda", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+                    If Not resp = 6 Then
+                        dgvDetalleTerminales.DataSource = Nothing
+                        dgvPNTermsProcess.DataSource = Nothing
+                        InfoTablas.Clear()
+                        Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
+                        Label8.Text = "Number of terminals 
+selected: " + InfoTablas.Count.ToString
+                        DisableButton()
+                    End If
+                End If
+                lbmTermsCheck(CellSelected, resp = 6)
             End If
             Cursor.Current = Cursors.Default
         End If
@@ -480,6 +521,28 @@ selected: " + InfoTablas.Count.ToString
             If Not res = 6 Then
                 e.Cancel = True
             End If
+        End If
+    End Sub
+    Private Sub dgvTerminalesXProcesar_CellMouseMove(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvTerminalesXProcesar.CellMouseMove
+        Dim Encabezado As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If Not rdx = -1 Or cdx = -1 Then
+            Encabezado = dgvTerminalesXProcesar.Columns(cdx).HeaderText
+        End If
+        If Encabezado = "Term" Or Encabezado = "Celda" Then
+            Cursor.Current = Cursors.Hand
+        End If
+    End Sub
+    Private Sub dgvTerminalesXProcesar_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dgvTerminalesXProcesar.CellMouseLeave
+        Dim Encabezado As String = ""
+        Dim cdx As Integer = e.ColumnIndex
+        Dim rdx As Integer = e.RowIndex
+        If Not rdx = -1 Or cdx = -1 Then
+            Encabezado = dgvTerminalesXProcesar.Columns(cdx).HeaderText
+        End If
+        If Encabezado = "Term" Or Encabezado = "Celda" Then
+            Cursor.Current = Cursors.Default
         End If
     End Sub
 End Class

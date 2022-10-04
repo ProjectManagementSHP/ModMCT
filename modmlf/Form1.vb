@@ -189,18 +189,24 @@ Public Class Principal
             If Not dgvMatSinStockCompras.RowCount > 0 Then CargadatosCompras()
         End If
     End Sub
-    Private Function cargausername(user As String) As String
+    Private Function CargaUsername(user As String) As String
         Try
-            user = LTrim(RTrim(user))
-            user = user.Replace(".", " ")
+            Dim UserReturn As New StringBuilder("")
+            user = LTrim(RTrim(user)).Replace(".", " ")
+            Dim _User As String() = user.Split(" ")
+            Dim obj = _User.AsEnumerable().[Select](Function(u) u(0).ToString.ToUpper & u.Substring(1) & u.Substring(u.Length))
+            For Each u In obj
+                UserReturn.Append($"{u} ")
+            Next
+            user = UserReturn.ToString.Trim
             Return user
         Catch ex As Exception
-            CorreoFalla.EnviaCorreoFalla("cargausername", host, UserName)
+            EnviaCorreoFalla("cargausername", host, UserName)
             Return Nothing
         End Try
     End Function
-    Sub LoadStart()
-        lblwelcome.Text = "Bienvenido: " & cargausername(UserName.ToString)
+    Public Sub LoadStart()
+        lblwelcome.Text = "Bienvenido: " & CargaUsername(UserName.ToString)
         Label4.Text = "Semana Actual: " & nsemana
         ToolStripMenuItem6.Visible = False
         GroupBox2.Visible = False
@@ -213,6 +219,8 @@ Public Class Principal
         Cargachart()
         GridCharge()
         ChargeInfoCortos()
+        If dgvWips.Rows.Count > 0 Then ConfigGridSolution(dgvWips)
+        If dgvPWO.Rows.Count > 0 Then ConfigGridSolution(dgvPWO)
         'AutoUpdate()
     End Sub
     'Private MouseMovementsUser As Action = Function()
@@ -238,18 +246,36 @@ Public Class Principal
             PWOTab.Visible = True
             PWOTab.Parent = tabWorkOrders
             tabWorkOrders.SelectedTab = PWOTab
+            '---- Ver Graficas -----
+            tbGraficaCorte.Visible = False
+            tbGraficaCorte.Parent = Nothing
+            tbpGraficaMediosProcesos.Visible = True
+            tbpGraficaMediosProcesos.Parent = tbGraficas
+            tbGraficas.SelectedTab = tbpGraficaMediosProcesos
         ElseIf opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
             PWOTab.Visible = False
             CWOtab.Visible = True
             PWOTab.Parent = Nothing
             CWOtab.Parent = tabWorkOrders
             tabWorkOrders.SelectedTab = CWOtab
+            '---- Ver Graficas -----
+            tbpGraficaMediosProcesos.Visible = False
+            tbpGraficaMediosProcesos.Parent = Nothing
+            tbGraficaCorte.Visible = True
+            tbGraficaCorte.Parent = tbGraficas
+            tbGraficas.SelectedTab = tbGraficaCorte
         Else
             CWOtab.Visible = True
             PWOTab.Visible = True
             PWOTab.Parent = tabWorkOrders
             CWOtab.Parent = tabWorkOrders
             tabWorkOrders.SelectedTab = CWOtab
+            '---- Ver Todas las Graficas ----
+            tbpGraficaMediosProcesos.Visible = True
+            tbpGraficaMediosProcesos.Parent = tbGraficas
+            tbGraficaCorte.Visible = True
+            tbGraficaCorte.Parent = tbGraficas
+            tbGraficas.SelectedTab = tbGraficaCorte
         End If
     End Sub
     Private Sub Llenagrid(CWOq As String, PWOq As String)
@@ -278,7 +304,6 @@ Public Class Principal
             End If
             If CWO.Rows.Count > 0 Then
                 dgvWips.DataSource = CWO
-                ConfigGridSolution(dgvWips)
                 Label3.Text = "Items: " & dgvWips.Rows.Count
                 btnRefrescaGrid.Visible = True
                 Pintaceldas(dgvWips)
@@ -288,7 +313,6 @@ Public Class Principal
             End If
             If PWO.Rows.Count > 0 Then
                 dgvPWO.DataSource = PWO
-                ConfigGridSolution(dgvPWO)
                 Label9.Text = "Items: " & dgvPWO.Rows.Count
                 btnRefrescaGrid.Visible = True
                 Pintaceldas(dgvPWO)
@@ -308,12 +332,12 @@ Public Class Principal
                                                                         Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                                                                         Grid.AutoResizeColumns()
                                                                         Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                                                                        Grid.Columns("DueDateProcess").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                        Grid.Columns("DateCreatedWIP").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                        If opcion = 5 Then
-                                                                            Grid.Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                            Grid.Columns("Fecha Materiales").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                        End If
+                                                                        'Grid.Columns("DueDateProcess").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                        'Grid.Columns("DateCreatedWIP").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                        'If opcion = 5 Then
+                                                                        '    Grid.Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                        '    Grid.Columns("Fecha Materiales").DefaultCellStyle.Format = "dd-MMM-yy"
+                                                                        'End If
                                                                         Grid.Columns(0).Frozen = True
                                                                         Grid.Columns(1).Frozen = True
                                                                     End If
@@ -1495,6 +1519,9 @@ Public Class Principal
             Me.Chart1.Series("Carga en proceso de confirmacion").Points.Clear()
             Me.Chart1.Series("Carga Maquinas por entrar").Points.Clear()
             Me.Chart1.Series("Carga Actual").Points.Clear()
+            Me.Chart2.Series("Carga en proceso de confirmacion").Points.Clear()
+            Me.Chart2.Series("Carga Actual").Points.Clear()
+            Me.Chart2.Series("Carga Celdas por entrar").Points.Clear()
             Dim consulta As String
             Dim getMaqActives As String = "select Maq,0 [Proceso de confirmacion],0 [Listos para entrar], 0 [En corte] from tblMaqRates where Active = 1 order by CONVERT(int,Maq) asc"
             Dim tbMP As New DataTable
@@ -2512,8 +2539,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Pintaceldas(dgvWips)
     End Sub
     Public Sub Filtros(a As Integer)
-        Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
-        Dim queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,a.DueDateProcess,a.CreatedDate [DateCreatedWIP],Sem from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+        Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+        Dim queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
         Dim cmd As String = "", wherePWO As String = ""
         If a = 1 Then
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
@@ -2564,8 +2591,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         End If
         If opcion = 5 Then
-            query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem,ProcFDispMat [Fecha Materiales],ProcNotas [Notas Compras],ProcFDispMat2 [Fecha Materiales despues de Hold] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
-            queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,a.DueDateProcess,a.CreatedDate [DateCreatedWIP],Sem,ProcFDispMat [Fecha Materiales],ProcNotas [Notas Compras],ProcFDispMat2 [Fecha Materiales despues de Hold] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+            query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+            queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
             query += cmd
             queryPWO += wherePWO
         Else
@@ -3426,9 +3453,10 @@ and a.Balance > 0)"
             cmd.ExecuteNonQuery()
             cnn.Close()
             FilterInfo()
+            MessageBox.Show("Cambio realizado")
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("cambioMaquinaXCWO", host, UserName)
+            EnviaCorreoFalla("cambioMaquinaXCWO", host, UserName)
         End Try
     End Sub
     Private Sub dgvMatSinStockCompras_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvMatSinStockCompras.ColumnHeaderMouseClick

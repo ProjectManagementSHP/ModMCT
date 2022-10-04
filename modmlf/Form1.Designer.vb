@@ -120,9 +120,9 @@ Partial Class Principal
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.TabControl2 = New System.Windows.Forms.TabControl()
-        Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.tbGraficas = New System.Windows.Forms.TabControl()
+        Me.tbGraficaCorte = New System.Windows.Forms.TabPage()
+        Me.tbpGraficaMediosProcesos = New System.Windows.Forms.TabPage()
         Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.btnCortosPN = New System.Windows.Forms.Button()
@@ -169,9 +169,9 @@ Partial Class Principal
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel3.SuspendLayout()
-        Me.TabControl2.SuspendLayout()
-        Me.TabPage4.SuspendLayout()
-        Me.TabPage5.SuspendLayout()
+        Me.tbGraficas.SuspendLayout()
+        Me.tbGraficaCorte.SuspendLayout()
+        Me.tbpGraficaMediosProcesos.SuspendLayout()
         CType(Me.Chart2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
         CType(Me.dgvAfectados, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -600,9 +600,10 @@ Partial Class Principal
         '
         Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
         Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button1.Location = New System.Drawing.Point(686, 12)
+        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Button1.Location = New System.Drawing.Point(687, 12)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(32, 25)
+        Me.Button1.Size = New System.Drawing.Size(31, 36)
         Me.Button1.TabIndex = 5437
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -632,7 +633,7 @@ Partial Class Principal
         Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridView1.EnableHeadersVisualStyles = False
         Me.DataGridView1.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.DataGridView1.Location = New System.Drawing.Point(5, 41)
+        Me.DataGridView1.Location = New System.Drawing.Point(5, 53)
         Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
@@ -647,7 +648,7 @@ Partial Class Principal
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.RowHeadersWidth = 51
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(732, 152)
+        Me.DataGridView1.Size = New System.Drawing.Size(732, 140)
         Me.DataGridView1.TabIndex = 5436
         '
         'ProgressBar1
@@ -735,6 +736,7 @@ Partial Class Principal
         '
         Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
         Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button3.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button3.Location = New System.Drawing.Point(365, 11)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(32, 36)
@@ -923,7 +925,7 @@ Partial Class Principal
         'Panel3
         '
         Me.Panel3.AutoScroll = True
-        Me.Panel3.Controls.Add(Me.TabControl2)
+        Me.Panel3.Controls.Add(Me.tbGraficas)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel3.Location = New System.Drawing.Point(2, 2)
         Me.Panel3.Margin = New System.Windows.Forms.Padding(2)
@@ -931,38 +933,38 @@ Partial Class Principal
         Me.Panel3.Size = New System.Drawing.Size(1267, 222)
         Me.Panel3.TabIndex = 5501
         '
-        'TabControl2
+        'tbGraficas
         '
-        Me.TabControl2.Controls.Add(Me.TabPage4)
-        Me.TabControl2.Controls.Add(Me.TabPage5)
-        Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabControl2.Location = New System.Drawing.Point(0, 0)
-        Me.TabControl2.Name = "TabControl2"
-        Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(1267, 222)
-        Me.TabControl2.TabIndex = 5443
+        Me.tbGraficas.Controls.Add(Me.tbGraficaCorte)
+        Me.tbGraficas.Controls.Add(Me.tbpGraficaMediosProcesos)
+        Me.tbGraficas.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tbGraficas.Location = New System.Drawing.Point(0, 0)
+        Me.tbGraficas.Name = "tbGraficas"
+        Me.tbGraficas.SelectedIndex = 0
+        Me.tbGraficas.Size = New System.Drawing.Size(1267, 222)
+        Me.tbGraficas.TabIndex = 5443
         '
-        'TabPage4
+        'tbGraficaCorte
         '
-        Me.TabPage4.Controls.Add(Me.Chart1)
-        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage4.Name = "TabPage4"
-        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(1259, 196)
-        Me.TabPage4.TabIndex = 0
-        Me.TabPage4.Text = "Graficas CWO"
-        Me.TabPage4.UseVisualStyleBackColor = True
+        Me.tbGraficaCorte.Controls.Add(Me.Chart1)
+        Me.tbGraficaCorte.Location = New System.Drawing.Point(4, 22)
+        Me.tbGraficaCorte.Name = "tbGraficaCorte"
+        Me.tbGraficaCorte.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbGraficaCorte.Size = New System.Drawing.Size(1259, 196)
+        Me.tbGraficaCorte.TabIndex = 0
+        Me.tbGraficaCorte.Text = "Graficas CWO"
+        Me.tbGraficaCorte.UseVisualStyleBackColor = True
         '
-        'TabPage5
+        'tbpGraficaMediosProcesos
         '
-        Me.TabPage5.Controls.Add(Me.Chart2)
-        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage5.Name = "TabPage5"
-        Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(1259, 196)
-        Me.TabPage5.TabIndex = 1
-        Me.TabPage5.Text = "Graficas PWO"
-        Me.TabPage5.UseVisualStyleBackColor = True
+        Me.tbpGraficaMediosProcesos.Controls.Add(Me.Chart2)
+        Me.tbpGraficaMediosProcesos.Location = New System.Drawing.Point(4, 22)
+        Me.tbpGraficaMediosProcesos.Name = "tbpGraficaMediosProcesos"
+        Me.tbpGraficaMediosProcesos.Padding = New System.Windows.Forms.Padding(3)
+        Me.tbpGraficaMediosProcesos.Size = New System.Drawing.Size(1259, 196)
+        Me.tbpGraficaMediosProcesos.TabIndex = 1
+        Me.tbpGraficaMediosProcesos.Text = "Graficas PWO"
+        Me.tbpGraficaMediosProcesos.UseVisualStyleBackColor = True
         '
         'Chart2
         '
@@ -1502,9 +1504,9 @@ Partial Class Principal
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
-        Me.TabControl2.ResumeLayout(False)
-        Me.TabPage4.ResumeLayout(False)
-        Me.TabPage5.ResumeLayout(False)
+        Me.tbGraficas.ResumeLayout(False)
+        Me.tbGraficaCorte.ResumeLayout(False)
+        Me.tbpGraficaMediosProcesos.ResumeLayout(False)
         CType(Me.Chart2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
@@ -1623,7 +1625,7 @@ Partial Class Principal
     Friend WithEvents ImprimirReporteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Chart2 As DataVisualization.Charting.Chart
-    Friend WithEvents TabControl2 As TabControl
-    Friend WithEvents TabPage4 As TabPage
-    Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents tbGraficas As TabControl
+    Friend WithEvents tbGraficaCorte As TabPage
+    Friend WithEvents tbpGraficaMediosProcesos As TabPage
 End Class

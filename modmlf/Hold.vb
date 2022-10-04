@@ -60,6 +60,7 @@
                 MsgBox("Debe agregar fecha promesa", MessageBoxIcon.Warning)
             Else
                 Principal.NotesWIPandCWOOnHold(lblcwoporsolicitar.Text, dtpFProm.Text, txbNotas.Text)
+                MsgBox("Cambio efectuado")
                 Me.Close()
             End If
         ElseIf opcion = 2 Then
