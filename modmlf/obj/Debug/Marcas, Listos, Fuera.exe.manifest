@@ -91,14 +91,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1529304">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1528792">
       <assemblyIdentity name="Marcas, Listos, Fuera" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>YdCwg6GcNs6fHs6MItsxg2v7WPDmR1bO5cVg9OeSBzM=</dsig:DigestValue>
+        <dsig:DigestValue>37IT3Ksu3pwsr7jlp3HpItvYM8st+Qz9uKWOsWtECzs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -882,7 +882,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>3kbIbL468HKCC/DJrKJ0Fj2LIhrLog5AoM/UKWk6IVM=</dsig:DigestValue>
+      <dsig:DigestValue>ywagJHj2GyCATXspLmMw15CcyDcaD0H6WYozdwbAX6g=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Marcas, Listos, Fuera.xml" size="7324">

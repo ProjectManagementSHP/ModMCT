@@ -551,19 +551,19 @@ Public Class Materiales
     End Sub
     Private Function DisponibilidadApl(apl As String) As Boolean
         Try
-            Dim res As Boolean
-            Dim query As String = $"select Count(*) from tblApl where OemAplID={apl} and (Loc is not null or Loc='Produccion')"
+            Dim query As String = $"select Count(*) from tblApl where OemAplID='{apl}' and [AssignedTo]='Produccion'"
             comando = New SqlCommand(query, conexion)
             comando.CommandType = CommandType.Text
             conexion.Open()
-            res = CInt(comando.ExecuteScalar) > 0
+            Return CInt(comando.ExecuteScalar) > 0
             conexion.Close()
-            Return res
         Catch ex As Exception
             conexion.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("DisponibilidadApl", host, UserName)
             Return Nothing
+        Finally
+            conexion.Close()
         End Try
     End Function
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked

@@ -338,20 +338,19 @@ Public Class Principal
             CorreoFalla.EnviaCorreoFalla("llenagrid", host, UserName)
         End Try
     End Sub
-    Private ConfigGridSolution As Action(Of DataGridView) = Function(Grid)
-                                                                Try
-                                                                    If Grid IsNot Nothing Then
-                                                                        Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-                                                                        Grid.AutoResizeColumns()
-                                                                        Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                                                                        Grid.Columns(0).Frozen = True
-                                                                        Grid.Columns(1).Frozen = True
-                                                                    End If
-                                                                Catch ex As Exception
-                                                                    MessageBox.Show(ex.ToString)
-                                                                End Try
-                                                                Return Nothing
-                                                            End Function
+    Private Sub ConfigGridSolution(Grid As DataGridView)
+        Try
+            If Grid IsNot Nothing Then
+                Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                Grid.AutoResizeColumns()
+                Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                Grid.Columns(0).Frozen = True
+                Grid.Columns(1).Frozen = True
+            End If
+        Catch ex As Exception
+            'MessageBox.Show(ex.ToString)
+        End Try
+    End Sub
     Private Sub GridCharge()
         Dim systemType As Type
         Dim propertyInfo As PropertyInfo
