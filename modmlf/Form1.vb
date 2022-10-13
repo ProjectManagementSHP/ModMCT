@@ -3268,6 +3268,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Catch ex As Exception
             conexNotify.Close()
         End Try
+        nsemana = GetWeek()
+        Label4.Text = $"Semana Actual: {nsemana}"
         Timer1.Enabled = True
         Timer1.Interval = 180000
     End Sub

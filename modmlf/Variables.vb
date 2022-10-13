@@ -26,7 +26,10 @@ Module Variables
     Public FlagFechas As Boolean = False
     Public op, sort, p, flag, maq, flagActualizacion, cola As Integer
     Public userID As String
-    Public host As String = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString
+    Public host As String = Security.Principal.WindowsIdentity.GetCurrent().Name.ToString
     Public opcionesDeExportacion As Integer
-    Public nsemana As Integer = DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now)
+    Public nsemana As Integer = GetWeek()
+    Public Function GetWeek()
+        Return DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now)
+    End Function
 End Module
