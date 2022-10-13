@@ -29,7 +29,7 @@ Public Class Principal
         Inicio()
         Cursor.Current = Cursors.Default
     End Sub
-    Sub Inicio()
+    Public Sub Inicio()
         If opcion = 1 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -68,7 +68,9 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            If Not dgvMatSinStockCompras.RowCount > 0 Then CargadatosCompras()
+            If Not dgvMatSinStockCompras.RowCount > 0 Then
+                CargadatosCompras()
+            End If
         ElseIf opcion = 3 Then
             pnluserandtitle.BackColor = Color.LightGray
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
@@ -124,7 +126,9 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = True
             btnAgregarNewElemento.Visible = True
-            If Not dgvMatSinStockCompras.RowCount > 0 Then CargadatosCompras()
+            If Not dgvMatSinStockCompras.RowCount > 0 Then
+                CargadatosCompras()
+            End If
             Timer3.Enabled = True
             Timer3.Interval = 1800000
         ElseIf opcion = 6 Then
@@ -146,7 +150,9 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            If Not dgvMatSinStockCompras.RowCount > 0 Then CargadatosCompras()
+            If Not dgvMatSinStockCompras.RowCount > 0 Then
+                CargadatosCompras()
+            End If
         ElseIf opcion = 7 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -166,7 +172,9 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            If Not dgvMatSinStockCompras.RowCount > 0 Then CargadatosCompras()
+            If Not dgvMatSinStockCompras.RowCount > 0 Then
+                CargadatosCompras()
+            End If
         ElseIf opcion = 8 Then 'Planeacion PWO
             pnluserandtitle.BackColor = Color.FromArgb(236, 154, 114)
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
@@ -186,7 +194,9 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
-            If Not dgvMatSinStockCompras.RowCount > 0 Then CargadatosCompras()
+            If Not dgvMatSinStockCompras.RowCount > 0 Then
+                CargadatosCompras()
+            End If
         End If
     End Sub
     Private Function CargaUsername(user As String) As String
@@ -219,8 +229,8 @@ Public Class Principal
         Cargachart()
         GridCharge()
         ChargeInfoCortos()
-        If dgvWips.Rows.Count > 0 Then ConfigGridSolution(dgvWips)
-        If dgvPWO.Rows.Count > 0 Then ConfigGridSolution(dgvPWO)
+        'If dgvWips.Rows.Count > 0 Then ConfigGridSolution(dgvWips)
+        'If dgvPWO.Rows.Count > 0 Then ConfigGridSolution(dgvPWO)
         'AutoUpdate()
     End Sub
     'Private MouseMovementsUser As Action = Function()
@@ -306,6 +316,7 @@ Public Class Principal
                 dgvWips.DataSource = CWO
                 Label3.Text = "Items: " & dgvWips.Rows.Count
                 btnRefrescaGrid.Visible = True
+                ConfigGridSolution(dgvWips)
                 Pintaceldas(dgvWips)
             Else
                 dgvWips.DataSource = Nothing
@@ -315,6 +326,7 @@ Public Class Principal
                 dgvPWO.DataSource = PWO
                 Label9.Text = "Items: " & dgvPWO.Rows.Count
                 btnRefrescaGrid.Visible = True
+                ConfigGridSolution(dgvPWO)
                 Pintaceldas(dgvPWO)
             Else
                 dgvPWO.DataSource = Nothing
@@ -332,12 +344,6 @@ Public Class Principal
                                                                         Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                                                                         Grid.AutoResizeColumns()
                                                                         Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                                                                        'Grid.Columns("DueDateProcess").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                        'Grid.Columns("DateCreatedWIP").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                        'If opcion = 5 Then
-                                                                        '    Grid.Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                        '    Grid.Columns("Fecha Materiales").DefaultCellStyle.Format = "dd-MMM-yy"
-                                                                        'End If
                                                                         Grid.Columns(0).Frozen = True
                                                                         Grid.Columns(1).Frozen = True
                                                                     End If
@@ -2396,12 +2402,10 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             If aQtyOnHand > 0 Then
                 If aQty > aQtyOnHand Then
                     'Quitar parcial el corto
-                    QuitaCortoCWOyWIPxPN(aPn, aQtyOnHand, False)
-                    MsgBox("Se ha quitado el corto parcialmente")
+                    If QuitaCortoCWOyWIPxPN(aPn, aQtyOnHand, False) Then MsgBox("Se ha quitado el corto parcialmente")
                 ElseIf aQtyOnHand >= aQty Then
                     'Quitar completo
-                    QuitaCortoCWOyWIPxPN(aPn, True)
-                    MsgBox("Se ha quitado el corto en su totalidad por la cantidad completa")
+                    If QuitaCortoCWOyWIPxPN(aPn, True) Then MsgBox("Se ha quitado el corto en su totalidad por la cantidad completa")
                 End If
                 QuitarPnCortos(aPn)
             ElseIf aQtyOnHand = 0 Then
@@ -2416,7 +2420,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             MsgBox(ex.ToString)
         End Try
     End Sub
-    Private Sub QuitaCortoCWOyWIPxPN(PN As String, Optional ByVal qty As Integer = 0, Optional aTypeParcialorCompleto As Boolean = True)
+    Private Function QuitaCortoCWOyWIPxPN(PN As String, Optional ByVal qty As Integer = 0, Optional aTypeParcialorCompleto As Boolean = True)
+        Dim result As Boolean = False
         Try
             'Dim query As String = If(aTypeParcialorCompleto, $"select WIP,CWO,PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1", $"select WIP,CWO,PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1 group by wip,cwo,pn,balance having SUM(Balance) <={qty}")
             Dim query As String = $"select WIP,CWO [WO],PN,Balance from tblBOMCWO where PN='{PN}' and Hold=1 {If(Not aTypeParcialorCompleto, $"group by wip,cwo,pn,balance having SUM(Balance) <={qty}", "")}
@@ -2453,12 +2458,14 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                     End Function
                     )
                 End If
+                result = True
             End If
         Catch ex As Exception
             cnn.Close()
             MsgBox(ex.ToString)
         End Try
-    End Sub
+        Return result
+    End Function
     Private Sub UpdateCortoXPn(PN As String, CWO As String)
         Try
             Dim update As String = $"update tblBOM{Microsoft.VisualBasic.Left(CWO, 1)}WO set Hold=0 where {Microsoft.VisualBasic.Left(CWO, 1)}WO='{CWO}' and PN='{PN}'"
@@ -3063,7 +3070,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                 Dim ver2 As Char = WIP(0)
                 If (ver = "C" Or ver = "P") And ver2 = "W" Then
                     With Materiales
-                        .MaximumSize = New System.Drawing.Size(1075, 870)
+                        .MaximumSize = New Size(1075, 870)
                         .DataGridView3.Anchor = (AnchorStyles.Left Or AnchorStyles.Top Or AnchorStyles.Bottom)
                         .dgvBOM.Anchor = (AnchorStyles.Left Or AnchorStyles.Top)
                         .lblcwomat.Text = CWO
@@ -3920,26 +3927,36 @@ and a.Balance > 0)"
         End Try
         Cursor.Current = Cursors.Default
     End Sub
+    Public CortosPNCheck As Action(Of Boolean) = Function(FlagProcess)
+                                                     If PN <> "" Then
+                                                         Dim aTable = New DataTable()
+                                                         aTable = PNQuitandoCorto(PN)
+                                                         If aTable IsNot Nothing Then
+                                                             If aTable.Rows.Count = 1 Then
+                                                                 CheckPN(aTable)
+                                                             Else
+                                                                 If FlagProcess Then
+                                                                     MsgBox("No se logro realizar el proceso, verifica el Numero de parte seleccionado")
+                                                                 End If
+                                                             End If
+                                                         Else
+                                                             If FlagProcess Then
+                                                                 MsgBox("No se logro realizar el proceso, verifica el Numero de parte seleccionado")
+                                                             End If
+                                                         End If
+                                                     Else
+                                                         If FlagProcess Then
+                                                             MsgBox("Selecciona un numero de parte")
+                                                         End If
+                                                     End If
+                                                     Return Nothing
+                                                 End Function
     'Evento de quitar corto al NP seleccionado para asi, evaluar su allocated y sobre eso, poder quitar corto,
     'en caso de ser parcial, hare funcion para registrar hasta donde se puede quitar el corto y que cwo si se salvan
     Private Sub ToolStripMenuItem14_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem14.Click
         Cursor.Current = Cursors.WaitCursor
         If opcion = 2 Then
-            If PN <> "" Then
-                Dim aTable = New DataTable()
-                aTable = PNQuitandoCorto(PN)
-                If aTable IsNot Nothing Then
-                    If aTable.Rows.Count = 1 Then
-                        CheckPN(aTable)
-                    Else
-                        MsgBox("No se logro realizar el proceso, verifica el Numero de parte seleccionado")
-                    End If
-                Else
-                    MsgBox("No se logro realizar el proceso, verifica el Numero de parte seleccionado")
-                End If
-            Else
-                MsgBox("Selecciona un numero de parte")
-            End If
+            CortosPNCheck(True)
         End If
         Cursor.Current = Cursors.Default
     End Sub

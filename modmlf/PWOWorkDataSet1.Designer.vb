@@ -460,13 +460,13 @@ Partial Public Class DataSet1
         
         Private columnPN As Global.System.Data.DataColumn
         
-        Private columnQtyOnHand As Global.System.Data.DataColumn
-        
-        Private columnQtyOnOrder As Global.System.Data.DataColumn
-        
         Private columnDueDate As Global.System.Data.DataColumn
         
         Private columnQty As Global.System.Data.DataColumn
+        
+        Private columnQtyOnHand As Global.System.Data.DataColumn
+        
+        Private columnQtyOnOrder As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -513,22 +513,6 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property QtyOnHandColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnQtyOnHand
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property QtyOnOrderColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnQtyOnOrder
-            End Get
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public ReadOnly Property DueDateColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnDueDate
@@ -540,6 +524,22 @@ Partial Public Class DataSet1
         Public ReadOnly Property QtyColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columnQty
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property QtyOnHandColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnQtyOnHand
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property QtyOnOrderColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnQtyOnOrder
             End Get
         End Property
         
@@ -580,9 +580,9 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddtblBOMPWORow(ByVal PN As String, ByVal QtyOnHand As Decimal, ByVal QtyOnOrder As Decimal, ByVal DueDate As Date, ByVal Qty As Integer) As tblBOMPWORow
+        Public Overloads Function AddtblBOMPWORow(ByVal PN As String, ByVal DueDate As Date, ByVal Qty As Integer, ByVal QtyOnHand As Integer, ByVal QtyOnOrder As Integer) As tblBOMPWORow
             Dim rowtblBOMPWORow As tblBOMPWORow = CType(Me.NewRow,tblBOMPWORow)
-            Dim columnValuesArray() As Object = New Object() {PN, QtyOnHand, QtyOnOrder, DueDate, Qty}
+            Dim columnValuesArray() As Object = New Object() {PN, DueDate, Qty, QtyOnHand, QtyOnOrder}
             rowtblBOMPWORow.ItemArray = columnValuesArray
             Me.Rows.Add(rowtblBOMPWORow)
             Return rowtblBOMPWORow
@@ -606,10 +606,10 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub InitVars()
             Me.columnPN = MyBase.Columns("PN")
-            Me.columnQtyOnHand = MyBase.Columns("QtyOnHand")
-            Me.columnQtyOnOrder = MyBase.Columns("QtyOnOrder")
             Me.columnDueDate = MyBase.Columns("DueDate")
             Me.columnQty = MyBase.Columns("Qty")
+            Me.columnQtyOnHand = MyBase.Columns("QtyOnHand")
+            Me.columnQtyOnOrder = MyBase.Columns("QtyOnOrder")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -617,19 +617,19 @@ Partial Public Class DataSet1
         Private Sub InitClass()
             Me.columnPN = New Global.System.Data.DataColumn("PN", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnPN)
-            Me.columnQtyOnHand = New Global.System.Data.DataColumn("QtyOnHand", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnQtyOnHand)
-            Me.columnQtyOnOrder = New Global.System.Data.DataColumn("QtyOnOrder", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnQtyOnOrder)
             Me.columnDueDate = New Global.System.Data.DataColumn("DueDate", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnDueDate)
             Me.columnQty = New Global.System.Data.DataColumn("Qty", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnQty)
+            Me.columnQtyOnHand = New Global.System.Data.DataColumn("QtyOnHand", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnQtyOnHand)
+            Me.columnQtyOnOrder = New Global.System.Data.DataColumn("QtyOnOrder", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnQtyOnOrder)
             Me.columnPN.MaxLength = 50
-            Me.columnQtyOnHand.ReadOnly = true
-            Me.columnQtyOnOrder.ReadOnly = true
             Me.columnDueDate.ReadOnly = true
             Me.columnQty.ReadOnly = true
+            Me.columnQtyOnHand.ReadOnly = true
+            Me.columnQtyOnOrder.ReadOnly = true
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2321,36 +2321,6 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property QtyOnHand() As Decimal
-            Get
-                Try 
-                    Return CType(Me(Me.tabletblBOMPWO.QtyOnHandColumn),Decimal)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'QtyOnHand' in table 'tblBOMPWO' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tabletblBOMPWO.QtyOnHandColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property QtyOnOrder() As Decimal
-            Get
-                Try 
-                    Return CType(Me(Me.tabletblBOMPWO.QtyOnOrderColumn),Decimal)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("The value for column 'QtyOnOrder' in table 'tblBOMPWO' is DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tabletblBOMPWO.QtyOnOrderColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Property DueDate() As Date
             Get
                 Try 
@@ -2381,6 +2351,36 @@ Partial Public Class DataSet1
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property QtyOnHand() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tabletblBOMPWO.QtyOnHandColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'QtyOnHand' in table 'tblBOMPWO' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tabletblBOMPWO.QtyOnHandColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property QtyOnOrder() As Integer
+            Get
+                Try 
+                    Return CType(Me(Me.tabletblBOMPWO.QtyOnOrderColumn),Integer)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'QtyOnOrder' in table 'tblBOMPWO' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tabletblBOMPWO.QtyOnOrderColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsPNNull() As Boolean
             Return Me.IsNull(Me.tabletblBOMPWO.PNColumn)
         End Function
@@ -2389,30 +2389,6 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetPNNull()
             Me(Me.tabletblBOMPWO.PNColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsQtyOnHandNull() As Boolean
-            Return Me.IsNull(Me.tabletblBOMPWO.QtyOnHandColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetQtyOnHandNull()
-            Me(Me.tabletblBOMPWO.QtyOnHandColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsQtyOnOrderNull() As Boolean
-            Return Me.IsNull(Me.tabletblBOMPWO.QtyOnOrderColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetQtyOnOrderNull()
-            Me(Me.tabletblBOMPWO.QtyOnOrderColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2437,6 +2413,30 @@ Partial Public Class DataSet1
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetQtyNull()
             Me(Me.tabletblBOMPWO.QtyColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsQtyOnHandNull() As Boolean
+            Return Me.IsNull(Me.tabletblBOMPWO.QtyOnHandColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetQtyOnHandNull()
+            Me(Me.tabletblBOMPWO.QtyOnHandColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsQtyOnOrderNull() As Boolean
+            Return Me.IsNull(Me.tabletblBOMPWO.QtyOnOrderColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetQtyOnOrderNull()
+            Me(Me.tabletblBOMPWO.QtyOnOrderColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -3456,10 +3456,10 @@ Namespace DataSet1TableAdapters
             tableMapping.SourceTable = "Table"
             tableMapping.DataSetTable = "tblBOMPWO"
             tableMapping.ColumnMappings.Add("PN", "PN")
-            tableMapping.ColumnMappings.Add("QtyOnHand", "QtyOnHand")
-            tableMapping.ColumnMappings.Add("QtyOnOrder", "QtyOnOrder")
             tableMapping.ColumnMappings.Add("DueDate", "DueDate")
             tableMapping.ColumnMappings.Add("Qty", "Qty")
+            tableMapping.ColumnMappings.Add("QtyOnHand", "QtyOnHand")
+            tableMapping.ColumnMappings.Add("QtyOnOrder", "QtyOnOrder")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -3476,12 +3476,13 @@ Namespace DataSet1TableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "select PN, CONVERT(int,SUM(balance)) [Qty],(select distinct QtyOnHand from tblIte"& _ 
-                "msQB where pn = tblBOMPWO.PN group by PN,QtyOnHand) [QtyOnHand],(select IsNull(S"& _ 
-                "um(QtyBalance),0) from tblItemsPOsDet a inner join tblItemsPOs b on a.IDPO=b.IDP"& _ 
-                "O where a.PN = tblBOMPWO.PN and b.Status='open' and (QtyReceivedJuarez is null o"& _ 
-                "r QtyReceivedJuarez < QtyBalance)) [QtyOnOrder],(select DueDate from tblPWO wher"& _ 
-                "e PWO = tblBOMPWO.PWO)[DueDate] from tblBOMPWO where PWO = @PWO group by PN,PWO"
+            Me._commandCollection(0).CommandText = "select PN, CONVERT(int,SUM(balance)) [Qty],(select distinct Convert(int,QtyOnHand"& _ 
+                ") from tblItemsQB where pn = tblBOMPWO.PN group by PN,QtyOnHand) [QtyOnHand],(se"& _ 
+                "lect IsNull(Convert(int,Sum(QtyBalance)),0) from tblItemsPOsDet a inner join tbl"& _ 
+                "ItemsPOs b on a.IDPO=b.IDPO where a.PN = tblBOMPWO.PN and b.Status='open' and (Q"& _ 
+                "tyReceivedJuarez is null or QtyReceivedJuarez < QtyBalance)) [QtyOnOrder],(selec"& _ 
+                "t DueDate from tblPWO where PWO = tblBOMPWO.PWO)[DueDate] from tblBOMPWO where P"& _ 
+                "WO = @PWO group by PN,PWO"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
@@ -4688,24 +4689,6 @@ Namespace DataSet1TableAdapters
             tableMapping.ColumnMappings.Add("ScanPWO", "ScanPWO")
             tableMapping.ColumnMappings.Add("PWO", "PWO")
             Me._adapter.TableMappings.Add(tableMapping)
-            Me._adapter.DeleteCommand = New Global.System.Data.SqlClient.SqlCommand()
-            Me._adapter.DeleteCommand.Connection = Me.Connection
-            Me._adapter.DeleteCommand.CommandText = "DELETE FROM [tblPWO] WHERE (([PWO] = @Original_PWO))"
-            Me._adapter.DeleteCommand.CommandType = Global.System.Data.CommandType.Text
-            Me._adapter.DeleteCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_PWO", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
-            Me._adapter.InsertCommand = New Global.System.Data.SqlClient.SqlCommand()
-            Me._adapter.InsertCommand.Connection = Me.Connection
-            Me._adapter.InsertCommand.CommandText = "INSERT INTO [tblPWO] ([PWO]) VALUES (@PWO);"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"SELECT { fn CONCAT('*', PWO, '*') } "& _ 
-                "AS ScanPWO, PWO FROM tblPWO WHERE (PWO = @PWO)"
-            Me._adapter.InsertCommand.CommandType = Global.System.Data.CommandType.Text
-            Me._adapter.InsertCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand = New Global.System.Data.SqlClient.SqlCommand()
-            Me._adapter.UpdateCommand.Connection = Me.Connection
-            Me._adapter.UpdateCommand.CommandText = "UPDATE [tblPWO] SET [PWO] = @PWO WHERE (([PWO] = @Original_PWO));"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"SELECT { fn CO"& _ 
-                "NCAT('*', PWO, '*') } AS ScanPWO, PWO FROM tblPWO WHERE (PWO = @PWO)"
-            Me._adapter.UpdateCommand.CommandType = Global.System.Data.CommandType.Text
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
-            Me._adapter.UpdateCommand.Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@Original_PWO", Global.System.Data.SqlDbType.NVarChar, 0, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Original, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4721,21 +4704,21 @@ Namespace DataSet1TableAdapters
             Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(0) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
-            Me._commandCollection(0).CommandText = "select CONCAT('*',PWO,'*') [ScanPWO],PWO from tblPWO where PWO = @PWO"
+            Me._commandCollection(0).CommandText = "select CONCAT('*',a.PWO,'*') [ScanPWO],PWO [PWO] from tblPWO a where a.PWO = @WO"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
-            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@PWO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(0).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@WO", Global.System.Data.SqlDbType.NVarChar, 50, Global.System.Data.ParameterDirection.Input, 0, 0, "PWO", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, true)>  _
-        Public Overloads Overridable Function Fill(ByVal dataTable As DataSet1.tblPWO1DataTable, ByVal PWO As String) As Integer
+        Public Overloads Overridable Function Fill(ByVal dataTable As DataSet1.tblPWO1DataTable, ByVal WO As String) As Integer
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            If (PWO Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("PWO")
+            If (WO Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("WO")
             Else
-                Me.Adapter.SelectCommand.Parameters(0).Value = CType(PWO,String)
+                Me.Adapter.SelectCommand.Parameters(0).Value = CType(WO,String)
             End If
             If (Me.ClearBeforeFill = true) Then
                 dataTable.Clear
@@ -4748,132 +4731,16 @@ Namespace DataSet1TableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
          Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], true)>  _
-        Public Overloads Overridable Function GetData(ByVal PWO As String) As DataSet1.tblPWO1DataTable
+        Public Overloads Overridable Function GetData(ByVal WO As String) As DataSet1.tblPWO1DataTable
             Me.Adapter.SelectCommand = Me.CommandCollection(0)
-            If (PWO Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("PWO")
+            If (WO Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("WO")
             Else
-                Me.Adapter.SelectCommand.Parameters(0).Value = CType(PWO,String)
+                Me.Adapter.SelectCommand.Parameters(0).Value = CType(WO,String)
             End If
             Dim dataTable As DataSet1.tblPWO1DataTable = New DataSet1.tblPWO1DataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataTable As DataSet1.tblPWO1DataTable) As Integer
-            Return Me.Adapter.Update(dataTable)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataSet As DataSet1) As Integer
-            Return Me.Adapter.Update(dataSet, "tblPWO1")
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataRow As Global.System.Data.DataRow) As Integer
-            Return Me.Adapter.Update(New Global.System.Data.DataRow() {dataRow})
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")>  _
-        Public Overloads Overridable Function Update(ByVal dataRows() As Global.System.Data.DataRow) As Integer
-            Return Me.Adapter.Update(dataRows)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Delete, true)>  _
-        Public Overloads Overridable Function Delete(ByVal Original_PWO As String) As Integer
-            If (Original_PWO Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Original_PWO")
-            Else
-                Me.Adapter.DeleteCommand.Parameters(0).Value = CType(Original_PWO,String)
-            End If
-            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.DeleteCommand.Connection.State
-            If ((Me.Adapter.DeleteCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
-                        <> Global.System.Data.ConnectionState.Open) Then
-                Me.Adapter.DeleteCommand.Connection.Open
-            End If
-            Try 
-                Dim returnValue As Integer = Me.Adapter.DeleteCommand.ExecuteNonQuery
-                Return returnValue
-            Finally
-                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
-                    Me.Adapter.DeleteCommand.Connection.Close
-                End If
-            End Try
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Insert, true)>  _
-        Public Overloads Overridable Function Insert(ByVal PWO As String) As Integer
-            If (PWO Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("PWO")
-            Else
-                Me.Adapter.InsertCommand.Parameters(0).Value = CType(PWO,String)
-            End If
-            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.InsertCommand.Connection.State
-            If ((Me.Adapter.InsertCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
-                        <> Global.System.Data.ConnectionState.Open) Then
-                Me.Adapter.InsertCommand.Connection.Open
-            End If
-            Try 
-                Dim returnValue As Integer = Me.Adapter.InsertCommand.ExecuteNonQuery
-                Return returnValue
-            Finally
-                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
-                    Me.Adapter.InsertCommand.Connection.Close
-                End If
-            End Try
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal PWO As String, ByVal Original_PWO As String) As Integer
-            If (PWO Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("PWO")
-            Else
-                Me.Adapter.UpdateCommand.Parameters(0).Value = CType(PWO,String)
-            End If
-            If (Original_PWO Is Nothing) Then
-                Throw New Global.System.ArgumentNullException("Original_PWO")
-            Else
-                Me.Adapter.UpdateCommand.Parameters(1).Value = CType(Original_PWO,String)
-            End If
-            Dim previousConnectionState As Global.System.Data.ConnectionState = Me.Adapter.UpdateCommand.Connection.State
-            If ((Me.Adapter.UpdateCommand.Connection.State And Global.System.Data.ConnectionState.Open)  _
-                        <> Global.System.Data.ConnectionState.Open) Then
-                Me.Adapter.UpdateCommand.Connection.Open
-            End If
-            Try 
-                Dim returnValue As Integer = Me.Adapter.UpdateCommand.ExecuteNonQuery
-                Return returnValue
-            Finally
-                If (previousConnectionState = Global.System.Data.ConnectionState.Closed) Then
-                    Me.Adapter.UpdateCommand.Connection.Close
-                End If
-            End Try
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
-         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Update, true)>  _
-        Public Overloads Overridable Function Update(ByVal Original_PWO As String) As Integer
-            Return Me.Update(Original_PWO, Original_PWO)
         End Function
     End Class
     
@@ -4891,8 +4758,6 @@ Namespace DataSet1TableAdapters
         Private _updateOrder As UpdateOrderOption
         
         Private _tblWIPTableAdapter As tblWIPTableAdapter
-        
-        Private _tblPWO1TableAdapter As tblPWO1TableAdapter
         
         Private _backupDataSetBeforeUpdate As Boolean
         
@@ -4924,20 +4789,6 @@ Namespace DataSet1TableAdapters
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
-         Global.System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso"& _ 
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3"& _ 
-            "a", "System.Drawing.Design.UITypeEditor")>  _
-        Public Property tblPWO1TableAdapter() As tblPWO1TableAdapter
-            Get
-                Return Me._tblPWO1TableAdapter
-            End Get
-            Set
-                Me._tblPWO1TableAdapter = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Property BackupDataSetBeforeUpdate() As Boolean
             Get
@@ -4960,10 +4811,6 @@ Namespace DataSet1TableAdapters
                             AndAlso (Not (Me._tblWIPTableAdapter.Connection) Is Nothing)) Then
                     Return Me._tblWIPTableAdapter.Connection
                 End If
-                If ((Not (Me._tblPWO1TableAdapter) Is Nothing)  _
-                            AndAlso (Not (Me._tblPWO1TableAdapter.Connection) Is Nothing)) Then
-                    Return Me._tblPWO1TableAdapter.Connection
-                End If
                 Return Nothing
             End Get
             Set
@@ -4978,9 +4825,6 @@ Namespace DataSet1TableAdapters
             Get
                 Dim count As Integer = 0
                 If (Not (Me._tblWIPTableAdapter) Is Nothing) Then
-                    count = (count + 1)
-                End If
-                If (Not (Me._tblPWO1TableAdapter) Is Nothing) Then
                     count = (count + 1)
                 End If
                 Return count
@@ -5003,15 +4847,6 @@ Namespace DataSet1TableAdapters
                     allChangedRows.AddRange(updatedRows)
                 End If
             End If
-            If (Not (Me._tblPWO1TableAdapter) Is Nothing) Then
-                Dim updatedRows() As Global.System.Data.DataRow = dataSet.tblPWO1.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.ModifiedCurrent)
-                updatedRows = Me.GetRealUpdatedRows(updatedRows, allAddedRows)
-                If ((Not (updatedRows) Is Nothing)  _
-                            AndAlso (0 < updatedRows.Length)) Then
-                    result = (result + Me._tblPWO1TableAdapter.Update(updatedRows))
-                    allChangedRows.AddRange(updatedRows)
-                End If
-            End If
             Return result
         End Function
         
@@ -5030,14 +4865,6 @@ Namespace DataSet1TableAdapters
                     allAddedRows.AddRange(addedRows)
                 End If
             End If
-            If (Not (Me._tblPWO1TableAdapter) Is Nothing) Then
-                Dim addedRows() As Global.System.Data.DataRow = dataSet.tblPWO1.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Added)
-                If ((Not (addedRows) Is Nothing)  _
-                            AndAlso (0 < addedRows.Length)) Then
-                    result = (result + Me._tblPWO1TableAdapter.Update(addedRows))
-                    allAddedRows.AddRange(addedRows)
-                End If
-            End If
             Return result
         End Function
         
@@ -5048,14 +4875,6 @@ Namespace DataSet1TableAdapters
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Private Function UpdateDeletedRows(ByVal dataSet As DataSet1, ByVal allChangedRows As Global.System.Collections.Generic.List(Of Global.System.Data.DataRow)) As Integer
             Dim result As Integer = 0
-            If (Not (Me._tblPWO1TableAdapter) Is Nothing) Then
-                Dim deletedRows() As Global.System.Data.DataRow = dataSet.tblPWO1.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
-                If ((Not (deletedRows) Is Nothing)  _
-                            AndAlso (0 < deletedRows.Length)) Then
-                    result = (result + Me._tblPWO1TableAdapter.Update(deletedRows))
-                    allChangedRows.AddRange(deletedRows)
-                End If
-            End If
             If (Not (Me._tblWIPTableAdapter) Is Nothing) Then
                 Dim deletedRows() As Global.System.Data.DataRow = dataSet.tblWIP.Select(Nothing, Nothing, Global.System.Data.DataViewRowState.Deleted)
                 If ((Not (deletedRows) Is Nothing)  _
@@ -5110,11 +4929,6 @@ Namespace DataSet1TableAdapters
                 Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
                         "tring.")
             End If
-            If ((Not (Me._tblPWO1TableAdapter) Is Nothing)  _
-                        AndAlso (Me.MatchTableAdapterConnection(Me._tblPWO1TableAdapter.Connection) = false)) Then
-                Throw New Global.System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s"& _ 
-                        "tring.")
-            End If
             Dim workConnection As Global.System.Data.IDbConnection = Me.Connection
             If (workConnection Is Nothing) Then
                 Throw New Global.System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana"& _ 
@@ -5154,15 +4968,6 @@ Namespace DataSet1TableAdapters
                     If Me._tblWIPTableAdapter.Adapter.AcceptChangesDuringUpdate Then
                         Me._tblWIPTableAdapter.Adapter.AcceptChangesDuringUpdate = false
                         adaptersWithAcceptChangesDuringUpdate.Add(Me._tblWIPTableAdapter.Adapter)
-                    End If
-                End If
-                If (Not (Me._tblPWO1TableAdapter) Is Nothing) Then
-                    revertConnections.Add(Me._tblPWO1TableAdapter, Me._tblPWO1TableAdapter.Connection)
-                    Me._tblPWO1TableAdapter.Connection = CType(workConnection,Global.System.Data.SqlClient.SqlConnection)
-                    Me._tblPWO1TableAdapter.Transaction = CType(workTransaction,Global.System.Data.SqlClient.SqlTransaction)
-                    If Me._tblPWO1TableAdapter.Adapter.AcceptChangesDuringUpdate Then
-                        Me._tblPWO1TableAdapter.Adapter.AcceptChangesDuringUpdate = false
-                        adaptersWithAcceptChangesDuringUpdate.Add(Me._tblPWO1TableAdapter.Adapter)
                     End If
                 End If
                 '
@@ -5228,10 +5033,6 @@ Namespace DataSet1TableAdapters
                 If (Not (Me._tblWIPTableAdapter) Is Nothing) Then
                     Me._tblWIPTableAdapter.Connection = CType(revertConnections(Me._tblWIPTableAdapter),Global.System.Data.SqlClient.SqlConnection)
                     Me._tblWIPTableAdapter.Transaction = Nothing
-                End If
-                If (Not (Me._tblPWO1TableAdapter) Is Nothing) Then
-                    Me._tblPWO1TableAdapter.Connection = CType(revertConnections(Me._tblPWO1TableAdapter),Global.System.Data.SqlClient.SqlConnection)
-                    Me._tblPWO1TableAdapter.Transaction = Nothing
                 End If
                 If (0 < adaptersWithAcceptChangesDuringUpdate.Count) Then
                     Dim adapters((adaptersWithAcceptChangesDuringUpdate.Count) - 1) As Global.System.Data.Common.DataAdapter

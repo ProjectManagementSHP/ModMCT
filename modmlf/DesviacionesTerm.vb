@@ -55,7 +55,7 @@ Public Class DesviacionesTerm
             MessageBox.Show(ex.Message + vbNewLine + ex.ToString)
         End Try
     End Sub
-    Private Sub processTerminal()
+    Private Sub ProcessTerminal()
         Dim actualterm As String = CurrentTerminal.Text.Trim()
         Dim newTerm As String = TerminalNew.Text.Trim()
         Dim oAwg As StringBuilder = New StringBuilder("")
@@ -67,7 +67,7 @@ Public Class DesviacionesTerm
             Dim Wires = (From row In tblwipdet.AsEnumerable() Select row("Wire")).[Select](Function(w) w.ToString.Substring(0, 5)).Distinct.ToList()
             Wires.ForEach(
                 Function(AWG)
-                    If loadtermSpecs(newTerm, AWG.ToString) Then
+                    If LoadtermSpecs(newTerm, AWG.ToString) Then
                         CountValidation += 1
                     Else
                         oAwg.Append($"{AWG.ToString},")
@@ -110,7 +110,10 @@ Public Class DesviacionesTerm
                                  )
                 End If
                 UpdateWipCord(WIP.Text, actualterm, newTerm)
+                UpdateCortosPN(WIP.Text, newTerm, actualterm)
                 RegistraCambio(WIP.Text, newTerm, actualterm)
+                PN = newTerm
+                Principal.CortosPNCheck(False)
                 MessageBox.Show("El Proceso a terminado exitosamente")
                 SendNotify("'aplicadores','Compras','corte'", 10)
                 Me.Dispose()
@@ -130,6 +133,30 @@ Public Class DesviacionesTerm
             command.CommandType = CommandType.Text
             cnn.Open()
             command.ExecuteNonQuery()
+            cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            MessageBox.Show(ex.Message + vbNewLine + ex.ToString, "Error")
+        End Try
+    End Sub
+    Private Sub UpdateCortosPN(WIP As String, NewPN As String, CurrentPN As String)
+        Try
+            Dim queryUpdate As String = ""
+            Dim execQuery As Func(Of String, SqlCommand) = Function(query)
+                                                               Dim command As SqlCommand = New SqlCommand(query, cnn)
+                                                               command.CommandType = CommandType.Text
+                                                               cnn.Open()
+                                                               Return command
+                                                           End Function
+            queryUpdate = $"select AU from tblWIP where WIP='{WIP}'"
+            Dim AU As String = CStr(execQuery(queryUpdate).ExecuteScalar)
+            cnn.Close()
+            queryUpdate = $"select COUNT(*) from tblCortosPN where PN='{CurrentPN}' and Aus_afectados like '%{AU}%' and Hold = 1"
+            If CInt(execQuery(queryUpdate).ExecuteScalar) > 0 Then
+                cnn.Close()
+                queryUpdate = $"update tblCortosPN set PN='{NewPN}' where PN='{CurrentPN}' and Aus_afectados like '%{AU}%' and Hold = 1"
+                execQuery(queryUpdate).ExecuteNonQuery()
+            End If
             cnn.Close()
         Catch ex As Exception
             cnn.Close()
@@ -195,7 +222,7 @@ Public Class DesviacionesTerm
         End Try
         Return TblwipDet
     End Function
-    Private Function loadtermSpecs(newTerminal As String, wire As String) As Boolean
+    Private Function LoadtermSpecs(newTerminal As String, wire As String) As Boolean
         Try
             Dim query As String = "SELECT IsNull(COUNT(IDKey),0) FROM tblTermSpecs WHERE (PN=@PN AND WTAWG = @Wire) AND (PTA = 1 OR (TemporalApprovedDate > CONVERT(date,GETDATE()) AND TemporalApproved = 1))"
             Dim command As SqlCommand = New SqlCommand(query, cnn)
@@ -346,13 +373,13 @@ Public Class DesviacionesTerm
             Dim count As Integer = 0
             If Grid = 1 Then
                 For i As Integer = 0 To dgvTerminales.Rows.Count - 1
-                    If dgvTerminales.Rows(i).Cells("Chk").Value = True Then
+                    If dgvTerminales.Rows(i).Cells("Chk").Value Then
                         count += 1
                     End If
                 Next
             ElseIf Grid = 2 Then
                 For i As Integer = 0 To dgvTerminalesValidadas.Rows.Count - 1
-                    If dgvTerminalesValidadas.Rows(i).Cells("Check").Value = True Then
+                    If dgvTerminalesValidadas.Rows(i).Cells("Check").Value Then
                         count += 1
                     End If
                 Next
@@ -415,7 +442,7 @@ Public Class DesviacionesTerm
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If TerminalNew.Text <> "-" And CurrentTerminal.Text <> "-" Then
-            processTerminal()
+            ProcessTerminal()
         Else
             MessageBox.Show("Seleccione la terminal a Desviar", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
