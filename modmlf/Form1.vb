@@ -176,6 +176,8 @@ Public Class Principal
         cargachart()
         GridCharge()
         ChargeInfoCortos()
+        Timer2.Enabled = True
+        Timer2.Interval = 60000
         'AutoUpdate()
     End Sub
     Private Sub llenagrid(query As String)
