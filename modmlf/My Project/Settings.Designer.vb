@@ -57,8 +57,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=SHPSIS01\SQLEXPRESS2012;Initial Catalog=SEA;Persist Security Info=Tru"& _ 
-            "e;User ID=sa;Password=SHPadmin14%")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=10.17.182.12\SQLEXPRESS2012;Initial Catalog=SEA;Persist Security Info"& _ 
+            "=True;User ID=sa;Password=SHPadmin14%")>  _
         Public ReadOnly Property SEAConnectionString() As String
             Get
                 Return CType(Me("SEAConnectionString"),String)

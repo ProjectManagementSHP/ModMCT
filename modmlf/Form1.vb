@@ -229,8 +229,8 @@ Public Class Principal
         Cargachart()
         GridCharge()
         ChargeInfoCortos()
-        'If dgvWips.Rows.Count > 0 Then ConfigGridSolution(dgvWips)
-        'If dgvPWO.Rows.Count > 0 Then ConfigGridSolution(dgvPWO)
+        Timer2.Enabled = True
+        Timer2.Interval = 60000
         'AutoUpdate()
     End Sub
     'Private MouseMovementsUser As Action = Function()
@@ -335,7 +335,7 @@ Public Class Principal
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error llenagrid")
-            CorreoFalla.EnviaCorreoFalla("llenagrid", host, UserName)
+            EnviaCorreoFalla("llenagrid", host, UserName)
         End Try
     End Sub
     Private Sub ConfigGridSolution(Grid As DataGridView)
@@ -348,7 +348,7 @@ Public Class Principal
                 Grid.Columns(1).Frozen = True
             End If
         Catch ex As Exception
-            'MessageBox.Show(ex.ToString)
+
         End Try
     End Sub
     Private Sub GridCharge()
@@ -413,7 +413,7 @@ Public Class Principal
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Terminales")
-            CorreoFalla.EnviaCorreoFalla("ChargeInfoCortos", host, UserName)
+            EnviaCorreoFalla("ChargeInfoCortos", host, UserName)
         End Try
     End Sub
     Private Sub ExportInfo()
@@ -1303,7 +1303,7 @@ Public Class Principal
                 ProgressBar1.Visible = False
             Catch ex As Exception
                 MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Terminales")
-                CorreoFalla.EnviaCorreoFalla("cargadatosCompras", host, UserName)
+                EnviaCorreoFalla("cargadatosCompras", host, UserName)
             End Try
             edo = cnn.State.ToString
             If edo = "Open" Then cnn.Close()
@@ -1321,7 +1321,7 @@ Public Class Principal
             Return Qty
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading TermA")
-            CorreoFalla.EnviaCorreoFalla("TermAQty", host, UserName)
+            EnviaCorreoFalla("TermAQty", host, UserName)
             Return 0
         Finally
             cnn.Close()
@@ -1339,7 +1339,7 @@ Public Class Principal
             Return Qty
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading TermB")
-            CorreoFalla.EnviaCorreoFalla("TermBQty", host, UserName)
+            EnviaCorreoFalla("TermBQty", host, UserName)
             Return 0
         Finally
             cnn.Close()
@@ -1355,7 +1355,7 @@ Public Class Principal
             Return Qty
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
-            CorreoFalla.EnviaCorreoFalla("AllocatedAQty", host, UserName)
+            EnviaCorreoFalla("AllocatedAQty", host, UserName)
             Return 0
         Finally
             cnn.Close()
@@ -1373,7 +1373,7 @@ Public Class Principal
             Return Qty
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading WireQty")
-            CorreoFalla.EnviaCorreoFalla("WireQty", host, UserName)
+            EnviaCorreoFalla("WireQty", host, UserName)
             Return 0
         Finally
             cnn.Close()
@@ -1410,7 +1410,7 @@ Public Class Principal
             End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading OH")
-            CorreoFalla.EnviaCorreoFalla("oHQty", host, UserName)
+            EnviaCorreoFalla("oHQty", host, UserName)
             oh = 0
             alm = 0
             piso = 0
@@ -1452,7 +1452,7 @@ Public Class Principal
             Next
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("PintarMateriales", host, UserName)
+            EnviaCorreoFalla("PintarMateriales", host, UserName)
         End Try
     End Sub
     Private Sub CheckValidaciones(PN As String)
@@ -1490,7 +1490,7 @@ Public Class Principal
             End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("CheckValidaciones", host, UserName)
+            EnviaCorreoFalla("CheckValidaciones", host, UserName)
         End Try
     End Sub
     Public BuildQuery As Func(Of String, Integer, String) = Function(Cell, aOption)
@@ -1569,7 +1569,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     conex.Close()
                 Catch ex As Exception
                     conex.Close()
-                    CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+                    EnviaCorreoFalla("cargachart", host, UserName)
                     Cargachart()
                 End Try
             End Using
@@ -1600,7 +1600,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     conex.Close()
                 Catch ex As Exception
                     conex.Close()
-                    CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+                    EnviaCorreoFalla("cargachart", host, UserName)
                     Cargachart()
                 End Try
             End Using
@@ -1631,7 +1631,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     conex.Close()
                 Catch ex As Exception
                     conex.Close()
-                    CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+                    EnviaCorreoFalla("cargachart", host, UserName)
                     Cargachart()
                 End Try
             End Using
@@ -1677,21 +1677,21 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             End With
             'If tbMP.Rows.Count > 0 Then
             With Me.Chart2
-                    .ChartAreas(0).AxisX.MajorGrid.LineWidth = 0
-                    .Series("Carga Celdas por entrar").IsValueShownAsLabel = True
-                    .Series("Carga Celdas por entrar").IsVisibleInLegend = True
-                    .Series("Carga Actual").IsValueShownAsLabel = True
-                    .Series("Carga en proceso de confirmacion").IsValueShownAsLabel = True
-                    .Titles.Clear()
+                .ChartAreas(0).AxisX.MajorGrid.LineWidth = 0
+                .Series("Carga Celdas por entrar").IsValueShownAsLabel = True
+                .Series("Carga Celdas por entrar").IsVisibleInLegend = True
+                .Series("Carga Actual").IsValueShownAsLabel = True
+                .Series("Carga en proceso de confirmacion").IsValueShownAsLabel = True
+                .Titles.Clear()
                 .Titles.Add("Grafico Carga de Celdas").Font = New Font("Arial", 12, FontStyle.Bold)
                 If tbMP.Rows.Count > 0 Then
-                        For j = 0 To tbMP.Rows.Count - 1
-                            .Series("Carga Celdas por entrar").Points.AddXY(tbMP.Rows(j).Item("Cell").ToString, tbMP.Rows(j).Item("Listos para entrar").ToString)
-                            .Series("Carga Actual").Points.AddXY(tbMP.Rows(j).Item("Cell").ToString, tbMP.Rows(j).Item("En MP").ToString)
-                            .Series("Carga en proceso de confirmacion").Points.AddXY(tbMP.Rows(j).Item("Cell").ToString, tbMP.Rows(j).Item("Proceso de confirmacion").ToString)
-                        Next
-                    End If
-                End With
+                    For j = 0 To tbMP.Rows.Count - 1
+                        .Series("Carga Celdas por entrar").Points.AddXY(tbMP.Rows(j).Item("Cell").ToString, tbMP.Rows(j).Item("Listos para entrar").ToString)
+                        .Series("Carga Actual").Points.AddXY(tbMP.Rows(j).Item("Cell").ToString, tbMP.Rows(j).Item("En MP").ToString)
+                        .Series("Carga en proceso de confirmacion").Points.AddXY(tbMP.Rows(j).Item("Cell").ToString, tbMP.Rows(j).Item("Proceso de confirmacion").ToString)
+                    Next
+                End If
+            End With
             'End If
             ' ------------------------------------------------------------------
         End If
@@ -1744,7 +1744,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 End If
             Catch ex As Exception
                 cnn.Close()
-                CorreoFalla.EnviaCorreoFalla("CWO sin imprimir", host, UserName)
+                EnviaCorreoFalla("CWO sin imprimir", host, UserName)
             End Try
         End If
     End Sub
@@ -1781,7 +1781,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     End If
                 Catch ex As Exception
                     MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                    CorreoFalla.EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                    EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
                 End Try
             End If
         End If
@@ -2091,7 +2091,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             FilterInfo()
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("DetenerCWO", host, UserName)
+            EnviaCorreoFalla("DetenerCWO", host, UserName)
         End Try
     End Sub
     Public Sub actualizafecharequerimiento(CWO As String)
@@ -2187,7 +2187,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             'End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
+            EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
         End Try
         '*********
         Poneokalm_apl(CWO, WIP)
@@ -2300,11 +2300,11 @@ else 25 end where WIP = @WIP")
                 cnn.Close()
             Catch ex As Exception
                 MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                CorreoFalla.EnviaCorreoFalla("wSortWIPAndACorte", host, UserName)
+                EnviaCorreoFalla("wSortWIPAndACorte", host, UserName)
             End Try
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("wSortWIPAndACorte", host, UserName)
+            EnviaCorreoFalla("wSortWIPAndACorte", host, UserName)
         End Try
     End Sub
     Public Function CheckWSort(CWO As String) As Boolean
@@ -2665,7 +2665,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Return Nothing
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("wsorts", host, UserName)
+            EnviaCorreoFalla("wsorts", host, UserName)
         Finally
             cnn.Close()
         End Try
@@ -2712,7 +2712,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Filtros(2)
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("notesWIPandCWOquitaOnHoldde26", host, UserName)
+            EnviaCorreoFalla("notesWIPandCWOquitaOnHoldde26", host, UserName)
         End Try
     End Sub
     Public Sub NotesWIPandCWOOnHold(cwo As String, fecha As String, notes As String)
@@ -2784,7 +2784,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cnn.Close()
         Catch ex As Exception
             MsgBox(ex.ToString)
-            CorreoFalla.EnviaCorreoFalla("notesWIPandCWOOnHold", host, UserName)
+            EnviaCorreoFalla("notesWIPandCWOOnHold", host, UserName)
         End Try
     End Sub
     Public Sub Notas(cwo As String, fecha As String, notes As String, WIP As String, PN As String)
@@ -2959,7 +2959,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Catch ex As Exception
             MsgBox(ex.ToString)
             cnn.Close()
-            CorreoFalla.EnviaCorreoFalla("llenanotas", host, UserName)
+            EnviaCorreoFalla("llenanotas", host, UserName)
         End Try
     End Sub
     Private Sub dgvWips_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvWips.CellClick
@@ -3032,7 +3032,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             GroupBox3.BringToFront()
         Catch ex As Exception
             MsgBox(ex.ToString)
-            CorreoFalla.EnviaCorreoFalla("Button2_Click", host, UserName)
+            EnviaCorreoFalla("Button2_Click", host, UserName)
         End Try
         Cursor.Current = Cursors.Default
     End Sub
@@ -3399,7 +3399,7 @@ and a.Balance > 0)"
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("ChargeGridAfectacion", host, UserName)
+            EnviaCorreoFalla("ChargeGridAfectacion", host, UserName)
             Return Nothing
         End Try
     End Function
@@ -3808,7 +3808,7 @@ and a.Balance > 0)"
             End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("dgvMatSinStockCompras_CellClick", host, UserName)
+            EnviaCorreoFalla("dgvMatSinStockCompras_CellClick", host, UserName)
         End Try
     End Sub
     Private Sub btnRefrescaGrid_Click(sender As Object, e As EventArgs) Handles btnRefrescaGrid.Click
@@ -4030,7 +4030,7 @@ and a.Balance > 0)"
                         PN = Convert.ToString(dgvCortosCompletos.Rows(e.RowIndex).Cells(0).Value)
                     Catch ex As Exception
                         MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                        CorreoFalla.EnviaCorreoFalla("dgvCortosCompletos_CellMouseDown", host, UserName)
+                        EnviaCorreoFalla("dgvCortosCompletos_CellMouseDown", host, UserName)
                     End Try
                 End If
             End If
@@ -4065,7 +4065,7 @@ and a.Balance > 0)"
                         PN = Convert.ToString(dgvMatSinStockCompras.Rows(e.RowIndex).Cells(1).Value)
                     Catch ex As Exception
                         MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                        CorreoFalla.EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                        EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
                     End Try
                 End If
             End If
@@ -4137,7 +4137,7 @@ and a.Balance > 0)"
                     End If
                 Catch ex As Exception
                     MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                    CorreoFalla.EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                    EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
                 End Try
             End If
         End If

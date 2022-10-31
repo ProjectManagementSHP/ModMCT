@@ -10,24 +10,27 @@ Public Class LoginUser
         Me.password = password
         Me.aModule = aModule
     End Sub
-    Public Function IsAuthenticated() As Boolean
-        Dim path As String = "LDAP://" & "10.17.182.22" 'domain
-        Dim domainAndUsername As String = "SHPMFG" + "\" + username
-        Dim entry As DirectoryEntry = New DirectoryEntry(path, domainAndUsername, password)
-        Try
-            Dim obj As Object = entry.NativeObject
-            Dim search As DirectorySearcher = New DirectorySearcher(entry)
-            search.Filter = "(SAMAccountName=" & username & ")"
-            search.PropertiesToLoad.Add("cn")
-            Dim result As SearchResult = search.FindOne()
-            If (result Is Nothing) Then
+    Public ReadOnly Property IsAuthenticated As Boolean
+        Get
+            Dim path As String = "LDAP://" & "10.17.182.22" 'domain
+            Dim domainAndUsername As String = "SHPMFG" + "\" + username
+            Dim entry As DirectoryEntry = New DirectoryEntry(path, domainAndUsername, password)
+            Try
+                Dim obj As Object = entry.NativeObject
+                Dim search As DirectorySearcher = New DirectorySearcher(entry)
+                search.Filter = "(SAMAccountName=" & username & ")"
+                search.PropertiesToLoad.Add("cn")
+                Dim result As SearchResult = search.FindOne()
+                If (result Is Nothing) Then
+                    Return False
+                End If
+            Catch ex As Exception
                 Return False
-            End If
-        Catch ex As Exception
-            Return False
-        End Try
-        Return True
-    End Function
+            End Try
+            Return True
+        End Get
+    End Property
+
     Public Function GetUserAuthorization() As Boolean
         Dim Resp As Boolean
         Dim Query As String = "SELECT UserID,Department FROM tblItemsPOUserIDAuthorizations WHERE UserID=@UserID AND Module=@Module and Active=1"
@@ -65,11 +68,7 @@ Public Class LoginUser
             Using cmd As New SqlCommand(query, cnn)
                 cmd.CommandType = CommandType.Text
                 cmd.Connection = cnn
-                If IsDBNull(cmd.ExecuteScalar()) Or CStr(cmd.ExecuteScalar) = "" Then
-                    valor = ""
-                Else
-                    valor = cmd.ExecuteScalar()
-                End If
+                valor = If(IsDBNull(cmd.ExecuteScalar()) Or CStr(cmd.ExecuteScalar) = "", "", DirectCast(cmd.ExecuteScalar(), String))
             End Using
             cnn.Close()
             If valor = "" Then
@@ -84,10 +83,14 @@ Public Class LoginUser
             cnn.Close()
         End Try
     End Function
-    Public Function GetAuthorizedName() As String
-        Return Me.username
-    End Function
-    Public Function GetAuthorizedDept() As String
-        Return Me.Dept
-    End Function
+    Public ReadOnly Property AuthorizedName As String
+        Get
+            Return Me.username
+        End Get
+    End Property
+    Public ReadOnly Property AuthorizedDept As String
+        Get
+            Return Me.Dept
+        End Get
+    End Property
 End Class

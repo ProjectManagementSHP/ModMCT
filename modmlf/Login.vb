@@ -52,10 +52,10 @@ Public Class Login
                 Principal.Show()
             Else
                 Dim User As LoginUser = New LoginUser(TextBox1.Text, TextBox2.Text, "MLF")
-                If User.IsAuthenticated() Then
+                If User.IsAuthenticated Then
                     If User.GetUserAuthorization() Then
-                        dep = User.GetAuthorizedDept()
-                        UserName = User.GetAuthorizedName()
+                        dep = User.AuthorizedDept
+                        UserName = User.AuthorizedName
                         Select Case dep
                             Case "Desarrollo"
                                 With OpcionesLog
@@ -106,6 +106,12 @@ Public Class Login
                                 Me.Hide()
                                 Principal.Text = "Planeacion XP"
                                 Principal.Show()
+                            Case "PlanPWO"
+                                opcion = 8
+                                insertMLFNotification()
+                                Me.Hide()
+                                Principal.Text = "Planeacion PWO"
+                                Principal.Show()
                             Case Else
                                 MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
                         End Select
@@ -135,8 +141,8 @@ Public Class Login
         Dim User As LoginUser = New LoginUser()
         If User.GetUserToLogin() Then
             If User.GetUserAuthorization() Then
-                dep = User.GetAuthorizedDept()
-                UserName = User.GetAuthorizedName()
+                dep = User.AuthorizedDept
+                UserName = User.AuthorizedName
                 Select Case dep
                     Case "Desarrollo"
                         With OpcionesLog

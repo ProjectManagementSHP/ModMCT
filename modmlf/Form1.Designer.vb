@@ -430,7 +430,7 @@ Partial Class Principal
         Me.ContextMenuVerMW.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ContextMenuVerMW.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem12, Me.ToolStripMenuItem13, Me.ToolStripTextBox5, Me.ToolStripTextBox6, Me.ToolStripTextBox7, Me.AsignarMaterialToolStripMenuItem, Me.ToolStripMenuItem14, Me.DesviarTerminalToolStripMenuItem})
         Me.ContextMenuVerMW.Name = "ContextMenuDesviacion"
-        Me.ContextMenuVerMW.Size = New System.Drawing.Size(161, 189)
+        Me.ContextMenuVerMW.Size = New System.Drawing.Size(107, 126)
         '
         'ToolStripMenuItem12
         '
