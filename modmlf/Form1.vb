@@ -205,6 +205,7 @@ Public Class Principal
                     End If
                     .Columns(0).Frozen = True
                     .Columns(1).Frozen = True
+                    .Columns("CheckExp").Visible = False
                     Label3.Text = "Items: " & dgvWips.Rows.Count
                     btnRefrescaGrid.Visible = True
                 End With
@@ -1283,6 +1284,10 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     linea.Cells(7).Style.ForeColor = Color.Black
                     linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
                 End If
+                If linea.Cells("CheckExp").Value Then
+                    linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
+                    linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
+                End If
             Next
         End If
         If (opcion = 6 Or opcion = 7 Or opcion = 8) And rbListosParaEntrar.Checked = True Then
@@ -1992,7 +1997,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         pintaceldas()
     End Sub
     Public Sub filtros(a As Integer)
-        Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+        Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem,case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
         Dim cmd As String = ""
         If a = 1 Then
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
