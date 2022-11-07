@@ -344,8 +344,9 @@ Public Class Principal
                 Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                 Grid.AutoResizeColumns()
                 Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                Grid.Columns(0).Frozen = True
-                Grid.Columns(1).Frozen = True
+                Grid.Columns("WIP").Frozen = True
+                Grid.Columns($"{If(Grid.Name = "dgvPWO", "PWO", "CWO")}").Frozen = True
+                Grid.Columns("CheckExp").Visible = False
             End If
         Catch ex As Exception
 
@@ -1717,6 +1718,10 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     linea.Cells(7).Style.ForeColor = Color.Black
                     linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
                 End If
+                If linea.Cells("CheckExp").Value Then
+                    linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
+                    linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
+                End If
             Next
         End If
         If (opcion = 6 Or opcion = 7) And rbListosParaEntrar.Checked Then
@@ -2545,8 +2550,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Pintaceldas(dgvWips)
     End Sub
     Public Sub Filtros(a As Integer)
-        Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
-        Dim queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+        Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+        Dim queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when a.ExCs is not null and a.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
         Dim cmd As String = "", wherePWO As String = ""
         If a = 1 Then
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
