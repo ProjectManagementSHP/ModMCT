@@ -192,6 +192,12 @@ Public Class Login
                         Principal.Text = "Planeacion XP"
                         Principal.ShowDialog()
                         Me.Close()
+                    Case "PlanPWO"
+                        opcion = 8
+                        insertMLFNotification()
+                        Principal.Text = "Planeacion PWO"
+                        Principal.ShowDialog()
+                        Me.Close()
                     Case Else
                         MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
                 End Select
@@ -204,16 +210,16 @@ Public Class Login
     End Sub
     Private Sub insertMLFNotification()
         Try
-            Dim valor As String = ""
+            Dim valor As Boolean = False
             cnn.Open()
             Using cmd As New SqlCommand("select ID from tblMLFNotifications where [User] = '" + UserName.ToString + "'", cnn)
                 cmd.CommandType = CommandType.Text
                 cmd.Connection = cnn
-                valor = If(CStr(cmd.ExecuteScalar) = "", "YES", "")
+                valor = CStr(cmd.ExecuteScalar) = ""
                 cnn.Close()
             End Using
             Dim insert As String = ""
-            If valor = "YES" Then
+            If valor Then
                 If dep = "PlanCorte" Then
                     insert = "insert into tblMLFNotifications ([User],Dep) values ('" + UserName.ToString + "','Corte')"
                 Else

@@ -157,7 +157,6 @@ C:\bin\debug\Marcas, Listos, Fuera.application
 C:\bin\debug\Marcas, Listos, Fuera.exe
 C:\bin\debug\Marcas, Listos, Fuera.pdb
 C:\bin\debug\Marcas, Listos, Fuera.xml
-C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.config
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources

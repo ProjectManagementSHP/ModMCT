@@ -8,7 +8,7 @@
         <beforeApplicationStartup />
       </update>
     </subscription>
-    <deploymentProvider codebase="file://10.17.182.12/Test/CWO/Test%20PWO/MLF/Marcas,%20Listos,%20Fuera.application" />
+    <deploymentProvider codebase="file://10.17.182.22/sea-s/TestPWO/MLF/Marcas,%20Listos,%20Fuera.application" />
   </deployment>
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
     <framework targetVersion="4.8" profile="Full" supportedRuntime="4.0.30319" />
@@ -21,7 +21,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>9v+zxlT+T5+qSH1bu9kW4GPHmBG0Kz3IhZVKZKbc2R4=</dsig:DigestValue>
+        <dsig:DigestValue>MHl9af3gH+FWONCWiAU4EGms4NfCD4dZfyIfm/NEVsk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
