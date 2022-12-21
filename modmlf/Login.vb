@@ -10,12 +10,12 @@ Public Class Login
         log_on()
         TextBox2.Focus()
         TextBox2.Select()
-        If (ApplicationDeployment.IsNetworkDeployed) Then
+        If ApplicationDeployment.IsNetworkDeployed Then
             With ApplicationDeployment.CurrentDeployment.CurrentVersion
                 Label3.Text = "Version: " & .Major & "." & .Minor & "." & .Build & "." & .Revision & ""
             End With
         Else
-            Label3.Text = "Version: " & System.Windows.Forms.Application.ProductVersion & ""
+            Label3.Text = "Version: " & Application.ProductVersion & ""
         End If
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -243,5 +243,21 @@ Public Class Login
     End Sub
     Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
         Me.Close()
+    End Sub
+
+    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+
     End Sub
 End Class

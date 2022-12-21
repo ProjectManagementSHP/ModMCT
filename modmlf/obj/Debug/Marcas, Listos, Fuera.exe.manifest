@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="Marcas, Listos, Fuera.exe" version="3.2.2.64" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="Marcas, Listos, Fuera.exe" version="3.2.2.65" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="42571verticaltrafficlight_99064.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -91,14 +91,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1529816">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Marcas, Listos, Fuera.exe" size="1530840">
       <assemblyIdentity name="Marcas, Listos, Fuera" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mo2XcrVB+RoLnAwstB3G30Y7j2x/GqtkfkV3UtugbvM=</dsig:DigestValue>
+        <dsig:DigestValue>xCRgn/h3IdvKOBBV2C8w9MnqdEsc2KPegyCppmJJ0xk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -876,13 +876,13 @@
       <dsig:DigestValue>biWeutyBx3k7nlXLDuuUeXUdCXGDwzyTjtkG28T4YqE=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Marcas, Listos, Fuera.pdb" size="775680">
+  <file name="Marcas, Listos, Fuera.pdb" size="777728">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>IRyUYF0C3tqUXd3myc+X7tvC93JOwZaL3WmxmWUNt3M=</dsig:DigestValue>
+      <dsig:DigestValue>YnBYmH4uPqDJsiFLqXEajxrsQKGgH151wQVaMRonLsw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Marcas, Listos, Fuera.xml" size="7324">

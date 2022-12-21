@@ -185,3 +185,4 @@ C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\D
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
