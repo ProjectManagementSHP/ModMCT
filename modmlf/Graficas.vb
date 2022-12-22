@@ -7,7 +7,7 @@ Public Class Graficas
         System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
         GroupBox5.Visible = True
         GroupBox5.BringToFront()
-        ProgressBar1.Maximum = 600
+        ProgressBar1.Maximum = 600 * 600
         cargaChartPlanCut()
         LlenaGrid("Wips Planeados Sin CWO", "Todos")
         cargachart()
