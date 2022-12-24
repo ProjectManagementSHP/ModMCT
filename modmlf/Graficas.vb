@@ -1,13 +1,11 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Deployment.Application
-Imports System.ComponentModel
 Public Class Graficas
     Dim countProcess As Integer = 0, tabla As New DataTable(), activeProcessBar As Boolean
     Private Sub Graficas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         GroupBox5.Visible = True
         GroupBox5.BringToFront()
-        ProgressBar1.Maximum = 600
+        ProgressBar1.Maximum = 600 * 600
         cargaChartPlanCut()
         LlenaGrid("Wips Planeados Sin CWO", "Todos")
         cargachart()
@@ -20,17 +18,17 @@ Public Class Graficas
             countProcess = ProgressBar1.Maximum
         End If
         GroupBox5.Visible = False
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub LlenaGrid(filtroPrincipal As String, dept As String)
         Try
             Dim consulta As String = "SELECT DISTINCT w.WIP,w.wSort,w.AU,w.Rev,w.Qty,w.IT,(Select SUM(WireBalance * 1) from tblWipDet x where x.WIP=w.WIP) as Ckts,w.KindOfAU,w.Balance,null as [Unit Price],null as [Total Price],w.Sem,CONVERT(date,w.ProcFDispMat) [Fecha Materiales],w.Pr,CONVERT(INT,[100RT] / 60)  + CONVERT(INT,[100SU] / 60) [100Tl] FROM tblWIP w INNER JOIN tblWipDet d ON w.WIP=d.WIP INNER JOIN tblTiemposEstIngDiv ti ON ti.AU=w.AU ", where As String = ""
             If filtroPrincipal = "Wips Planeados Sin CWO" And dept = "Todos" Then
-                where = " WHERE Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
+                where = " WHERE Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
             ElseIf filtroPrincipal = "Wips Planeados Sin CWO" And dept = "Produccion" Then
-                where = " WHERE Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU NOT LIKE 'XP%'"
+                where = " WHERE Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU NOT LIKE 'XP%'"
             ElseIf filtroPrincipal = "Wips Planeados Sin CWO" And dept = "Zona 0" Then
-                where = " WHERE Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU LIKE 'XP%'"
+                where = " WHERE Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU LIKE 'XP%'"
             ElseIf filtroPrincipal = "CWO Nuevos" And dept = "Todos" Then
                 where = "  inner join tblCWO c on c.CWO=d.CWO where (W.wSort IN (3,27)) and (C.WSort IN (3,27)) and c.FechaSolicitudMat is null"
             ElseIf filtroPrincipal = "CWO Nuevos" And dept = "Produccion" Then
@@ -97,7 +95,7 @@ Public Class Graficas
     Function ReturnUnitAndTotalPrice(Qty As Integer, AU As Integer, Rev As String) As Integer
         Try
             Dim valor As Integer = 0
-            Dim QueryPrices As String = "select Price from tblMasterPrice where AU=" + AU.ToString + " and Rev='" + Rev.ToString + "' and " + Qty.ToString + " < [to] and " + Qty.ToString + " > [From] group by Price"
+            Dim QueryPrices As String = $"select Price from tblMasterPrice where AU={AU} and Rev='{Rev}' and {Qty} < [to] and {Qty} > [From] group by Price"
             cmd = New SqlCommand(QueryPrices, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -107,7 +105,7 @@ Public Class Graficas
         Catch ex As Exception
             MsgBox(ex.ToString)
             cnn.Close()
-            Return Nothing
+            Return 0
         End Try
     End Function
     Private Sub cargaChartPlanCut()
@@ -123,11 +121,11 @@ Public Class Graficas
         ' -------------------------------------------------------------------
         ' WIPS sin crear CWO y con semana de corte
         If RadioButton1.Checked = True Then
-            where = " where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
+            where = " where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
         ElseIf RadioButton2.Checked = True Then
-            where = " where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU NOT LIKE 'XP%'"
+            where = " where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU NOT LIKE 'XP%'"
         ElseIf RadioButton3.Checked = True Then
-            where = " where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU LIKE 'XP%'"
+            where = " where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU LIKE 'XP%'"
         End If
         consulta += where
         Using tabla As New DataTable
@@ -153,7 +151,7 @@ Public Class Graficas
             Catch ex As Exception
                 conexOne.Close()
                 MsgBox(ex.ToString)
-                CorreoFalla.EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
+                EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
             End Try
         End Using
 
@@ -171,7 +169,7 @@ Public Class Graficas
                 If data.HasRows Then
                     While data.Read()
                         sumTotalMaqXentrar += data.GetValue(0)
-                        If GroupBox5.Visible = True And activeProcessBar = False Then
+                        If GroupBox5.Visible And activeProcessBar = False Then
                             ProgressBar1.Value = countProcess
                             Application.DoEvents()
                             countProcess += 1
@@ -184,7 +182,7 @@ Public Class Graficas
             Catch ex As Exception
                 conexOne.Close()
                 MsgBox(ex.ToString)
-                CorreoFalla.EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
+                EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
             End Try
         End Using
         'Carga de maquinas en proceso de corte
@@ -201,7 +199,7 @@ Public Class Graficas
                 If data1.HasRows Then
                     While data1.Read()
                         sumTotalMaqProcess += data1.GetValue(0)
-                        If GroupBox5.Visible = True And activeProcessBar = False Then
+                        If GroupBox5.Visible And activeProcessBar = False Then
                             ProgressBar1.Value = countProcess
                             Application.DoEvents()
                             countProcess += 1
@@ -214,7 +212,7 @@ Public Class Graficas
             Catch ex As Exception
                 conexOne.Close()
                 MsgBox(ex.ToString)
-                CorreoFalla.EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
+                EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
             End Try
         End Using
         ' Carga de maquinas en proceso de confirmacion
@@ -231,7 +229,7 @@ Public Class Graficas
                 If data3.HasRows Then
                     While data3.Read()
                         sumTotalConfirmacion += data3.GetValue(1)
-                        If GroupBox5.Visible = True And activeProcessBar = False Then
+                        If GroupBox5.Visible And activeProcessBar = False Then
                             ProgressBar1.Value = countProcess
                             Application.DoEvents()
                             countProcess += 1
@@ -244,7 +242,7 @@ Public Class Graficas
             Catch ex As Exception
                 MsgBox(ex.ToString)
                 conexOne.Close()
-                CorreoFalla.EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
+                EnviaCorreoFalla("cargaChartPlanCut", host, UserName)
             End Try
         End Using
         Try
@@ -257,7 +255,7 @@ Public Class Graficas
             Me.Chart1.Series("Carga en proceso de confirmacion").IsValueShownAsLabel = True
             'Me.Chart1.ChartAreas(0).AxisY.MajorGrid.LineWidth = 0 'este es para quitar lineas eje Y
             Me.Chart1.Titles.Clear()
-            Me.Chart1.Titles.Add("Grafico Planeacion Corte").Font = New System.Drawing.Font("Arial", 12, System.Drawing.FontStyle.Bold)
+            Me.Chart1.Titles.Add("Grafico Planeacion Corte").Font = New Font("Arial", 12, FontStyle.Bold)
             '--------------------------------------------------------------------------
             Me.Chart1.Series("Carga Maquinas por entrar").Points.AddXY("", sumTotalMaqXentrar)
             '-------------------------------------------------------------------------
@@ -268,7 +266,7 @@ Public Class Graficas
             Me.Chart1.Series("WIP's").Points.AddXY("", sumTotalWIPS)
             'Me.Chart1.Series("WIP's").Points(0).Color = Color.Purple
             ' ------------------------------------------------------------------
-            If GroupBox5.Visible = True And activeProcessBar = False Then
+            If GroupBox5.Visible And Not activeProcessBar Then
                 ProgressBar1.Value = countProcess
                 Application.DoEvents()
                 countProcess += 1
@@ -285,7 +283,7 @@ Public Class Graficas
         Dim consulta As String
         Dim getMaqActives As String = "select Maq,0 [Proceso de confirmacion],0 [Listos para entrar], 0 [En corte] from tblMaqRates where Active = 1 order by CONVERT(int,Maq) asc"
         Dim getTableMaqs As DataTable = New DataTable(), dr1 As SqlDataReader
-        Dim cm As SqlCommand = New SqlCommand(getMaqActives, conex)
+        Dim cm As New SqlCommand(getMaqActives, conex)
         cm.CommandType = CommandType.Text
         conex.Open()
         dr1 = cm.ExecuteReader
@@ -326,7 +324,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             Catch ex As Exception
                 conexOne.Close()
                 MsgBox(ex.ToString)
-                CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+                EnviaCorreoFalla("cargachart", host, UserName)
                 cargachart()
             End Try
         End Using
@@ -362,7 +360,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             Catch ex As Exception
                 MsgBox(ex.ToString)
                 conexOne.Close()
-                CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+                EnviaCorreoFalla("cargachart", host, UserName)
                 cargachart()
             End Try
         End Using
@@ -385,7 +383,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                                 Exit For
                             End If
                         Next
-                        If GroupBox5.Visible = True And activeProcessBar = False Then
+                        If GroupBox5.Visible And activeProcessBar = False Then
                             ProgressBar1.Value = countProcess
                             Application.DoEvents()
                             countProcess += 1
@@ -398,7 +396,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             Catch ex As Exception
                 MsgBox(ex.ToString)
                 conexOne.Close()
-                CorreoFalla.EnviaCorreoFalla("cargachart", host, UserName)
+                EnviaCorreoFalla("cargachart", host, UserName)
                 cargachart()
             End Try
         End Using
@@ -410,7 +408,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             .Series("Carga Actual").IsValueShownAsLabel = True
             .Series("Carga en proceso de confirmacion").IsValueShownAsLabel = True
             .Titles.Clear()
-            .Titles.Add("Grafico Carga de Maquinas").Font = New System.Drawing.Font("Arial", 12, System.Drawing.FontStyle.Bold)
+            .Titles.Add("Grafico Carga de Maquinas").Font = New Font("Arial", 12, FontStyle.Bold)
             If getTableMaqs.Rows.Count > 0 Then
                 For j = 0 To getTableMaqs.Rows.Count - 1
                     .Series("Carga Maquinas por entrar").Points.AddXY(getTableMaqs.Rows(j).Item("Maq").ToString, getTableMaqs.Rows(j).Item("Listos para entrar").ToString)
@@ -422,7 +420,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         ' ------------------------------------------------------------------
         Timer1.Enabled = True
         Timer1.Interval = 60000
-        If GroupBox5.Visible = True And activeProcessBar = False Then
+        If GroupBox5.Visible And activeProcessBar = False Then
             ProgressBar1.Value = countProcess
             Application.DoEvents()
             countProcess += 1
@@ -434,7 +432,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         Try
             Dim sumTotalValores As Integer = 0, arreglo As String = ""
             If opcionDeSum = "Hrs" Then
-                arreglo = "select SUM(convert(int,[100RT] / 60)  + convert(int,[100SU] / 60)) [100Tl] from tblWIP w inner join tblWipDet d on w.WIP=d.WIP inner join tblTiemposEstIngDiv ti on ti.AU=w.AU where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
+                arreglo = "select SUM(convert(int,[100RT] / 60)  + convert(int,[100SU] / 60)) [100Tl] from tblWIP w inner join tblWipDet d on w.WIP=d.WIP inner join tblTiemposEstIngDiv ti on ti.AU=w.AU where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
                 cmd = New SqlCommand(arreglo, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -472,7 +470,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 cnn.Close()
                 blCWOcut.Text = (From row In tablaRev.AsEnumerable() Select row("TotalTime")).ToList().Sum(Function(i) CInt(i.ToString()))
             ElseIf opcionDeSum = "Total Ckts" Then
-                arreglo = "Select ISNULL(SUM(WireBalance * 1),0) from tblWipDet where WIP in (select distinct w.WIP from tblWIP w inner join tblWipDet d on w.WIP=d.WIP inner join tblTiemposEstIngDiv ti on ti.AU=w.AU where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN')"
+                arreglo = "Select ISNULL(SUM(WireBalance * 1),0) from tblWipDet where WIP in (select distinct w.WIP from tblWIP w inner join tblWipDet d on w.WIP=d.WIP inner join tblTiemposEstIngDiv ti on ti.AU=w.AU where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN')"
                 cmd = New SqlCommand(arreglo, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -510,7 +508,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 sumTotalValores = 0
             ElseIf opcionDeSum = "$ Valor" Then
                 tablaRev.Clear()
-                arreglo = "select distinct w.AU,w.Rev,w.Qty from tblWIP w inner join tblWipDet d on w.WIP=d.WIP inner join tblTiemposEstIngDiv ti on ti.AU=w.AU where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
+                arreglo = "select distinct w.AU,w.Rev,w.Qty from tblWIP w inner join tblWipDet d on w.WIP=d.WIP inner join tblTiemposEstIngDiv ti on ti.AU=w.AU where Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN'"
                 cmd = New SqlCommand(arreglo, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -575,27 +573,27 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         End Try
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         activeProcessBar = True
-        If RadioButton1.Checked = True Then LlenaGrid(ComboBox1.Text, RadioButton1.Text.ToString)
-        If RadioButton2.Checked = True Then LlenaGrid(ComboBox1.Text, RadioButton2.Text.ToString)
-        If RadioButton3.Checked = True Then LlenaGrid(ComboBox1.Text, RadioButton3.Text.ToString)
+        If RadioButton1.Checked Then LlenaGrid(ComboBox1.Text, RadioButton1.Text.ToString)
+        If RadioButton2.Checked Then LlenaGrid(ComboBox1.Text, RadioButton2.Text.ToString)
+        If RadioButton3.Checked Then LlenaGrid(ComboBox1.Text, RadioButton3.Text.ToString)
         cargaChartPlanCut()
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub RadioButton5_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton5.CheckedChanged
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-        If RadioButton5.Checked = True Then
+        Cursor.Current = Cursors.WaitCursor
+        If RadioButton5.Checked Then
             SumTotales(RadioButton5.Text.ToString)
         End If
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If RadioButton4.Checked = True Then
             SumTotales(RadioButton4.Text.ToString)
         End If
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Timer1.Stop()
@@ -615,10 +613,10 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         Me.Dispose()
     End Sub
     Private Sub RadioButton6_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton6.CheckedChanged
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
-        If RadioButton6.Checked = True Then
+        Cursor.Current = Cursors.WaitCursor
+        If RadioButton6.Checked Then
             SumTotales(RadioButton6.Text.ToString)
         End If
-        System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
 End Class

@@ -5,7 +5,7 @@ Public Class LoginUser
     Public password As String
     Public aModule As String
     Public Dept As String
-    Public Sub New(Optional ByVal username As String = "", Optional ByVal password As String = "", Optional ByVal aModule As String = "MLF")
+    Public Sub New(Optional username As String = "", Optional password As String = "", Optional aModule As String = "MLF")
         Me.username = username
         Me.password = password
         Me.aModule = aModule
