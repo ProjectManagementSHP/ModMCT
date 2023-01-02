@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Globalization
+
 Module Variables
 
     Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
@@ -25,7 +27,7 @@ Module Variables
     Public FlagFechas As Boolean = False
     Public op, sort, p, flag, maq, flagActualizacion, cola As Integer
     Public userID As String
-    Public host As String = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString
+    Public host As String = Security.Principal.WindowsIdentity.GetCurrent().Name.ToString
     Public opcionesDeExportacion As Integer
-    Public nsemana As Integer = DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now)
+    Public nsemana As Integer = CultureInfo.CurrentUICulture.Calendar.GetWeekOfYear(Date.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday) 'DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now)
 End Module
