@@ -1,4 +1,6 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Globalization
+
 Module Variables
 
     Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
@@ -30,6 +32,6 @@ Module Variables
     Public opcionesDeExportacion As Integer
     Public nsemana As Integer = GetWeek()
     Public Function GetWeek()
-        Return DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now)
+        Return CultureInfo.CurrentUICulture.Calendar.GetWeekOfYear(Date.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday) 'DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now) Comentado por bug sem 0
     End Function
 End Module

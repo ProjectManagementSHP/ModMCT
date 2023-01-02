@@ -2612,48 +2612,43 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End If
         Llenagrid(query, queryPWO)
     End Sub
+    Private Sub FilterData(aOptionFill As Integer)
+        Filtros(aOptionFill)
+        lblwsortasig.Text = "-"
+        lblWIPorCWO.Text = "-"
+    End Sub
     Private Sub rbsolicitar_CheckedChanged(sender As Object, e As EventArgs) Handles rbsolicitar.CheckedChanged
         Cursor.Current = Cursors.WaitCursor
-        If rbsolicitar.Checked = True Then
-            Filtros(1)
-            lblwsortasig.Text = "-"
-            lblWIPorCWO.Text = "-"
+        If rbsolicitar.Checked Then
+            FilterData(1)
         End If
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub rbListosParaEntrar_CheckedChanged(sender As Object, e As EventArgs) Handles rbListosParaEntrar.CheckedChanged
         Cursor.Current = Cursors.WaitCursor
-        If rbListosParaEntrar.Checked = True Then
-            Filtros(3)
-            lblwsortasig.Text = "-"
-            lblWIPorCWO.Text = "-"
+        If rbListosParaEntrar.Checked Then
+            FilterData(3)
         End If
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub rbYaempezados_CheckedChanged(sender As Object, e As EventArgs) Handles rbYaempezados.CheckedChanged
         Cursor.Current = Cursors.WaitCursor
-        If rbYaempezados.Checked = True Then
-            Filtros(4)
-            lblwsortasig.Text = "-"
-            lblWIPorCWO.Text = "-"
+        If rbYaempezados.Checked Then
+            FilterData(4)
         End If
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub rbEmpezadosyDetenidos_CheckedChanged(sender As Object, e As EventArgs) Handles rbEmpezadosyDetenidos.CheckedChanged
         Cursor.Current = Cursors.WaitCursor
-        If rbEmpezadosyDetenidos.Checked = True Then
-            Filtros(5)
-            lblwsortasig.Text = "-"
-            lblWIPorCWO.Text = "-"
+        If rbEmpezadosyDetenidos.Checked Then
+            FilterData(5)
         End If
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub rdbOnHold_CheckedChanged(sender As Object, e As EventArgs) Handles rdbOnHold.CheckedChanged
         Cursor.Current = Cursors.WaitCursor
-        If rdbOnHold.Checked = True Then
-            Filtros(6)
-            lblwsortasig.Text = "-"
-            lblWIPorCWO.Text = "-"
+        If rdbOnHold.Checked Then
+            FilterData(6)
         End If
         Cursor.Current = Cursors.Default
     End Sub
