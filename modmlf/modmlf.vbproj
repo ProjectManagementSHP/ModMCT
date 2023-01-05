@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>\\10.17.182.22\sea-s\TestPWO\MLF\</PublishUrl>
+    <PublishUrl>\\10.17.182.22\sea-s\MLF\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -28,12 +28,8 @@
     <ProductName>MLF</ProductName>
     <PublisherName>SEA</PublisherName>
     <MinimumRequiredVersion>2.0.0.0</MinimumRequiredVersion>
-<<<<<<< HEAD
-    <ApplicationRevision>63</ApplicationRevision>
-=======
-    <ApplicationRevision>66</ApplicationRevision>
->>>>>>> Conectividad
-    <ApplicationVersion>3.2.2.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>4.6.10.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

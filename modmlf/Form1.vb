@@ -292,35 +292,6 @@ Public Class Principal
         Dim CWO As New DataTable
         Dim PWO As New DataTable
         Try
-<<<<<<< HEAD
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cmd.CommandTimeout = 600000
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tabla.Load(dr)
-            edo = cnn.State.ToString
-            If edo = "Open" Then cnn.Close()
-            If tabla.Rows.Count > 0 Then
-                With dgvWips
-                    .DataSource = tabla
-                    .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    .Columns("DueDateProcess").DefaultCellStyle.Format = ("dd-MMM-yy")
-                    .Columns("DateCreatedWIP").DefaultCellStyle.Format = ("dd-MMM-yy")
-                    If opcion = 5 Then
-                        .Columns("Fecha Materiales despues de Hold").DefaultCellStyle.Format = ("dd-MMM-yy")
-                        .Columns("Fecha Materiales").DefaultCellStyle.Format = ("dd-MMM-yy")
-                    End If
-                    .Columns(0).Frozen = True
-                    .Columns(1).Frozen = True
-                    .Columns("CheckExp").Visible = False
-                    Label3.Text = "Items: " & dgvWips.Rows.Count
-                    btnRefrescaGrid.Visible = True
-                End With
-                pintaceldas()
-=======
             If Not opcion = 8 Then
                 cmd = New SqlCommand(CWOq, cnn)
                 cmd.CommandType = CommandType.Text
@@ -347,7 +318,6 @@ Public Class Principal
                 btnRefrescaGrid.Visible = True
                 ConfigGridSolution(dgvWips)
                 Pintaceldas(dgvWips)
->>>>>>> Conectividad
             Else
                 dgvWips.DataSource = Nothing
                 Label3.Text = "Items: " & dgvWips.Rows.Count
@@ -2579,16 +2549,10 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     Private Sub dgvWips_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.ColumnHeaderMouseClick
         Pintaceldas(dgvWips)
     End Sub
-<<<<<<< HEAD
-    Public Sub filtros(a As Integer)
-        Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,w.DueDateProcess,w.CreatedDate [DateCreatedWIP],Sem,case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
-        Dim cmd As String = ""
-=======
     Public Sub Filtros(a As Integer)
         Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
         Dim queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when a.ExCs is not null and a.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
         Dim cmd As String = "", wherePWO As String = ""
->>>>>>> Conectividad
         If a = 1 Then
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
                 cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"

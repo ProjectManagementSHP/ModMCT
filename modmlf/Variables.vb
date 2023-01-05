@@ -30,12 +30,8 @@ Module Variables
     Public userID As String
     Public host As String = Security.Principal.WindowsIdentity.GetCurrent().Name.ToString
     Public opcionesDeExportacion As Integer
-<<<<<<< HEAD
-    Public nsemana As Integer = CultureInfo.CurrentUICulture.Calendar.GetWeekOfYear(Date.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday) 'DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now)
-=======
     Public nsemana As Integer = GetWeek()
     Public Function GetWeek()
         Return CultureInfo.CurrentUICulture.Calendar.GetWeekOfYear(Date.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday) 'DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now) Comentado por bug sem 0
     End Function
->>>>>>> Conectividad
 End Module
