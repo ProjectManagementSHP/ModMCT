@@ -195,11 +195,11 @@ Partial Class HoraXHora
         Me.TabControl2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl2.Controls.Add(Me.TabPage3)
         Me.TabControl2.Controls.Add(Me.TabPage4)
-        Me.TabControl2.Location = New System.Drawing.Point(905, 43)
+        Me.TabControl2.Location = New System.Drawing.Point(632, 72)
         Me.TabControl2.Margin = New System.Windows.Forms.Padding(2)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(700, 186)
+        Me.TabControl2.Size = New System.Drawing.Size(692, 186)
         Me.TabControl2.TabIndex = 5495
         '
         'TabPage3
@@ -211,7 +211,7 @@ Partial Class HoraXHora
         Me.TabPage3.Margin = New System.Windows.Forms.Padding(2)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage3.Size = New System.Drawing.Size(692, 160)
+        Me.TabPage3.Size = New System.Drawing.Size(684, 160)
         Me.TabPage3.TabIndex = 0
         Me.TabPage3.Text = "Produccion"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -290,7 +290,7 @@ Partial Class HoraXHora
         Me.TabPage4.Margin = New System.Windows.Forms.Padding(2)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage4.Size = New System.Drawing.Size(692, 181)
+        Me.TabPage4.Size = New System.Drawing.Size(692, 160)
         Me.TabPage4.TabIndex = 1
         Me.TabPage4.Text = "Almacen"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -366,11 +366,11 @@ Partial Class HoraXHora
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(1014, 349)
+        Me.TabControl1.Location = New System.Drawing.Point(268, 349)
         Me.TabControl1.Margin = New System.Windows.Forms.Padding(2)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(366, 395)
+        Me.TabControl1.Size = New System.Drawing.Size(366, 80)
         Me.TabControl1.TabIndex = 5493
         '
         'TabPage1
@@ -386,7 +386,7 @@ Partial Class HoraXHora
         Me.TabPage1.Margin = New System.Windows.Forms.Padding(2)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(2)
-        Me.TabPage1.Size = New System.Drawing.Size(541, 195)
+        Me.TabPage1.Size = New System.Drawing.Size(358, 54)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Comparacion"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -616,7 +616,7 @@ Partial Class HoraXHora
         Me.dgvWipCutCard.RowHeadersVisible = False
         Me.dgvWipCutCard.RowHeadersWidth = 51
         Me.dgvWipCutCard.RowTemplate.Height = 24
-        Me.dgvWipCutCard.Size = New System.Drawing.Size(1005, 373)
+        Me.dgvWipCutCard.Size = New System.Drawing.Size(1304, 190)
         Me.dgvWipCutCard.TabIndex = 5487
         '
         'btnDet14
@@ -733,7 +733,7 @@ Partial Class HoraXHora
         Me.dgvPNMaq05.DefaultCellStyle = DataGridViewCellStyle14
         Me.dgvPNMaq05.EnableHeadersVisualStyles = False
         Me.dgvPNMaq05.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNMaq05.Location = New System.Drawing.Point(994, -5)
+        Me.dgvPNMaq05.Location = New System.Drawing.Point(994, 32)
         Me.dgvPNMaq05.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNMaq05.Name = "dgvPNMaq05"
         Me.dgvPNMaq05.ReadOnly = True
@@ -810,7 +810,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated1.DefaultCellStyle = DataGridViewCellStyle17
         Me.dgvPNAllocated1.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated1.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated1.Location = New System.Drawing.Point(207, -5)
+        Me.dgvPNAllocated1.Location = New System.Drawing.Point(207, 32)
         Me.dgvPNAllocated1.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated1.Name = "dgvPNAllocated1"
         Me.dgvPNAllocated1.ReadOnly = True
@@ -854,7 +854,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated0.DefaultCellStyle = DataGridViewCellStyle20
         Me.dgvPNAllocated0.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated0.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated0.Location = New System.Drawing.Point(4, -5)
+        Me.dgvPNAllocated0.Location = New System.Drawing.Point(4, 32)
         Me.dgvPNAllocated0.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated0.Name = "dgvPNAllocated0"
         Me.dgvPNAllocated0.ReadOnly = True
@@ -898,7 +898,7 @@ Partial Class HoraXHora
         Me.dgvPnInMaq12.DefaultCellStyle = DataGridViewCellStyle23
         Me.dgvPnInMaq12.EnableHeadersVisualStyles = False
         Me.dgvPnInMaq12.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPnInMaq12.Location = New System.Drawing.Point(1799, -5)
+        Me.dgvPnInMaq12.Location = New System.Drawing.Point(1799, 32)
         Me.dgvPnInMaq12.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPnInMaq12.Name = "dgvPnInMaq12"
         Me.dgvPnInMaq12.ReadOnly = True
@@ -942,7 +942,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated14.DefaultCellStyle = DataGridViewCellStyle26
         Me.dgvPNAllocated14.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated14.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated14.Location = New System.Drawing.Point(2207, -5)
+        Me.dgvPNAllocated14.Location = New System.Drawing.Point(2207, 32)
         Me.dgvPNAllocated14.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated14.Name = "dgvPNAllocated14"
         Me.dgvPNAllocated14.ReadOnly = True
@@ -997,7 +997,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated2.DefaultCellStyle = DataGridViewCellStyle29
         Me.dgvPNAllocated2.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated2.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated2.Location = New System.Drawing.Point(406, -5)
+        Me.dgvPNAllocated2.Location = New System.Drawing.Point(406, 32)
         Me.dgvPNAllocated2.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated2.Name = "dgvPNAllocated2"
         Me.dgvPNAllocated2.ReadOnly = True
@@ -1041,7 +1041,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated13.DefaultCellStyle = DataGridViewCellStyle32
         Me.dgvPNAllocated13.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated13.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated13.Location = New System.Drawing.Point(2004, -5)
+        Me.dgvPNAllocated13.Location = New System.Drawing.Point(2004, 32)
         Me.dgvPNAllocated13.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated13.Name = "dgvPNAllocated13"
         Me.dgvPNAllocated13.ReadOnly = True
@@ -1085,7 +1085,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated10.DefaultCellStyle = DataGridViewCellStyle35
         Me.dgvPNAllocated10.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated10.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated10.Location = New System.Drawing.Point(1402, -5)
+        Me.dgvPNAllocated10.Location = New System.Drawing.Point(1402, 32)
         Me.dgvPNAllocated10.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated10.Name = "dgvPNAllocated10"
         Me.dgvPNAllocated10.ReadOnly = True
@@ -1193,7 +1193,7 @@ Partial Class HoraXHora
         Me.Panel1.Location = New System.Drawing.Point(9, 26)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(897, 149)
+        Me.Panel1.Size = New System.Drawing.Size(619, 220)
         Me.Panel1.TabIndex = 5485
         '
         'lblCWOconStart
@@ -1261,7 +1261,7 @@ Partial Class HoraXHora
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.RowHeadersWidth = 51
         Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(885, 90)
+        Me.DataGridView1.Size = New System.Drawing.Size(607, 161)
         Me.DataGridView1.TabIndex = 5468
         '
         'btnRefrescaGridCut
@@ -1322,14 +1322,14 @@ Partial Class HoraXHora
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(4, 2, 0, 2)
-        Me.MenuStrip1.Size = New System.Drawing.Size(1380, 16)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1324, 24)
         Me.MenuStrip1.TabIndex = 5499
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'FileToolStripMenuItem
         '
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(64, 12)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(64, 20)
         Me.FileToolStripMenuItem.Text = "Regresar"
         '
         'Panel2
@@ -1340,7 +1340,7 @@ Partial Class HoraXHora
         Me.Panel2.Controls.Add(Me.Label5)
         Me.Panel2.Controls.Add(Me.Button1)
         Me.Panel2.Controls.Add(Me.mtbxProxHrs)
-        Me.Panel2.Location = New System.Drawing.Point(905, 17)
+        Me.Panel2.Location = New System.Drawing.Point(638, 26)
         Me.Panel2.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(686, 42)
@@ -1450,7 +1450,7 @@ Partial Class HoraXHora
         Me.Panel3.Location = New System.Drawing.Point(5, 250)
         Me.Panel3.Margin = New System.Windows.Forms.Padding(2)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(1377, 178)
+        Me.Panel3.Size = New System.Drawing.Size(1311, 252)
         Me.Panel3.TabIndex = 5500
         '
         'btnDet6
@@ -1490,7 +1490,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated6.DefaultCellStyle = DataGridViewCellStyle41
         Me.dgvPNAllocated6.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated6.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated6.Location = New System.Drawing.Point(1199, -5)
+        Me.dgvPNAllocated6.Location = New System.Drawing.Point(1199, 32)
         Me.dgvPNAllocated6.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated6.Name = "dgvPNAllocated6"
         Me.dgvPNAllocated6.ReadOnly = True
@@ -1567,7 +1567,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated4.DefaultCellStyle = DataGridViewCellStyle44
         Me.dgvPNAllocated4.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated4.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated4.Location = New System.Drawing.Point(801, -5)
+        Me.dgvPNAllocated4.Location = New System.Drawing.Point(801, 32)
         Me.dgvPNAllocated4.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated4.Name = "dgvPNAllocated4"
         Me.dgvPNAllocated4.ReadOnly = True
@@ -1633,7 +1633,7 @@ Partial Class HoraXHora
         Me.dgvPnInMaq11.DefaultCellStyle = DataGridViewCellStyle47
         Me.dgvPnInMaq11.EnableHeadersVisualStyles = False
         Me.dgvPnInMaq11.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPnInMaq11.Location = New System.Drawing.Point(1597, -5)
+        Me.dgvPnInMaq11.Location = New System.Drawing.Point(1597, 32)
         Me.dgvPnInMaq11.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPnInMaq11.Name = "dgvPnInMaq11"
         Me.dgvPnInMaq11.ReadOnly = True
@@ -1699,7 +1699,7 @@ Partial Class HoraXHora
         Me.dgvPNAllocated3.DefaultCellStyle = DataGridViewCellStyle50
         Me.dgvPNAllocated3.EnableHeadersVisualStyles = False
         Me.dgvPNAllocated3.GridColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.dgvPNAllocated3.Location = New System.Drawing.Point(602, -5)
+        Me.dgvPNAllocated3.Location = New System.Drawing.Point(602, 32)
         Me.dgvPNAllocated3.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNAllocated3.Name = "dgvPNAllocated3"
         Me.dgvPNAllocated3.ReadOnly = True
@@ -1732,7 +1732,7 @@ Partial Class HoraXHora
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(2070, 1113)
+        Me.ClientSize = New System.Drawing.Size(1324, 746)
         Me.Controls.Add(Me.lblmaquina)
         Me.Controls.Add(Me.Panel3)
         Me.Controls.Add(Me.Panel2)
