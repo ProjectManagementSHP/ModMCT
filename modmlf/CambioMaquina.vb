@@ -1,6 +1,6 @@
 ﻿Public Class CambioMaquina
     Public Categoria As Integer
-    Private Sub btnpasarseporlosbuebostodoelsistem_Click(sender As Object, e As EventArgs) Handles btnpasarseporlosbuebostodoelsistem.Click
+    Private Sub btnConfirmar_Click(sender As Object, e As EventArgs) Handles btnConfirmar.Click
         If Not ComboBox1.Text = "" Then
             If Categoria = 1 Then
                 Principal.cambioMaquinaXCWO(ComboBox1.Text, txbNotas.Text, lblcwoporsolicitar.Text, Categoria)

@@ -1,18 +1,24 @@
 ﻿Imports System.Data.SqlClient
 Public Class AutomaticSort
+    'Inherits CreateWorkOrder
     Public conexion As New SqlConnection(strconexion)
     Public Maq As Integer
+    Public Cell As String
     Public NewSort As Integer
     Public OldSort As Integer
     Public LongitudArray As Integer
     Public Grid As DataGridView
     Public CWOForChange As String
-    Public Sub New(NewSort As Integer, OldSort As Integer, LongArray As Integer, Grid As DataGridView, Maquina As Integer, CWO As String)
+    Public Sub New(NewSort As Integer, OldSort As Integer, LongArray As Integer, Grid As DataGridView, Maquina As Object, CWO As String)
         Me.NewSort = NewSort
         Me.OldSort = OldSort
         Me.LongitudArray = LongArray
         Me.Grid = Grid
-        Me.Maq = Maquina
+        If IsNumeric(Maquina) Then
+            Me.Maq = Integer.Parse(Maquina)
+        Else
+            Me.Cell = Convert.ToString(Maquina)
+        End If
         Me.CWOForChange = CWO
     End Sub
     Public Sub New(Maquina As Integer)
@@ -22,7 +28,14 @@ Public Class AutomaticSort
         Me.Maq = Maquina
         Me.OldSort = oldsort
     End Sub
-    Function Compare() As Boolean
+    Public Sub New(Cell As String)
+        Me.Cell = Cell
+    End Sub
+    Public Sub New(Cell As String, oldsort As Integer)
+        Me.Cell = Cell
+        Me.OldSort = oldsort
+    End Sub
+    Public Function Compare() As Boolean
         If Me.NewSort > 0 Then
             If Me.NewSort < Me.OldSort Then
                 Return True
@@ -34,10 +47,10 @@ Public Class AutomaticSort
         End If
         Return Nothing
     End Function
-    Sub SetArray()
+    Public Sub SetArray()
         Dim arrayCWO(LongitudArray - 1) As String, arraySort(LongitudArray - 1) As Integer, tempSort As Integer, tempCWO As String
         For i As Integer = 0 To Grid.Rows.Count - 1
-            Dim auxString As String = Grid.Rows(i).Cells("CWO").Value.ToString, auxSort As Integer = CInt(Val(Grid.Rows(i).Cells("Orden").Value.ToString))
+            Dim auxString As String = Grid.Rows(i).Cells(0).Value.ToString, auxSort As Integer = CInt(Val(Grid.Rows(i).Cells(1).Value.ToString))
             arrayCWO(i) = auxString
             arraySort(i) = auxSort
         Next
@@ -78,7 +91,7 @@ Public Class AutomaticSort
     Function CheckZeros() As Boolean
         Try
             Dim ArraySort As DataTable = New DataTable
-            Dim aCmdo As SqlCommand = New SqlCommand($"select Id from tblCWO where Maq={Me.Maq} and (Id is not null or Id>0) and Status='OPEN' order by Id asc", cnn)
+            Dim aCmdo As SqlCommand = New SqlCommand($"select Id from {If(opcion = 8, $"tblPWO where Cell='{Cell}'", $"tblCWO where Maq={Me.Maq}")} and (Id is not null or Id>0) and Status='OPEN' order by Id asc", cnn)
             Dim daread As SqlDataReader
             aCmdo.CommandType = CommandType.Text
             cnn.Open()
@@ -112,7 +125,7 @@ Public Class AutomaticSort
     End Function
     Public Function RemoveZeros()
         Try
-            Dim aCmdo As SqlCommand = New SqlCommand($"select Id,CWO from tblCWO where Maq={Me.Maq} and (Id is not null or Id>0) and Status='OPEN' ORDER BY tblCWO.Id ASC ", cnn)
+            Dim aCmdo As SqlCommand = New SqlCommand($"select Id,{If(opcion = 8, "PWO", "CWO")} wo from {If(opcion = 8, $"tblPWO w where Cell='{Cell}'", $"tblCWO w where Maq={Me.Maq}")} and (Id is not null or Id>0) and Status='OPEN' ORDER BY w.Id ASC ", cnn)
             Dim aRead As SqlDataReader
             Dim oArray As DataTable = New DataTable
             aCmdo.CommandType = CommandType.Text
@@ -124,7 +137,7 @@ Public Class AutomaticSort
                 For i = 0 To oArray.Rows.Count - 1
                     If i = 0 Then
                         If CInt(oArray.Rows(i).Item("Id").ToString) < 1 Or CInt(oArray.Rows(i).Item("Id").ToString) > 1 Then
-                            Update(1, oArray.Rows(i).Item("CWO").ToString)
+                            Update(1, oArray.Rows(i).Item("wo").ToString)
                             Return RemoveZeros()
                         ElseIf CInt(oArray.Rows(i).Item("Id").ToString) = 1 Then
                             Continue For
@@ -133,7 +146,7 @@ Public Class AutomaticSort
                         If CInt(oArray.Rows(i).Item("Id").ToString) = (CInt(oArray.Rows(i - 1).Item("Id").ToString) + 1) Then
                             Continue For
                         Else
-                            Update((CInt(oArray.Rows(i - 1).Item("Id").ToString) + 1), oArray.Rows(i).Item("CWO").ToString)
+                            Update((CInt(oArray.Rows(i - 1).Item("Id").ToString) + 1), oArray.Rows(i).Item("wo").ToString)
                             Return RemoveZeros()
                         End If
                     End If
@@ -144,9 +157,9 @@ Public Class AutomaticSort
         End Try
         Return Nothing
     End Function
-    Function GetIdSort()
+    Public Function GetIdSort()
         Try
-            Dim aCmdo As SqlCommand = New SqlCommand($"select Id from tblCWO where CWO='{Me.CWOForChange}'", cnn)
+            Dim aCmdo As SqlCommand = New SqlCommand($"select Id from tbl{If(opcion = 8, "P", "C")}WO where {If(opcion = 8, "P", "C")}WO='{Me.CWOForChange}'", cnn)
             aCmdo.CommandType = CommandType.Text
             cnn.Open()
             Return If(CInt(aCmdo.ExecuteScalar) = Me.NewSort, True, False)
@@ -159,7 +172,7 @@ Public Class AutomaticSort
     End Function
     Sub Update(IdNew As Integer, CWO As String)
         Try
-            Dim cmdo1 As SqlCommand = New SqlCommand("update tblCWO set Id=" + IdNew.ToString + " where CWO='" + CWO.ToString + "'", cnn)
+            Dim cmdo1 As SqlCommand = New SqlCommand($"update {If(opcion = 8, "tblPWO", "tblCWO")} set Id=" + IdNew.ToString + $" where {If(opcion = 8, "PWO", "CWO")}='" + CWO.ToString + "'", cnn)
             cmdo1.CommandType = CommandType.Text
             cnn.Open()
             Dim edo = cnn.State.ToString
@@ -169,13 +182,12 @@ Public Class AutomaticSort
             cnn.Close()
         End Try
     End Sub
-    Function GetSort() As Integer
+    Public Function GetSort() As Integer
         Try
             Dim value As Integer, query As String = ""
-            query = "select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblCWO where Maq=@Maq and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
+            query = $"select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblCWO where Maq={Maq} and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
             Dim cmd As SqlCommand = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add("@Maq", SqlDbType.Int).Value = Maq
             cnn.Open()
             value = cmd.ExecuteScalar
             cnn.Close()
@@ -185,9 +197,36 @@ Public Class AutomaticSort
             Return 0
         End Try
     End Function
-    Sub ReOrderSort()
+    Function GetSortPWO() As Integer
         Try
-            Using cmd As New SqlCommand("update tblCWO set Id= Id - 1 where Maq=" + Maq.ToString + " and Status='OPEN' and Id > 0 and Id > " + OldSort.ToString + "", cnn)
+            Dim value As Integer, query As String = ""
+            query = $"select ISNULL(NULLIF(MAX(Id),0),0) + 1 [Id] from tblPWO where Cell='{Cell}' and Status='OPEN' and CloseDate is null and (Id is not null or Id > 0)"
+            Dim cmd As SqlCommand = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            value = cmd.ExecuteScalar
+            cnn.Close()
+            Return value
+        Catch ex As Exception
+            cnn.Close()
+            Return 0
+        End Try
+    End Function
+    Public Sub ReOrderSort()
+        Try
+            Using cmd As New SqlCommand($"update {If(opcion = 8, "tblPWO", "tblCWO")} set Id= Id - 1 where {If(opcion = 8, $"Cell='{Cell}'", $"Maq={Maq}")} And Status='OPEN' and Id > 0 and Id > {OldSort}", cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                cmd.ExecuteNonQuery()
+                cnn.Close()
+            End Using
+        Catch ex As Exception
+            cnn.Close()
+        End Try
+    End Sub
+    Sub PushFirstPlacePWO()
+        Try
+            Using cmd As New SqlCommand("update tblPWO set Id= Id + 1 where Cell='" + Cell.ToString + "' and Status='OPEN' and Id > 0 ", cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
                 cmd.ExecuteNonQuery()

@@ -20,13 +20,12 @@ Public Class Materiales
                     GroupBox3.Visible = True
                     DataGridView1.Visible = True
                     dgvBOM.Visible = False
-                    llenagrid2()
+                    Llenagrid2()
                 Else
-                    MsgBox("El CWO ya tiene todo el material asignado")
+                    MsgBox($"El {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO ya tiene todo el material asignado")
                     Me.Dispose()
                     Me.Close()
                 End If
-                p = 0
             ElseIf p = 12 Then 'Bandera de Hold
                 Button3.Visible = True
                 GroupBox2.Visible = False
@@ -34,9 +33,8 @@ Public Class Materiales
                 DataGridView1.Visible = True
                 CheckBox1.Visible = False
                 gbnotasconfirmando.Visible = False
-                llenagrid3()
+                Llenagrid3()
                 TabControl1.Parent = Nothing
-                p = 0
             Else ' Solo ver materiales (Almacen y Compras)
                 GroupBox2.Visible = False
                 GroupBox3.Visible = True
@@ -44,7 +42,7 @@ Public Class Materiales
                 DataGridView1.Visible = False
                 gbnotasconfirmando.Visible = False
                 CheckBox1.Visible = False
-                llenagrid()
+                Llenagrid()
                 TabPage1.Parent = Nothing
             End If
         ElseIf opcion = 3 Then ' Ver aplicadores
@@ -54,8 +52,8 @@ Public Class Materiales
             CheckBox1.Visible = False
             DataGridView3.Visible = True
             TabControl1.Visible = False
-            llenagrid1()
-        ElseIf opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Then
+            Llenagrid1()
+        ElseIf opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8 Then
             TabPage1.Parent = Nothing
             Label1.Text = "Materiales BOM y Re-Asignacion"
             GroupBox2.Visible = False
@@ -63,7 +61,7 @@ Public Class Materiales
             DataGridView1.Visible = False
             gbnotasconfirmando.Visible = False
             CheckBox1.Visible = False
-            llenaGridMaterialesParaCorte()
+            LlenaGridMaterialesParaCorte()
             GroupBox3.Visible = True
             LinkLabel1.Visible = False
         End If
@@ -102,8 +100,8 @@ Public Class Materiales
         propertyInfo.SetValue(dgvBOM, True, Nothing)
     End Sub
     Public SumVal As Func(Of Integer, Integer, Integer, Integer) = Function(a, b, result) result + a + b
-    Private Sub llenagrid() 'Solo ver materiales
-        Dim query As String = "Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],ISNULL(bw.TagAsignado,0) [TagAsignado],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOMCWO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
+    Private Sub Llenagrid() 'Solo ver materiales
+        Dim query As String = $"Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],ISNULL(bw.TagAsignado,0) [TagAsignado],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOM{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO ='{lblcwomat.Text}' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
         Dim muestra As Integer = 0, query2 As String = ""
         Dim tabla As New DataTable(), tabl As New DataTable(), tb As New DataTable()
         Try
@@ -118,7 +116,7 @@ Public Class Materiales
                 For i As Integer = 0 To tabla.Rows.Count - 1
                     tabla.Columns(9).ReadOnly = False
                     tabla.Columns(9).MaxLength = 400
-                    tabla.Rows(i).Item(9) = locacion(tabla.Rows(i).Item("PN").ToString)
+                    tabla.Rows(i).Item(9) = Locacion(tabla.Rows(i).Item("PN").ToString)
                 Next
             End If
             With dgvBOM
@@ -127,39 +125,42 @@ Public Class Materiales
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                 Label2.Text = "Items: " & dgvBOM.Rows.Count
             End With
-            pintandoceldas()
+            Pintandoceldas()
             btnExportar.Visible = If(opcion = 2 And DataGridView1.Rows.Count > 0, True, False)
-            cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
-            cnn.Close()
-            query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
-            cmd = New SqlCommand(query2, cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tabl.Load(dr)
-            cnn.Close()
-            If tabl.Rows.Count > 0 Then
-                tAcumulado = 0
-                Dim column As Integer = If(muestra = 1, 11, 8)
-                For i As Integer = 0 To tabl.Rows.Count - 1
-                    tabl.Columns(column).ReadOnly = False
-                    tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
-                    tabl.Rows(i).Item(column) = tAcumulado
-                Next
-                tAcumulado = 0
-                With DataGridView3
-                    .DataSource = tabl
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    .Visible = True
-                End With
+            If Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C" Then
+                cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
+                cnn.Close()
+                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+                cmd = New SqlCommand(query2, cnn)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                dr = cmd.ExecuteReader
+                tabl.Load(dr)
+                cnn.Close()
+                If tabl.Rows.Count > 0 Then
+                    tAcumulado = 0
+                    Dim column As Integer = If(muestra = 1, 11, 8)
+                    For i As Integer = 0 To tabl.Rows.Count - 1
+                        tabl.Columns(column).ReadOnly = False
+                        tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
+                        tabl.Rows(i).Item(column) = tAcumulado
+                    Next
+                    tAcumulado = 0
+                    With DataGridView3
+                        .DataSource = tabl
+                        .AutoResizeColumns()
+                        .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                        .Visible = True
+                    End With
+                End If
             End If
             vertagasignado = 1
-            cmd = New SqlCommand("select TAG,bw.PN,(select NULLif(Maq,'S/E') from tblCWO where CWO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like 'C%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOMCWO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
+            cmd = New SqlCommand($"select TAG,bw.PN,(select NULLif({If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "Maq", "Cell")},'S/E') from tbl{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO where {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like '{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOM{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
             cmd.CommandType = CommandType.Text
+            cmd.CommandTimeout = 120000
             cnn.Open()
             dr = cmd.ExecuteReader
             tb.Load(dr)
@@ -178,12 +179,13 @@ Public Class Materiales
             MsgBox(ex.Message + vbNewLine + ex.ToString)
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("llenagrid'Materiales'", host, UserName)
+            cnn.Close()
         End Try
     End Sub
-    Private Sub llenagrid1() 'Aplicadores
+    Private Sub Llenagrid1() 'Aplicadores
         Dim tabla As New DataTable, tb As New DataTable
         Try
-            cmd = New SqlCommand("select Wire,TermA,SUBSTRING(isnull(AplicatorA,0),0,4)[AplicatorA],IDKeyA,MaqA,TermB,SUBSTRING(isnull(AplicatorB,0),0,4)[AplicatorB],IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA from tblWipDet inner join tblTermSpecs on tblTermSpecs.IDKey=tblWipDet.IDKeyA where CWO='" + lblcwomat.Text + "' group by Wire,TermA,AplicatorA,IDKeyA,MaqA,TermB,AplicatorB,IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA", cnn)
+            cmd = New SqlCommand($"select Wire,TermA,SUBSTRING(isnull(AplicatorA,0),0,4)[AplicatorA],IDKeyA,MaqA,TermB,SUBSTRING(isnull(AplicatorB,0),0,4)[AplicatorB],IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA from tblWipDet inner join tblTermSpecs on tblTermSpecs.IDKey=tblWipDet.IDKeyA where {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "P", $"PWOA='{lblcwomat.Text}' or PWOB='{lblcwomat.Text}'", $"CWO='{lblcwomat.Text}'")} group by Wire,TermA,AplicatorA,IDKeyA,MaqA,TermB,AplicatorB,IDKeyB,MaqB,PTA, QAPTA,EngPTA,WTAWG,WC,WA,IC,IA", cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             dr = cmd.ExecuteReader
@@ -194,11 +196,11 @@ Public Class Materiales
                 .DataSource = tabla
                 .AutoResizeColumns()
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                Label2.Text = "Items: " & dgvBOM.Rows.Count
+                Label2.Text = "Items: " & .Rows.Count
                 DataGridView1.Visible = False
             End With
-            recorregrid()
-            cmd = New SqlCommand("select AU,WID,Wire,LengthWire,TermA,MaqA,AplicatorA,TermB,MaqB,AplicatorB,WIP from tblWipDet where CWO = '" + lblcwomat.Text + "' order by WireID", cnn)
+            Recorregrid()
+            cmd = New SqlCommand($"select AU,WID,Wire,LengthWire,TermA,MaqA,AplicatorA,TermB,MaqB,AplicatorB,WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "P", $"PWOA='{lblcwomat.Text}' or PWOB='{lblcwomat.Text}'", $"CWO='{lblcwomat.Text}'")} order by WireID", cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
             dr = cmd.ExecuteReader
@@ -215,8 +217,8 @@ Public Class Materiales
             CorreoFalla.EnviaCorreoFalla("llenagrid1'Materiales'", host, UserName)
         End Try
     End Sub
-    Private Sub llenagrid2()
-        Dim query As String = "Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],ISNULL(bw.TagAsignado,0) [TagAsignado],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOMCWO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
+    Private Sub Llenagrid2()
+        Dim query As String = $"Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],ISNULL(bw.TagAsignado,0) [TagAsignado],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOM{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
         Dim muestra As Integer = 0, query2 As String = ""
         Dim tabla As New DataTable, tabl As New DataTable()
         Try
@@ -231,7 +233,7 @@ Public Class Materiales
                 For i As Integer = 0 To tabla.Rows.Count - 1
                     tabla.Columns(9).ReadOnly = False
                     tabla.Columns(9).MaxLength = 400
-                    tabla.Rows(i).Item(9) = locacion(tabla.Rows(i).Item("PN").ToString)
+                    tabla.Rows(i).Item(9) = Locacion(tabla.Rows(i).Item("PN").ToString)
                 Next
             End If
             With DataGridView1
@@ -241,7 +243,7 @@ Public Class Materiales
                 .Columns("Chk").Visible = False
                 Label2.Text = "Items: " & DataGridView1.RowCount
             End With
-            pintandoceldas()
+            Pintandoceldas()
             btnExportar.Visible = If(opcion = 2 And DataGridView1.Rows.Count > 0, True, False)
             If p = 10 Then
                 For i As Integer = 0 To DataGridView1.Rows.Count - 1
@@ -251,6 +253,122 @@ Public Class Materiales
                         DataGridView1.Rows(i).Cells("PN").Style.BackColor = Color.Orange
                     End If
                 Next
+                If Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C" Then
+                    cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
+                    cmd.CommandType = CommandType.Text
+                    cnn.Open()
+                    muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
+                    cnn.Close()
+                    query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,Tsetup,TRuntime,null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+                    cmd = New SqlCommand(query2, cnn)
+                    cmd.CommandType = CommandType.Text
+                    cnn.Open()
+                    dr = cmd.ExecuteReader
+                    tabl.Load(dr)
+                    cnn.Close()
+                    If tabl.Rows.Count > 0 Then
+                        tAcumulado = 0
+                        Dim column As Integer = If(muestra = 1, 11, 8)
+                        For i As Integer = 0 To tabl.Rows.Count - 1
+                            tabl.Columns(column).ReadOnly = False
+                            tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
+                            tabl.Rows(i).Item(column) = tAcumulado
+                        Next
+                        tAcumulado = 0
+                    End If
+                    With DataGridView3
+                        .DataSource = tabl
+                        .AutoResizeColumns()
+                        .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                        .Visible = True
+                    End With
+                End If
+            End If
+            vertagasignado = 1
+            cmd = New SqlCommand($"select TAG,bw.PN,(select NULLif({If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "Maq", "Cell")},'S/E') from tbl{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO where {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like '{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOM{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            tb.Load(dr)
+            cnn.Close()
+            If tb.Rows.Count > 0 Then
+                With DataGridView4
+                    .DataSource = tb
+                    .AutoResizeColumns()
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .DefaultCellStyle.ForeColor = Color.Black
+                    .DefaultCellStyle.Font = New Font(Font, FontStyle.Regular)
+                    .Visible = True
+                End With
+            End If
+        Catch ex As Exception
+            cnn.Close()
+            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias" + vbNewLine + ex.ToString)
+            CorreoFalla.EnviaCorreoFalla("llenagrid2'Materiales'", host, UserName)
+        End Try
+    End Sub
+    Private Sub Llenagrid3() 'Materiales sin stock para poner en hold
+        Dim query As String = $"Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOM{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.{If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' and Hold = 0 group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder"
+        Dim tabla As New DataTable
+        Try
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            tabla.Load(dr)
+            cnn.Close()
+            If tabla.Rows.Count > 0 Then
+                For i As Integer = 0 To tabla.Rows.Count - 1
+                    tabla.Columns(9).ReadOnly = False
+                    tabla.Columns(9).MaxLength = 400
+                    tabla.Rows(i).Item(9) = Locacion(tabla.Rows(i).Item("PN").ToString)
+                Next
+                With DataGridView1
+                    .DataSource = tabla
+                    .AutoResizeColumns()
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Label2.Text = "Items: " & DataGridView1.Rows.Count
+                End With
+                Pintandoceldas()
+                btnExportar.Visible = If(opcion = 2 And DataGridView1.RowCount > 0, True, False)
+            Else
+                DataGridView1.DataSource = Nothing
+                MessageBox.Show("No hay numeros de parte para colocar cortos.")
+                TabControl1.Parent = Nothing
+                p = 0
+                Me.Dispose()
+                Me.Close()
+            End If
+        Catch ex As Exception
+            cnn.Close()
+            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
+            CorreoFalla.EnviaCorreoFalla("llenagrid3'Materiales'", host, UserName)
+        End Try
+    End Sub
+    Private Sub LlenaGridMaterialesParaCorte() 'Carga consulta para corte
+        Try
+            Dim tabla As New DataTable, tabl As New DataTable, tb As New DataTable
+            Dim query As String = $"Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],ISNULL(bw.TagAsignado,0) [TagAsignado] From tblBOM{If(opcion = 8, "P", "C")}WO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.{If(opcion = 8, "P", "C")}WO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
+            Dim muestra As Integer = 0, query2 As String = ""
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            dr = cmd.ExecuteReader
+            tabla.Load(dr)
+            edo = cnn.State.ToString
+            If edo = "Open" Then cnn.Close()
+            If tabla.Rows.Count > 0 Then
+                With dgvBOM
+                    .DataSource = tabla
+                    .AutoResizeColumns()
+                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    Label2.Text = "Items: " & dgvBOM.Rows.Count
+                End With
+            Else
+                dgvBOM.DataSource = Nothing
+                Label2.Text = "Items: " & dgvBOM.Rows.Count
+            End If
+            If Not opcion = 8 Then
                 cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -272,17 +390,18 @@ Public Class Materiales
                         tabl.Rows(i).Item(column) = tAcumulado
                     Next
                     tAcumulado = 0
+                    With DataGridView3
+                        .DataSource = tabl
+                        .AutoResizeColumns()
+                        .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                        .Visible = True
+                    End With
                 End If
-                With DataGridView3
-                    .DataSource = tabl
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    .Visible = True
-                End With
             End If
             vertagasignado = 1
-            cmd = New SqlCommand("select TAG,bw.PN,(select NULLif(Maq,'S/E') from tblCWO where CWO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like 'C%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOMCWO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
+            cmd = New SqlCommand($"select TAG,bw.PN,(select NULLif({If(opcion = 8, "Cell", "Maq")},'S/E') from tbl{If(opcion = 8, "P", "C")}WO where {If(opcion = 8, "P", "C")}WO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like '{If(opcion = 8, "P", "C")}%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOM{If(opcion = 8, "P", "C")}WO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.{If(opcion = 8, "P", "C")}WO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
             cmd.CommandType = CommandType.Text
+            cmd.CommandTimeout = 120000
             cnn.Open()
             dr = cmd.ExecuteReader
             tb.Load(dr)
@@ -292,120 +411,18 @@ Public Class Materiales
                     .DataSource = tb
                     .AutoResizeColumns()
                     .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    .DefaultCellStyle.ForeColor = Color.Black
                     .DefaultCellStyle.Font = New Font(Font, FontStyle.Regular)
-                    .Visible = True
-                End With
-            End If
-        Catch ex As Exception
-            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("llenagrid2'Materiales'", host, UserName)
-        End Try
-    End Sub
-    Private Sub llenagrid3() 'Materiales sin stock para poner en hold
-        Dim query As String = "Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='NoAvailable' and Balance>0) [En Piso],(select isnull(Convert(int,SUM(Balance)),0) from tblItemsTags where tblItemsTags.PN=bw.PN and Status='Available' and Balance>0) [Almacen],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],Convert(Int, ml.QtyOnOrder) [In Transit], '' [Locaciones],(SELECT TOP(1) JuarezDueDate FROM tblItemsPOsDet AS A INNER JOIN tblItemsPOs AS B ON A.IDPO = B.IDPO WHERE A.PN = bw.PN AND A.QtyBalance > 0 AND B.Status = 'OPEN'  AND A.Confirmed = 1 ORDER BY A.JuarezDueDate) [Next Fecha Recibo] From tblBOMCWO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder"
-        Dim tabla As New DataTable
-        Try
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tabla.Load(dr)
-            cnn.Close()
-            If tabla.Rows.Count > 0 Then
-                For i As Integer = 0 To tabla.Rows.Count - 1
-                    tabla.Columns(9).ReadOnly = False
-                    tabla.Columns(9).MaxLength = 400
-                    tabla.Rows(i).Item(9) = locacion(tabla.Rows(i).Item("PN").ToString)
-                Next
-                With DataGridView1
-                    .DataSource = tabla
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Label2.Text = "Items: " & DataGridView1.Rows.Count
-                End With
-                pintandoceldas()
-                btnExportar.Visible = If(opcion = 2 And DataGridView1.RowCount > 0, True, False)
-            Else
-                DataGridView1.DataSource = Nothing
-            End If
-        Catch ex As Exception
-            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("llenagrid3'Materiales'", host, UserName)
-        End Try
-    End Sub
-    Private Sub llenaGridMaterialesParaCorte() 'Carga consulta para corte
-        Try
-            Dim tabla As New DataTable, tabl As New DataTable, tb As New DataTable
-            Dim query As String = "Select bw.PN,bw.Description,CONVERT(int,bw.Qty) [Qty] ,CONVERT(int,bw.Balance) [Balance],Convert(Int, ml.QtyOnHand) [Total],Convert(Int, ml.QtyOnHand) - CONVERT(int,bw.Balance) [Dif],ISNULL(bw.TagAsignado,0) [TagAsignado] From tblBOMCWO As bw inner Join tblItemsQB As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' group by bw.PN,bw.Description,bw.Qty,bw.Balance,ml.QtyOnHand,ml.QtyOnOrder,bw.TagAsignado"
-            Dim muestra As Integer = 0, query2 As String = ""
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tabla.Load(dr)
-            edo = cnn.State.ToString
-            If edo = "Open" Then cnn.Close()
-            If tabla.Rows.Count > 0 Then
-                With dgvBOM
-                    .DataSource = tabla
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    Label2.Text = "Items: " & dgvBOM.Rows.Count
-                End With
-            End If
-            cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
-            cnn.Close()
-            query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,Tsetup,TRuntime,null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
-            cmd = New SqlCommand(query2, cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tabl.Load(dr)
-            cnn.Close()
-            If tabl.Rows.Count > 0 Then
-                tAcumulado = 0
-                Dim column As Integer = If(muestra = 1, 11, 8)
-                For i As Integer = 0 To tabl.Rows.Count - 1
-                    tabl.Columns(column).ReadOnly = False
-                    tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
-                    tabl.Rows(i).Item(column) = tAcumulado
-                Next
-                tAcumulado = 0
-                With DataGridView3
-                    .DataSource = tabl
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                     .Visible = True
                 End With
             End If
             PintaMaterialesConAsignacion()
-            vertagasignado = 1
-            cmd = New SqlCommand("select TAG,bw.PN,(select NULLif(Maq,'S/E') from tblCWO where CWO = (select MAX(WO) from tblBOMWIPRelationsTagsDet where tblBOMWIPRelationsTagsDet.TAG=ml.TAG and WO like 'C%')) [Ultima Maquina usada],convert(date,OutDate) [OutDate] From tblBOMCWO As bw inner Join tblItemsTags As ml On bw.PN = ml.PN Where bw.CWO ='" + lblcwomat.Text + "' and bw.Balance > 0 and bw.PN not like 'S%' and Status='NoAvailable' and ml.Balance > 0 and bw.Balance > 0", cnn)
-            cmd.CommandType = CommandType.Text
-            cnn.Open()
-            dr = cmd.ExecuteReader
-            tb.Load(dr)
-            cnn.Close()
-            If tb.Rows.Count > 0 Then
-                With DataGridView4
-                    .DataSource = tb
-                    .AutoResizeColumns()
-                    .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                    .DefaultCellStyle.Font = New Font(Font, FontStyle.Regular)
-                    .Visible = True
-                End With
-            End If
         Catch ex As Exception
             cnn.Close()
-            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
+            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias" + vbNewLine + ex.ToString)
             CorreoFalla.EnviaCorreoFalla("llenaGridMaterialesParaCorte", host, UserName)
         End Try
     End Sub
-    Private Function locacion(pn As String) As String
+    Private Function Locacion(pn As String) As String
         Try
             Dim resultado As String = ""
             Dim consulta As String = "declare @locaciones as nvarchar(500)
@@ -438,7 +455,7 @@ Public Class Materiales
         Try
             Dim muestra As Boolean
             Dim t As New DataTable
-            Dim query As String = "select TagAsignado from tblBOMCWO where CWO=@CWO and PN= @PN and TagAsignado is not null"
+            Dim query As String = $"select TagAsignado from tblBOM{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO where {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO=@CWO and PN= @PN and TagAsignado is not null"
             Dim comand As SqlCommand = New SqlCommand(query, cnn)
             comand.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
             comand.Parameters.Add("@PN", SqlDbType.NVarChar).Value = pn
@@ -452,7 +469,7 @@ Public Class Materiales
             Return Nothing
         End Try
     End Function
-    Private Sub pintandoceldas()
+    Private Sub Pintandoceldas()
         Try
             For Each linea As DataGridViewRow In dgvBOM.Rows
                 If linea.Cells(2).Value <= linea.Cells(6).Value Then
@@ -505,7 +522,7 @@ Public Class Materiales
             CorreoFalla.EnviaCorreoFalla("PintaMaterialesConAsignacion", host, UserName)
         End Try
     End Sub
-    Private Sub recorregrid()
+    Private Sub Recorregrid()
         Try
             For i As Integer = 0 To dgvBOM.Rows.Count - 1
                 If CInt(Val(dgvBOM.Rows(i).Cells("AplicatorA").Value.ToString)) > 0 Then
@@ -534,19 +551,19 @@ Public Class Materiales
     End Sub
     Private Function DisponibilidadApl(apl As String) As Boolean
         Try
-            Dim res As Boolean
-            Dim query As String = $"select Count(*) from tblApl where OemAplID={apl} and (Loc is not null or Loc='Produccion')"
+            Dim query As String = $"select Count(*) from tblApl where OemAplID='{apl}' and [AssignedTo]='Produccion'"
             comando = New SqlCommand(query, conexion)
             comando.CommandType = CommandType.Text
             conexion.Open()
-            res = If(CInt(comando.ExecuteScalar) > 0, True, False)
+            Return CInt(comando.ExecuteScalar) > 0
             conexion.Close()
-            Return res
         Catch ex As Exception
             conexion.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             CorreoFalla.EnviaCorreoFalla("DisponibilidadApl", host, UserName)
             Return Nothing
+        Finally
+            conexion.Close()
         End Try
     End Function
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
@@ -571,14 +588,14 @@ Public Class Materiales
         End If
     End Sub
     Private Sub DataGridView1_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DataGridView1.ColumnHeaderMouseClick
-        pintandoceldas()
+        Pintandoceldas()
     End Sub
     Private Sub dgvBOM_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvBOM.ColumnHeaderMouseClick
         If e.RowIndex > -1 Then
             If opcion = 1 Or opcion = 4 Then
                 PintaMaterialesConAsignacion()
             Else
-                pintandoceldas()
+                Pintandoceldas()
             End If
         End If
     End Sub
@@ -609,22 +626,23 @@ Public Class Materiales
                                     End If
                                 End If
                             Next
-                            mensaje = mensaje + " se han puesto en Cortos por falta de material, en el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
+                            mensaje = mensaje + " se han puesto en Cortos por falta de material, en el WIP: " & Label4.Text & $" y {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
                         Else
-                            mensaje = "Se notifica que se pone el WIP: " & Label4.Text & " y CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
+                            mensaje = "Se notifica que se pone el WIP: " & Label4.Text & $" y {If(Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C", "C", "P")}WO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
-                        Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        Principal.NotesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
                         lst.ForEach(Function(pn)
                                         Principal.CheckCortosPN(pn)
                                         Return Nothing
                                     End Function)
-                        Principal.filtros(3)
+                        Principal.Filtros(3)
                         holdoconfir = 0
+                        MessageBox.Show("Numeros de Parte colocados en status corto con exito")
                         Me.Dispose()
                         Me.Close()
                     Else
@@ -650,20 +668,21 @@ Public Class Materiales
                             Next
                             mensaje = mensaje + " se han puesto en Hold por falta de material, en el CWO: " & lblcwomat.Text & " por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + "" + vbNewLine + " Verificalo y asigna una nueva fecha de material."
                         Else
-                            mensaje = "Se notifica que se pone el CWO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
+                            mensaje = "Se notifica que se pone el WO: " & lblcwomat.Text & " en Hold por el usuario " + UserName.ToString + " del departamento de " + Principal.lbldept.Text + " pero," + vbNewLine + " sin numeros de parte que esten sin stock, por favor verificarlo"
                         End If
-                        CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
+                        'CorreoFalla.EnviaCorreoHoldMat(mensaje) 'Esto descomentar al momento de subir el codigo
                         Principal.NotifyIcon1.BalloonTipText = "Se han notificado los cambios a Compras"
                         Principal.NotifyIcon1.BalloonTipTitle = "Material sin stock"
                         Principal.NotifyIcon1.Visible = True
                         Principal.NotifyIcon1.ShowBalloonTip(0)
-                        Principal.notesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
+                        Principal.NotesWIPandCWOOnHold(lblcwomat.Text, Convert.ToDateTime(Now), TextBox2.Text)
                         lst.ForEach(Function(pn)
                                         Principal.CheckCortosPN(pn)
                                         Return Nothing
                                     End Function)
-                        Principal.filtros(3)
+                        Principal.Filtros(3)
                         holdoconfir = 0
+                        MessageBox.Show("Numeros de Parte colocados en status corto con exito")
                         Me.Dispose()
                         Me.Close()
                     End If
@@ -683,12 +702,13 @@ Public Class Materiales
             Dim resp As Boolean
             query = "select case when Qty > (select SUM(QtyActual-QtyNew) from tblItemsAdjustmentTAGs where tblItemsTags.TAG=tblItemsAdjustmentTAGs.TAG and AdjusmentType='Negative') then 'Ajuste negativo' end [Ajuste],PN from tblItemsTags where PN=@PN and (Qty >= @QTY or qty <= @QTY) and qty= (case when Qty > (select SUM(QtyActual-QtyNew) from tblItemsAdjustmentTAGs where tblItemsTags.TAG=tblItemsAdjustmentTAGs.TAG and AdjusmentType='Negative') then Qty end)"
             cmd = New SqlCommand(query, cnn)
+            cmd.CommandTimeout = 120000
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@PN", SqlDbType.NVarChar).Value = PN
             cmd.Parameters.Add("@QTY", SqlDbType.Int).Value = qty
             cnn.Open()
             dr = cmd.ExecuteReader
-            resp = If(dr.HasRows, True, False)
+            resp = dr.HasRows
             cnn.Close()
             Return resp
         Catch ex As Exception
@@ -702,7 +722,7 @@ Public Class Materiales
             CWO As String,
             PN As String)
         Try
-            query = "update tblBOMCWO set Hold=1 where CWO='" + CWO + "' and PN='" + PN + "'"
+            query = $"update tblBOM{Microsoft.VisualBasic.Left(CWO, 1)}WO set Hold=1 where {Microsoft.VisualBasic.Left(CWO, 1)}WO='" + CWO + "' and PN='" + PN + "'"
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -715,7 +735,7 @@ Public Class Materiales
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim values As String = ""
         For jj = 0 To DataGridView1.Rows.Count - 1
-            If DataGridView1.Rows(jj).Cells("Chk").Value = True Then
+            If DataGridView1.Rows(jj).Cells("Chk").Value Then
                 If values <> "" Then
                     values = values + DataGridView1.Rows(jj).Cells("PN").Value.ToString + ", "
                 Else
@@ -727,22 +747,22 @@ Public Class Materiales
             holdoconfir = 1
             gbnotasconfirmando.Visible = True
             TextBox2.Text = values
-            Dim qtylen As Integer = Len(values)
+            'Dim qtylen As Integer = Len(values)
             TextBox2.Focus()
-            TextBox2.[Select](TextBox2.Text.Length, qtylen)
+            TextBox2.[Select](TextBox2.Text.Length, Len(values))
         Else
             MsgBox("Debe seleccionar minimo un numero de parte a agregar a las notas")
         End If
     End Sub
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        If CheckBox1.Checked = True Then
+        If CheckBox1.Checked Then
             gbTAGS.Visible = True
             txbTAGSxentrar.Focus()
-        ElseIf CheckBox1.Checked = False Then
+        Else
             gbTAGS.Visible = False
         End If
     End Sub
-    Private Function verificatag(tag As String) As Boolean 'Nuevo
+    Private Function Verificatag(tag As String) As Boolean 'Nuevo
         Dim res As Boolean
         Dim tb As New DataTable
         Try
@@ -786,22 +806,22 @@ Public Class Materiales
                 For a As Integer = 0 To DataGridView2.Rows.Count - 1
                     subquery.Append($"'{Convert.ToString(DataGridView2.Rows(a).Cells(1).Value)}',")
                 Next
-                Dim update As String = "update tblBOMCWO set TagAsignado=1 where CWO= '" + lblcwomat.Text.ToString + "' and PN in (" + subquery.ToString.TrimEnd(",").Trim() + ")"
+                Dim update As String = $"update tblBOM{Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO set TagAsignado=1 where {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO= '" + lblcwomat.Text.ToString + "' and PN in (" + subquery.ToString.TrimEnd(",").Trim() + ")"
                 Dim comm As SqlCommand = New SqlCommand(update, cnn)
                 comm.CommandType = CommandType.Text
                 cnn.Open()
                 comm.ExecuteReader()
                 cnn.Close()
                 If MAtAsigcomplete(lblcwomat.Text.ToString.Trim) Then
-                    MsgBox("Ya han sido asignados todos los materiales para este CWO")
+                    MsgBox($"Ya han sido asignados todos los materiales para este {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO")
                     Me.Dispose()
                     Me.Close()
                 Else
                     DataGridView2.DataSource = Nothing
-                    llenagrid2()
+                    Llenagrid2()
                 End If
             Else
-                MsgBox("No hay materiales para cargar al CWO")
+                MsgBox($"No hay materiales para cargar al {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO")
             End If
         Catch ex As Exception
             cnn.Close()
@@ -1067,11 +1087,13 @@ Public Class Materiales
         End Try
     End Sub
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        GroupBox2.Visible = True
-        TextBox1.Text = 10
-        ItemsAdjustementTags(DataGridView1.Rows(e.RowIndex).Cells("PN").Value.ToString)
+        If p <> 10 Then
+            GroupBox2.Visible = True
+            TextBox1.Text = 10
+            ItemsAdjustementTags(DataGridView1.Rows(e.RowIndex).Cells("PN").Value.ToString)
+        End If
     End Sub
-    Sub ItemsAdjustementTags(PN As String)
+    Public Sub ItemsAdjustementTags(PN As String)
         Try
             Dim Query As String = "", dtAjus As New DataTable()
             PNAux = PN
@@ -1173,7 +1195,7 @@ Public Class Materiales
     End Sub
     Private Function MAtAsigcomplete(cwo As String)
         Dim res As Boolean
-        Dim query As String = "select COUNT(PN) [matasignado],(select COUNT(PN) from tblBOMCWO where CWO='" + cwo.ToString + "' and TagAsignado is null and PN not like 'S%') [Matnoasignado] from tblBOMCWO where CWO='" + lblcwomat.Text.ToString + "' and TagAsignado=1 and PN not like 'S%'"
+        Dim query As String = $"select COUNT(PN) [matasignado],(select COUNT(PN) from tblBOM{Microsoft.VisualBasic.Left(cwo, 1)}WO where {Microsoft.VisualBasic.Left(cwo, 1)}WO='" + cwo.ToString + $"' and TagAsignado is null and PN not like 'S%') [Matnoasignado] from tblBOM{Microsoft.VisualBasic.Left(cwo, 1)}WO where {Microsoft.VisualBasic.Left(cwo, 1)}WO='" + lblcwomat.Text.ToString + "' and TagAsignado=1 and PN not like 'S%'"
         Try
             Dim commm As SqlCommand = New SqlCommand(query, cnn)
             Dim read As SqlDataReader
@@ -1182,7 +1204,7 @@ Public Class Materiales
             read = commm.ExecuteReader()
             If read.HasRows Then
                 While read.Read
-                    res = If(CInt(read.GetValue(0)) = CInt(read.GetValue(1)), True, False)
+                    res = CInt(read.GetValue(0)) = CInt(read.GetValue(1))
                 End While
             Else
                 res = False
@@ -1200,7 +1222,7 @@ Public Class Materiales
         Try
             Dim existpn As Boolean = False, validaBalance As Boolean
             If e.KeyChar = Chr(13) Then
-                If verificatag(txbTAGSxentrar.Text) Then
+                If Verificatag(txbTAGSxentrar.Text) Then
                     For i As Integer = 0 To DataGridView1.Rows.Count - 1
                         If pn = DataGridView1.Rows(i).Cells("PN").Value.ToString Then
                             existpn = True

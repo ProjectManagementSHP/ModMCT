@@ -10,12 +10,12 @@ Public Class Login
         log_on()
         TextBox2.Focus()
         TextBox2.Select()
-        If (ApplicationDeployment.IsNetworkDeployed) Then
+        If ApplicationDeployment.IsNetworkDeployed Then
             With ApplicationDeployment.CurrentDeployment.CurrentVersion
                 Label3.Text = "Version: " & .Major & "." & .Minor & "." & .Build & "." & .Revision & ""
             End With
         Else
-            Label3.Text = "Version: " & System.Windows.Forms.Application.ProductVersion & ""
+            Label3.Text = "Version: " & Application.ProductVersion & ""
         End If
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -40,72 +40,78 @@ Public Class Login
                 With OpcionesLog
                     .ShowDialog()
                 End With
+                Me.Hide()
                 Principal.Text = "Admin"
                 Principal.Show()
-                Me.Hide()
             ElseIf TextBox1.Text = "" And TextBox2.Text = "a10946830z" Then
                 With OpcionesLog
                     .ShowDialog()
                 End With
+                Me.Hide()
                 Principal.Text = "Direccion"
                 Principal.Show()
-                Me.Hide()
             Else
                 Dim User As LoginUser = New LoginUser(TextBox1.Text, TextBox2.Text, "MLF")
-                If User.IsAuthenticated() Then
+                If User.IsAuthenticated Then
                     If User.GetUserAuthorization() Then
-                        dep = User.GetAuthorizedDept()
-                        UserName = User.GetAuthorizedName()
+                        dep = User.AuthorizedDept
+                        UserName = User.AuthorizedName
                         Select Case dep
                             Case "Desarrollo"
                                 With OpcionesLog
                                     .ShowDialog()
                                 End With
+                                Me.Hide()
                                 Principal.Text = "Desarrollo"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Almacen"
                                 opcion = 2
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Almacen"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Corte"
                                 opcion = 1
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Corte"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Aplicadores"
                                 opcion = 3
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Aplicadores"
                                 Principal.Show()
-                                Me.Hide()
                             Case "XP"
                                 opcion = 4
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "XP"
                                 Principal.Show()
-                                Me.Hide()
                             Case "Compras"
                                 opcion = 5
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Compras"
                                 Principal.Show()
-                                Me.Hide()
                             Case "PlanCorte"
                                 opcion = 6
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Planeacion Corte"
                                 Principal.Show()
-                                Me.Hide()
                             Case "PlanXP"
                                 opcion = 7
                                 insertMLFNotification()
+                                Me.Hide()
                                 Principal.Text = "Planeacion XP"
                                 Principal.Show()
+                            Case "PlanPWO"
+                                opcion = 8
+                                insertMLFNotification()
                                 Me.Hide()
+                                Principal.Text = "Planeacion PWO"
+                                Principal.Show()
                             Case Else
                                 MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
                         End Select
@@ -135,8 +141,8 @@ Public Class Login
         Dim User As LoginUser = New LoginUser()
         If User.GetUserToLogin() Then
             If User.GetUserAuthorization() Then
-                dep = User.GetAuthorizedDept()
-                UserName = User.GetAuthorizedName()
+                dep = User.AuthorizedDept
+                UserName = User.AuthorizedName
                 Select Case dep
                     Case "Desarrollo"
                         With OpcionesLog
@@ -186,6 +192,12 @@ Public Class Login
                         Principal.Text = "Planeacion XP"
                         Principal.ShowDialog()
                         Me.Close()
+                    Case "PlanPWO"
+                        opcion = 8
+                        insertMLFNotification()
+                        Principal.Text = "Planeacion PWO"
+                        Principal.ShowDialog()
+                        Me.Close()
                     Case Else
                         MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
                 End Select
@@ -198,16 +210,16 @@ Public Class Login
     End Sub
     Private Sub insertMLFNotification()
         Try
-            Dim valor As String = ""
+            Dim valor As Boolean = False
             cnn.Open()
             Using cmd As New SqlCommand("select ID from tblMLFNotifications where [User] = '" + UserName.ToString + "'", cnn)
                 cmd.CommandType = CommandType.Text
                 cmd.Connection = cnn
-                valor = If(CStr(cmd.ExecuteScalar) = "", "YES", "")
+                valor = CStr(cmd.ExecuteScalar) = ""
                 cnn.Close()
             End Using
             Dim insert As String = ""
-            If valor = "YES" Then
+            If valor Then
                 If dep = "PlanCorte" Then
                     insert = "insert into tblMLFNotifications ([User],Dep) values ('" + UserName.ToString + "','Corte')"
                 Else
@@ -231,5 +243,21 @@ Public Class Login
     End Sub
     Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
         Me.Close()
+    End Sub
+
+    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+
     End Sub
 End Class
