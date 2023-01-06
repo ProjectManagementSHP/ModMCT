@@ -136,10 +136,13 @@
   <data name="BotonCorto2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BotonCorto2.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="botonexport" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\botonexport.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="save_icon-icons.com_53618(1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save_icon-icons.com_53618(1).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="botonexport" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\botonexport.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="42571verticaltrafficlight_99064" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\42571verticaltrafficlight_99064.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

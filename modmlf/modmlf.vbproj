@@ -28,7 +28,7 @@
     <ProductName>MLF</ProductName>
     <PublisherName>SEA</PublisherName>
     <MinimumRequiredVersion>2.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>4.6.10.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -319,6 +319,12 @@
     <Compile Include="ReportePWO.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SplashWindow.Designer.vb">
+      <DependentUpon>SplashWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Variables.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -373,6 +379,9 @@
     <EmbeddedResource Include="PWONew.rdlc" />
     <EmbeddedResource Include="ReportePWO.resx">
       <DependentUpon>ReportePWO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashWindow.resx">
+      <DependentUpon>SplashWindow.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
