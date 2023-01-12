@@ -12,27 +12,27 @@ Module CorreoFalla
                     Correo = "Fallo la aplicacion, error potencialmente grave en funcion: " & Falla.ToString & ", Hostname que presento el error: " & hostanme.ToString & " y usuario: " & user.ToString & " " + vbNewLine + " Version del usuario: " & .Major & "." & .Minor & "." & .Build & "." & .Revision & ""
                 End With
             Else
-                Correo = "Fallo la aplicacion, error potencialmente grave en funcion: " & Falla.ToString & ", Hostname que presento el error: " & hostanme.ToString & " y usuario: " & user.ToString & " " + vbNewLine + " Version del usuario: " & System.Windows.Forms.Application.ProductVersion & ""
+                Correo = "Fallo la aplicacion, error potencialmente grave en funcion: " & Falla.ToString & ", Hostname que presento el error: " & hostanme.ToString & " y usuario: " & user.ToString & " " + vbNewLine + " Version del usuario: " & Application.ProductVersion & ""
             End If
             Correo += vbNewLine + vbNewLine + vbNewLine
             Correo += "Por favor no responder este correo" + vbNewLine + "Gracias"
 
-            Dim _Message As New System.Net.Mail.MailMessage()
-            Dim _SMTP As New System.Net.Mail.SmtpClient
+            Dim _Message As New Net.Mail.MailMessage()
+            Dim _SMTP As New Net.Mail.SmtpClient
 
-            _SMTP.Credentials = New System.Net.NetworkCredential(EnviadoPor, "Row.6078$")
+            _SMTP.Credentials = New Net.NetworkCredential(EnviadoPor, "Row.6078$")
             _SMTP.Host = "smtp.ipower.com"
             _SMTP.Port = 587
             _SMTP.EnableSsl = True
 
             _Message.[To].Add(DestinatariosTO)
-            _Message.From = New System.Net.Mail.MailAddress(EnviadoPor, "", System.Text.Encoding.UTF8)
+            _Message.From = New Net.Mail.MailAddress(EnviadoPor, "", Text.Encoding.UTF8)
             _Message.Subject = "Advertencia, falla de MLF"
-            _Message.SubjectEncoding = System.Text.Encoding.UTF8
+            _Message.SubjectEncoding = Text.Encoding.UTF8
 
             _Message.Body = Correo
-            _Message.BodyEncoding = System.Text.Encoding.UTF8
-            _Message.Priority = System.Net.Mail.MailPriority.High
+            _Message.BodyEncoding = Text.Encoding.UTF8
+            _Message.Priority = Net.Mail.MailPriority.High
 
             _Message.IsBodyHtml = False
             'ENVIO
@@ -64,7 +64,7 @@ Module CorreoFalla
             If DestinatariosCC <> "" Then _Message.CC.Add(DestinatariosCC)
             If DestinatariosBCC <> "" Then _Message.Bcc.Add(DestinatariosBCC)
             _Message.[To].Add(DestinatariosTO)
-            _Message.From = New System.Net.Mail.MailAddress(EnviadoPor, "", System.Text.Encoding.UTF8)
+            _Message.From = New Net.Mail.MailAddress(EnviadoPor, "", Text.Encoding.UTF8)
             _Message.Subject = "Material sin stock en Hold"
             _Message.SubjectEncoding = Text.Encoding.UTF8
             _Message.Body = Correo
@@ -94,7 +94,7 @@ Module CorreoFalla
 
             Dim _Message As New Net.Mail.MailMessage()
             Dim _SMTP As New Net.Mail.SmtpClient With {
-                .Credentials = New System.Net.NetworkCredential(EnviadoPor, "Row.6078$"),
+                .Credentials = New Net.NetworkCredential(EnviadoPor, "Row.6078$"),
                 .Host = "smtp.ipower.com",
                 .Port = 587,
                 .EnableSsl = True
@@ -103,12 +103,12 @@ Module CorreoFalla
             If DestinatariosCC <> "" Then _Message.CC.Add(DestinatariosCC)
             If DestinatariosBCC <> "" Then _Message.Bcc.Add(DestinatariosBCC)
             _Message.[To].Add(DestinatariosTO)
-            _Message.From = New System.Net.Mail.MailAddress(EnviadoPor, "", System.Text.Encoding.UTF8)
+            _Message.From = New Net.Mail.MailAddress(EnviadoPor, "", Text.Encoding.UTF8)
             _Message.Subject = "Material sin stock en Hold"
-            _Message.SubjectEncoding = System.Text.Encoding.UTF8
+            _Message.SubjectEncoding = Text.Encoding.UTF8
             _Message.Body = Correo
-            _Message.BodyEncoding = System.Text.Encoding.UTF8
-            _Message.Priority = System.Net.Mail.MailPriority.High
+            _Message.BodyEncoding = Text.Encoding.UTF8
+            _Message.Priority = Net.Mail.MailPriority.High
 
             _Message.IsBodyHtml = False
             'ENVIO

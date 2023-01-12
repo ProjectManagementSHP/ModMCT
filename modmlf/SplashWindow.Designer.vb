@@ -22,7 +22,9 @@ Partial Class SplashWindow
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -36,6 +38,9 @@ Partial Class SplashWindow
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
+        '
+        'Timer1
+        '
         '
         'SplashWindow
         '
@@ -54,4 +59,5 @@ Partial Class SplashWindow
     End Sub
 
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Timer1 As Timer
 End Class

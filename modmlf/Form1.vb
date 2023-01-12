@@ -346,7 +346,7 @@ Public Class Principal
                 Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                 Grid.Columns("WIP").Frozen = True
                 Grid.Columns($"{If(Grid.Name = "dgvPWO", "PWO", "CWO")}").Frozen = True
-                Grid.Columns("CheckExp").Visible = False
+                'Grid.Columns("CheckExp").Visible = False
             End If
         Catch ex As Exception
 
@@ -1718,10 +1718,10 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     linea.Cells(7).Style.ForeColor = Color.Black
                     linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
                 End If
-                If linea.Cells("CheckExp").Value Then
-                    linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
-                    linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
-                End If
+                'If linea.Cells("CheckExp").Value Then
+                '    linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
+                '    linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
+                'End If
             Next
         End If
         If (opcion = 6 Or opcion = 7) And rbListosParaEntrar.Checked Then
