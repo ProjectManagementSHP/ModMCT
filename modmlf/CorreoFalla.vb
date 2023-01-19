@@ -126,7 +126,7 @@ Module CorreoFalla
 		                                set @Email=''
 			                             select @Email=@Email + T.Email + ',' from
 			                             (SELECT Email FROM tblUserEmails WHERE Module='{Modulo}' AND Active=1 AND OptionToSend='{OpcionEnvio}') as T
-		                                if @Ws <> ''
+		                                if @Email <> ''
 			                             begin
 				                          set @Email=LEFT(@Email, len(@Email) - 1)
 				                          select @Email [Email]
