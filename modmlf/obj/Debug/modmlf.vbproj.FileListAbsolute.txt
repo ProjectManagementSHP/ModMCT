@@ -147,17 +147,16 @@ C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
-C:\bin\debug\SqlServerTypes\x64\msvcr120.dll
-C:\bin\debug\SqlServerTypes\x64\SqlServerSpatial140.dll
-C:\bin\debug\SqlServerTypes\x86\msvcr120.dll
-C:\bin\debug\SqlServerTypes\x86\SqlServerSpatial140.dll
-C:\bin\debug\Marcas, Listos, Fuera.exe.config
-C:\bin\debug\Marcas, Listos, Fuera.exe.manifest
-C:\bin\debug\Marcas, Listos, Fuera.application
-C:\bin\debug\Marcas, Listos, Fuera.exe
-C:\bin\debug\Marcas, Listos, Fuera.pdb
-C:\bin\debug\Marcas, Listos, Fuera.xml
-C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\bin\debug\app.publish\SqlServerTypes\x64\msvcr120.dll
+C:\bin\debug\app.publish\SqlServerTypes\x64\SqlServerSpatial140.dll
+C:\bin\debug\app.publish\SqlServerTypes\x86\msvcr120.dll
+C:\bin\debug\app.publish\SqlServerTypes\x86\SqlServerSpatial140.dll
+C:\bin\debug\app.publish\Marcas, Listos, Fuera.exe.config
+C:\bin\debug\app.publish\Marcas, Listos, Fuera.exe.manifest
+C:\bin\debug\app.publish\Marcas, Listos, Fuera.application
+C:\bin\debug\app.publish\Marcas, Listos, Fuera.exe
+C:\bin\debug\app.publish\Marcas, Listos, Fuera.pdb
+C:\bin\debug\app.publish\Marcas, Listos, Fuera.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.config
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
@@ -176,14 +175,16 @@ C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\D
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.Resources.resources
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.OpcionesLog.resources
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.ReportePWO.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.SplashWindow.resources
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\RdlCompile.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\RdlCompile.compiled
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.TrustInfo.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.application
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.CopyComplete
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
-C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.SplashWindow.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache

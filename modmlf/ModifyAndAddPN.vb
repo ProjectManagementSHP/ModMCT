@@ -92,7 +92,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
             End If
             If Aus.Length > 0 And WipsWithOutCWO.Length > 0 Then
                 IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text,
-                txbNotasNew.Text, True, chkParoAUNew.Checked, True, WipsWithOutCWO.ToString.TrimEnd(","),
+                txbNotasNew.Text, True, chkParoAUNew.Checked, False, WipsWithOutCWO.ToString.TrimEnd(","),
                 Aus.ToString.TrimEnd(","))
                 Dim WipsClean As String = WipsWithOutCWO.ToString.Replace("'", "")
                 WipsClean = WipsClean.ToString.TrimEnd(",", "")
