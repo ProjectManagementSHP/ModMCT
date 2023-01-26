@@ -3275,53 +3275,56 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub FechasIncumplidas()
         Try
-            Dim consulta As String = ""
+            Dim consulta As String = "select PN,ETA,QtyPN,(select top 1 QtyOnHand from tblItemsQB where PN = tblcortosPN.PN) as QtyOnHand 
+                                      from tblcortosPn 
+                                      where hold = 1 and ETA is not null and Convert(date,ETA) <= Convert(date,GETDATE()) 
+                                      and QtyPN > (select top 1 QtyOnHand from tblItemsQB where PN = tblcortosPN.PN)"
             Dim commm As SqlCommand
-            consulta = $"select distinct bw.PN,
-             (
-             select 
-             case when bw.PN like 'C%' or bw.PN like 'W%'  
-             then (
-             select SUM(WireBalance * LengthWire) * 0.0032808 AS Qty 
-             From tblWipDet where WireBalance > 0 AND Wire = bw.PN AND 
-             wip in (
-             select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
-             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
-             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
-             (ConfirmacionAlm='OnHold')
-             ))
-             when bw.PN like 'T%'
-             then (SELECT SUM(TABalance) As Qty FROM tblWipDet where TABalance > 0 AND TermA = bw.PN AND
-             wip in (
-             select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
-             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
-             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
-             (ConfirmacionAlm='OnHold'))
-             ) + (SELECT SUM(TBBalance) As Qty FROM tblWipDet where TBBalance > 0 AND TermB = bw.PN AND
-             wip in (
-             select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
-             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
-             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
-             (ConfirmacionAlm='OnHold'))
-             ) end)
-             [QtyRequerida],
-             qb.QtyOnHand,bw.ProcFDisMat
-             from tblBOMWIP bw
-             INNER JOIN tblItemsQB qb on bw.PN=qb.PN
-             where 
-             bw.PN in (
-             SELECT tblBOMCWO.PN 
-             FROM tblBOMCWO 
-             WHERE 
-             tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
-             CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
-             where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
-             (ConfirmacionAlm='OnHold')) and tblBOMCWO.Hold=1
-             ) and
-             bw.ProcFDisMat is not null and (
-                 Convert(date,bw.ProcFDisMat) <= Convert(date,GETDATE())
-             )
-             order by bw.ProcFDisMat desc"
+            'consulta = $"select distinct bw.PN,
+            ' (
+            ' select 
+            ' case when bw.PN like 'C%' or bw.PN like 'W%'  
+            ' then (
+            ' select SUM(WireBalance * LengthWire) * 0.0032808 AS Qty 
+            ' From tblWipDet where WireBalance > 0 AND Wire = bw.PN AND 
+            ' wip in (
+            ' select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+            ' CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+            ' where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+            ' (ConfirmacionAlm='OnHold')
+            ' ))
+            ' when bw.PN like 'T%'
+            ' then (SELECT SUM(TABalance) As Qty FROM tblWipDet where TABalance > 0 AND TermA = bw.PN AND
+            ' wip in (
+            ' select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+            ' CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+            ' where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+            ' (ConfirmacionAlm='OnHold'))
+            ' ) + (SELECT SUM(TBBalance) As Qty FROM tblWipDet where TBBalance > 0 AND TermB = bw.PN AND
+            ' wip in (
+            ' select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+            ' CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+            ' where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+            ' (ConfirmacionAlm='OnHold'))
+            ' ) end)
+            ' [QtyRequerida],
+            ' qb.QtyOnHand,bw.ProcFDisMat
+            ' from tblBOMWIP bw
+            ' INNER JOIN tblItemsQB qb on bw.PN=qb.PN
+            ' where 
+            ' bw.PN in (
+            ' SELECT tblBOMCWO.PN 
+            ' FROM tblBOMCWO 
+            ' WHERE 
+            ' tblBOMCWO.WIP IN (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.
+            ' CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
+            ' where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) and 
+            ' (ConfirmacionAlm='OnHold')) and tblBOMCWO.Hold=1
+            ' ) and
+            ' bw.ProcFDisMat is not null and (
+            '     Convert(date,bw.ProcFDisMat) <= Convert(date,GETDATE())
+            ' )
+            ' order by bw.ProcFDisMat desc"
             conexMensajeCortos.Close()
             commm = New SqlCommand(consulta, conexMensajeCortos)
             Dim ReadData As SqlDataReader
@@ -3331,14 +3334,14 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ReadData = commm.ExecuteReader
             aTableReader.Load((ReadData))
             conexMensajeCortos.Close()
-            If aTableReader.Rows.Count > 0 Then
-                For ii = 0 To aTableReader.Rows.Count - 1
-                    If Not CInt(aTableReader.Rows(ii).Item("QtyRequerida").ToString) > CInt(aTableReader.Rows(ii).Item("QtyOnHand").ToString) Then
-                        aTableReader.Rows(ii).Delete()
-                    End If
-                Next
-            End If
-            aTableReader.AcceptChanges()
+            'If aTableReader.Rows.Count > 0 Then
+            'For ii = 0 To aTableReader.Rows.Count - 1
+            '    If Not CInt(aTableReader.Rows(ii).Item("QtyRequerida").ToString) > CInt(aTableReader.Rows(ii).Item("QtyOnHand").ToString) Then
+            '        aTableReader.Rows(ii).Delete()
+            '    End If
+            'Next
+            'End If
+            'aTableReader.AcceptChanges()
             If aTableReader.Rows.Count > 0 Then
                 With MensajePN
                     With .dgvNumerosParte
@@ -3346,7 +3349,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                         .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                         .AutoResizeColumns()
                         .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                        .Columns("ProcFDisMat").DefaultCellStyle.Format = ("dd-MMM-yy")
+                        .Columns("ETA").DefaultCellStyle.Format = ("dd-MMM-yy")
                         .ClearSelection()
                     End With
                     .Label3.Text = "Items: " + .dgvNumerosParte.Rows.Count.ToString

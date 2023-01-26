@@ -87,7 +87,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
             Next
             If CountWipsPass > 0 Then
                 If Not IDemonChanges.CheckCortosPN(txbNewPN.Text, True, chkParoAUNew.Checked) Then
-                    IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text, txbNotasNew.Text, True, If(chkParoAUNew.Checked, True, False))
+                    IDemonChanges.InsertNew(txbNewPN.Text, dtpAgregando.Value.ToString, cmbPONuevo.Text, txbNuevoVendor.Text, txtNewRazon.Text, txbNotasNew.Text, True, chkParoAUNew.Checked)
                 End If
             End If
             If Aus.Length > 0 And WipsWithOutCWO.Length > 0 Then
