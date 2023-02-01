@@ -501,6 +501,14 @@ Public Class Principal
     End Function
     Public Sub CheckCWOonPN(oWIP As String, oPn As String)
         Try
+            Dim execUpdate As Action(Of String) = Function(q)
+                                                      cmd = New SqlCommand(q, cnn)
+                                                      cmd.CommandType = CommandType.Text
+                                                      cnn.Open()
+                                                      cmd.ExecuteNonQuery()
+                                                      cnn.Close()
+                                                      Return Nothing
+                                                  End Function
             Dim tbCWO As New DataTable
             Dim oQuery As String = $"select distinct c.CWO [WO],c.wSort from tblWipDet a inner join tblWIP b on a.WIP=b.WIP inner join tblCWO c on a.CWO=c.CWO where b.WIP='{oWIP}' union
                                      select distinct c.PWO [WO],c.wSort from tblWipDet a inner join tblWIP b on a.WIP=b.WIP inner join tblPWO c on a.PWOA=c.PWO or a.PWOB=c.PWO where b.WIP='{oWIP}'"
@@ -514,18 +522,10 @@ Public Class Principal
                 For Each rows As DataRow In tbCWO.Rows
                     If CInt(rows.Item(1).ToString) < 30 Then
                         Materiales.UpdateHoldPN(rows.Item(0).ToString, oPn)
-                        query = $"update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(rows.Item(0), 1) = "C", $"CWO='{rows.Item(0)}'", $"PWOA='{rows.Item(0)}' or PWOB='{rows.Item(0)}'")} )"
-                        cmd = New SqlCommand(query, cnn)
-                        cmd.CommandType = CommandType.Text
-                        cnn.Open()
-                        cmd.ExecuteNonQuery()
-                        cnn.Close()
-                        query = $"update tbl{Microsoft.VisualBasic.Left(rows.Item(0), 1)}WO set wSort= 12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where {Microsoft.VisualBasic.Left(rows.Item(0), 1)}WO='{rows.Item(0)}'"
-                        cmd = New SqlCommand(query, cnn)
-                        cmd.CommandType = CommandType.Text
-                        cnn.Open()
-                        cmd.ExecuteNonQuery()
-                        cnn.Close()
+
+                        execUpdate($"update tblWIP set wSort=12 where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(rows.Item(0), 1) = "C", $"CWO='{rows.Item(0)}'", $"PWOA='{rows.Item(0)}' or PWOB='{rows.Item(0)}'")} )")
+
+                        execUpdate($"update tbl{Microsoft.VisualBasic.Left(rows.Item(0), 1)}WO set wSort= 12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where {Microsoft.VisualBasic.Left(rows.Item(0), 1)}WO='{rows.Item(0)}'")
                     End If
                 Next
             End If
@@ -1718,10 +1718,10 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     linea.Cells(7).Style.ForeColor = Color.Black
                     linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
                 End If
-                'If linea.Cells("CheckExp").Value Then
-                '    linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
-                '    linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
-                'End If
+                If CBool(linea.Cells("CheckExp").Value) Then
+                    linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
+                    linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
+                End If
             Next
         End If
         If (opcion = 6 Or opcion = 7) And rbListosParaEntrar.Checked Then
@@ -2555,36 +2555,36 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Dim cmd As String = "", wherePWO As String = ""
         If a = 1 Then
             If opcion = 1 Or opcion = 6 Then 'Solicitar Mat/Apl
-                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"
+                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU not like '[XP]%') and c.Maq > 0 order by c.Maq desc,c.Id asc,w.WIP"
             ElseIf opcion = 4 Or opcion = 7 Then 'Solicitar Mat/Apl XP
-                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') and c.Maq in (0,5) order by c.Maq desc,c.Id asc,w.WIP"
+                cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null and (w.KindOfAU like '[XP]%') and c.Maq in (0,5) order by c.Maq desc,c.Id asc,w.WIP"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then 'Solicitar Mat/Apl XP and KoA normal
                 cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null order by c.Maq desc,c.Id asc,w.WIP"
             End If
             wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort = '3' and c.dateSolicitud is null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 3 Then 'Listos Para Entrar
             If opcion = 1 Or opcion = 6 Then
-                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc"
+                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU not like '[XP]%') and c.Maq > 0 order by c.Maq desc,c.Id asc"
             ElseIf opcion = 4 Or opcion = 7 Then
-                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,25,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc"
+                cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,25,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU like '[XP]%') order by c.Maq desc,c.Id asc"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null order by c.CWO /*w.CreatedDate*/"
             End If
             wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (20,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 4 Then 'Ya empezados
             If opcion = 1 Or opcion = 6 Then
-                cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like '[XP]%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 4 Or opcion = 7 Then
-                cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU like '[XP]%') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
             wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (25,12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort = 25)))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 5 Then 'Empezados y Detenidos
             If opcion = 1 Or opcion = 6 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU not like '[XP]%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 4 Or opcion = 7 Then
-                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
+                cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU like '[XP]%') order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
@@ -2593,17 +2593,17 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             If opcion = 5 Then
                 cmd = " where (c.Wsort in (3,27,12,14,20,25)) And (c.Wsort in (27,11,12,13,14,20)) and (ConfirmacionAlm='OnHold') and w.WIP in (select distinct WIP from tblItemsQB as q inner join tblBOMCWO as bc on q.PN=bc.PN where WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (c.Wsort in (3,27,12,14,20)) And (c.Wsort in (27,11,12,13,14,20)) and (ConfirmacionAlm='OnHold')) and (q.QtyOnHand = 0 or bc.Balance > q.QtyOnHand or bc.Hold=1)) order by c.Maq desc,c.Id asc"
             ElseIf opcion = 4 Or opcion = 7 Then
-                cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and (w.KindOfAU like 'XP%' or w.KindOfAU like '%PPAP%' or w.KindOfAU ='Only Cord') and c.Status = 'OPEN' order by c.Maq desc,c.Id asc"
+                cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and (w.KindOfAU like '[XP]%') and c.Status = 'OPEN' order by c.Maq desc,c.Id asc"
             ElseIf opcion = 1 Or opcion = 6 Then
-                cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and (w.KindOfAU not like 'XP%' and w.KindOfAU not like '%PPAP%' and w.KindOfAU not like '%Only Cord%') and c.Maq > 0 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc"
+                cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and (w.KindOfAU not like '[XP]%') and c.Maq > 0 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc"
             Else
                 cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
             wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         End If
         If opcion = 5 Then
-            query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
-            queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+            query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold],case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+            queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold],case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
             query += cmd
             queryPWO += wherePWO
         Else
