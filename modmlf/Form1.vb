@@ -346,7 +346,7 @@ Public Class Principal
                 Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
                 Grid.Columns("WIP").Frozen = True
                 Grid.Columns($"{If(Grid.Name = "dgvPWO", "PWO", "CWO")}").Frozen = True
-                'Grid.Columns("CheckExp").Visible = False
+                Grid.Columns("CheckExp").Visible = False
             End If
         Catch ex As Exception
 
