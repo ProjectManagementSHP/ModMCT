@@ -1349,6 +1349,7 @@ Public Class Principal
     Public Function AllocatedAQty(Query As String) As Integer
         Dim Qty As Integer = 0
         Try
+            cnn.Close()
             cmd = New SqlCommand(Query, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -1356,7 +1357,7 @@ Public Class Principal
             Return Qty
         Catch ex As Exception
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
-            EnviaCorreoFalla("AllocatedAQty", host, UserName)
+            EnviaCorreoFalla($"AllocatedAQty {ex}", host, UserName)
             Return 0
         Finally
             cnn.Close()
@@ -2612,7 +2613,25 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End If
         Llenagrid(query, queryPWO)
     End Sub
+    Private Sub RevisaStatusWIPs()
+        Try
+            Dim execNow As Func(Of String, SqlCommand) = Function(q)
+                                                             Dim ocmd As New SqlCommand(q, cnn)
+                                                             ocmd.CommandType = CommandType.Text
+                                                             cnn.Open()
+                                                             Return ocmd
+                                                         End Function
+            If CInt(execNow("select Count(*) from tblWIP where WIP in (select WIP from tblWipDet where CWO in (select CWO from tblCWO where WSort = 3)) and wSort in (2,15)").ExecuteScalar) > 0 Then
+                cnn.Close()
+                execNow("update tblWIP set wsort = 3 where WIP in (select WIP from tblWipDet where CWO in (select CWO from tblCWO where WSort = 3)) and wSort in (2,15)").ExecuteScalar()
+            End If
+            cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+        End Try
+    End Sub
     Private Sub FilterData(aOptionFill As Integer)
+        RevisaStatusWIPs()
         Filtros(aOptionFill)
         lblwsortasig.Text = "-"
         lblWIPorCWO.Text = "-"
