@@ -2641,7 +2641,6 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End Try
     End Sub
     Private Sub FilterData(aOptionFill As Integer)
-        RevisaStatusWIPs()
         Filtros(aOptionFill)
         lblwsortasig.Text = "-"
         lblWIPorCWO.Text = "-"
@@ -3137,6 +3136,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Timer1.Stop()
+        RevisaStatusWIPs()
         ' ------------------------------------------------
         ' Nuevo notify con tabla
         Try
