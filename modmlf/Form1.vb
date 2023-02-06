@@ -49,6 +49,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
+            UsuariosToolStripMenuItem.Visible = False
         ElseIf opcion = 2 Then
             pnluserandtitle.BackColor = Color.LightBlue
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
@@ -71,6 +72,7 @@ Public Class Principal
             If Not dgvMatSinStockCompras.RowCount > 0 Then
                 CargadatosCompras()
             End If
+            UsuariosToolStripMenuItem.Visible = False
         ElseIf opcion = 3 Then
             pnluserandtitle.BackColor = Color.LightGray
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
@@ -87,6 +89,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
+            UsuariosToolStripMenuItem.Visible = False
         ElseIf opcion = 4 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -104,6 +107,7 @@ Public Class Principal
             btnCortosPN.Visible = False
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
+            UsuariosToolStripMenuItem.Visible = False
         ElseIf opcion = 5 Then
             pnluserandtitle.BackColor = Color.Bisque
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
@@ -131,6 +135,7 @@ Public Class Principal
             End If
             Timer3.Enabled = True
             Timer3.Interval = 1800000
+            UsuariosToolStripMenuItem.Visible = False
         ElseIf opcion = 6 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -153,6 +158,7 @@ Public Class Principal
             If Not dgvMatSinStockCompras.RowCount > 0 Then
                 CargadatosCompras()
             End If
+            UsuariosToolStripMenuItem.Visible = False
         ElseIf opcion = 7 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -175,6 +181,7 @@ Public Class Principal
             If Not dgvMatSinStockCompras.RowCount > 0 Then
                 CargadatosCompras()
             End If
+            UsuariosToolStripMenuItem.Visible = False
         ElseIf opcion = 8 Then 'Planeacion PWO
             pnluserandtitle.BackColor = Color.FromArgb(236, 154, 114)
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
@@ -197,7 +204,9 @@ Public Class Principal
             If Not dgvMatSinStockCompras.RowCount > 0 Then
                 CargadatosCompras()
             End If
+            UsuariosToolStripMenuItem.Visible = False
         End If
+        UsuariosToolStripMenuItem.Visible = Me.Text = "Desarrollo"
     End Sub
     Private Function CargaUsername(user As String) As String
         Try
@@ -216,6 +225,7 @@ Public Class Principal
         End Try
     End Function
     Public Sub LoadStart()
+        LogOut = False
         lblwelcome.Text = "Bienvenido: " & CargaUsername(UserName.ToString)
         Label4.Text = "Semana Actual: " & nsemana
         ToolStripMenuItem6.Visible = False
@@ -2604,7 +2614,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End If
         If opcion = 5 Then
             query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold],case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
-            queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold],case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+            queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold],case when a.ExCs is not null and a.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
             query += cmd
             queryPWO += wherePWO
         Else
@@ -3756,13 +3766,15 @@ and a.Balance > 0)"
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub Principal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        bgWorker.Dispose()
-        With NotifyIcon1
-            .Visible = False
-            .Dispose()
-        End With
-        Application.Exit()
-        End
+        If Not LogOut Then
+            bgWorker.Dispose()
+            With NotifyIcon1
+                .Visible = False
+                .Dispose()
+            End With
+            Application.Exit()
+            End
+        End If
     End Sub
     Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
         Cursor.Current = Cursors.WaitCursor
@@ -3803,13 +3815,13 @@ and a.Balance > 0)"
         End Try
     End Sub
     Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem5.Click
-        If Me.Text = "Desarrollo" Or Me.Text = "Admin" Or Me.Text = "Direccion" Then
+        If Me.Text = "Desarrollo" Or Me.Text = "Admin" Or Me.Text = "Direccion" Or MultiDepart Then
             Dim tempOption = opcion
             With OpcionesLog
                 '.Location() = New Point(ToolStripMenuItem11.Width, ToolStripMenuItem11.Height)
                 .ShowDialog()
             End With
-            Me.Text = Me.Text
+            'Me.Text = Me.Text
             If Not opcion = tempOption Then Form1_Load(New [Object], New EventArgs)
         Else
             Dim path As String = "C:\Users\" + Environment.UserName.ToString + "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\SEA\MLF.appref-ms"
@@ -4226,6 +4238,15 @@ and a.Balance > 0)"
         ElseIf Encabezado = "QTY" AndAlso dgvMatSinStockCompras.Rows(rdx).Cells("ComponentPN").Style.BackColor = Color.MintCream Then
             Cursor.Current = Cursors.Default
         End If
+    End Sub
+    Private Sub UsuariosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UsuariosToolStripMenuItem.Click
+        Dim User As New Usuarios
+        User.Show()
+    End Sub
+    Private Sub CerrarSesionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarSesionToolStripMenuItem.Click
+        LogOut = True
+        Login.Visible = True
+        Close()
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If ApplicationDeployment.IsNetworkDeployed Then

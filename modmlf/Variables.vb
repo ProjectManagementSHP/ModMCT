@@ -31,6 +31,7 @@ Module Variables
     Public host As String = Security.Principal.WindowsIdentity.GetCurrent().Name.ToString
     Public opcionesDeExportacion As Integer
     Public nsemana As Integer = GetWeek()
+    Public MultiDepart As Boolean = False, LogOut As Boolean = False
     Public Function GetWeek()
         Return CultureInfo.CurrentUICulture.Calendar.GetWeekOfYear(Date.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday) 'DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now) Comentado por bug sem 0
     End Function

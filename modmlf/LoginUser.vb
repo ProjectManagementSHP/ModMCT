@@ -30,7 +30,6 @@ Public Class LoginUser
             Return True
         End Get
     End Property
-
     Public Function GetUserAuthorization() As Boolean
         Dim Resp As Boolean
         Dim Query As String = "SELECT UserID,Department FROM tblItemsPOUserIDAuthorizations WHERE UserID=@UserID AND Module=@Module and Active=1"
@@ -54,7 +53,7 @@ Public Class LoginUser
             cnn.Close()
         Catch ex As Exception
             cnn.Close()
-            CorreoFalla.EnviaCorreoFalla("AutorizacionDelUsuario", host, username)
+            EnviaCorreoFalla("AutorizacionDelUsuario", host, username)
             Return Nothing
         End Try
         Return Resp
@@ -63,7 +62,7 @@ Public Class LoginUser
         cnn.Close()
         cnn.Open()
         Dim valor As String
-        query = "select userID from tblLogs where LoginDate = CONVERT(DATE, GETDATE()) AND hostname = '" & System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString & "'"
+        query = "select userID from tblLogs where /*LoginDate = CONVERT(DATE, GETDATE()) AND*/ hostname = '" & Security.Principal.WindowsIdentity.GetCurrent().Name.ToString & "'"
         Try
             Using cmd As New SqlCommand(query, cnn)
                 cmd.CommandType = CommandType.Text
