@@ -7,7 +7,9 @@ Public Class Login
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox1.Text = UserName
         Me.Visible = False
-        log_on()
+        If Not LogOut Then
+            log_on()
+        End If
         TextBox2.Focus()
         TextBox2.Select()
         If ApplicationDeployment.IsNetworkDeployed Then
@@ -38,16 +40,18 @@ Public Class Login
         Try
             If TextBox1.Text = "admin" And TextBox2.Text = "Supremadmin" Then
                 With OpcionesLog
+                    .AllVisible()
                     .ShowDialog()
                 End With
-                Me.Hide()
+                Hide()
                 Principal.Text = "Admin"
                 Principal.Show()
             ElseIf TextBox1.Text = "" And TextBox2.Text = "a10946830z" Then
                 With OpcionesLog
+                    .AllVisible()
                     .ShowDialog()
                 End With
-                Me.Hide()
+                Hide()
                 Principal.Text = "Direccion"
                 Principal.Show()
             Else
@@ -56,69 +60,81 @@ Public Class Login
                     If User.GetUserAuthorization() Then
                         dep = User.AuthorizedDept
                         UserName = User.AuthorizedName
-                        Select Case dep
-                            Case "Desarrollo"
-                                With OpcionesLog
-                                    .ShowDialog()
-                                End With
-                                Me.Hide()
-                                Principal.Text = "Desarrollo"
-                                Principal.Show()
-                            Case "Almacen"
-                                opcion = 2
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "Almacen"
-                                Principal.Show()
-                            Case "Corte"
-                                opcion = 1
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "Corte"
-                                Principal.Show()
-                            Case "Aplicadores"
-                                opcion = 3
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "Aplicadores"
-                                Principal.Show()
-                            Case "XP"
-                                opcion = 4
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "XP"
-                                Principal.Show()
-                            Case "Compras"
-                                opcion = 5
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "Compras"
-                                Principal.Show()
-                            Case "PlanCorte"
-                                opcion = 6
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "Planeacion Corte"
-                                Principal.Show()
-                            Case "PlanXP"
-                                opcion = 7
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "Planeacion XP"
-                                Principal.Show()
-                            Case "PlanPWO"
-                                opcion = 8
-                                insertMLFNotification()
-                                Me.Hide()
-                                Principal.Text = "Planeacion PWO"
-                                Principal.Show()
-                            Case Else
-                                MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
-                        End Select
+                        If CbRecordarUser.Checked Then
+                            RecordarUsuario()
+                        End If
+                        If dep = "Desarrollo" Then
+                            With OpcionesLog
+                                .AllVisible()
+                                .ShowDialog()
+                            End With
+                            Hide()
+                            Principal.Text = "Desarrollo"
+                            Principal.Show()
+                        ElseIf dep = "Almacen" Then
+                            opcion = 2
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "Almacen"
+                            Principal.Show()
+                        ElseIf dep = "Corte" Then
+                            opcion = 1
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "Corte"
+                            Principal.Show()
+                        ElseIf dep = "Aplicadores" Then
+                            opcion = 3
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "Aplicadores"
+                            Principal.Show()
+                        ElseIf dep = "XP" Then
+                            opcion = 4
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "XP"
+                            Principal.Show()
+                        ElseIf dep = "Compras" Then
+                            opcion = 5
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "Compras"
+                            Principal.Show()
+                        ElseIf dep = "PlanCorte" Then
+                            opcion = 6
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "Planeacion Corte"
+                            Principal.Show()
+                        ElseIf dep = "PlanXP" Then
+                            opcion = 7
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "Planeacion XP"
+                            Principal.Show()
+                        ElseIf dep = "PlanPWO" Then
+                            opcion = 8
+                            insertMLFNotification()
+                            Hide()
+                            Principal.Text = "Planeacion PWO"
+                            Principal.Show()
+                        ElseIf dep.Contains(",") Then
+                            With OpcionesLog
+                                .CheckOpcionesVisible(dep)
+                                .ShowDialog()
+                            End With
+                            MultiDepart = True
+                            Hide()
+                            Principal.Text = GetNameDept()
+                            Principal.ShowDialog()
+                        Else
+                            MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
+                        End If
                         TextBox2.Text = ""
                         TextBox1.Text = ""
                     Else
-                        MessageBox.Show("Usuario sin autorizacion, por favor intente de nuevo ", "Authentication Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                            MessageBox.Show("Usuario sin autorizacion, por favor intente de nuevo ", "Authentication Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                         TextBox2.Text = ""
                     End If
                 Else
@@ -126,7 +142,7 @@ Public Class Login
                     intento += 1
                     If intento = 3 Then
                         MessageBox.Show("Ha superado el maximo de intentos", "Authentication Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                        Me.Close()
+                        Close()
                     End If
                     TextBox2.Focus()
                     TextBox2.SelectAll()
@@ -134,7 +150,7 @@ Public Class Login
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            CorreoFalla.EnviaCorreoFalla("Login_User", host, UserName)
+            EnviaCorreoFalla("Login_User", host, UserName)
         End Try
     End Sub
     Private Sub log_on()
@@ -143,64 +159,93 @@ Public Class Login
             If User.GetUserAuthorization() Then
                 dep = User.AuthorizedDept
                 UserName = User.AuthorizedName
-                Select Case dep
-                    Case "Desarrollo"
-                        With OpcionesLog
-                            .ShowDialog()
-                        End With
-                        Principal.Text = "Desarrollo"
-                        Principal.Show()
-                        Me.Close()
-                    Case "Almacen"
-                        opcion = 2
-                        insertMLFNotification()
-                        Principal.Text = "Almacen"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case "Corte"
-                        opcion = 1
-                        insertMLFNotification()
-                        Principal.Text = "Corte"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case "Aplicadores"
-                        opcion = 3
-                        Principal.Text = "Aplicadores"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case "XP"
-                        opcion = 4
-                        insertMLFNotification()
-                        Principal.Text = "XP"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case "Compras"
-                        opcion = 5
-                        insertMLFNotification()
-                        Principal.Text = "Compras"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case "PlanCorte"
-                        opcion = 6
-                        insertMLFNotification()
-                        Principal.Text = "Planeacion Corte"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case "PlanXP"
-                        opcion = 7
-                        insertMLFNotification()
-                        Principal.Text = "Planeacion XP"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case "PlanPWO"
-                        opcion = 8
-                        insertMLFNotification()
-                        Principal.Text = "Planeacion PWO"
-                        Principal.ShowDialog()
-                        Me.Close()
-                    Case Else
-                        MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
-                End Select
+                If dep = "Desarrollo" Then
+                    With OpcionesLog
+                        .AllVisible()
+                        .ShowDialog()
+                    End With
+                    Principal.Text = "Desarrollo"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "Almacen" Then
+                    opcion = 2
+                    insertMLFNotification()
+                    Principal.Text = "Almacen"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "Corte" Then
+                    opcion = 1
+                    insertMLFNotification()
+                    Principal.Text = "Corte"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "Aplicadores" Then
+                    opcion = 3
+                    Principal.Text = "Aplicadores"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "XP" Then
+                    opcion = 4
+                    insertMLFNotification()
+                    Principal.Text = "XP"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "Compras" Then
+                    opcion = 5
+                    insertMLFNotification()
+                    Principal.Text = "Compras"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "PlanCorte" Then
+                    opcion = 6
+                    insertMLFNotification()
+                    Principal.Text = "Planeacion Corte"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "PlanXP" Then
+                    opcion = 7
+                    insertMLFNotification()
+                    Principal.Text = "Planeacion XP"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep = "PlanPWO" Then
+                    opcion = 8
+                    insertMLFNotification()
+                    Principal.Text = "Planeacion PWO"
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                ElseIf dep.Contains(",") Then
+                    With OpcionesLog
+                        .CheckOpcionesVisible(dep)
+                        .ShowDialog()
+                    End With
+                    MultiDepart = True
+                    Principal.Text = GetNameDept()
+                    Principal.ShowDialog()
+                    If Not LogOut Then
+                        Close()
+                    End If
+                Else
+                    MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
+                End If
             Else
                 Me.Visible = True
             End If
@@ -208,6 +253,23 @@ Public Class Login
             Me.Visible = True
         End If
     End Sub
+    Private Function GetNameDept()
+        Dim returnName As String = ""
+        If opcion = 2 Then
+            returnName = "Almacen"
+        ElseIf opcion = 3 Then
+            returnName = "Aplicadores"
+        ElseIf opcion = 5 Then
+            returnName = "Compras"
+        ElseIf opcion = 6 Then
+            returnName = "Planeacion Corte"
+        ElseIf opcion = 7 Then
+            returnName = "Planeacion XP"
+        ElseIf opcion = 8 Then
+            returnName = "Planeacion PWO"
+        End If
+        Return returnName
+    End Function
     Private Sub insertMLFNotification()
         Try
             Dim valor As Boolean = False
@@ -231,18 +293,31 @@ Public Class Login
                 cnn.Close()
             End If
         Catch ex As Exception
-            CorreoFalla.EnviaCorreoFalla("insertMLFNotification", host, UserName)
+            EnviaCorreoFalla("insertMLFNotification", host, UserName)
+        End Try
+    End Sub
+    Private Sub RecordarUsuario()
+        Try
+            Dim cmod As SqlCommand = New SqlCommand($"select Count(*) from tblLogs where userID = '{UserName}' and hostname = '{Security.Principal.WindowsIdentity.GetCurrent().Name}'", cnn)
+            cnn.Open()
+            If CInt(cmod.ExecuteScalar()) = 0 Then
+                cmod = New SqlCommand($"insert into tblLogs (userID,hostname,LoginDate) values ('{UserName}','{Security.Principal.WindowsIdentity.GetCurrent().Name}',Convert(date,GetDate()))", cnn)
+                cmod.ExecuteNonQuery()
+            End If
+            cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
         End Try
     End Sub
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        If CheckBox1.Checked = True Then
+        If CheckBox1.Checked Then
             TextBox2.PasswordChar = ""
-        ElseIf CheckBox1.Checked = False Then
+        ElseIf Not CheckBox1.Checked Then
             TextBox2.PasswordChar = "*"
         End If
     End Sub
     Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
