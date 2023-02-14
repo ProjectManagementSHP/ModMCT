@@ -323,7 +323,7 @@ selected: " + InfoTablas.Count.ToString
     Private Sub FillColorGrid()
         If dgvDetalleTerminales.Rows.Count > 0 And InfoTablas.Count > 0 Then
             Dim auxRow As Integer = 0
-            Dim First = (From d In InfoTablas Order By d.Rows Ascending Select d.Rows).First()
+            Dim First = (From d In InfoTablas  Order By d.Rows Ascending  Select d.Rows).First()
             InfoTablas.ForEach(
                 Function(Term)
                     Dim CountInteraction As Integer = 0
