@@ -1796,6 +1796,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                         End If
                     End If
                 Catch ex As Exception
+                    cnn.Close()
                     MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
                     EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
                 End Try
@@ -2625,6 +2626,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub RevisaStatusWIPs()
         Try
+            cnn.Close()
             Dim execNow As Func(Of String, SqlCommand) = Function(q)
                                                              Dim ocmd As New SqlCommand(q, cnn)
                                                              ocmd.CommandType = CommandType.Text
@@ -2634,6 +2636,11 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             If CInt(execNow("select Count(*) from tblWIP where WIP in (select WIP from tblWipDet where CWO in (select CWO from tblCWO where WSort = 3)) and wSort in (2,15)").ExecuteScalar) > 0 Then
                 cnn.Close()
                 execNow("update tblWIP set wsort = 3 where WIP in (select WIP from tblWipDet where CWO in (select CWO from tblCWO where WSort = 3)) and wSort in (2,15)").ExecuteScalar()
+            End If
+            cnn.Close()
+            If CInt(execNow("select Count(*) from tblWIP where wSort is null").ExecuteScalar) > 0 Then
+                cnn.Close()
+                execNow("update tblWIP set wsort = 25 where wSort is null").ExecuteScalar()
             End If
             cnn.Close()
         Catch ex As Exception
@@ -4098,8 +4105,9 @@ and a.Balance > 0)"
                         dgvMatSinStockCompras.Rows(e.RowIndex).Selected = True
                         PN = Convert.ToString(dgvMatSinStockCompras.Rows(e.RowIndex).Cells(1).Value)
                     Catch ex As Exception
+                        cnn.Close()
                         MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                        EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                        EnviaCorreoFalla("dgvMatSinStockCompras_CellMouseDown", host, UserName)
                     End Try
                 End If
             End If
