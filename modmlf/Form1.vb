@@ -23,7 +23,7 @@ Public Class Principal
     Dim oh, alm, piso, rework As Decimal
     Public WithEvents FSW As New IO.FileSystemWatcher
     Private bgWorker As New BackgroundWorker
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Cursor.Current = Cursors.WaitCursor
         LoadStart()
         Inicio()
@@ -4255,6 +4255,7 @@ and a.Balance > 0)"
     Private Sub CerrarSesionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarSesionToolStripMenuItem.Click
         LogOut = True
         Login.Visible = True
+        opcion = 0
         Close()
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click

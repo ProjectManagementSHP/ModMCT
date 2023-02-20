@@ -6,6 +6,7 @@ Public Class Login
     Private intento As Integer
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TextBox1.Text = UserName
+        opcion = 0
         Me.Visible = False
         If Not LogOut Then
             log_on()
@@ -65,76 +66,92 @@ Public Class Login
                         End If
                         If dep = "Desarrollo" Then
                             With OpcionesLog
+                                If LogOut Then
+                                    .Label2.Visible = False
+                                End If
                                 .AllVisible()
                                 .ShowDialog()
                             End With
                             Hide()
                             Principal.Text = "Desarrollo"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "Almacen" Then
                             opcion = 2
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "Almacen"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "Corte" Then
                             opcion = 1
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "Corte"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "Aplicadores" Then
                             opcion = 3
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "Aplicadores"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "XP" Then
                             opcion = 4
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "XP"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "Compras" Then
                             opcion = 5
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "Compras"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "PlanCorte" Then
                             opcion = 6
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "Planeacion Corte"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "PlanXP" Then
                             opcion = 7
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "Planeacion XP"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep = "PlanPWO" Then
                             opcion = 8
                             insertMLFNotification()
                             Hide()
                             Principal.Text = "Planeacion PWO"
+                            CharginPrincipal()
                             Principal.Show()
                         ElseIf dep.Contains(",") Then
                             With OpcionesLog
+                                If LogOut Then
+                                    .Label2.Visible = False
+                                End If
                                 .CheckOpcionesVisible(dep)
                                 .ShowDialog()
                             End With
                             MultiDepart = True
                             Hide()
                             Principal.Text = GetNameDept()
-                            Principal.ShowDialog()
+                            CharginPrincipal()
+                            Principal.Show()
                         Else
                             MsgBox("Tu departamento no tiene acceso a este modulo, verificalo e intenta de nuevo")
                         End If
                         TextBox2.Text = ""
                         TextBox1.Text = ""
                     Else
-                            MessageBox.Show("Usuario sin autorizacion, por favor intente de nuevo ", "Authentication Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                        MessageBox.Show("Usuario sin autorizacion, por favor intente de nuevo ", "Authentication Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                         TextBox2.Text = ""
                     End If
                 Else
@@ -152,6 +169,11 @@ Public Class Login
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             EnviaCorreoFalla("Login_User", host, UserName)
         End Try
+    End Sub
+    Private Sub CharginPrincipal()
+        If LogOut Then
+            Principal.Form1_Load(New [Object], New EventArgs)
+        End If
     End Sub
     Private Sub log_on()
         Dim User As LoginUser = New LoginUser()
