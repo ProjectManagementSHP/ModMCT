@@ -1969,7 +1969,8 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                         End If
                     End If
                 ElseIf opcion = 5 Then
-                    If rdbOnHold.Checked = True And dgvWips.Rows.Count > 0 Then
+                    'If rdbOnHold.Checked = True And 
+                    If dgvWips.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
                             ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
                             ToolStripMenuItem14.Visible = False
@@ -1980,7 +1981,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             AsignarMaterialToolStripMenuItem.Visible = False
                             ToolStripTextBox7.Visible = False
                             ToolStripMenuItem15.Visible = False
-                            DesviarTerminalToolStripMenuItem.Visible = False
+                            DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
                         End If
                     End If
@@ -4020,7 +4021,7 @@ and a.Balance > 0)"
     End Sub
     Private Sub DesviarTerminalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DesviarTerminalToolStripMenuItem.Click
         Cursor.Current = Cursors.WaitCursor
-        If opcion = 3 Then
+        If opcion = 3 Or opcion = 5 Then
             DesviacionesCheck()
         End If
         Cursor.Current = Cursors.Default
