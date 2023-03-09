@@ -92,12 +92,14 @@ Partial Class Principal
 		Me.rbsolicitar = New System.Windows.Forms.RadioButton()
 		Me.GroupBox2 = New System.Windows.Forms.GroupBox()
 		Me.Label1 = New System.Windows.Forms.Label()
+		Me.Button1 = New System.Windows.Forms.Button()
 		Me.DataGridView1 = New System.Windows.Forms.DataGridView()
 		Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
 		Me.dgvMatSinStockCompras = New System.Windows.Forms.DataGridView()
 		Me.Chk = New System.Windows.Forms.DataGridViewCheckBoxColumn()
 		Me.Button2 = New System.Windows.Forms.Button()
 		Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+		Me.Button3 = New System.Windows.Forms.Button()
 		Me.Label2 = New System.Windows.Forms.Label()
 		Me.dgvwSorts = New System.Windows.Forms.DataGridView()
 		Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -110,6 +112,8 @@ Partial Class Principal
 		Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.CrearPWOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
+		Me.UsuariosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.CerrarSesionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
 		Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -123,6 +127,10 @@ Partial Class Principal
 		Me.tbpGraficaMediosProcesos = New System.Windows.Forms.TabPage()
 		Me.Chart2 = New System.Windows.Forms.DataVisualization.Charting.Chart()
 		Me.TabPage2 = New System.Windows.Forms.TabPage()
+		Me.btnCortosPN = New System.Windows.Forms.Button()
+		Me.btnAgregaFecha = New System.Windows.Forms.Button()
+		Me.btnexportaeficc = New System.Windows.Forms.Button()
+		Me.btnRefrescaGrid = New System.Windows.Forms.Button()
 		Me.Label8 = New System.Windows.Forms.Label()
 		Me.Label7 = New System.Windows.Forms.Label()
 		Me.lblAfectados = New System.Windows.Forms.Label()
@@ -135,8 +143,11 @@ Partial Class Principal
 		Me.Label10 = New System.Windows.Forms.Label()
 		Me.dtpBefore = New System.Windows.Forms.DateTimePicker()
 		Me.dtpAfter = New System.Windows.Forms.DateTimePicker()
+		Me.BtnExportarCortos = New System.Windows.Forms.PictureBox()
 		Me.Label5 = New System.Windows.Forms.Label()
 		Me.dgvCortosCompletos = New System.Windows.Forms.DataGridView()
+		Me.btnAgregarNewElemento = New System.Windows.Forms.PictureBox()
+		Me.Button4 = New System.Windows.Forms.Button()
 		Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
 		Me.ContextMenuStripModificar = New System.Windows.Forms.ContextMenuStrip(Me.components)
 		Me.TLModificar = New System.Windows.Forms.ToolStripMenuItem()
@@ -145,17 +156,6 @@ Partial Class Principal
 		Me.PWOTab = New System.Windows.Forms.TabPage()
 		Me.Label9 = New System.Windows.Forms.Label()
 		Me.dgvPWO = New System.Windows.Forms.DataGridView()
-		Me.btnCortosPN = New System.Windows.Forms.Button()
-		Me.btnAgregaFecha = New System.Windows.Forms.Button()
-		Me.btnexportaeficc = New System.Windows.Forms.Button()
-		Me.btnRefrescaGrid = New System.Windows.Forms.Button()
-		Me.BtnExportarCortos = New System.Windows.Forms.PictureBox()
-		Me.btnAgregarNewElemento = New System.Windows.Forms.PictureBox()
-		Me.Button4 = New System.Windows.Forms.Button()
-		Me.Button3 = New System.Windows.Forms.Button()
-		Me.Button1 = New System.Windows.Forms.Button()
-		Me.UsuariosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.CerrarSesionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		CType(Me.dgvWips, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.ContextMenuDisponibilidad.SuspendLayout()
 		Me.pnluserandtitle.SuspendLayout()
@@ -179,14 +179,14 @@ Partial Class Principal
 		CType(Me.dgvAfectados, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.TabPage3.SuspendLayout()
 		Me.gbFechas.SuspendLayout()
+		CType(Me.BtnExportarCortos, System.ComponentModel.ISupportInitialize).BeginInit()
 		CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).BeginInit()
+		CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.ContextMenuStripModificar.SuspendLayout()
 		Me.tabWorkOrders.SuspendLayout()
 		Me.CWOtab.SuspendLayout()
 		Me.PWOTab.SuspendLayout()
 		CType(Me.dgvPWO, System.ComponentModel.ISupportInitialize).BeginInit()
-		CType(Me.BtnExportarCortos, System.ComponentModel.ISupportInitialize).BeginInit()
-		CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
 		'dgvWips
@@ -423,7 +423,7 @@ Partial Class Principal
 		Me.Chart1.Series.Add(Series1)
 		Me.Chart1.Series.Add(Series2)
 		Me.Chart1.Series.Add(Series3)
-		Me.Chart1.Size = New System.Drawing.Size(1205, 224)
+		Me.Chart1.Size = New System.Drawing.Size(1226, 224)
 		Me.Chart1.TabIndex = 5439
 		Me.Chart1.Text = "Chart1"
 		'
@@ -598,6 +598,17 @@ Partial Class Principal
 		Me.Label1.TabIndex = 2
 		Me.Label1.Text = "Historial: "
 		'
+		'Button1
+		'
+		Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
+		Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+		Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.Button1.Location = New System.Drawing.Point(687, 12)
+		Me.Button1.Name = "Button1"
+		Me.Button1.Size = New System.Drawing.Size(31, 36)
+		Me.Button1.TabIndex = 5437
+		Me.Button1.UseVisualStyleBackColor = True
+		'
 		'DataGridView1
 		'
 		Me.DataGridView1.AllowUserToAddRows = False
@@ -723,6 +734,17 @@ Partial Class Principal
 		Me.GroupBox3.TabIndex = 5454
 		Me.GroupBox3.TabStop = False
 		'
+		'Button3
+		'
+		Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
+		Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+		Me.Button3.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.Button3.Location = New System.Drawing.Point(365, 11)
+		Me.Button3.Name = "Button3"
+		Me.Button3.Size = New System.Drawing.Size(32, 36)
+		Me.Button3.TabIndex = 5439
+		Me.Button3.UseVisualStyleBackColor = True
+		'
 		'Label2
 		'
 		Me.Label2.AutoSize = True
@@ -799,50 +821,62 @@ Partial Class Principal
 		'MonitorWIPS
 		'
 		Me.MonitorWIPS.Name = "MonitorWIPS"
-		Me.MonitorWIPS.Size = New System.Drawing.Size(180, 22)
+		Me.MonitorWIPS.Size = New System.Drawing.Size(171, 22)
 		Me.MonitorWIPS.Text = "Monitor WIP's"
 		'
 		'ToolStripMenuItem1
 		'
 		Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem1.Text = "CSHP"
 		'
 		'ToolStripMenuItem10
 		'
 		Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-		Me.ToolStripMenuItem10.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem10.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem10.Text = "Graficas"
 		'
 		'ToolStripMenuItem11
 		'
 		Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
-		Me.ToolStripMenuItem11.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem11.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem11.Text = "Hora x Hora"
 		'
 		'ToolStripMenuItem3
 		'
 		Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-		Me.ToolStripMenuItem3.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem3.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem3.Text = "Ver Manual de uso"
 		'
 		'ToolStripMenuItem6
 		'
 		Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-		Me.ToolStripMenuItem6.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem6.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem6.Text = "WIP Issues"
 		'
 		'CrearPWOToolStripMenuItem
 		'
 		Me.CrearPWOToolStripMenuItem.Name = "CrearPWOToolStripMenuItem"
-		Me.CrearPWOToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+		Me.CrearPWOToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
 		Me.CrearPWOToolStripMenuItem.Text = "Crear PWO"
 		'
 		'ToolStripMenuItem5
 		'
 		Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-		Me.ToolStripMenuItem5.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem5.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem5.Text = "Cambiar de usario"
+		'
+		'UsuariosToolStripMenuItem
+		'
+		Me.UsuariosToolStripMenuItem.Name = "UsuariosToolStripMenuItem"
+		Me.UsuariosToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+		Me.UsuariosToolStripMenuItem.Text = "Usuarios"
+		'
+		'CerrarSesionToolStripMenuItem
+		'
+		Me.CerrarSesionToolStripMenuItem.Name = "CerrarSesionToolStripMenuItem"
+		Me.CerrarSesionToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+		Me.CerrarSesionToolStripMenuItem.Text = "Cerrar Sesion"
 		'
 		'AboutToolStripMenuItem
 		'
@@ -897,7 +931,7 @@ Partial Class Principal
 		Me.TabPage1.Margin = New System.Windows.Forms.Padding(2)
 		Me.TabPage1.Name = "TabPage1"
 		Me.TabPage1.Padding = New System.Windows.Forms.Padding(2)
-		Me.TabPage1.Size = New System.Drawing.Size(1223, 260)
+		Me.TabPage1.Size = New System.Drawing.Size(1244, 260)
 		Me.TabPage1.TabIndex = 0
 		Me.TabPage1.Text = "Graficas"
 		Me.TabPage1.UseVisualStyleBackColor = True
@@ -910,7 +944,7 @@ Partial Class Principal
 		Me.Panel3.Location = New System.Drawing.Point(2, 2)
 		Me.Panel3.Margin = New System.Windows.Forms.Padding(2)
 		Me.Panel3.Name = "Panel3"
-		Me.Panel3.Size = New System.Drawing.Size(1219, 256)
+		Me.Panel3.Size = New System.Drawing.Size(1240, 256)
 		Me.Panel3.TabIndex = 5501
 		'
 		'tbGraficas
@@ -921,7 +955,7 @@ Partial Class Principal
 		Me.tbGraficas.Location = New System.Drawing.Point(0, 0)
 		Me.tbGraficas.Name = "tbGraficas"
 		Me.tbGraficas.SelectedIndex = 0
-		Me.tbGraficas.Size = New System.Drawing.Size(1219, 256)
+		Me.tbGraficas.Size = New System.Drawing.Size(1240, 256)
 		Me.tbGraficas.TabIndex = 5443
 		'
 		'tbGraficaCorte
@@ -930,7 +964,7 @@ Partial Class Principal
 		Me.tbGraficaCorte.Location = New System.Drawing.Point(4, 22)
 		Me.tbGraficaCorte.Name = "tbGraficaCorte"
 		Me.tbGraficaCorte.Padding = New System.Windows.Forms.Padding(3)
-		Me.tbGraficaCorte.Size = New System.Drawing.Size(1211, 230)
+		Me.tbGraficaCorte.Size = New System.Drawing.Size(1232, 230)
 		Me.tbGraficaCorte.TabIndex = 0
 		Me.tbGraficaCorte.Text = "Graficas CWO"
 		Me.tbGraficaCorte.UseVisualStyleBackColor = True
@@ -941,7 +975,7 @@ Partial Class Principal
 		Me.tbpGraficaMediosProcesos.Location = New System.Drawing.Point(4, 22)
 		Me.tbpGraficaMediosProcesos.Name = "tbpGraficaMediosProcesos"
 		Me.tbpGraficaMediosProcesos.Padding = New System.Windows.Forms.Padding(3)
-		Me.tbpGraficaMediosProcesos.Size = New System.Drawing.Size(1211, 230)
+		Me.tbpGraficaMediosProcesos.Size = New System.Drawing.Size(1232, 230)
 		Me.tbpGraficaMediosProcesos.TabIndex = 1
 		Me.tbpGraficaMediosProcesos.Text = "Graficas PWO"
 		Me.tbpGraficaMediosProcesos.UseVisualStyleBackColor = True
@@ -982,7 +1016,7 @@ Partial Class Principal
 		Me.Chart2.Series.Add(Series4)
 		Me.Chart2.Series.Add(Series5)
 		Me.Chart2.Series.Add(Series6)
-		Me.Chart2.Size = New System.Drawing.Size(1205, 224)
+		Me.Chart2.Size = New System.Drawing.Size(1226, 224)
 		Me.Chart2.TabIndex = 5442
 		Me.Chart2.Text = "Chart2"
 		'
@@ -1003,10 +1037,64 @@ Partial Class Principal
 		Me.TabPage2.Margin = New System.Windows.Forms.Padding(2)
 		Me.TabPage2.Name = "TabPage2"
 		Me.TabPage2.Padding = New System.Windows.Forms.Padding(2)
-		Me.TabPage2.Size = New System.Drawing.Size(1223, 260)
+		Me.TabPage2.Size = New System.Drawing.Size(1244, 260)
 		Me.TabPage2.TabIndex = 1
 		Me.TabPage2.Text = "PN Cortos"
 		Me.TabPage2.UseVisualStyleBackColor = True
+		'
+		'btnCortosPN
+		'
+		Me.btnCortosPN.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.btnCortosPN.BackgroundImage = CType(resources.GetObject("btnCortosPN.BackgroundImage"), System.Drawing.Image)
+		Me.btnCortosPN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+		Me.btnCortosPN.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.btnCortosPN.Location = New System.Drawing.Point(835, 6)
+		Me.btnCortosPN.Margin = New System.Windows.Forms.Padding(2)
+		Me.btnCortosPN.Name = "btnCortosPN"
+		Me.btnCortosPN.Size = New System.Drawing.Size(36, 37)
+		Me.btnCortosPN.TabIndex = 5470
+		Me.btnCortosPN.UseVisualStyleBackColor = True
+		Me.btnCortosPN.Visible = False
+		'
+		'btnAgregaFecha
+		'
+		Me.btnAgregaFecha.BackgroundImage = CType(resources.GetObject("btnAgregaFecha.BackgroundImage"), System.Drawing.Image)
+		Me.btnAgregaFecha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+		Me.btnAgregaFecha.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.btnAgregaFecha.Location = New System.Drawing.Point(320, 3)
+		Me.btnAgregaFecha.Margin = New System.Windows.Forms.Padding(2)
+		Me.btnAgregaFecha.Name = "btnAgregaFecha"
+		Me.btnAgregaFecha.Size = New System.Drawing.Size(36, 37)
+		Me.btnAgregaFecha.TabIndex = 5469
+		Me.btnAgregaFecha.UseVisualStyleBackColor = True
+		Me.btnAgregaFecha.Visible = False
+		'
+		'btnexportaeficc
+		'
+		Me.btnexportaeficc.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.btnexportaeficc.BackColor = System.Drawing.Color.White
+		Me.btnexportaeficc.BackgroundImage = CType(resources.GetObject("btnexportaeficc.BackgroundImage"), System.Drawing.Image)
+		Me.btnexportaeficc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+		Me.btnexportaeficc.Location = New System.Drawing.Point(571, 12)
+		Me.btnexportaeficc.Margin = New System.Windows.Forms.Padding(2)
+		Me.btnexportaeficc.Name = "btnexportaeficc"
+		Me.btnexportaeficc.Size = New System.Drawing.Size(78, 27)
+		Me.btnexportaeficc.TabIndex = 5468
+		Me.btnexportaeficc.UseVisualStyleBackColor = False
+		Me.btnexportaeficc.Visible = False
+		'
+		'btnRefrescaGrid
+		'
+		Me.btnRefrescaGrid.BackgroundImage = CType(resources.GetObject("btnRefrescaGrid.BackgroundImage"), System.Drawing.Image)
+		Me.btnRefrescaGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+		Me.btnRefrescaGrid.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.btnRefrescaGrid.Location = New System.Drawing.Point(386, 6)
+		Me.btnRefrescaGrid.Margin = New System.Windows.Forms.Padding(2)
+		Me.btnRefrescaGrid.Name = "btnRefrescaGrid"
+		Me.btnRefrescaGrid.Size = New System.Drawing.Size(29, 33)
+		Me.btnRefrescaGrid.TabIndex = 5467
+		Me.btnRefrescaGrid.UseVisualStyleBackColor = True
+		Me.btnRefrescaGrid.Visible = False
 		'
 		'Label8
 		'
@@ -1178,6 +1266,20 @@ Partial Class Principal
 		Me.dtpAfter.TabIndex = 5472
 		Me.dtpAfter.Value = New Date(2022, 8, 8, 0, 0, 0, 0)
 		'
+		'BtnExportarCortos
+		'
+		Me.BtnExportarCortos.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.BtnExportarCortos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+		Me.BtnExportarCortos.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.BtnExportarCortos.Image = Global.modmlf.My.Resources.Resources.botonexport
+		Me.BtnExportarCortos.Location = New System.Drawing.Point(258, 10)
+		Me.BtnExportarCortos.Margin = New System.Windows.Forms.Padding(2)
+		Me.BtnExportarCortos.Name = "BtnExportarCortos"
+		Me.BtnExportarCortos.Size = New System.Drawing.Size(214, 41)
+		Me.BtnExportarCortos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+		Me.BtnExportarCortos.TabIndex = 5471
+		Me.BtnExportarCortos.TabStop = False
+		'
 		'Label5
 		'
 		Me.Label5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -1236,6 +1338,33 @@ Partial Class Principal
 		Me.dgvCortosCompletos.Size = New System.Drawing.Size(1230, 195)
 		Me.dgvCortosCompletos.TabIndex = 5436
 		'
+		'btnAgregarNewElemento
+		'
+		Me.btnAgregarNewElemento.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.btnAgregarNewElemento.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+		Me.btnAgregarNewElemento.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.btnAgregarNewElemento.Image = Global.modmlf.My.Resources.Resources.BotonCorto2
+		Me.btnAgregarNewElemento.Location = New System.Drawing.Point(987, 10)
+		Me.btnAgregarNewElemento.Margin = New System.Windows.Forms.Padding(2)
+		Me.btnAgregarNewElemento.Name = "btnAgregarNewElemento"
+		Me.btnAgregarNewElemento.Size = New System.Drawing.Size(242, 45)
+		Me.btnAgregarNewElemento.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+		Me.btnAgregarNewElemento.TabIndex = 5469
+		Me.btnAgregarNewElemento.TabStop = False
+		Me.btnAgregarNewElemento.Visible = False
+		'
+		'Button4
+		'
+		Me.Button4.BackgroundImage = CType(resources.GetObject("Button4.BackgroundImage"), System.Drawing.Image)
+		Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+		Me.Button4.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.Button4.Location = New System.Drawing.Point(7, 9)
+		Me.Button4.Margin = New System.Windows.Forms.Padding(2)
+		Me.Button4.Name = "Button4"
+		Me.Button4.Size = New System.Drawing.Size(40, 35)
+		Me.Button4.TabIndex = 5468
+		Me.Button4.UseVisualStyleBackColor = True
+		'
 		'Timer3
 		'
 		'
@@ -1283,7 +1412,7 @@ Partial Class Principal
 		Me.PWOTab.Location = New System.Drawing.Point(4, 22)
 		Me.PWOTab.Name = "PWOTab"
 		Me.PWOTab.Padding = New System.Windows.Forms.Padding(3)
-		Me.PWOTab.Size = New System.Drawing.Size(1216, 208)
+		Me.PWOTab.Size = New System.Drawing.Size(1237, 208)
 		Me.PWOTab.TabIndex = 1
 		Me.PWOTab.Text = "PWO"
 		Me.PWOTab.UseVisualStyleBackColor = True
@@ -1345,135 +1474,6 @@ Partial Class Principal
 		Me.dgvPWO.Size = New System.Drawing.Size(1258, 173)
 		Me.dgvPWO.TabIndex = 5436
 		'
-		'btnCortosPN
-		'
-		Me.btnCortosPN.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-		Me.btnCortosPN.BackgroundImage = CType(resources.GetObject("btnCortosPN.BackgroundImage"), System.Drawing.Image)
-		Me.btnCortosPN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-		Me.btnCortosPN.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.btnCortosPN.Location = New System.Drawing.Point(835, 6)
-		Me.btnCortosPN.Margin = New System.Windows.Forms.Padding(2)
-		Me.btnCortosPN.Name = "btnCortosPN"
-		Me.btnCortosPN.Size = New System.Drawing.Size(36, 37)
-		Me.btnCortosPN.TabIndex = 5470
-		Me.btnCortosPN.UseVisualStyleBackColor = True
-		Me.btnCortosPN.Visible = False
-		'
-		'btnAgregaFecha
-		'
-		Me.btnAgregaFecha.BackgroundImage = CType(resources.GetObject("btnAgregaFecha.BackgroundImage"), System.Drawing.Image)
-		Me.btnAgregaFecha.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-		Me.btnAgregaFecha.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.btnAgregaFecha.Location = New System.Drawing.Point(320, 3)
-		Me.btnAgregaFecha.Margin = New System.Windows.Forms.Padding(2)
-		Me.btnAgregaFecha.Name = "btnAgregaFecha"
-		Me.btnAgregaFecha.Size = New System.Drawing.Size(36, 37)
-		Me.btnAgregaFecha.TabIndex = 5469
-		Me.btnAgregaFecha.UseVisualStyleBackColor = True
-		Me.btnAgregaFecha.Visible = False
-		'
-		'btnexportaeficc
-		'
-		Me.btnexportaeficc.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-		Me.btnexportaeficc.BackColor = System.Drawing.Color.White
-		Me.btnexportaeficc.BackgroundImage = CType(resources.GetObject("btnexportaeficc.BackgroundImage"), System.Drawing.Image)
-		Me.btnexportaeficc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-		Me.btnexportaeficc.Location = New System.Drawing.Point(571, 12)
-		Me.btnexportaeficc.Margin = New System.Windows.Forms.Padding(2)
-		Me.btnexportaeficc.Name = "btnexportaeficc"
-		Me.btnexportaeficc.Size = New System.Drawing.Size(78, 27)
-		Me.btnexportaeficc.TabIndex = 5468
-		Me.btnexportaeficc.UseVisualStyleBackColor = False
-		Me.btnexportaeficc.Visible = False
-		'
-		'btnRefrescaGrid
-		'
-		Me.btnRefrescaGrid.BackgroundImage = CType(resources.GetObject("btnRefrescaGrid.BackgroundImage"), System.Drawing.Image)
-		Me.btnRefrescaGrid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-		Me.btnRefrescaGrid.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.btnRefrescaGrid.Location = New System.Drawing.Point(386, 6)
-		Me.btnRefrescaGrid.Margin = New System.Windows.Forms.Padding(2)
-		Me.btnRefrescaGrid.Name = "btnRefrescaGrid"
-		Me.btnRefrescaGrid.Size = New System.Drawing.Size(29, 33)
-		Me.btnRefrescaGrid.TabIndex = 5467
-		Me.btnRefrescaGrid.UseVisualStyleBackColor = True
-		Me.btnRefrescaGrid.Visible = False
-		'
-		'BtnExportarCortos
-		'
-		Me.BtnExportarCortos.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-		Me.BtnExportarCortos.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-		Me.BtnExportarCortos.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.BtnExportarCortos.Image = Global.modmlf.My.Resources.Resources.botonexport
-		Me.BtnExportarCortos.Location = New System.Drawing.Point(258, 10)
-		Me.BtnExportarCortos.Margin = New System.Windows.Forms.Padding(2)
-		Me.BtnExportarCortos.Name = "BtnExportarCortos"
-		Me.BtnExportarCortos.Size = New System.Drawing.Size(214, 41)
-		Me.BtnExportarCortos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-		Me.BtnExportarCortos.TabIndex = 5471
-		Me.BtnExportarCortos.TabStop = False
-		'
-		'btnAgregarNewElemento
-		'
-		Me.btnAgregarNewElemento.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-		Me.btnAgregarNewElemento.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-		Me.btnAgregarNewElemento.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.btnAgregarNewElemento.Image = Global.modmlf.My.Resources.Resources.BotonCorto2
-		Me.btnAgregarNewElemento.Location = New System.Drawing.Point(987, 10)
-		Me.btnAgregarNewElemento.Margin = New System.Windows.Forms.Padding(2)
-		Me.btnAgregarNewElemento.Name = "btnAgregarNewElemento"
-		Me.btnAgregarNewElemento.Size = New System.Drawing.Size(242, 45)
-		Me.btnAgregarNewElemento.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-		Me.btnAgregarNewElemento.TabIndex = 5469
-		Me.btnAgregarNewElemento.TabStop = False
-		Me.btnAgregarNewElemento.Visible = False
-		'
-		'Button4
-		'
-		Me.Button4.BackgroundImage = CType(resources.GetObject("Button4.BackgroundImage"), System.Drawing.Image)
-		Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-		Me.Button4.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.Button4.Location = New System.Drawing.Point(7, 9)
-		Me.Button4.Margin = New System.Windows.Forms.Padding(2)
-		Me.Button4.Name = "Button4"
-		Me.Button4.Size = New System.Drawing.Size(40, 35)
-		Me.Button4.TabIndex = 5468
-		Me.Button4.UseVisualStyleBackColor = True
-		'
-		'Button3
-		'
-		Me.Button3.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
-		Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-		Me.Button3.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.Button3.Location = New System.Drawing.Point(365, 11)
-		Me.Button3.Name = "Button3"
-		Me.Button3.Size = New System.Drawing.Size(32, 36)
-		Me.Button3.TabIndex = 5439
-		Me.Button3.UseVisualStyleBackColor = True
-		'
-		'Button1
-		'
-		Me.Button1.BackgroundImage = Global.modmlf.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984
-		Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-		Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.Button1.Location = New System.Drawing.Point(687, 12)
-		Me.Button1.Name = "Button1"
-		Me.Button1.Size = New System.Drawing.Size(31, 36)
-		Me.Button1.TabIndex = 5437
-		Me.Button1.UseVisualStyleBackColor = True
-		'
-		'UsuariosToolStripMenuItem
-		'
-		Me.UsuariosToolStripMenuItem.Name = "UsuariosToolStripMenuItem"
-		Me.UsuariosToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-		Me.UsuariosToolStripMenuItem.Text = "Usuarios"
-		'
-		'CerrarSesionToolStripMenuItem
-		'
-		Me.CerrarSesionToolStripMenuItem.Name = "CerrarSesionToolStripMenuItem"
-		Me.CerrarSesionToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-		Me.CerrarSesionToolStripMenuItem.Text = "Cerrar Sesion"
-		'
 		'Principal
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1529,7 +1529,9 @@ Partial Class Principal
 		Me.TabPage3.PerformLayout()
 		Me.gbFechas.ResumeLayout(False)
 		Me.gbFechas.PerformLayout()
+		CType(Me.BtnExportarCortos, System.ComponentModel.ISupportInitialize).EndInit()
 		CType(Me.dgvCortosCompletos, System.ComponentModel.ISupportInitialize).EndInit()
+		CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ContextMenuStripModificar.ResumeLayout(False)
 		Me.tabWorkOrders.ResumeLayout(False)
 		Me.CWOtab.ResumeLayout(False)
@@ -1537,8 +1539,6 @@ Partial Class Principal
 		Me.PWOTab.ResumeLayout(False)
 		Me.PWOTab.PerformLayout()
 		CType(Me.dgvPWO, System.ComponentModel.ISupportInitialize).EndInit()
-		CType(Me.BtnExportarCortos, System.ComponentModel.ISupportInitialize).EndInit()
-		CType(Me.btnAgregarNewElemento, System.ComponentModel.ISupportInitialize).EndInit()
 		Me.ResumeLayout(False)
 		Me.PerformLayout()
 

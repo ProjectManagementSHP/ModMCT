@@ -330,7 +330,7 @@ Public Class Materiales
                     Label2.Text = "Items: " & DataGridView1.Rows.Count
                 End With
                 Pintandoceldas()
-                btnExportar.Visible = If(opcion = 2 And DataGridView1.RowCount > 0, True, False)
+                btnExportar.Visible = opcion = 2 And DataGridView1.RowCount > 0
             Else
                 DataGridView1.DataSource = Nothing
                 MessageBox.Show("No hay numeros de parte para colocar cortos.")
