@@ -585,9 +585,9 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         Cursor.Current = Cursors.WaitCursor
         Try
             If LinkLabel1.Text = "Almacen" Then
-                Process.Start("\\10.17.182.22\sea-s\Picklist.exe")
+                Process.Start("\\10.17.182.22\sea-s\Picklist\setup.exe")
             ElseIf LinkLabel1.Text = "ACS" Then
-                Process.Start("\\10.17.182.22\sea-s\ACS.exe")
+                Process.Start("\\10.17.182.22\sea-s\ACS\setup.exe")
             End If
         Catch ex As Exception
             MsgBox("No se puede iniciar la aplicacion, debido a que no cuentas con los permisos requeridos, si deseas consultar en esta aplicacion, solicita los accesos necesarios, gracias")
