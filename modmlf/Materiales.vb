@@ -133,7 +133,12 @@ Public Class Materiales
                 cnn.Open()
                 muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
                 cnn.Close()
-                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet  cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "'
+and IDSort <= det.IDSort) [Time] where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort",
+"select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID 
+ cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0)
+and IDSort <= det.IDSort) [Time]
+where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
                 cmd = New SqlCommand(query2, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -141,14 +146,14 @@ Public Class Materiales
                 tabl.Load(dr)
                 cnn.Close()
                 If tabl.Rows.Count > 0 Then
-                    tAcumulado = 0
-                    Dim column As Integer = If(muestra = 1, 11, 8)
-                    For i As Integer = 0 To tabl.Rows.Count - 1
-                        tabl.Columns(column).ReadOnly = False
-                        tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
-                        tabl.Rows(i).Item(column) = tAcumulado
-                    Next
-                    tAcumulado = 0
+                    'tAcumulado = 0
+                    'Dim column As Integer = If(muestra = 1, 11, 8)
+                    'For i As Integer = 0 To tabl.Rows.Count - 1
+                    '    tabl.Columns(column).ReadOnly = False
+                    '    tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
+                    '    tabl.Rows(i).Item(column) = tAcumulado
+                    'Next
+                    'tAcumulado = 0
                     With DataGridView3
                         .DataSource = tabl
                         .AutoResizeColumns()
@@ -259,7 +264,12 @@ Public Class Materiales
                     cnn.Open()
                     muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
                     cnn.Close()
-                    query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,Tsetup,TRuntime,null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+                    query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet  cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "'
+and IDSort <= det.IDSort) [Time] where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort",
+"select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID 
+ cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0)
+and IDSort <= det.IDSort) [Time]
+where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
                     cmd = New SqlCommand(query2, cnn)
                     cmd.CommandType = CommandType.Text
                     cnn.Open()
@@ -267,14 +277,14 @@ Public Class Materiales
                     tabl.Load(dr)
                     cnn.Close()
                     If tabl.Rows.Count > 0 Then
-                        tAcumulado = 0
-                        Dim column As Integer = If(muestra = 1, 11, 8)
-                        For i As Integer = 0 To tabl.Rows.Count - 1
-                            tabl.Columns(column).ReadOnly = False
-                            tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
-                            tabl.Rows(i).Item(column) = tAcumulado
-                        Next
-                        tAcumulado = 0
+                        'tAcumulado = 0
+                        'Dim column As Integer = If(muestra = 1, 11, 8)
+                        'For i As Integer = 0 To tabl.Rows.Count - 1
+                        '    tabl.Columns(column).ReadOnly = False
+                        '    tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
+                        '    tabl.Rows(i).Item(column) = tAcumulado
+                        'Next
+                        'tAcumulado = 0
                     End If
                     With DataGridView3
                         .DataSource = tabl
@@ -374,7 +384,12 @@ Public Class Materiales
                 cnn.Open()
                 muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
                 cnn.Close()
-                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime],null as 'Acumulado' from tblWipDet where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort", "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,Tsetup,TRuntime,null as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
+                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet  cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "'
+and IDSort <= det.IDSort) [Time] where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort",
+"select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID 
+ cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0)
+and IDSort <= det.IDSort) [Time]
+where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0) order by IDSort")
                 cmd = New SqlCommand(query2, cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
@@ -382,14 +397,14 @@ Public Class Materiales
                 tabl.Load(dr)
                 cnn.Close()
                 If tabl.Rows.Count > 0 Then
-                    tAcumulado = 0
-                    Dim column As Integer = If(muestra = 1, 11, 8)
-                    For i As Integer = 0 To tabl.Rows.Count - 1
-                        tabl.Columns(column).ReadOnly = False
-                        tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
-                        tabl.Rows(i).Item(column) = tAcumulado
-                    Next
-                    tAcumulado = 0
+                    'tAcumulado = 0
+                    'Dim column As Integer = If(muestra = 1, 11, 8)
+                    'For i As Integer = 0 To tabl.Rows.Count - 1
+                    '    tabl.Columns(column).ReadOnly = False
+                    '    tAcumulado = SumVal(tabl.Rows(i).Item("Tsetup").ToString, tabl.Rows(i).Item("TRuntime").ToString, tAcumulado)
+                    '    tabl.Rows(i).Item(column) = tAcumulado
+                    'Next
+                    'tAcumulado = 0
                     With DataGridView3
                         .DataSource = tabl
                         .AutoResizeColumns()
@@ -546,38 +561,38 @@ Public Class Materiales
             Next
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("recorregrid", host, UserName)
+            EnviaCorreoFalla("recorregrid", host, UserName)
         End Try
     End Sub
     Private Function DisponibilidadApl(apl As String) As Boolean
         Try
-            Dim query As String = $"select Count(*) from tblApl where OemAplID='{apl}' and [AssignedTo]='Produccion'"
-            comando = New SqlCommand(query, conexion)
-            comando.CommandType = CommandType.Text
-            conexion.Open()
-            Return CInt(comando.ExecuteScalar) > 0
-            conexion.Close()
+            Dim query As String = $"select Count(*) from tblToolCribAplicators where AplPn='{apl}' and [AssignedTo] <> 'ALMACEN'"
+            cmd = New SqlCommand(query, cnn)
+            cmd.CommandType = CommandType.Text
+            cnn.Open()
+            Return CInt(cmd.ExecuteScalar) > 0
+            cnn.Close()
         Catch ex As Exception
-            conexion.Close()
+            cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("DisponibilidadApl", host, UserName)
+            EnviaCorreoFalla("DisponibilidadApl", host, UserName)
             Return Nothing
         Finally
             conexion.Close()
         End Try
     End Function
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Try
             If LinkLabel1.Text = "Almacen" Then
-                Process.Start("\\10.17.182.12\Test\WareHouse\Almacen\ConPeso\Almacen.exe")
+                Process.Start("\\10.17.182.22\sea-s\Picklist.exe")
             ElseIf LinkLabel1.Text = "ACS" Then
-                Process.Start("\\10.17.182.12\Test\ACS\ACS.application")
+                Process.Start("\\10.17.182.22\sea-s\ACS.exe")
             End If
         Catch ex As Exception
             MsgBox("No se puede iniciar la aplicacion, debido a que no cuentas con los permisos requeridos, si deseas consultar en esta aplicacion, solicita los accesos necesarios, gracias")
         End Try
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub DateTimePicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles DateTimePicker1.MouseDown
         If e.Button = MouseButtons.Left Then
@@ -694,7 +709,7 @@ Public Class Materiales
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("Button2_Click'Materiales'", host, UserName)
+            EnviaCorreoFalla("Button2_Click'Materiales'", host, UserName)
         End Try
     End Sub
     Function CheckMovNegative(PN As String, qty As Integer) As Boolean
@@ -715,7 +730,7 @@ Public Class Materiales
             cnn.Close()
             Return False
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("CheckMovNegative", host, UserName)
+            EnviaCorreoFalla("CheckMovNegative", host, UserName)
         End Try
     End Function
     Public Sub UpdateHoldPN(
@@ -826,7 +841,7 @@ Public Class Materiales
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("btnTerminarescaneo_Click", host, UserName)
+            EnviaCorreoFalla("btnTerminarescaneo_Click", host, UserName)
         End Try
     End Sub
     Private Sub DataGridView2_CellMouseDown(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DataGridView2.CellMouseDown
@@ -838,7 +853,7 @@ Public Class Materiales
                     FilaSeleccionada = Convert.ToString(DataGridView2.Rows(e.RowIndex).Cells(0).Value)
                 Catch ex As Exception
                     MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                    CorreoFalla.EnviaCorreoFalla("DataGridView2_CellMouseDown", host, UserName)
+                    EnviaCorreoFalla("DataGridView2_CellMouseDown", host, UserName)
                 End Try
             End If
         End If

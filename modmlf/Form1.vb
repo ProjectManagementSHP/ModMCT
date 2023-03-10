@@ -350,7 +350,7 @@ Public Class Principal
     End Sub
     Private Sub ConfigGridSolution(Grid As DataGridView)
         Try
-            If Grid IsNot Nothing Then
+            If Grid IsNot Nothing And Grid.Rows.Count > 0 Then
                 Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
                 Grid.AutoResizeColumns()
                 Grid.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
@@ -399,7 +399,7 @@ Public Class Principal
             Dim consulta As String = "SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
             (select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
             Vendor,Razon,Notas,ParoAU
-            FROM tblCortosPn WHERE Hold = 1"
+            FROM tblCortosPn WHERE (PN LIKE '[WT]%' OR (PN LIKE 'C__[0-9]%' and  PN not like 'C_[-]%')) and Hold = 1"
             cmd = New SqlCommand(consulta, cnn)
             cmd.CommandType = CommandType.Text
             cmd.CommandTimeout = 120000
@@ -434,7 +434,7 @@ Public Class Principal
             (select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
             Vendor,Razon,Notas
             FROM tblCortosPn WHERE CONVERT(date,[Fecha_Corto]) 
-            BETWEEN '{dtpBefore.Value}' AND '{dtpAfter.Value}' "
+            BETWEEN '{dtpBefore.Value}' AND '{dtpAfter.Value}' and (PN LIKE '[WT]%' OR (PN LIKE 'C__[0-9]%' and  PN not like 'C_[-]%'))"
             cmd = New SqlCommand(queryCortos, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -1494,11 +1494,7 @@ Public Class Principal
             Else
                 MsgBox($"No hay validaciones para {PN}")
                 dgvMatSinStockCompras.DataSource = tblasig
-                If opcion = 5 Then
-                    dgvMatSinStockCompras.Columns("Chk").Visible = True
-                Else
-                    dgvMatSinStockCompras.Columns("Chk").Visible = False
-                End If
+                dgvMatSinStockCompras.Columns("Chk").Visible = opcion = 5
             End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
@@ -1708,62 +1704,63 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             ' ------------------------------------------------------------------
         End If
     End Sub
-    Private Sub Pintaceldas(dgv As DataGridView)
-        If rbsolicitar.Checked = True Or rdbOnHold.Checked = True Or rbListosParaEntrar.Checked = True Then
-            For Each linea As DataGridViewRow In dgv.Rows
-                If linea.Cells(6).Value = 27 Or linea.Cells(7).Value = 27 Then
-                    linea.DefaultCellStyle.BackColor = Color.FromArgb(252, 95, 77)
-                    linea.DefaultCellStyle.ForeColor = Color.White
-                ElseIf linea.Cells(7).Value = 12 Or linea.Cells(7).Value = 14 Then
-                    linea.Cells(6).Style.BackColor = Color.FromArgb(252, 95, 77)
-                    linea.Cells(6).Style.ForeColor = Color.Black
-                    linea.Cells(6).Style.Font = New Font(Font, FontStyle.Bold)
-                    linea.Cells(7).Style.BackColor = Color.FromArgb(252, 95, 77)
-                    linea.Cells(7).Style.ForeColor = Color.Black
-                    linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
-                ElseIf linea.Cells(7).Value = 3 Or linea.Cells(7).Value = 9 Or linea.Cells(7).Value = 11 Or linea.Cells(7).Value = 13 Then
-                    linea.Cells(6).Style.BackColor = Color.LightGreen
-                    linea.Cells(6).Style.ForeColor = Color.Black
-                    linea.Cells(6).Style.Font = New Font(Font, FontStyle.Bold)
-                    linea.Cells(7).Style.BackColor = Color.LightGreen
-                    linea.Cells(7).Style.ForeColor = Color.Black
-                    linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
-                End If
-                If CBool(linea.Cells("CheckExp").Value) Then
-                    linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
-                    linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
-                End If
-            Next
-        End If
-        If (opcion = 6 Or opcion = 7) And rbListosParaEntrar.Checked Then
-            Dim t As New DataTable
-            Try
-                Dim cmdo1 As SqlCommand = New SqlCommand("select distinct CWO from tblCWO where Wsort = 20 and (PrintedSNCWO is null or PrintedSNCWO=0)", cnn)
-                cmdo1.CommandType = CommandType.Text
-                cmdo1.CommandTimeout = 120000
-                Dim data1 As SqlDataReader
-                cnn.Open()
-                data1 = cmdo1.ExecuteReader
-                t.Load(data1)
-                cnn.Close()
-                If t.Rows.Count > 0 Then
-                    If dgvWips.Rows.Count > 0 Then
-                        For i As Integer = 0 To t.Rows.Count - 1
-                            Dim comparacion = t.Rows(i).Item("CWO").ToString
-                            For a As Integer = 0 To dgvWips.Rows.Count - 1
-                                If comparacion = dgvWips.Rows(a).Cells(1).Value.ToString Then
-                                    dgvWips.Rows(a).Cells(1).Style.BackColor = Color.Pink
-                                End If
-                            Next
-                        Next
-                    End If
-                End If
-            Catch ex As Exception
-                cnn.Close()
-                EnviaCorreoFalla("CWO sin imprimir", host, UserName)
-            End Try
-        End If
-    End Sub
+    Private Pintaceldas As Action(Of DataGridView) = Function(dgv)
+                                                         If rbsolicitar.Checked Or rdbOnHold.Checked Or rbListosParaEntrar.Checked Then
+                                                             For Each linea As DataGridViewRow In dgv.Rows
+                                                                 If linea.Cells(6).Value = 27 Or linea.Cells(7).Value = 27 Then
+                                                                     linea.DefaultCellStyle.BackColor = Color.FromArgb(252, 95, 77)
+                                                                     linea.DefaultCellStyle.ForeColor = Color.White
+                                                                 ElseIf linea.Cells(7).Value = 12 Or linea.Cells(7).Value = 14 Then
+                                                                     linea.Cells(6).Style.BackColor = Color.FromArgb(252, 95, 77)
+                                                                     linea.Cells(6).Style.ForeColor = Color.Black
+                                                                     linea.Cells(6).Style.Font = New Font(Font, FontStyle.Bold)
+                                                                     linea.Cells(7).Style.BackColor = Color.FromArgb(252, 95, 77)
+                                                                     linea.Cells(7).Style.ForeColor = Color.Black
+                                                                     linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
+                                                                 ElseIf linea.Cells(7).Value = 3 Or linea.Cells(7).Value = 9 Or linea.Cells(7).Value = 11 Or linea.Cells(7).Value = 13 Then
+                                                                     linea.Cells(6).Style.BackColor = Color.LightGreen
+                                                                     linea.Cells(6).Style.ForeColor = Color.Black
+                                                                     linea.Cells(6).Style.Font = New Font(Font, FontStyle.Bold)
+                                                                     linea.Cells(7).Style.BackColor = Color.LightGreen
+                                                                     linea.Cells(7).Style.ForeColor = Color.Black
+                                                                     linea.Cells(7).Style.Font = New Font(Font, FontStyle.Bold)
+                                                                 End If
+                                                                 If CBool(linea.Cells("CheckExp").Value) Then
+                                                                     linea.DefaultCellStyle.BackColor = Color.FromArgb(208, 206, 206)
+                                                                     linea.DefaultCellStyle.ForeColor = Color.FromArgb(242, 44, 44)
+                                                                 End If
+                                                             Next
+                                                         End If
+                                                         If (opcion = 6 Or opcion = 7) And rbListosParaEntrar.Checked Then
+                                                             Dim t As New DataTable
+                                                             Try
+                                                                 Dim cmdo1 As SqlCommand = New SqlCommand("select distinct CWO from tblCWO where Wsort = 20 and (PrintedSNCWO is null or PrintedSNCWO=0)", cnn)
+                                                                 cmdo1.CommandType = CommandType.Text
+                                                                 cmdo1.CommandTimeout = 120000
+                                                                 Dim data1 As SqlDataReader
+                                                                 cnn.Open()
+                                                                 data1 = cmdo1.ExecuteReader
+                                                                 t.Load(data1)
+                                                                 cnn.Close()
+                                                                 If t.Rows.Count > 0 Then
+                                                                     If dgvWips.Rows.Count > 0 Then
+                                                                         For i As Integer = 0 To t.Rows.Count - 1
+                                                                             Dim comparacion = t.Rows(i).Item("CWO").ToString
+                                                                             For a As Integer = 0 To dgvWips.Rows.Count - 1
+                                                                                 If comparacion = dgvWips.Rows(a).Cells(1).Value.ToString Then
+                                                                                     dgvWips.Rows(a).Cells(1).Style.BackColor = Color.Pink
+                                                                                 End If
+                                                                             Next
+                                                                         Next
+                                                                     End If
+                                                                 End If
+                                                             Catch ex As Exception
+                                                                 cnn.Close()
+                                                                 EnviaCorreoFalla("CWO sin imprimir", host, UserName)
+                                                             End Try
+                                                         End If
+                                                         Return Nothing
+                                                     End Function
     Private Sub ToolStripTextBox1_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox1.Click
         If WIP <> "" And CWO <> "" Then
             Dim ver As Char = CWO(0)
@@ -1831,7 +1828,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             ImprimirReporteToolStripMenuItem.Visible = False
                         End If
-                    ElseIf rbEmpezadosyDetenidos.Checked = True Then
+                    ElseIf rbEmpezadosyDetenidos.Checked Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
                             ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
                             ToolStripTextBox1.Visible = False
@@ -1847,7 +1844,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 ElseIf opcion = 6 Or opcion = 7 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
                         ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
-                        If rbsolicitar.Checked = True Then
+                        If rbsolicitar.Checked Then
                             ToolStripTextBox1.Visible = True
                             ToolStripMenuItem7.Visible = False
                             ToolStripMenuItem8.Visible = False
@@ -1855,7 +1852,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = False
                             ToolStripMenuItem15.Visible = False
-                        ElseIf rbSolicitado.Checked = True Then
+                        ElseIf rbSolicitado.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = True
@@ -1863,7 +1860,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
-                        ElseIf rbYaempezados.Checked = True Then
+                        ElseIf rbYaempezados.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = False
@@ -1871,7 +1868,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = True
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
-                        ElseIf rbEmpezadosyDetenidos.Checked = True Then
+                        ElseIf rbEmpezadosyDetenidos.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = False
                             ToolStripMenuItem4.Visible = True
@@ -1879,7 +1876,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = True
                             ToolStripMenuItem15.Visible = True
-                        ElseIf rbListosParaEntrar.Checked = True Then
+                        ElseIf rbListosParaEntrar.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = True
@@ -1887,7 +1884,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
-                        ElseIf rdbOnHold.Checked = True Then
+                        ElseIf rdbOnHold.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = True
@@ -1895,8 +1892,8 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
-                            ImprimirReporteToolStripMenuItem.Visible = False
                         End If
+                        ImprimirReporteToolStripMenuItem.Visible = False
                     End If
                 ElseIf opcion = 2 Then
                     If (rbSolicitado.Checked Or rdbOnHold.Checked) And dgvWips.Rows.Count > 0 Then
@@ -1988,7 +1985,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 ElseIf opcion = 8 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
                         ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
-                        If rbsolicitar.Checked = True Then
+                        If rbsolicitar.Checked Then
                             ToolStripTextBox1.Visible = True
                             ToolStripMenuItem7.Visible = False
                             ToolStripMenuItem8.Visible = False
@@ -1997,7 +1994,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem4.Visible = False
                             ToolStripMenuItem15.Visible = False
                             ImprimirReporteToolStripMenuItem.Visible = True
-                        ElseIf rbSolicitado.Checked = True Then
+                        ElseIf rbSolicitado.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = True
@@ -2006,7 +2003,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = True
-                        ElseIf rbYaempezados.Checked = True Then
+                        ElseIf rbYaempezados.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = False
@@ -2015,7 +2012,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = True
-                        ElseIf rbEmpezadosyDetenidos.Checked = True Then
+                        ElseIf rbEmpezadosyDetenidos.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = False
                             ToolStripMenuItem4.Visible = True
@@ -2024,7 +2021,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem9.Visible = True
                             ToolStripMenuItem15.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = True
-                        ElseIf rbListosParaEntrar.Checked = True Then
+                        ElseIf rbListosParaEntrar.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = True
@@ -2033,7 +2030,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = True
-                        ElseIf rdbOnHold.Checked = True Then
+                        ElseIf rdbOnHold.Checked Then
                             ToolStripTextBox1.Visible = False
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = True
@@ -3396,6 +3393,8 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             End If
             conexMensajeCortos.Close()
         Catch ex As Exception
+            MensajePN.Close()
+            MensajePN.Dispose()
             conexMensajeCortos.Close()
             cnn.Close()
         End Try
@@ -3480,7 +3479,7 @@ and a.Balance > 0)"
                     MaqNew = "PUR"
                 End If
                 sort = New AutomaticSort(MaqNew)
-                query = $"update tblPWO set Cell='{MaqNew}',Notes='{NotesXCambio}',Id={sort.GetSortPWO().ToString} where PWO='{CWOAceptChange}'"
+                query = $"update tblPWO set Cell='{MaqNew}',Notes='{NotesXCambio}',Id={sort.GetSortPWO()} where PWO='{CWOAceptChange}'"
             End If
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
