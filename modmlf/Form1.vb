@@ -2124,7 +2124,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = True
-                        ElseIf RdbSearch.Checked And (opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8) AndAlso e.Button = System.Windows.Forms.MouseButtons.Right Then
+                        ElseIf RdbSearch.Checked AndAlso e.Button = System.Windows.Forms.MouseButtons.Right Then
                             ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
                             If sort = 3 Then
                                 'Solicitar, cambio maq, desviacion
@@ -2702,7 +2702,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                         queryWO += $" Where c.[Status] = 'OPEN' and c.CWO like '%{filter}' order by c.Maq desc,c.Id asc,w.WIP"
                     End If
                 Else
-                    queryWO += $" Where c.[Status] = 'OPEN' and ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.MP > 0 and a.Corte = 0 and c.wSort = '3' and c.dateSolicitud is null and c.PWO like '%{filter}' order by c.Cell desc,c.Id asc,a.WIP"
+                    queryWO += $" Where c.[Status] = 'OPEN' and ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.MP > 0 and a.Corte = 0 and c.PWO like '%{filter}' order by c.Cell desc,c.Id asc,a.WIP"
                 End If
 
                 Llenagrid(If(queryWO Like "*CWO*", queryWO, ""), If(queryWO Like "*PWO*", queryWO, ""))
