@@ -241,7 +241,7 @@ Public Class Principal
         ChargeInfoCortos()
         Timer2.Enabled = True
         Timer2.Interval = 60000
-        'AutoUpdate()
+        AutoUpdate()
     End Sub
     'Private MouseMovementsUser As Action = Function()
     '                                           Me.Controls.OfType(Of Control)().ToList().ForEach(Function(o)
@@ -302,7 +302,7 @@ Public Class Principal
         Dim CWO As New DataTable
         Dim PWO As New DataTable
         Try
-            If Not opcion = 8 Then
+            If Not opcion = 8 AndAlso CWOq <> "" Then
                 cmd = New SqlCommand(CWOq, cnn)
                 cmd.CommandType = CommandType.Text
                 cmd.CommandTimeout = 600000
@@ -312,7 +312,7 @@ Public Class Principal
                 edo = cnn.State.ToString
                 If edo = "Open" Then cnn.Close()
             End If
-            If opcion <> 1 AndAlso opcion <> 4 AndAlso opcion <> 6 AndAlso opcion <> 7 Then
+            If opcion <> 1 AndAlso opcion <> 4 AndAlso opcion <> 6 AndAlso opcion <> 7 AndAlso PWOq <> "" Then
                 cmd = New SqlCommand(PWOq, cnn)
                 cmd.CommandType = CommandType.Text
                 cmd.CommandTimeout = 600000
@@ -1705,7 +1705,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         End If
     End Sub
     Private Pintaceldas As Action(Of DataGridView) = Function(dgv)
-                                                         If rbsolicitar.Checked Or rdbOnHold.Checked Or rbListosParaEntrar.Checked Then
+                                                         If rbsolicitar.Checked Or rdbOnHold.Checked Or rbListosParaEntrar.Checked Or RdbSearch.Checked Then
                                                              For Each linea As DataGridViewRow In dgv.Rows
                                                                  If linea.Cells(6).Value = 27 Or linea.Cells(7).Value = 27 Then
                                                                      linea.DefaultCellStyle.BackColor = Color.FromArgb(252, 95, 77)
@@ -1840,6 +1840,39 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             ImprimirReporteToolStripMenuItem.Visible = False
                         End If
+                    ElseIf RdbSearch.Checked And (opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8) AndAlso e.Button = System.Windows.Forms.MouseButtons.Right Then
+                        ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                        If sort = 3 Then
+                            'Solicitar, cambio maq, desviacion
+                            ToolStripTextBox1.Visible = True
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = False
+                            ToolStripMenuItem7.Visible = False
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = False
+                            ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                        ElseIf sort = 20 Or sort = 12 Or sort = 25 Then
+                            'Cambio maq, desviar, cambiar orden, materiales asignados, detener
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = sort = 25
+                            ToolStripMenuItem9.Visible = False
+                            ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                        ElseIf sort = 22 Or sort = 24 Then
+                            'Cambio maq, desviar, cambiar orden, materiales asignados,volver al proceso
+                            ToolStripTextBox1.Visible = False
+                            ToolStripMenuItem2.Visible = True
+                            ToolStripMenuItem4.Visible = True
+                            ToolStripMenuItem7.Visible = True
+                            ToolStripMenuItem8.Visible = False
+                            ToolStripMenuItem9.Visible = True
+                            ToolStripMenuItem15.Visible = True
+                            ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                        End If
                     End If
                 ElseIf opcion = 6 Or opcion = 7 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -1892,6 +1925,39 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem8.Visible = False
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
+                        ElseIf RdbSearch.Checked And (opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8) AndAlso e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                            If sort = 3 Then
+                                'Solicitar, cambio maq, desviacion
+                                ToolStripTextBox1.Visible = True
+                                ToolStripMenuItem2.Visible = True
+                                ToolStripMenuItem4.Visible = False
+                                ToolStripMenuItem7.Visible = False
+                                ToolStripMenuItem8.Visible = False
+                                ToolStripMenuItem9.Visible = False
+                                ToolStripMenuItem15.Visible = False
+                                ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                            ElseIf sort = 20 Or sort = 12 Or sort = 25 Then
+                                'Cambio maq, desviar, cambiar orden, materiales asignados, detener
+                                ToolStripTextBox1.Visible = False
+                                ToolStripMenuItem2.Visible = True
+                                ToolStripMenuItem4.Visible = True
+                                ToolStripMenuItem7.Visible = True
+                                ToolStripMenuItem8.Visible = sort = 25
+                                ToolStripMenuItem9.Visible = False
+                                ToolStripMenuItem15.Visible = True
+                                ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                            ElseIf sort = 22 Or sort = 24 Then
+                                'Cambio maq, desviar, cambiar orden, materiales asignados,volver al proceso
+                                ToolStripTextBox1.Visible = False
+                                ToolStripMenuItem2.Visible = True
+                                ToolStripMenuItem4.Visible = True
+                                ToolStripMenuItem7.Visible = True
+                                ToolStripMenuItem8.Visible = False
+                                ToolStripMenuItem9.Visible = True
+                                ToolStripMenuItem15.Visible = True
+                                ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                            End If
                         End If
                         ImprimirReporteToolStripMenuItem.Visible = False
                     End If
@@ -1940,9 +2006,28 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             DesviarTerminalToolStripMenuItem.Visible = False
                             ImprimirReporteToolStripMenuItem.Visible = False
                         End If
+                    ElseIf RdbSearch.Checked Then
+                        If e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
+                            ToolStripTextBox5.Visible = True
+                            AsignarMaterialToolStripMenuItem.Visible = True
+                            If sort = 12 Then
+                                ToolStripMenuItem12.Visible = True
+                                ToolStripMenuItem13.Visible = False
+                            ElseIf sort = 14 Or sort = 3 Then
+                                ToolStripMenuItem13.Visible = False
+                                ToolStripMenuItem12.Visible = False
+                            ElseIf sort = 20 Or sort = 11 Or sort = 13 Or sort = 25 Then
+                                ToolStripMenuItem12.Visible = False
+                                ToolStripMenuItem13.Visible = True
+                            End If
+                            ToolStripTextBox6.Visible = False
+                            ToolStripTextBox7.Visible = False
+                            DesviarTerminalToolStripMenuItem.Visible = False
+                        End If
                     End If
                 ElseIf opcion = 3 And sort <> 27 Then
-                    If (rbListosParaEntrar.Checked Or rbYaempezados.Checked) And dgvWips.Rows.Count > 0 Then
+                    If (rbListosParaEntrar.Checked Or rbYaempezados.Checked Or RdbSearch.Checked) And dgv.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
                             ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
                             ToolStripMenuItem14.Visible = False
@@ -1967,7 +2052,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     End If
                 ElseIf opcion = 5 Then
                     'If rdbOnHold.Checked = True And 
-                    If dgvWips.Rows.Count > 0 Then
+                    If dgv.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
                             ContextMenuVerMW.Show(Cursor.Position.X, Cursor.Position.Y)
                             ToolStripMenuItem14.Visible = False
@@ -2039,6 +2124,39 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = True
+                        ElseIf RdbSearch.Checked And (opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8) AndAlso e.Button = System.Windows.Forms.MouseButtons.Right Then
+                            ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
+                            If sort = 3 Then
+                                'Solicitar, cambio maq, desviacion
+                                ToolStripTextBox1.Visible = True
+                                ToolStripMenuItem2.Visible = True
+                                ToolStripMenuItem4.Visible = False
+                                ToolStripMenuItem7.Visible = False
+                                ToolStripMenuItem8.Visible = False
+                                ToolStripMenuItem9.Visible = False
+                                ToolStripMenuItem15.Visible = False
+                                ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                            ElseIf sort = 20 Or sort = 12 Or sort = 25 Then
+                                'Cambio maq, desviar, cambiar orden, materiales asignados, detener
+                                ToolStripTextBox1.Visible = False
+                                ToolStripMenuItem2.Visible = True
+                                ToolStripMenuItem4.Visible = True
+                                ToolStripMenuItem7.Visible = True
+                                ToolStripMenuItem8.Visible = True
+                                ToolStripMenuItem9.Visible = False
+                                ToolStripMenuItem15.Visible = True
+                                ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                            ElseIf sort = 22 Or sort = 24 Then
+                                'Cambio maq, desviar, cambiar orden, materiales asignados,volver al proceso
+                                ToolStripTextBox1.Visible = False
+                                ToolStripMenuItem2.Visible = True
+                                ToolStripMenuItem4.Visible = True
+                                ToolStripMenuItem7.Visible = True
+                                ToolStripMenuItem8.Visible = False
+                                ToolStripMenuItem9.Visible = True
+                                ToolStripMenuItem15.Visible = True
+                                ImprimirReporteToolStripMenuItem.Visible = opcion = 8
+                            End If
                         End If
                     End If
                 End If
@@ -2559,6 +2677,44 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     Private Sub dgvWips_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvWips.ColumnHeaderMouseClick
         Pintaceldas(dgvWips)
     End Sub
+    Private Sub SearchWO(filter As String)
+        Try
+            Dim queryWO As String = ""
+            If tabWorkOrders.SelectedIndex = 0 Then
+
+                If opcion = 8 Then
+                    queryWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when a.ExCs is not null and a.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+                Else
+                    queryWO = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
+                End If
+
+            ElseIf tabWorkOrders.SelectedIndex = 1 Then
+                queryWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when a.ExCs is not null and a.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
+            End If
+
+            If queryWO <> "" Then
+                If queryWO Like "*CWO*" Then
+                    If opcion = 1 Or opcion = 6 Then
+                        queryWO += $" Where c.[Status] = 'OPEN' and (w.KindOfAU not like '[XP]%') and c.Maq > 0 and c.CWO like '%{filter}' order by c.Maq desc,c.Id asc,w.WIP"
+                    ElseIf opcion = 4 Or opcion = 7 Then
+                        queryWO += $" Where c.[Status] = 'OPEN' and (w.KindOfAU like '[XP]%') and c.Maq in (0,5) and c.CWO like '%{filter}' order by c.Maq desc,c.Id asc,w.WIP"
+                    Else
+                        queryWO += $" Where c.[Status] = 'OPEN' and c.CWO like '%{filter}' order by c.Maq desc,c.Id asc,w.WIP"
+                    End If
+                Else
+                    queryWO += $" Where c.[Status] = 'OPEN' and ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.MP > 0 and a.Corte = 0 and c.wSort = '3' and c.dateSolicitud is null and c.PWO like '%{filter}' order by c.Cell desc,c.Id asc,a.WIP"
+                End If
+
+                Llenagrid(If(queryWO Like "*CWO*", queryWO, ""), If(queryWO Like "*PWO*", queryWO, ""))
+
+            End If
+
+            TxtCWOorPWOSearching.Text = ""
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
     Public Sub Filtros(a As Integer)
         Dim query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
         Dim queryPWO = "select distinct a.WIP,c.PWO,c.Id [Orden Prensa],c.Cell,a.AU,a.Rev,a.wSort [wSort WIP],c.WSort [wSort PWO],a.Qty,a.KindOfAU,a.Customer, ETotalTime [Tiempo Total],a.IT,a.PR,FORMAT(a.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(a.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,case when a.ExCs is not null and a.ExMateriales is not null then 1 else 0 end [CheckExp] from tblWIP a inner join tblWipDet b on a.WIP = b.WIP inner join tblPWO c on c.PWO=b.PWOA or c.PWO=b.PWOB"
@@ -2646,6 +2802,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End Try
     End Sub
     Private Sub FilterData(aOptionFill As Integer)
+        TxtCWOorPWOSearching.Visible = False
         Filtros(aOptionFill)
         lblwsortasig.Text = "-"
         lblWIPorCWO.Text = "-"
@@ -2685,24 +2842,24 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         End If
         Cursor.Current = Cursors.Default
     End Sub
-    Private Function wsorts(w As Integer) As String
-        Try
-            query = "select ISNULL(Definition,'Sin categoria') from tblWsorts where Wsort=@w"
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add("@w", SqlDbType.NVarChar).Value = w
-            cnn.Open()
-            Return CStr(cmd.ExecuteScalar)
-            cnn.Close()
-        Catch ex As Exception
-            Return Nothing
-            cnn.Close()
-            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("wsorts", host, UserName)
-        Finally
-            cnn.Close()
-        End Try
-    End Function
+    'Private Function wsorts(w As Integer) As String
+    '    Try
+    '        query = "select ISNULL(Definition,'Sin categoria') from tblWsorts where Wsort=@w"
+    '        cmd = New SqlCommand(query, cnn)
+    '        cmd.CommandType = CommandType.Text
+    '        cmd.Parameters.Add("@w", SqlDbType.NVarChar).Value = w
+    '        cnn.Open()
+    '        Return CStr(cmd.ExecuteScalar)
+    '        cnn.Close()
+    '    Catch ex As Exception
+    '        Return Nothing
+    '        cnn.Close()
+    '        MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
+    '        EnviaCorreoFalla("wsorts", host, UserName)
+    '    Finally
+    '        cnn.Close()
+    '    End Try
+    'End Function
     Public Sub notesWIPandCWOquitaOnHoldde26(notes As String, cwo As String, wip As String)
         Try
             query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@note,GETDATE(),'MLF')"
@@ -3002,11 +3159,12 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         If Not rdx = -1 Or cdx = -1 Then
             cabecera = Me.dgvWips.Columns(cdx).HeaderText
         End If
-        If cabecera = "wSort WIP" Then
-            lblwsortasig.Text = wsorts(dgvWips.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
-        ElseIf cabecera = "wSort CWO" Then
-            lblwsortasig.Text = wsorts(dgvWips.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
-        ElseIf cabecera = "CWO" Then
+        'If cabecera = "wSort WIP" Then
+        '    lblwsortasig.Text = wsorts(dgvWips.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
+        'ElseIf cabecera = "wSort CWO" Then
+        '    lblwsortasig.Text = wsorts(dgvWips.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
+        'Else
+        If cabecera = "CWO" Then
             llenanotas(dgvWips.Rows(e.RowIndex).Cells("CWO").Value.ToString, 1)
             lblWIPorCWO.Text = dgvWips.Rows(e.RowIndex).Cells("CWO").Value.ToString
             lblWIP.Text = dgvWips.Rows(e.RowIndex).Cells("WIP").Value.ToString
@@ -4146,11 +4304,12 @@ and a.Balance > 0)"
         If Not rdx = -1 Or cdx = -1 Then
             cabecera = dgvPWO.Columns(cdx).HeaderText
         End If
-        If cabecera = "wSort WIP" Then
-            lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
-        ElseIf cabecera = "wSort PWO" Then
-            lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort PWO").Value.ToString)
-        ElseIf cabecera = "PWO" Then
+        'If cabecera = "wSort WIP" Then
+        '    lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort WIP").Value.ToString)
+        'ElseIf cabecera = "wSort PWO" Then
+        '    lblwsortasig.Text = wsorts(dgvPWO.Rows(e.RowIndex).Cells("wSort PWO").Value.ToString)
+        'Else
+        If cabecera = "PWO" Then
             llenanotas(dgvPWO.Rows(e.RowIndex).Cells("PWO").Value.ToString, 1)
             lblWIPorCWO.Text = dgvPWO.Rows(e.RowIndex).Cells("PWO").Value.ToString
             lblWIP.Text = dgvPWO.Rows(e.RowIndex).Cells("WIP").Value.ToString
@@ -4256,6 +4415,21 @@ and a.Balance > 0)"
         Login.Visible = True
         opcion = 0
         Close()
+    End Sub
+    Private Sub TxtCWOorPWOSearching_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtCWOorPWOSearching.KeyPress
+        If e.KeyChar = Chr(13) And TxtCWOorPWOSearching.Text <> "" Then
+            SearchWO(TxtCWOorPWOSearching.Text)
+        End If
+    End Sub
+    Private Sub RdbSearch_CheckedChanged(sender As Object, e As EventArgs) Handles RdbSearch.CheckedChanged
+        If RdbSearch.Checked Then
+            TxtCWOorPWOSearching.Visible = RdbSearch.Checked
+            rdbOnHold.Checked = Not RdbSearch.Checked
+            rbEmpezadosyDetenidos.Checked = Not RdbSearch.Checked
+            rbYaempezados.Checked = Not RdbSearch.Checked
+            rbListosParaEntrar.Checked = Not RdbSearch.Checked
+            rbsolicitar.Checked = Not RdbSearch.Checked
+        End If
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If ApplicationDeployment.IsNetworkDeployed Then
