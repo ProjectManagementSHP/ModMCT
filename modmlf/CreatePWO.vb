@@ -3,6 +3,7 @@
 Public Class CreatePWO
     Dim AU As Integer = 0
     Dim InfoTablas As New List(Of ChargeInfo)
+    Dim PartNumber As String = ""
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Cursor.Current = Cursors.WaitCursor
         GetDataByUser()
@@ -234,6 +235,7 @@ selected: " + InfoTablas.Count.ToString
                         Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
                         FillListInfoTablas(PN, last + aTable.Rows.Count, Cell, Balance)
                         SumQtyAndTest(tbAux)
+                        If dgvDetalleTerminales.Rows.Count - 1 >= 0 Then dgvDetalleTerminales.FirstDisplayedScrollingRowIndex = dgvDetalleTerminales.Rows.Count - 1
                     End If
                 Else
                     With dgvDetalleTerminales
@@ -245,6 +247,7 @@ selected: " + InfoTablas.Count.ToString
                         .ClearSelection()
                         FillListInfoTablas(PN, aTable.Rows.Count, Cell, Balance)
                         SumQtyAndTest(aTable)
+                        If .Rows.Count - 1 >= 0 Then .FirstDisplayedScrollingRowIndex = .Rows.Count - 1
                     End With
                 End If
             Else
@@ -292,17 +295,10 @@ selected: " + InfoTablas.Count.ToString
                                                                              End Function
     Private SumQtyAndTest As Action(Of DataTable) = Function(a)
                                                         Try
-                                                            Dim Qty = 0
                                                             Dim Test = 0
                                                             Dim objT = a.AsEnumerable()
-                                                            InfoTablas.ForEach(Function(oPn)
-                                                                                   Qty += objT.Where(Function(o) o.Item("TermA").Equals(oPn.PN)).[Select](Function(o) o.Item("TABalance")).Sum(Function(o) CInt(o.ToString)) '(From row In a.AsEnumerable() Select row("TABalance")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                                                   Qty += objT.Where(Function(o) o.Item("TermB").Equals(oPn.PN)).[Select](Function(o) o.Item("TBBalance")).Sum(Function(o) CInt(o.ToString)) '(From row In a.AsEnumerable() Select row("TBBalance")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                                                   Return Nothing
-                                                                               End Function
-                                                                   )
                                                             Test = (From row In a.AsEnumerable() Select row("Test")).ToList().Sum(Function(i) CInt(i.ToString()))
-                                                            Label3.Text = Qty.ToString
+                                                            Label3.Text = InfoTablas.Sum(Function(o) o.Balance)
                                                             Label4.Text = Test.ToString
                                                         Catch ex As Exception
                                                             MessageBox.Show(ex.ToString)
@@ -427,6 +423,7 @@ selected: " + InfoTablas.Count.ToString
                     If Not resp = 6 Then
                         dgvDetalleTerminales.DataSource = Nothing
                         dgvPNTermsProcess.DataSource = Nothing
+                        dgvPNTermsProcess.ClearSelection()
                         InfoTablas.Clear()
                         Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
                         Label8.Text = "Number of terminals 
@@ -441,32 +438,90 @@ selected: " + InfoTablas.Count.ToString
     End Sub
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         'Eliminar ultima terminal seleccionada
+        Cursor.Current = Cursors.WaitCursor
+        Dim changesInGrid As Boolean = False
         Dim dt As New DataTable
-        dt = (DirectCast(dgvDetalleTerminales.DataSource, DataTable))
-        Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
-        InfoTablas.RemoveAt(InfoTablas.FindIndex(Function(d) d.Rows.Equals(last)))
-        last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
-        For i = 0 To dt.Rows.Count - 1
-            If i >= last Then
-                dt.Rows(i).Delete()
-            End If
-        Next
-        dt.AcceptChanges()
-        With dgvDetalleTerminales
-            .DataSource = Nothing
-            .DataSource = dt
-            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-            .AutoResizeColumns()
-            .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .ClearSelection()
-            SumQtyAndTest(dt)
-        End With
+        dt = DirectCast(dgvDetalleTerminales.DataSource, DataTable)
+        Dim countLastRow As Integer = 0
+
+        Dim CheckDt As Func(Of String, Integer) = Function(PnItem)
+                                                      For i = 0 To dt.Rows.Count - 1
+                                                          If (dt.Rows(i).Item("TermA").ToString = PnItem And dt.Rows(i).Item("MaqA").ToString = "MM") Or (dt.Rows(i).Item("TermB").ToString = PnItem And dt.Rows(i).Item("MaqB").ToString = "MM") Then
+                                                              countLastRow += 1
+                                                          End If
+                                                      Next
+                                                      Return countLastRow
+                                                  End Function
+        Dim FillGrid As Action(Of DataTable) = Function(dtObj)
+                                                   With dgvDetalleTerminales
+                                                       .DataSource = Nothing
+                                                       .DataSource = dtObj
+                                                       .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                                                       .AutoResizeColumns()
+                                                       .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                                                       .ClearSelection()
+                                                       If .Rows.Count - 1 >= 0 Then .FirstDisplayedScrollingRowIndex = .Rows.Count - 1
+                                                   End With
+                                                   Return Nothing
+                                               End Function
+
+        If PartNumber = "" Then
+            Dim last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
+            InfoTablas.RemoveAt(InfoTablas.FindIndex(Function(d) d.Rows.Equals(last)))
+            last = (From d In InfoTablas Order By d.Rows Descending Select d.Rows).First()
+            For i = 0 To dt.Rows.Count - 1
+                If i >= last Then
+                    dt.Rows(i).Delete()
+                End If
+            Next
+            dt.AcceptChanges()
+        Else
+            dt.Clear()
+            dt.AcceptChanges()
+            InfoTablas.RemoveAt(InfoTablas.FindIndex(Function(d) d.PN.Equals(PartNumber)))
+            Dim interactionCount As Integer = 0
+            InfoTablas.ForEach(Function(Term)
+                                   Dim aConsulta As String = $"select AU,WIP,Wire,TermA,TABalance,TermB,TBBalance,CONVERT(float,ROUND(CAST(((case when TermA = '{Term.PN}' and MaqA='MM' then TABalance else 0 end + case when TermB = '{Term.PN}' and MaqB='MM' then TBBalance else 0 end) * 7) AS DECIMAL(18,0)) / 60,2,1)) [Test],'{Term.Cell}' [Celda],WireID,MaqA,MaqB from tblWipDet" &
+                                                                 $" where ((TermA = '{Term.PN}' and MaqA='MM') or (TermB='{Term.PN}' and MaqB='MM')) and" &
+                                                                 $" WIP in (select WIP from tblWIP where Status='OPEN' and MP > 0 and Corte = 0 and wSort >= 30 {If(AU = 0, " ", $" and AU={AU}")}) 
+                                                                 and ((PWOA is null and MaqA='MM') or (PWOB is null and MaqB='MM'))" &
+                                                                 "order by IDSort asc"
+                                   Dim cmd As SqlCommand = New SqlCommand(aConsulta, cnn)
+                                   Dim aTable As DataTable = New DataTable, tbAux As DataTable = New DataTable
+                                   Dim dr As SqlDataReader
+                                   cnn.Open()
+                                   dr = cmd.ExecuteReader
+                                   aTable.Load(dr)
+                                   cnn.Close()
+                                   If aTable.Rows.Count > 0 Then
+                                       If dt.Rows.Count > 0 Then
+                                           dt.Merge(aTable, True, MissingSchemaAction.AddWithKey)
+                                       Else
+                                           dt = aTable.Copy()
+                                       End If
+                                       interactionCount += 1
+                                   End If
+                                   Return Nothing
+                               End Function)
+
+            InfoTablas.ForEach(Function(item)
+                                   item.Rows = CheckDt(item.PN)
+                                   Return Nothing
+                               End Function)
+
+            PartNumber = ""
+        End If
+
+        FillGrid(dt)
+        SumQtyAndTest(dt)
+
         DisableButton()
         FillColorGrid()
         ChargeSpecsTerms()
         Label5.Text = "Records: " + dgvDetalleTerminales.Rows.Count.ToString
         Label8.Text = "Number of terminals 
 selected: " + InfoTablas.Count.ToString
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click 'Create PWO
         Cursor.Current = Cursors.WaitCursor
@@ -543,6 +598,13 @@ selected: " + InfoTablas.Count.ToString
         End If
         If Encabezado = "Term" Or Encabezado = "Celda" Then
             Cursor.Current = Cursors.Default
+        End If
+    End Sub
+    Private Sub dgvPNTermsProcess_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPNTermsProcess.CellDoubleClick
+        If e.RowIndex >= 0 Then
+            PartNumber = dgvPNTermsProcess.Rows(e.RowIndex).Cells(0).Value.ToString
+            dgvPNTermsProcess.Rows(e.RowIndex).Selected = True
+            Button3.Visible = True
         End If
     End Sub
 End Class

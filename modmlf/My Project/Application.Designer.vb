@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.modmlf.Login
+            Me.MainForm = Global.modmlf.CreatePWO
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
