@@ -399,7 +399,7 @@ Public Class Principal
             Dim consulta As String = "SELECT PN [Component PN],[Description],Fecha_Corto [Fecha Corto],Aus_afectados [AUs afectados], Cliente, AU_Qty [AU Qty], AU_Date [AU Date],
             (select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
             Vendor,Razon,Notas,ParoAU
-            FROM tblCortosPn WHERE (PN LIKE '[WT]%' OR (PN LIKE 'C__[0-9]%' and  PN not like 'C_[-]%')) and Hold = 1"
+            FROM tblCortosPn WHERE (PN LIKE '[WT]%' OR ((PN LIKE 'C[0-9]%' and LEN(PN) <= 4) and  PN not like '[BC]_[-]%')) and Hold = 1"
             cmd = New SqlCommand(consulta, cnn)
             cmd.CommandType = CommandType.Text
             cmd.CommandTimeout = 120000
@@ -434,7 +434,7 @@ Public Class Principal
             (select IsNull(SUM(CONVERT(int,Balance)),0) from tblItemsTags where PN=tblCortosPn.PN and Status <> 'CLOSE') [O.H],ETA,QtyPN [Qty PN],PO_Asignada [PO Asignada],
             Vendor,Razon,Notas
             FROM tblCortosPn WHERE CONVERT(date,[Fecha_Corto]) 
-            BETWEEN '{dtpBefore.Value}' AND '{dtpAfter.Value}' and (PN LIKE '[WT]%' OR (PN LIKE 'C__[0-9]%' and  PN not like 'C_[-]%'))"
+            BETWEEN '{dtpBefore.Value}' AND '{dtpAfter.Value}' and (PN LIKE '[WT]%' OR ((PN LIKE 'C[0-9]%' and LEN(PN) <= 4) and  PN not like '[BC]_[-]%')) and Hold = 1"
             cmd = New SqlCommand(queryCortos, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -3718,7 +3718,7 @@ and a.Balance > 0)"
     Sub GetMaqsActive(OptionWorkOrder As Boolean)
         Try
             CambioMaquina.ComboBox1.Items.Clear()
-            Dim consulta As String = If(OptionWorkOrder, "Select Maq from tblMaqRates where Active = 1 order by CONVERT(int,Maq) asc", "select distinct Celda from tblToolCribAplicators where Celda <> 'NO S/N'")
+            Dim consulta As String = If(OptionWorkOrder, "Select Maq from tblMaqRates where Active = 1 order by CONVERT(int,Maq) asc", "select distinct Celda from tblToolCribAplicators where Celda not in ('NO S/N','virtual')")
             cmd = New SqlCommand(consulta, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -3834,7 +3834,6 @@ and a.Balance > 0)"
     Private Sub ToolStripMenuItem10_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem10.Click 'Graficas
         Cursor.Current = Cursors.WaitCursor
         Graficas.Show()
-        Me.Hide()
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem11.Click 'Hora X Hora
