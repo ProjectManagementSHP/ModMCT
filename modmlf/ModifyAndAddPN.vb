@@ -40,7 +40,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
             If txbNewPN.Text = "" And dgvCortosCompletos.RowCount = 0 Then
                 MessageBox.Show("Antes de continuar, favor de escribir un numero de parte y rellenar los campos.")
             Else
-                If txbNotasNew.Text = "" And dtpAgregando.Value = "2021-01-01" And CheckWips = False Then
+                If txbNotasNew.Text = "" And dtpAgregando.Value = "2021-01-01" And Not CheckPn Then
                     MessageBox.Show("Debe colocar fecha, nota y seleccionar al menos un WIP.")
                 Else
                     If ProcessPN() Then
@@ -55,13 +55,13 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
         End If
         Cursor.Current = Cursors.Default
     End Sub
-    Protected ReadOnly Property CheckWips
+    Protected ReadOnly Property CheckPn
         Get
             Dim countSelect As Integer = 0
             For Each row As DataGridViewRow In dgvCortosCompletos.Rows
-                countSelect = If(row.Cells(0).Value = True, +1, 0)
+                countSelect = If(row.Cells(0).Value, +1, If(countSelect > 0, +1, 0))
             Next
-            Return If(countSelect > 0, True, False)
+            Return countSelect > 0
         End Get
     End Property
     Protected Friend Function ProcessPN()

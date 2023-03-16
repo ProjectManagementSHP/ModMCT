@@ -2794,8 +2794,16 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cnn.Close()
             If CInt(execNow("select Count(*) from tblWIP where wSort is null").ExecuteScalar) > 0 Then
                 cnn.Close()
-                execNow("update tblWIP set wsort = 25 where wSort is null").ExecuteScalar()
+                execNow("update tblWIP set wsort = 25 where wSort is null").ExecuteNonQuery()
             End If
+            'If CInt(execNow("select Count(*) from tblWIP where wSort <= 2 and ProcFDispMat is not null").ExecuteScalar) > 0 Then
+            '    cnn.Close()
+            '    execNow("update tblWIP set wsort = 2 where wSort <= 2 and ProcFDispMat is not null").ExecuteNonQuery()
+            'End If
+            'If CInt(execNow("select Count(*) from tblWipDet where WIP in (select WIP from tblWIP where wSort = 3) and CWO = '0'").ExecuteScalar) > 0 Then
+            '    cnn.Close()
+            '    execNow("update tblWIP set wsort = case when ProcFDispMat is not null then 2 else -1 end where WIP in (select WIP from tblWipDet where WIP in (select WIP from tblWIP where wSort = 3) and CWO = '0')").ExecuteNonQuery()
+            'End If
             cnn.Close()
         Catch ex As Exception
             cnn.Close()
@@ -4445,19 +4453,13 @@ and a.Balance > 0)"
         FSW.EnableRaisingEvents = True
     End Sub
     Private Sub FSW_Created(sender As Object, e As IO.FileSystemEventArgs) Handles FSW.Created
-        Dim limpiaChar As String = e.Name, extraVersion As String = ""
+        Dim limpiaChar As String = e.Name
         limpiaChar = LTrim(RTrim(limpiaChar.Replace("_", ".").Replace(",", "")))
-        'limpiaChar = 'limpiaChar.Replace("_", ".").Replace(",", "")
         limpiaChar = Regex.Replace(limpiaChar, "[a-zA-Z]", "")
-        'For i As Integer = 0 To limpiaChar.Length - 1
-        '    If IsNumeric(limpiaChar(i)) Or limpiaChar(i) = "." Then
-        '        extraVersion += limpiaChar(i)
-        '    End If
-        'Next
-        ver = limpiaChar 'extraVersion
-        ActualizacionRequerida.BringToFront()
-        ActualizacionRequerida.ShowDialog()
-        If flagActualizacion = 1 Then
+        Dim actualiza As New ActualizacionRequerida(limpiaChar)
+        actualiza.BringToFront()
+        actualiza.ShowDialog()
+        If flagActualizacion Then
             Application.Exit()
         End If
     End Sub

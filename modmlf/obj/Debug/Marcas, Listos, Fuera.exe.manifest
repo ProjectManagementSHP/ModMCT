@@ -98,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GggczMYrnUfufyfgVBADU3JeNG1gwtjIprvB5bxWuqA=</dsig:DigestValue>
+        <dsig:DigestValue>QeUiMvCEKOyOWgjQdPII/DV85POYMu8kFSaBX4B0Oes=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -882,7 +882,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>PNbAJ+NRBDPzmMBpxFvoF4QP37OOxBHP1G2KNsFG/Kk=</dsig:DigestValue>
+      <dsig:DigestValue>OAmR9RX6DkB4Ktc7SC4sEZUi+ptPvJqNtvjhTzi0pis=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Marcas, Listos, Fuera.xml" size="7504">
