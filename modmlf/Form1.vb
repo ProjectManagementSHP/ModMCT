@@ -50,6 +50,7 @@ Public Class Principal
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = False
         ElseIf opcion = 2 Then
             pnluserandtitle.BackColor = Color.LightBlue
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue
@@ -73,6 +74,7 @@ Public Class Principal
                 CargadatosCompras()
             End If
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = False
         ElseIf opcion = 3 Then
             pnluserandtitle.BackColor = Color.LightGray
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
@@ -90,6 +92,7 @@ Public Class Principal
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = False
         ElseIf opcion = 4 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -108,6 +111,7 @@ Public Class Principal
             gbFechas.Visible = False
             btnAgregarNewElemento.Visible = False
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = False
         ElseIf opcion = 5 Then
             pnluserandtitle.BackColor = Color.Bisque
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.Bisque
@@ -136,6 +140,7 @@ Public Class Principal
             Timer3.Enabled = True
             Timer3.Interval = 1800000
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = False
         ElseIf opcion = 6 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -159,6 +164,7 @@ Public Class Principal
                 CargadatosCompras()
             End If
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = True
         ElseIf opcion = 7 Then
             pnluserandtitle.BackColor = Color.LightGreen
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGreen
@@ -182,6 +188,7 @@ Public Class Principal
                 CargadatosCompras()
             End If
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = True
         ElseIf opcion = 8 Then 'Planeacion PWO
             pnluserandtitle.BackColor = Color.FromArgb(236, 154, 114)
             dgvWips.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(236, 154, 114)
@@ -205,6 +212,7 @@ Public Class Principal
                 CargadatosCompras()
             End If
             UsuariosToolStripMenuItem.Visible = False
+            AtadosToolStripMenuItem.Visible = False
         End If
         UsuariosToolStripMenuItem.Visible = Me.Text = "Desarrollo"
     End Sub
@@ -4437,6 +4445,9 @@ and a.Balance > 0)"
             rbListosParaEntrar.Checked = Not RdbSearch.Checked
             rbsolicitar.Checked = Not RdbSearch.Checked
         End If
+    End Sub
+    Private Sub AtadosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AtadosToolStripMenuItem.Click
+
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If ApplicationDeployment.IsNetworkDeployed Then
