@@ -207,6 +207,12 @@
     <Compile Include="Asignar.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Atados.Designer.vb">
+      <DependentUpon>Atados.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Atados.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="AutomaticSort.vb" />
     <Compile Include="CambioMaquina.Designer.vb">
       <DependentUpon>CambioMaquina.vb</DependentUpon>
@@ -342,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Asignar.resx">
       <DependentUpon>Asignar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Atados.resx">
+      <DependentUpon>Atados.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CambioMaquina.resx">
       <DependentUpon>CambioMaquina.vb</DependentUpon>

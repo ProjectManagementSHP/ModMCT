@@ -2611,12 +2611,12 @@ Public Class HoraXHora
         lblmaquina.Text = "Maquina seleccionada: 11"
     End Sub
     Private Sub txtBuscador_TextChanged_1(sender As Object, e As EventArgs) Handles txtBuscador.TextChanged
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Dim filtro As String = CType(sender, TextBox).Text
         If filtro.Trim() <> String.Empty Then
             filtrarDatos(filtro)
         End If
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Public Sub filtrarDatos(ByVal buscar As String)
         Try

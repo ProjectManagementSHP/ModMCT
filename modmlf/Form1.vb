@@ -4447,7 +4447,7 @@ and a.Balance > 0)"
         End If
     End Sub
     Private Sub AtadosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AtadosToolStripMenuItem.Click
-
+        Atados.Show()
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If ApplicationDeployment.IsNetworkDeployed Then
