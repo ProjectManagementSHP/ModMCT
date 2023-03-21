@@ -225,6 +225,8 @@ Public Class Principal
         End Try
     End Function
     Public Sub LoadStart()
+        Login.Hide()
+        Login.Visible = False
         LogOut = False
         lblwelcome.Text = "Bienvenido: " & CargaUsername(UserName.ToString)
         Label4.Text = "Semana Actual: " & nsemana
