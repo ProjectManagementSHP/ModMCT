@@ -189,7 +189,7 @@ Public Class Login
 					End With
 					Visible = False
 					Hide()
-					Thread.Sleep(4000)
+					'Thread.Sleep(4000)
 					Principal.Text = "Desarrollo"
 					Principal.ShowDialog()
 					If Not LogOut Then

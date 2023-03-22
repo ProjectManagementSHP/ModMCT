@@ -23,8 +23,8 @@ Public Class Materiales
                     Llenagrid2()
                 Else
                     MsgBox($"El {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO ya tiene todo el material asignado")
-                    Me.Dispose()
-                    Me.Close()
+                    Dispose()
+                    Close()
                 End If
             ElseIf p = 12 Then 'Bandera de Hold
                 Button3.Visible = True
@@ -113,9 +113,9 @@ Public Class Materiales
             edo = cnn.State.ToString
             If edo = "Open" Then cnn.Close()
             If tabla.Rows.Count > 0 Then
+                tabla.Columns(9).ReadOnly = False
+                tabla.Columns(9).MaxLength = 400
                 For i As Integer = 0 To tabla.Rows.Count - 1
-                    tabla.Columns(9).ReadOnly = False
-                    tabla.Columns(9).MaxLength = 400
                     tabla.Rows(i).Item(9) = Locacion(tabla.Rows(i).Item("PN").ToString)
                 Next
             End If
@@ -126,14 +126,14 @@ Public Class Materiales
                 Label2.Text = "Items: " & dgvBOM.Rows.Count
             End With
             Pintandoceldas()
-            btnExportar.Visible = If(opcion = 2 And DataGridView1.Rows.Count > 0, True, False)
+            btnExportar.Visible = opcion = 2 And DataGridView1.Rows.Count > 0
             If Microsoft.VisualBasic.Left(lblcwomat.Text, 1) = "C" Then
                 cmd = New SqlCommand("select COUNT(*) from tblCWOSerialNumbers where CWO='" + lblcwomat.Text + "'", cnn)
                 cmd.CommandType = CommandType.Text
                 cnn.Open()
                 muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
                 cnn.Close()
-                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet  cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "'
+                query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet det cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "'
 and IDSort <= det.IDSort) [Time] where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort",
 "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID 
  cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0)
@@ -146,14 +146,6 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                 tabl.Load(dr)
                 cnn.Close()
                 If tabl.Rows.Count > 0 Then
-                    'tAcumulado = 0
-                    'Dim column As Integer = If(muestra = 1, 11, 8)
-                    'For i As Integer = 0 To tabl.Rows.Count - 1
-                    '    tabl.Columns(column).ReadOnly = False
-                    '    tAcumulado = SumVal(CInt(tabl.Rows(i).Item("Tsetup").ToString), CInt(tabl.Rows(i).Item("TRuntime").ToString), tAcumulado)
-                    '    tabl.Rows(i).Item(column) = tAcumulado
-                    'Next
-                    'tAcumulado = 0
                     With DataGridView3
                         .DataSource = tabl
                         .AutoResizeColumns()
@@ -183,7 +175,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         Catch ex As Exception
             MsgBox(ex.Message + vbNewLine + ex.ToString)
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("llenagrid'Materiales'", host, UserName)
+            EnviaCorreoFalla("llenagrid'Materiales'", host, UserName)
             cnn.Close()
         End Try
     End Sub
@@ -219,7 +211,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
             End With
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("llenagrid1'Materiales'", host, UserName)
+            EnviaCorreoFalla("llenagrid1'Materiales'", host, UserName)
         End Try
     End Sub
     Private Sub Llenagrid2()
@@ -249,7 +241,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                 Label2.Text = "Items: " & DataGridView1.RowCount
             End With
             Pintandoceldas()
-            btnExportar.Visible = If(opcion = 2 And DataGridView1.Rows.Count > 0, True, False)
+            btnExportar.Visible = opcion = 2 And DataGridView1.Rows.Count > 0
             If p = 10 Then
                 For i As Integer = 0 To DataGridView1.Rows.Count - 1
                     If ConfirmarMatAsignado(lblcwomat.Text, DataGridView1.Rows(i).Cells("PN").Value.ToString) Then
@@ -264,7 +256,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                     cnn.Open()
                     muestra = If(CInt(cmd.ExecuteScalar) = 0, 0, 1)
                     cnn.Close()
-                    query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet  cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "'
+                    query2 = If(muestra = 0, "select IdSort,Wire,TermA,MaqA,TermB,MaqB,IsNull(Tsetup,0) [TSetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet det cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "'
 and IDSort <= det.IDSort) [Time] where CWO='" + lblcwomat.Text + "' and WireBalance>0 order by IDSort",
 "select IdSort,det.Wire,det.WireBalance,det.TermA,TABalance,MaqA,det.TermB,TBBalance,MaqB,IsNull(Tsetup,0) [Tsetup],IsNull(TRuntime,0) [TRuntime], [Time].[Acum] as 'Acumulado' from tblWipDet det inner join tblCWOSerialNumbers cw on det.wireid=cw.WireID 
  cross apply (select SUM(TSetup + TRuntime) [Acum] from tblWipDet where CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalance > 0)
@@ -314,7 +306,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias" + vbNewLine + ex.ToString)
-            CorreoFalla.EnviaCorreoFalla("llenagrid2'Materiales'", host, UserName)
+            EnviaCorreoFalla("llenagrid2'Materiales'", host, UserName)
         End Try
     End Sub
     Private Sub Llenagrid3() 'Materiales sin stock para poner en hold
@@ -346,13 +338,13 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                 MessageBox.Show("No hay numeros de parte para colocar cortos.")
                 TabControl1.Parent = Nothing
                 p = 0
-                Me.Dispose()
-                Me.Close()
+                Dispose()
+                Close()
             End If
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("llenagrid3'Materiales'", host, UserName)
+            EnviaCorreoFalla("llenagrid3'Materiales'", host, UserName)
         End Try
     End Sub
     Private Sub LlenaGridMaterialesParaCorte() 'Carga consulta para corte
@@ -434,7 +426,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias" + vbNewLine + ex.ToString)
-            CorreoFalla.EnviaCorreoFalla("llenaGridMaterialesParaCorte", host, UserName)
+            EnviaCorreoFalla("llenaGridMaterialesParaCorte", host, UserName)
         End Try
     End Sub
     Private Function Locacion(pn As String) As String
@@ -462,7 +454,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("locacion", host, UserName)
+            EnviaCorreoFalla("locacion", host, UserName)
             Return Nothing
         End Try
     End Function
@@ -480,7 +472,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
             Return muestra
         Catch ex As Exception
             cnn.Close()
-            CorreoFalla.EnviaCorreoFalla("ConfirmarMatAsignado", host, UserName)
+            EnviaCorreoFalla("ConfirmarMatAsignado", host, UserName)
             Return Nothing
         End Try
     End Function
@@ -522,7 +514,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
             Next
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("pintandoceldas", host, UserName)
+            EnviaCorreoFalla("pintandoceldas", host, UserName)
         End Try
     End Sub
     Private Sub PintaMaterialesConAsignacion()
@@ -534,7 +526,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
             Next
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            CorreoFalla.EnviaCorreoFalla("PintaMaterialesConAsignacion", host, UserName)
+            EnviaCorreoFalla("PintaMaterialesConAsignacion", host, UserName)
         End Try
     End Sub
     Private Sub Recorregrid()
@@ -596,9 +588,9 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
     End Sub
     Private Sub DateTimePicker1_MouseDown(sender As Object, e As MouseEventArgs) Handles DateTimePicker1.MouseDown
         If e.Button = MouseButtons.Left Then
-            Me.DateTimePicker1.Format = DateTimePickerFormat.Short
+            DateTimePicker1.Format = DateTimePickerFormat.Short
             If DateTimePicker1.Value = "2021-01-01" Then
-                Me.DateTimePicker1.Value = Date.Today
+                DateTimePicker1.Value = Date.Today
             End If
         End If
     End Sub
@@ -658,8 +650,8 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                         Principal.Filtros(3)
                         holdoconfir = 0
                         MessageBox.Show("Numeros de Parte colocados en status corto con exito")
-                        Me.Dispose()
-                        Me.Close()
+                        Dispose()
+                        Close()
                     Else
                         If DataGridView1.Rows.Count > 0 Then
                             For o As Integer = 0 To DataGridView1.Rows.Count - 1
@@ -698,8 +690,8 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                         Principal.Filtros(3)
                         holdoconfir = 0
                         MessageBox.Show("Numeros de Parte colocados en status corto con exito")
-                        Me.Dispose()
-                        Me.Close()
+                        Dispose()
+                        Close()
                     End If
                 Else
                     MsgBox("Debe agregar una nota")
@@ -762,7 +754,6 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
             holdoconfir = 1
             gbnotasconfirmando.Visible = True
             TextBox2.Text = values
-            'Dim qtylen As Integer = Len(values)
             TextBox2.Focus()
             TextBox2.[Select](TextBox2.Text.Length, Len(values))
         Else
@@ -829,8 +820,8 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                 cnn.Close()
                 If MAtAsigcomplete(lblcwomat.Text.ToString.Trim) Then
                     MsgBox($"Ya han sido asignados todos los materiales para este {Microsoft.VisualBasic.Left(lblcwomat.Text, 1)}WO")
-                    Me.Dispose()
-                    Me.Close()
+                    Dispose()
+                    Close()
                 Else
                     DataGridView2.DataSource = Nothing
                     Llenagrid2()
@@ -872,7 +863,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                     DataGridView2.Rows.Remove(DataGridView2.Rows(i))
                 End If
             Next
-            lbltagsescaneados.Text = "Tag's Escaneados: " & CInt(Val(DataGridView2.Rows.Count))
+            lbltagsescaneados.Text = "Tag's Escaneados: " & Val(DataGridView2.Rows.Count)
             eliminartagmenu.Close()
         End If
     End Sub
@@ -947,7 +938,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                 End If
             Catch ex As Exception
                 MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                CorreoFalla.EnviaCorreoFalla("btnExportar_Click()", host, UserName)
+                EnviaCorreoFalla("btnExportar_Click()", host, UserName)
             End Try
         Else
             MsgBox("No existen items para exportar!!", MsgBoxStyle.Information)
@@ -964,10 +955,10 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         Dim cdx As Integer = e.ColumnIndex
         Dim rdx As Integer = e.RowIndex
         If Not rdx = -1 Or cdx = -1 Then
-            cabecera = Me.dgvBOM.Columns(cdx).HeaderText
+            cabecera = dgvBOM.Columns(cdx).HeaderText
         End If
         If cabecera = "PN" Then
-            Me.DataGridView3.DefaultCellStyle.BackColor = DefaultBackColor
+            DataGridView3.DefaultCellStyle.BackColor = DefaultBackColor
             If Microsoft.VisualBasic.Left(dgvBOM.Rows(e.RowIndex).Cells("PN").Value.ToString, 1) = "W" Then
                 For i As Integer = 0 To DataGridView3.Rows.Count - 1
                     If dgvBOM.Rows(e.RowIndex).Cells("PN").Value.ToString = DataGridView3.Rows(i).Cells("Wire").Value.ToString Then
@@ -1121,7 +1112,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
             dr = cmd.ExecuteReader
             dtAjus.Load(dr)
             cnn.Close()
-            Me.AutoScroll = True
+            AutoScroll = True
             DataGridView3.DataSource = dtAjus
             DataGridView3.Visible = True
         Catch ex As Exception
@@ -1206,7 +1197,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         End Try
     End Sub
     Private Sub Materiales_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        Me.Dispose()
+        Dispose()
     End Sub
     Private Function MAtAsigcomplete(cwo As String)
         Dim res As Boolean
@@ -1228,7 +1219,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
             Return res
         Catch ex As Exception
             cnn.Close()
-            CorreoFalla.EnviaCorreoFalla("MAtAsigcomplete()", host, UserName)
+            EnviaCorreoFalla("MAtAsigcomplete()", host, UserName)
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
             Return Nothing
         End Try
@@ -1260,11 +1251,11 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                             End If
                         Next
                         If DataGridView2.Rows.Count = 0 Then
-                            Me.DataGridView2.Rows.Add()
+                            DataGridView2.Rows.Add()
                             DataGridView2.Rows(0).Cells(0).Value = txbTAGSxentrar.Text.ToString
                             DataGridView2.Rows(0).Cells(1).Value = pn.ToString
                         ElseIf DataGridView2.Rows.Count > 0 Then
-                            Me.DataGridView2.Rows.Add()
+                            DataGridView2.Rows.Add()
                             For i As Integer = 0 To DataGridView2.Rows.Count - 1
                                 If DataGridView2.Rows(i).Cells(0).Value = Nothing Then
                                     DataGridView2.Rows(i).Cells(0).Value = txbTAGSxentrar.Text.ToString
@@ -1288,7 +1279,7 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
                 End If
             End If
         Catch ex As Exception
-            CorreoFalla.EnviaCorreoFalla("txbTAGSxentrar_KeyPress()", host, UserName)
+            EnviaCorreoFalla("txbTAGSxentrar_KeyPress()", host, UserName)
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
         End Try
     End Sub
