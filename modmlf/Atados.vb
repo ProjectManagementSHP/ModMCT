@@ -67,8 +67,8 @@ Public Class Atados
 		Load_Aus()
 		TextBox1.Text = ""
 		TxbQtyAtado.Text = ""
-		LblAu.Text = ""
-		LblRev.Text = ""
+		LblAu.Text = "-"
+		LblRev.Text = "-"
 	End Sub
 	Private Sub Atados_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 		Load_Aus()
@@ -81,12 +81,17 @@ Public Class Atados
 		End If
 	End Sub
 	Private Sub TxbQtyAtado_TextChanged(sender As Object, e As EventArgs) Handles TxbQtyAtado.TextChanged
+		TxbQtyAtado.Text = $"{If(LblAu.Text <> "-" And LblRev.Text <> "-", TxbQtyAtado.Text, "")}"
 		Button2.Visible = (LblAu.Text <> "-" And LblRev.Text <> "-") AndAlso TxbQtyAtado.Text.Length > 0 AndAlso IsNumeric(TxbQtyAtado.Text) AndAlso CInt(TxbQtyAtado.Text) > 1
 	End Sub
 	Private Sub DgvAus_CellClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles DgvAus.CellClick
 		If e.RowIndex >= 0 Then
 			LblAu.Text = DgvAus.Item(0, e.RowIndex).Value()
 			LblRev.Text = DgvAus.Item(1, e.RowIndex).Value()
+			TxbQtyAtado.Focus()
 		End If
+	End Sub
+	Private Sub TxbQtyAtado_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxbQtyAtado.KeyPress
+		If e.KeyChar = Chr(13) AndAlso TxbQtyAtado.Text <> "" Then Button2.Focus()
 	End Sub
 End Class
