@@ -113,6 +113,7 @@ Partial Class Principal
 		Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.CrearPWOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.AtadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.UsuariosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.CerrarSesionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -158,7 +159,6 @@ Partial Class Principal
 		Me.PWOTab = New System.Windows.Forms.TabPage()
 		Me.Label9 = New System.Windows.Forms.Label()
 		Me.dgvPWO = New System.Windows.Forms.DataGridView()
-		Me.AtadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		CType(Me.dgvWips, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.ContextMenuDisponibilidad.SuspendLayout()
 		Me.pnluserandtitle.SuspendLayout()
@@ -846,61 +846,67 @@ Partial Class Principal
 		'MonitorWIPS
 		'
 		Me.MonitorWIPS.Name = "MonitorWIPS"
-		Me.MonitorWIPS.Size = New System.Drawing.Size(180, 22)
+		Me.MonitorWIPS.Size = New System.Drawing.Size(171, 22)
 		Me.MonitorWIPS.Text = "Monitor WIP's"
 		'
 		'ToolStripMenuItem1
 		'
 		Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem1.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem1.Text = "CSHP"
 		'
 		'ToolStripMenuItem10
 		'
 		Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-		Me.ToolStripMenuItem10.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem10.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem10.Text = "Graficas"
 		'
 		'ToolStripMenuItem11
 		'
 		Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
-		Me.ToolStripMenuItem11.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem11.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem11.Text = "Hora x Hora"
 		'
 		'ToolStripMenuItem3
 		'
 		Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-		Me.ToolStripMenuItem3.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem3.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem3.Text = "Ver Manual de uso"
 		'
 		'ToolStripMenuItem6
 		'
 		Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-		Me.ToolStripMenuItem6.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem6.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem6.Text = "WIP Issues"
 		'
 		'CrearPWOToolStripMenuItem
 		'
 		Me.CrearPWOToolStripMenuItem.Name = "CrearPWOToolStripMenuItem"
-		Me.CrearPWOToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+		Me.CrearPWOToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
 		Me.CrearPWOToolStripMenuItem.Text = "Crear PWO"
+		'
+		'AtadosToolStripMenuItem
+		'
+		Me.AtadosToolStripMenuItem.Name = "AtadosToolStripMenuItem"
+		Me.AtadosToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+		Me.AtadosToolStripMenuItem.Text = "Atados"
 		'
 		'ToolStripMenuItem5
 		'
 		Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-		Me.ToolStripMenuItem5.Size = New System.Drawing.Size(180, 22)
+		Me.ToolStripMenuItem5.Size = New System.Drawing.Size(171, 22)
 		Me.ToolStripMenuItem5.Text = "Cambiar de usario"
 		'
 		'UsuariosToolStripMenuItem
 		'
 		Me.UsuariosToolStripMenuItem.Name = "UsuariosToolStripMenuItem"
-		Me.UsuariosToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+		Me.UsuariosToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
 		Me.UsuariosToolStripMenuItem.Text = "Usuarios"
 		'
 		'CerrarSesionToolStripMenuItem
 		'
 		Me.CerrarSesionToolStripMenuItem.Name = "CerrarSesionToolStripMenuItem"
-		Me.CerrarSesionToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+		Me.CerrarSesionToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
 		Me.CerrarSesionToolStripMenuItem.Text = "Cerrar Sesion"
 		'
 		'AboutToolStripMenuItem
@@ -1498,12 +1504,6 @@ Partial Class Principal
 		Me.dgvPWO.RowTemplate.Height = 24
 		Me.dgvPWO.Size = New System.Drawing.Size(1258, 173)
 		Me.dgvPWO.TabIndex = 5436
-		'
-		'AtadosToolStripMenuItem
-		'
-		Me.AtadosToolStripMenuItem.Name = "AtadosToolStripMenuItem"
-		Me.AtadosToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-		Me.AtadosToolStripMenuItem.Text = "Atados"
 		'
 		'Principal
 		'

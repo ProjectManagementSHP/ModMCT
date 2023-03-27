@@ -1868,7 +1868,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem2.Visible = True
                             ToolStripMenuItem4.Visible = True
                             ToolStripMenuItem7.Visible = True
-                            ToolStripMenuItem8.Visible = sort = 25
+                            ToolStripMenuItem8.Visible = sort = 25 Or sort = 20
                             ToolStripMenuItem9.Visible = False
                             ToolStripMenuItem15.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = opcion = 8
@@ -1953,7 +1953,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                                 ToolStripMenuItem2.Visible = True
                                 ToolStripMenuItem4.Visible = True
                                 ToolStripMenuItem7.Visible = True
-                                ToolStripMenuItem8.Visible = sort = 25
+                                ToolStripMenuItem8.Visible = sort = 25 Or sort = 20
                                 ToolStripMenuItem9.Visible = False
                                 ToolStripMenuItem15.Visible = True
                                 ImprimirReporteToolStripMenuItem.Visible = opcion = 8
@@ -3635,7 +3635,7 @@ and a.Balance > 0)"
             Return Nothing
         End Try
     End Function
-    Public Sub cambioMaquinaXCWO(MaqNew As String, NotesXCambio As String, CWOAceptChange As String, Optional ByVal flag As Integer = 0)
+    Public Sub cambioMaquinaXCWO(MaqNew As String, NotesXCambio As String, CWOAceptChange As String, Optional flag As Integer = 0)
         Try
             Dim CheckWO As Char = CWOAceptChange(0)
             Dim sort As AutomaticSort
@@ -3643,7 +3643,7 @@ and a.Balance > 0)"
             NotesXCambio = $"Cambio de {If(CheckWO = "C", "maquina", "celda")} " & NotesXCambio
             If CheckWO = "C" Then
                 sort = New AutomaticSort(Integer.Parse(MaqNew))
-                query = If(flag = 1, $"update tblCWO set Maq={Integer.Parse(MaqNew)},Notes='{NotesXCambio}' where CWO='{CWOAceptChange}'", $"update tblCWO set Maq={Integer.Parse(MaqNew)},Notes='{NotesXCambio}',Id={sort.GetSort().ToString} where CWO='{CWOAceptChange}'")
+                query = If(flag = 1, $"update tblCWO set Maq={Integer.Parse(MaqNew)},Notes='{NotesXCambio}' where CWO='{CWOAceptChange}'", $"update tblCWO set Maq={Integer.Parse(MaqNew)},Notes='{NotesXCambio}',Id={sort.GetSort()} where CWO='{CWOAceptChange}'")
             ElseIf CheckWO = "P" Then
                 If MaqNew = "AMARILLO" Then
                     MaqNew = "YEL"
