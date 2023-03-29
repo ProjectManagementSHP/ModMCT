@@ -228,7 +228,7 @@ Public Class Principal
             user = UserReturn.ToString.Trim
             Return user
         Catch ex As Exception
-            EnviaCorreoFalla("cargausername", host, UserName)
+            EnviaCorreoFalla($"cargausername", host, UserName)
             Return Nothing
         End Try
     End Function
@@ -355,7 +355,7 @@ Public Class Principal
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error llenagrid")
-            EnviaCorreoFalla("llenagrid", host, UserName)
+            EnviaCorreoFalla($"llenagrid {ex}", host, UserName)
         End Try
     End Sub
     Private Sub ConfigGridSolution(Grid As DataGridView)
@@ -434,7 +434,7 @@ Public Class Principal
         Catch ex As Exception
             cnn.Close()
             MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Terminales")
-            EnviaCorreoFalla("ChargeInfoCortos", host, UserName)
+            EnviaCorreoFalla($"ChargeInfoCortos {ex}", host, UserName)
         End Try
     End Sub
     Private Sub ExportInfo()
@@ -1324,7 +1324,7 @@ Public Class Principal
                 ProgressBar1.Visible = False
             Catch ex As Exception
                 MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Terminales")
-                EnviaCorreoFalla("cargadatosCompras", host, UserName)
+                EnviaCorreoFalla($"cargadatosCompras {ex}", host, UserName)
             End Try
             edo = cnn.State.ToString
             If edo = "Open" Then cnn.Close()
@@ -1339,14 +1339,22 @@ Public Class Principal
             cmd.Parameters.Add("@TermA", SqlDbType.NVarChar).Value = TermA
             cnn.Open()
             Qty = If(IsDBNull(cmd.ExecuteScalar()), 0, CInt(Val(cmd.ExecuteScalar())))
-            Return Qty
-        Catch ex As Exception
-            MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading TermA")
-            EnviaCorreoFalla("TermAQty", host, UserName)
-            Return 0
-        Finally
             cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            If ex.ToString Like "*The specified network name is no longer available*" Then
+                If TimeOut_OpenConnection() Then
+                    TermAQty(TermA, subQuery)
+                Else
+                    Qty = 0
+                End If
+            Else
+                MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
+                EnviaCorreoFalla($"TermAQty {ex}", host, UserName)
+                Qty = 0
+            End If
         End Try
+        Return Qty
     End Function
     Private Function TermBQty(TermB As String, subQuery As String) As Integer
         Dim Qty As Integer = 0
@@ -1357,14 +1365,22 @@ Public Class Principal
             cmd.Parameters.Add("@TermB", SqlDbType.NVarChar).Value = TermB
             cnn.Open()
             Qty = If(IsDBNull(cmd.ExecuteScalar()), 0, CInt(Val(cmd.ExecuteScalar())))
-            Return Qty
-        Catch ex As Exception
-            MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading TermB")
-            EnviaCorreoFalla("TermBQty", host, UserName)
-            Return 0
-        Finally
             cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            If ex.ToString Like "*The specified network name is no longer available*" Then
+                If TimeOut_OpenConnection() Then
+                    TermBQty(TermB, subQuery)
+                Else
+                    Qty = 0
+                End If
+            Else
+                MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
+                EnviaCorreoFalla($"TermBQty {ex}", host, UserName)
+                Qty = 0
+            End If
         End Try
+        Return Qty
     End Function
     Public Function AllocatedAQty(Query As String) As Integer
         Dim Qty As Integer = 0
@@ -1374,14 +1390,22 @@ Public Class Principal
             cmd.CommandType = CommandType.Text
             cnn.Open()
             Qty = If(IsDBNull(cmd.ExecuteScalar()), 0, CInt(Val(cmd.ExecuteScalar())))
-            Return Qty
-        Catch ex As Exception
-            MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
-            EnviaCorreoFalla($"AllocatedAQty {ex}", host, UserName)
-            Return 0
-        Finally
             cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            If ex.ToString Like "*The specified network name is no longer available*" Then
+                If TimeOut_OpenConnection() Then
+                    AllocatedAQty(Query)
+                Else
+                    Qty = 0
+                End If
+            Else
+                MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
+                EnviaCorreoFalla($"AllocatedAQty {ex}", host, UserName)
+                Qty = 0
+            End If
         End Try
+        Return Qty
     End Function
     Private Function WireQty(Wire As String, subQuery As String) As Integer
         Dim Qty As Integer = 0
@@ -1392,17 +1416,24 @@ Public Class Principal
             cmd.Parameters.Add("@Wire", SqlDbType.NVarChar).Value = Wire
             cnn.Open()
             Qty = If(IsDBNull(cmd.ExecuteScalar()), 0, CInt(Val(cmd.ExecuteScalar())))
-            Return Qty
-        Catch ex As Exception
-            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading WireQty")
-            EnviaCorreoFalla("WireQty", host, UserName)
-            Return 0
-        Finally
             cnn.Close()
+        Catch ex As Exception
+            cnn.Close()
+            If ex.ToString Like "*The specified network name is no longer available*" Then
+                If TimeOut_OpenConnection() Then
+                    WireQty(Wire, subQuery)
+                Else
+                    Qty = 0
+                End If
+            Else
+                MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
+                EnviaCorreoFalla($"WireQty {ex}", host, UserName)
+                Qty = 0
+            End If
         End Try
+        Return Qty
     End Function
     Private Sub oHQty(PN As String)
-        Dim Qty As Integer = 0
         Dim dtOH As New DataTable()
         dtOH.Clear()
         Dim Query As String = "SELECT DISTINCT Z.PN,
@@ -1431,12 +1462,24 @@ Public Class Principal
                 rework = 0
             End If
         Catch ex As Exception
-            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading OH")
-            EnviaCorreoFalla("oHQty", host, UserName)
-            oh = 0
-            alm = 0
-            piso = 0
-            rework = 0
+            cnn.Close()
+            If ex.ToString Like "*The specified network name is no longer available*" Then
+                If TimeOut_OpenConnection() Then
+                    oHQty(PN)
+                Else
+                    oh = 0
+                    alm = 0
+                    piso = 0
+                    rework = 0
+                End If
+            Else
+                MessageBox.Show("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias", "Error Loading Allocated")
+                EnviaCorreoFalla($"oHQty {ex}", host, UserName)
+                oh = 0
+                alm = 0
+                piso = 0
+                rework = 0
+            End If
         Finally
             cnn.Close()
         End Try
@@ -1474,7 +1517,7 @@ Public Class Principal
             Next
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("PintarMateriales", host, UserName)
+            EnviaCorreoFalla($"PintarMateriales {ex}", host, UserName)
         End Try
     End Sub
     Private Sub CheckValidaciones(PN As String)
@@ -1508,7 +1551,7 @@ Public Class Principal
             End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("CheckValidaciones", host, UserName)
+            EnviaCorreoFalla($"CheckValidaciones {ex}", host, UserName)
         End Try
     End Sub
     Public BuildQuery As Func(Of String, Integer, String) = Function(Cell, aOption)
@@ -1587,7 +1630,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     conex.Close()
                 Catch ex As Exception
                     conex.Close()
-                    EnviaCorreoFalla("cargachart", host, UserName)
+                    EnviaCorreoFalla($"cargachart {ex}", host, UserName)
                     Cargachart()
                 End Try
             End Using
@@ -1618,7 +1661,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     conex.Close()
                 Catch ex As Exception
                     conex.Close()
-                    EnviaCorreoFalla("cargachart", host, UserName)
+                    EnviaCorreoFalla($"cargachart {ex}", host, UserName)
                     Cargachart()
                 End Try
             End Using
@@ -1649,7 +1692,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     conex.Close()
                 Catch ex As Exception
                     conex.Close()
-                    EnviaCorreoFalla("cargachart", host, UserName)
+                    EnviaCorreoFalla($"cargachart {ex}", host, UserName)
                     Cargachart()
                 End Try
             End Using
@@ -1766,7 +1809,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                                                                  End If
                                                              Catch ex As Exception
                                                                  cnn.Close()
-                                                                 EnviaCorreoFalla("CWO sin imprimir", host, UserName)
+                                                                 EnviaCorreoFalla($"CWO sin imprimir", host, UserName)
                                                              End Try
                                                          End If
                                                          Return Nothing
@@ -1805,7 +1848,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 Catch ex As Exception
                     cnn.Close()
                     MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                    EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                    EnviaCorreoFalla($"dgvWips_CellMouseDown {ex}", host, UserName)
                 End Try
             End If
         End If
@@ -2234,7 +2277,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             FilterInfo()
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("DetenerCWO", host, UserName)
+            EnviaCorreoFalla($"DetenerCWO {ex}", host, UserName)
         End Try
     End Sub
     Public Sub actualizafecharequerimiento(CWO As String)
@@ -2330,7 +2373,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
             'End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("actualizafecharequerimiento", host, UserName)
+            EnviaCorreoFalla($"actualizafecharequerimiento {ex}", host, UserName)
         End Try
         '*********
         Poneokalm_apl(CWO, WIP)
@@ -2443,11 +2486,11 @@ else 25 end where WIP = @WIP")
                 cnn.Close()
             Catch ex As Exception
                 MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                EnviaCorreoFalla("wSortWIPAndACorte", host, UserName)
+                EnviaCorreoFalla($"wSortWIPAndACorte {ex}", host, UserName)
             End Try
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("wSortWIPAndACorte", host, UserName)
+            EnviaCorreoFalla($"wSortWIPAndACorte {ex}", host, UserName)
         End Try
     End Sub
     Public Function CheckWSort(CWO As String) As Boolean
@@ -2873,7 +2916,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     '        Return Nothing
     '        cnn.Close()
     '        MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-    '        EnviaCorreoFalla("wsorts", host, UserName)
+    '        EnviaCorreoFalla($"wsorts", host, UserName)
     '    Finally
     '        cnn.Close()
     '    End Try
@@ -2920,7 +2963,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Filtros(2)
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("notesWIPandCWOquitaOnHoldde26", host, UserName)
+            EnviaCorreoFalla($"notesWIPandCWOquitaOnHoldde26 {ex}", host, UserName)
         End Try
     End Sub
     Public Sub NotesWIPandCWOOnHold(cwo As String, fecha As String, notes As String)
@@ -2992,7 +3035,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cnn.Close()
         Catch ex As Exception
             MsgBox(ex.ToString)
-            EnviaCorreoFalla("notesWIPandCWOOnHold", host, UserName)
+            EnviaCorreoFalla($"notesWIPandCWOOnHold {ex}", host, UserName)
         End Try
     End Sub
     Public Sub Notas(cwo As String, fecha As String, notes As String, WIP As String, PN As String)
@@ -3051,7 +3094,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ' ---------------------------
         Catch ex As Exception
             MsgBox(ex.ToString)
-            EnviaCorreoFalla("notas", host, UserName)
+            EnviaCorreoFalla($"notas {ex}", host, UserName)
         End Try
         Cursor.Current = Cursors.Default
     End Sub
@@ -3167,7 +3210,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
         Catch ex As Exception
             MsgBox(ex.ToString)
             cnn.Close()
-            EnviaCorreoFalla("llenanotas", host, UserName)
+            EnviaCorreoFalla($"llenanotas {ex}", host, UserName)
         End Try
     End Sub
     Private Sub dgvWips_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvWips.CellClick
@@ -3241,7 +3284,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             GroupBox3.BringToFront()
         Catch ex As Exception
             MsgBox(ex.ToString)
-            EnviaCorreoFalla("Button2_Click", host, UserName)
+            EnviaCorreoFalla($"Button2_Click {ex}", host, UserName)
         End Try
         Cursor.Current = Cursors.Default
     End Sub
@@ -3614,7 +3657,7 @@ and a.Balance > 0)"
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("ChargeGridAfectacion", host, UserName)
+            EnviaCorreoFalla($"ChargeGridAfectacion {ex}", host, UserName)
             Return Nothing
         End Try
     End Function
@@ -3679,7 +3722,7 @@ and a.Balance > 0)"
             MessageBox.Show("Cambio realizado")
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("cambioMaquinaXCWO", host, UserName)
+            EnviaCorreoFalla($"cambioMaquinaXCWO {ex}", host, UserName)
         End Try
     End Sub
     Private Sub dgvMatSinStockCompras_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvMatSinStockCompras.ColumnHeaderMouseClick
@@ -3993,7 +4036,7 @@ and a.Balance > 0)"
             End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("dgvMatSinStockCompras_CellDoubleClick", host, UserName)
+            EnviaCorreoFalla($"dgvMatSinStockCompras_CellDoubleClick {ex}", host, UserName)
         End Try
     End Sub
     Private Sub ToolStripMenuItem5_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem5.Click
@@ -4024,7 +4067,7 @@ and a.Balance > 0)"
             End If
         Catch ex As Exception
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("dgvMatSinStockCompras_CellClick", host, UserName)
+            EnviaCorreoFalla($"dgvMatSinStockCompras_CellClick {ex}", host, UserName)
         End Try
     End Sub
     Private Sub btnRefrescaGrid_Click(sender As Object, e As EventArgs) Handles btnRefrescaGrid.Click
@@ -4246,7 +4289,7 @@ and a.Balance > 0)"
                         PN = Convert.ToString(dgvCortosCompletos.Rows(e.RowIndex).Cells(0).Value)
                     Catch ex As Exception
                         MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                        EnviaCorreoFalla("dgvCortosCompletos_CellMouseDown", host, UserName)
+                        EnviaCorreoFalla($"dgvCortosCompletos_CellMouseDown {ex}", host, UserName)
                     End Try
                 End If
             End If
@@ -4282,7 +4325,7 @@ and a.Balance > 0)"
                     Catch ex As Exception
                         cnn.Close()
                         MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                        EnviaCorreoFalla("dgvMatSinStockCompras_CellMouseDown", host, UserName)
+                        EnviaCorreoFalla($"dgvMatSinStockCompras_CellMouseDown {ex}", host, UserName)
                     End Try
                 End If
             End If
@@ -4355,7 +4398,7 @@ and a.Balance > 0)"
                     End If
                 Catch ex As Exception
                     MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-                    EnviaCorreoFalla("dgvWips_CellMouseDown", host, UserName)
+                    EnviaCorreoFalla($"dgvWips_CellMouseDown {ex}", host, UserName)
                 End Try
             End If
         End If
