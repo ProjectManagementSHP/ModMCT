@@ -67,6 +67,7 @@ Partial Class Principal
 		Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem15 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ImprimirReporteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ReImprimirTravelersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.pnluserandtitle = New System.Windows.Forms.Panel()
 		Me.Label4 = New System.Windows.Forms.Label()
 		Me.lblWIP = New System.Windows.Forms.Label()
@@ -83,6 +84,7 @@ Partial Class Principal
 		Me.AsignarMaterialToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
 		Me.ToolStripMenuItem14 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.DesviarTerminalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+		Me.ReImprimirTravelersToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
 		Me.GroupBox1 = New System.Windows.Forms.GroupBox()
 		Me.TxtCWOorPWOSearching = New System.Windows.Forms.TextBox()
 		Me.RdbSearch = New System.Windows.Forms.RadioButton()
@@ -159,8 +161,6 @@ Partial Class Principal
 		Me.PWOTab = New System.Windows.Forms.TabPage()
 		Me.Label9 = New System.Windows.Forms.Label()
 		Me.dgvPWO = New System.Windows.Forms.DataGridView()
-		Me.ReImprimirTravelersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-		Me.ReImprimirTravelersToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
 		CType(Me.dgvWips, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.ContextMenuDisponibilidad.SuspendLayout()
 		Me.pnluserandtitle.SuspendLayout()
@@ -268,7 +268,7 @@ Partial Class Principal
 		Me.ContextMenuDisponibilidad.ImageScalingSize = New System.Drawing.Size(20, 20)
 		Me.ContextMenuDisponibilidad.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripTextBox1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem4, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem15, Me.ImprimirReporteToolStripMenuItem, Me.ReImprimirTravelersToolStripMenuItem})
 		Me.ContextMenuDisponibilidad.Name = "ContextMenuDesviacion"
-		Me.ContextMenuDisponibilidad.Size = New System.Drawing.Size(187, 227)
+		Me.ContextMenuDisponibilidad.Size = New System.Drawing.Size(187, 205)
 		'
 		'ToolStripTextBox1
 		'
@@ -319,6 +319,12 @@ Partial Class Principal
 		Me.ImprimirReporteToolStripMenuItem.Name = "ImprimirReporteToolStripMenuItem"
 		Me.ImprimirReporteToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
 		Me.ImprimirReporteToolStripMenuItem.Text = "Imprimir Reporte"
+		'
+		'ReImprimirTravelersToolStripMenuItem
+		'
+		Me.ReImprimirTravelersToolStripMenuItem.Name = "ReImprimirTravelersToolStripMenuItem"
+		Me.ReImprimirTravelersToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+		Me.ReImprimirTravelersToolStripMenuItem.Text = "Re-Imprimir Travelers"
 		'
 		'pnluserandtitle
 		'
@@ -437,18 +443,18 @@ Partial Class Principal
 		Me.ContextMenuVerMW.ImageScalingSize = New System.Drawing.Size(20, 20)
 		Me.ContextMenuVerMW.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem12, Me.ToolStripMenuItem13, Me.ToolStripTextBox5, Me.ToolStripTextBox6, Me.ToolStripTextBox7, Me.AsignarMaterialToolStripMenuItem, Me.ToolStripMenuItem14, Me.DesviarTerminalToolStripMenuItem, Me.ReImprimirTravelersToolStripMenuItem1})
 		Me.ContextMenuVerMW.Name = "ContextMenuDesviacion"
-		Me.ContextMenuVerMW.Size = New System.Drawing.Size(187, 211)
+		Me.ContextMenuVerMW.Size = New System.Drawing.Size(187, 233)
 		'
 		'ToolStripMenuItem12
 		'
 		Me.ToolStripMenuItem12.Name = "ToolStripMenuItem12"
-		Me.ToolStripMenuItem12.Size = New System.Drawing.Size(160, 22)
+		Me.ToolStripMenuItem12.Size = New System.Drawing.Size(186, 22)
 		Me.ToolStripMenuItem12.Text = "Listo"
 		'
 		'ToolStripMenuItem13
 		'
 		Me.ToolStripMenuItem13.Name = "ToolStripMenuItem13"
-		Me.ToolStripMenuItem13.Size = New System.Drawing.Size(160, 22)
+		Me.ToolStripMenuItem13.Size = New System.Drawing.Size(186, 22)
 		Me.ToolStripMenuItem13.Text = "Cortos"
 		'
 		'ToolStripTextBox5
@@ -475,20 +481,26 @@ Partial Class Principal
 		'AsignarMaterialToolStripMenuItem
 		'
 		Me.AsignarMaterialToolStripMenuItem.Name = "AsignarMaterialToolStripMenuItem"
-		Me.AsignarMaterialToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+		Me.AsignarMaterialToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
 		Me.AsignarMaterialToolStripMenuItem.Text = "Asignar material"
 		'
 		'ToolStripMenuItem14
 		'
 		Me.ToolStripMenuItem14.Name = "ToolStripMenuItem14"
-		Me.ToolStripMenuItem14.Size = New System.Drawing.Size(160, 22)
+		Me.ToolStripMenuItem14.Size = New System.Drawing.Size(186, 22)
 		Me.ToolStripMenuItem14.Text = "Quitar Corto"
 		'
 		'DesviarTerminalToolStripMenuItem
 		'
 		Me.DesviarTerminalToolStripMenuItem.Name = "DesviarTerminalToolStripMenuItem"
-		Me.DesviarTerminalToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+		Me.DesviarTerminalToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
 		Me.DesviarTerminalToolStripMenuItem.Text = "Desviar Terminal"
+		'
+		'ReImprimirTravelersToolStripMenuItem1
+		'
+		Me.ReImprimirTravelersToolStripMenuItem1.Name = "ReImprimirTravelersToolStripMenuItem1"
+		Me.ReImprimirTravelersToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
+		Me.ReImprimirTravelersToolStripMenuItem1.Text = "Re-Imprimir Travelers"
 		'
 		'GroupBox1
 		'
@@ -1506,18 +1518,6 @@ Partial Class Principal
 		Me.dgvPWO.RowTemplate.Height = 24
 		Me.dgvPWO.Size = New System.Drawing.Size(1258, 173)
 		Me.dgvPWO.TabIndex = 5436
-		'
-		'ReImprimirTravelersToolStripMenuItem
-		'
-		Me.ReImprimirTravelersToolStripMenuItem.Name = "ReImprimirTravelersToolStripMenuItem"
-		Me.ReImprimirTravelersToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
-		Me.ReImprimirTravelersToolStripMenuItem.Text = "Re-Imprimir Travelers"
-		'
-		'ReImprimirTravelersToolStripMenuItem1
-		'
-		Me.ReImprimirTravelersToolStripMenuItem1.Name = "ReImprimirTravelersToolStripMenuItem1"
-		Me.ReImprimirTravelersToolStripMenuItem1.Size = New System.Drawing.Size(186, 22)
-		Me.ReImprimirTravelersToolStripMenuItem1.Text = "Re-Imprimir Travelers"
 		'
 		'Principal
 		'

@@ -1836,7 +1836,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                     dgvWips.Rows(e.RowIndex).Selected = True
                     WIP = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(0).Value)
                     CWO = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(1).Value)
-                    sort = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(6).Value)
+                    sort = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(7).Value)
                     maq = Convert.ToString(dgvWips.Rows(e.RowIndex).Cells(3).Value)
                     If Not rbsolicitar.Checked = True And Not rbEmpezadosyDetenidos.Checked = True Then
                         If dgvWips.Rows(e.RowIndex).Cells(2).Value.ToString = "" Then
@@ -1927,7 +1927,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                         End If
                     End If
-                    ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso sort = 3
+                    ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
                 ElseIf opcion = 6 Or opcion = 7 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
                         ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
@@ -2014,7 +2014,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             End If
                         End If
                         ImprimirReporteToolStripMenuItem.Visible = False
-                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso sort = 3
+                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
                     End If
                 ElseIf opcion = 2 Then
                     If (rbSolicitado.Checked Or rdbOnHold.Checked) And dgvWips.Rows.Count > 0 Then
@@ -2081,7 +2081,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             DesviarTerminalToolStripMenuItem.Visible = False
                         End If
                     End If
-                    ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso sort = 3
+                    ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
                 ElseIf opcion = 3 And sort <> 27 Then
                     If (rbListosParaEntrar.Checked Or rbYaempezados.Checked Or RdbSearch.Checked) And dgv.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -2104,7 +2104,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
-                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso sort = 3
+                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
                         End If
                     End If
                 ElseIf opcion = 5 Then
@@ -2122,7 +2122,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
-                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso sort = 3
+                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
                         End If
                     End If
                 ElseIf opcion = 8 Then
@@ -2216,7 +2216,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                                 ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                             End If
                         End If
-                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso sort = 3
+                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
                     End If
                 End If
             End If
@@ -4490,6 +4490,7 @@ and a.Balance > 0)"
     Private Sub RdbSearch_CheckedChanged(sender As Object, e As EventArgs) Handles RdbSearch.CheckedChanged
         If RdbSearch.Checked Then
             TxtCWOorPWOSearching.Visible = RdbSearch.Checked
+            TxtCWOorPWOSearching.Focus()
             rdbOnHold.Checked = Not RdbSearch.Checked
             rbEmpezadosyDetenidos.Checked = Not RdbSearch.Checked
             rbYaempezados.Checked = Not RdbSearch.Checked
@@ -4499,6 +4500,47 @@ and a.Balance > 0)"
     End Sub
     Private Sub AtadosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AtadosToolStripMenuItem.Click
         Atados.Show()
+    End Sub
+    Private Sub ReImprimirTravelers()
+        Try
+            If CWO = "" Then Exit Sub
+            Dim execNow As Func(Of String, SqlCommand) = Function(q)
+                                                             Dim ocmd As New SqlCommand(q, cnn)
+                                                             ocmd.CommandType = CommandType.Text
+                                                             cnn.Open()
+                                                             Return ocmd
+                                                         End Function
+            Dim res = MessageBox.Show("Asegurate de que este CWO no este en corte para poder realizar la eliminacion de los travelers para re-imprimirlos.", "Re-imprimir Travelers", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            If res = 6 Then
+                cnn.Close()
+                Dim query As String = $"Begin
+                                          declare @filasAfectadas int = 0;
+                                          UPDATE tblCWO SET PrintedSNCWO = 0 where CWO = '{CWO}'
+                                          SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT
+                                          update tblWipDet set Printed = null where CWO = '{CWO}'
+                                          SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT
+                                          delete from tblCwoSerialNumbers where cwo = '{CWO}'
+                                          SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT
+                                          SELECT @filasAfectadas
+                                        end"
+                Dim oCount = CInt(execNow(query).ExecuteScalar())
+                cnn.Close()
+                If oCount > 0 Then
+                    MessageBox.Show("Se actualizo con exito.")
+                Else
+                    MessageBox.Show("Revisa este CWO.")
+                End If
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Revisa este CWO, error " + ex.ToString)
+            cnn.Close()
+        End Try
+    End Sub
+    Private Sub ReImprimirTravelersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReImprimirTravelersToolStripMenuItem.Click
+        ReImprimirTravelers()
+    End Sub
+    Private Sub ReImprimirTravelersToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ReImprimirTravelersToolStripMenuItem1.Click
+        ReImprimirTravelers()
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If ApplicationDeployment.IsNetworkDeployed Then
