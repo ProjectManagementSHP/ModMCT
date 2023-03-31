@@ -7,8 +7,8 @@
             Else
                 Principal.cambioMaquinaXCWO(ComboBox1.Text, txbNotas.Text, lblcwoporsolicitar.Text)
             End If
-            Me.Dispose()
-            Me.Close()
+            Dispose()
+            Close()
         Else
             MsgBox("Favor de seleccionar una maquina para continuar")
             ComboBox1.SelectAll()
