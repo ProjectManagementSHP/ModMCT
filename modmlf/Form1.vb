@@ -1927,6 +1927,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                         End If
                     End If
+                    ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso sort = 3
                 ElseIf opcion = 6 Or opcion = 7 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
                         ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
@@ -2013,6 +2014,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             End If
                         End If
                         ImprimirReporteToolStripMenuItem.Visible = False
+                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso sort = 3
                     End If
                 ElseIf opcion = 2 Then
                     If (rbSolicitado.Checked Or rdbOnHold.Checked) And dgvWips.Rows.Count > 0 Then
@@ -2079,6 +2081,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             DesviarTerminalToolStripMenuItem.Visible = False
                         End If
                     End If
+                    ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso sort = 3
                 ElseIf opcion = 3 And sort <> 27 Then
                     If (rbListosParaEntrar.Checked Or rbYaempezados.Checked Or RdbSearch.Checked) And dgv.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -2101,6 +2104,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
+                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso sort = 3
                         End If
                     End If
                 ElseIf opcion = 5 Then
@@ -2118,6 +2122,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
+                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso sort = 3
                         End If
                     End If
                 ElseIf opcion = 8 Then
@@ -2211,6 +2216,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                                 ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                             End If
                         End If
+                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso sort = 3
                     End If
                 End If
             End If
