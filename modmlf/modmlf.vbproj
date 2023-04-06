@@ -221,6 +221,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ChargeInfo.vb" />
+    <Compile Include="CloseCWO.Designer.vb">
+      <DependentUpon>CloseCWO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CloseCWO.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="cnnACS.vb" />
     <Compile Include="CorreoFalla.vb" />
     <Compile Include="CreatePWO.Designer.vb">
@@ -354,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CambioMaquina.resx">
       <DependentUpon>CambioMaquina.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CloseCWO.resx">
+      <DependentUpon>CloseCWO.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreatePWO.resx">
       <DependentUpon>CreatePWO.vb</DependentUpon>

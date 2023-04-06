@@ -1928,6 +1928,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                         End If
                     End If
                     ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                    CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                 ElseIf opcion = 6 Or opcion = 7 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
                         ContextMenuDisponibilidad.Show(Cursor.Position.X, Cursor.Position.Y)
@@ -2015,6 +2016,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                         End If
                         ImprimirReporteToolStripMenuItem.Visible = False
                         ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                        CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                     End If
                 ElseIf opcion = 2 Then
                     If (rbSolicitado.Checked Or rdbOnHold.Checked) And dgvWips.Rows.Count > 0 Then
@@ -3366,6 +3368,10 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Timer1.Stop()
+        If Not CheckInternet() Then
+            MessageBox.Show("No hay conexion con el servidor, si tienes conexion y persiste el problema, favor de contactarte con el departamento de IT para su solucion." + vbNewLine + "Se cerrara la aplicacion.", "Sin conexion con el servidor", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Emergency_CloseApp()
+        End If
         RevisaStatusWIPs()
         ' ------------------------------------------------
         ' Nuevo notify con tabla
@@ -3626,6 +3632,10 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
         Timer2.Stop()
+        If Not CheckInternet() Then
+            MessageBox.Show("No hay conexion con el servidor, si tienes conexion y persiste el problema, favor de contactarte con el departamento de IT para su solucion." + vbNewLine + "Se cerrara la aplicacion.", "Sin conexion con el servidor", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Emergency_CloseApp()
+        End If
         Cargachart()
         Timer2.Enabled = True
         Timer2.Interval = 60000
@@ -3997,15 +4007,7 @@ and a.Balance > 0)"
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub Principal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        If Not LogOut Then
-            bgWorker.Dispose()
-            With NotifyIcon1
-                .Visible = False
-                .Dispose()
-            End With
-            Application.Exit()
-            End
-        End If
+        Emergency_CloseApp()
     End Sub
     Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
         Cursor.Current = Cursors.WaitCursor
@@ -4057,7 +4059,7 @@ and a.Balance > 0)"
         Else
             Dim path As String = "C:\Users\" + Environment.UserName.ToString + "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\SEA\MLF.appref-ms"
             Process.Start(path)
-            Me.Close()
+            Emergency_CloseApp()
         End If
     End Sub
     Private Sub dgvMatSinStockCompras_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvMatSinStockCompras.CellClick
@@ -4251,6 +4253,10 @@ and a.Balance > 0)"
     End Sub
     Private Sub Timer3_Tick(sender As Object, e As EventArgs) Handles Timer3.Tick
         Timer3.Stop()
+        If Not CheckInternet() Then
+            MessageBox.Show("No hay conexion con el servidor, si tienes conexion y persiste el problema, favor de contactarte con el departamento de IT para su solucion." + vbNewLine + "Se cerrara la aplicacion.", "Sin conexion con el servidor", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Emergency_CloseApp()
+        End If
         FechasIncumplidas()
         Timer3.Enabled = True
         Timer3.Interval = 1800000
@@ -4536,11 +4542,54 @@ and a.Balance > 0)"
             cnn.Close()
         End Try
     End Sub
+    Public Function ClosingCWO(Note_Closing As String)
+        Try
+            If CWO = "" Then Return False
+            Dim execNow As Func(Of String, SqlCommand) = Function(q)
+                                                             cnn.Close()
+                                                             Dim ocmd As New SqlCommand(q, cnn)
+                                                             ocmd.CommandType = CommandType.Text
+                                                             cnn.Open()
+                                                             Return ocmd
+                                                         End Function
+            Dim MaqUsed = CInt(execNow($"select Maq from tblCWO where CWO = '{CWO}'").ExecuteScalar()), OldIdSort = CInt(execNow($"select Id from tblCWO where CWO = '{CWO}'").ExecuteScalar())
+            Dim countInt = 0
+            Dim query() As String = {$"UPDATE tblWipDet SET WireBalance= 0 WHERE CWO = '{CWO}'", $"UPDATE tblWipDet SET TABalance= case when MaqA='MA' then 0 else TABalance end WHERE CWO = '{CWO}'", $"UPDATE tblWipDet SET TBBalance= case when MaqB='MA' then 0 else TBBalance end WHERE CWO = '{CWO}'", $"UPDATE tblCWO SET Status= 'CLOSE', CloseDate= GETDATE(),Notes='{Note_Closing}', WSort= 30,id=null WHERE CWO = '{CWO}'", $"UPDATE tblCWOSerialNumbers SET Cutting=GETDATE(), UserCutting='0000'  WHERE CWO='{CWO}' AND Cutting IS NULL", $"UPDATE tblBOMCWO SET Hold=0 WHERE CWO='{CWO}' AND Hold=1"}
+            For Each q In query
+                execNow(q).ExecuteNonQuery()
+                cnn.Close()
+                countInt += 1
+            Next
+            If countInt > 0 Then
+                Dim iSortCWO As New AutomaticSort(MaqUsed, OldIdSort)
+                With iSortCWO
+                    .ReOrderSort()
+                    If Not .CheckZeros() Then
+                        .RemoveZeros()
+                    End If
+                End With
+            End If
+        Catch ex As Exception
+            If Not ex.Message Like "*was not closed*" Then
+                MsgBox(ex.Message + vbNewLine + ex.ToString)
+            End If
+            cnn.Close()
+            Return False
+        End Try
+        Return True
+    End Function
     Private Sub ReImprimirTravelersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReImprimirTravelersToolStripMenuItem.Click
         ReImprimirTravelers()
     End Sub
     Private Sub ReImprimirTravelersToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ReImprimirTravelersToolStripMenuItem1.Click
         ReImprimirTravelers()
+    End Sub
+    Private Sub CerrarCWOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarCWOToolStripMenuItem.Click
+        Dim res = MessageBox.Show("Asegurate de que este CWO no este en corte para poder cerrarlo.", "Cerrar CWO", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+        If res = 6 Then
+            Dim Close_CWO As New CloseCWO
+            Close_CWO.ShowDialog()
+        End If
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         If ApplicationDeployment.IsNetworkDeployed Then
