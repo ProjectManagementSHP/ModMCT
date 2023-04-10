@@ -3368,7 +3368,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Timer1.Stop()
-        If Not CheckInternet() Then
+        If Not CheckInternet() And Not CheckInternet() Then
             MessageBox.Show("No hay conexion con el servidor, si tienes conexion y persiste el problema, favor de contactarte con el departamento de IT para su solucion." + vbNewLine + "Se cerrara la aplicacion.", "Sin conexion con el servidor", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Emergency_CloseApp()
         End If
@@ -3632,7 +3632,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     End Sub
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
         Timer2.Stop()
-        If Not CheckInternet() Then
+        If Not CheckInternet() And Not CheckInternet() Then
             MessageBox.Show("No hay conexion con el servidor, si tienes conexion y persiste el problema, favor de contactarte con el departamento de IT para su solucion." + vbNewLine + "Se cerrara la aplicacion.", "Sin conexion con el servidor", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Emergency_CloseApp()
         End If
@@ -4253,7 +4253,7 @@ and a.Balance > 0)"
     End Sub
     Private Sub Timer3_Tick(sender As Object, e As EventArgs) Handles Timer3.Tick
         Timer3.Stop()
-        If Not CheckInternet() Then
+        If Not CheckInternet() And Not CheckInternet() Then
             MessageBox.Show("No hay conexion con el servidor, si tienes conexion y persiste el problema, favor de contactarte con el departamento de IT para su solucion." + vbNewLine + "Se cerrara la aplicacion.", "Sin conexion con el servidor", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Emergency_CloseApp()
         End If
@@ -4592,13 +4592,7 @@ and a.Balance > 0)"
         End If
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        If ApplicationDeployment.IsNetworkDeployed Then
-            With ApplicationDeployment.CurrentDeployment.CurrentVersion
-                MessageBox.Show(vbCrLf + "MLF Software" + vbNewLine + "© SPECIALIZED HARNESS PRODUCTS S DE RL DE CV" + vbCr + "All Rights Reserved" + vbLf + "Software Version " & .Major & "." & .Minor & "." & .Build & "." & .Revision & "" + vbCr + "Oct/2021", "MLF Software", MessageBoxButtons.OK)
-            End With
-        Else
-            MessageBox.Show(vbCrLf + "MLF Software" + vbNewLine + "© SPECIALIZED HARNESS PRODUCTS S DE RL DE CV" + vbCr + "All Rights Reserved" + vbLf + "Software Version " & Application.ProductVersion & "" + vbCr + "Oct/2021", "MLF Software", MessageBoxButtons.OK)
-        End If
+        AboutBox1.ShowDialog()
     End Sub
     Public Sub AutoUpdate()
         FSW.Path = "\\10.17.182.22\sea-s\MLF\Application Files"

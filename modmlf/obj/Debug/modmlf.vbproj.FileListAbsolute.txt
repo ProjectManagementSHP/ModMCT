@@ -191,3 +191,4 @@ C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\D
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.CloseCWO.resources
+C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.AboutBox1.resources

@@ -148,7 +148,7 @@ where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (Kind
         End With
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Me.Close()
+        Close()
     End Sub
     Private Sub txbNewPN_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txbNewPN.KeyPress
         Cursor.Current = Cursors.WaitCursor

@@ -6,6 +6,10 @@ Public Class Login
 	Private dep As String
 	Private intento As Integer
 	Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+		If Not CheckInternet() And Not CheckInternet() Then
+			MessageBox.Show("No hay conexion con el servidor, si tienes conexion y persiste el problema, favor de contactarte con el departamento de IT para su solucion." + vbNewLine + "Se cerrara la aplicacion.", "Sin conexion con el servidor", MessageBoxButtons.OK, MessageBoxIcon.Error)
+			Emergency_CloseApp()
+		End If
 		TextBox1.Text = UserName
 		opcion = 0
 		Me.Visible = False
@@ -143,7 +147,7 @@ Public Class Login
 							End With
 							MultiDepart = True
 							Hide()
-							Principal.Text = GetNameDept()
+							Principal.Text = NameDept
 							CharginPrincipal()
 							Principal.Show()
 						Else
@@ -273,7 +277,7 @@ Public Class Login
 					End With
 					MultiDepart = True
 					Hide()
-					Principal.Text = GetNameDept()
+					Principal.Text = NameDept
 					Principal.ShowDialog()
 					If Not LogOut Then
 						Close()
@@ -288,23 +292,25 @@ Public Class Login
 			Me.Visible = True
 		End If
 	End Sub
-	Private Function GetNameDept()
-		Dim returnName As String = ""
-		If opcion = 2 Then
-			returnName = "Almacen"
-		ElseIf opcion = 3 Then
-			returnName = "Aplicadores"
-		ElseIf opcion = 5 Then
-			returnName = "Compras"
-		ElseIf opcion = 6 Then
-			returnName = "Planeacion Corte"
-		ElseIf opcion = 7 Then
-			returnName = "Planeacion XP"
-		ElseIf opcion = 8 Then
-			returnName = "Planeacion PWO"
-		End If
-		Return returnName
-	End Function
+	Private ReadOnly Property NameDept
+		Get
+			Dim returnName As String = ""
+			If opcion = 2 Then
+				returnName = "Almacen"
+			ElseIf opcion = 3 Then
+				returnName = "Aplicadores"
+			ElseIf opcion = 5 Then
+				returnName = "Compras"
+			ElseIf opcion = 6 Then
+				returnName = "Planeacion Corte"
+			ElseIf opcion = 7 Then
+				returnName = "Planeacion XP"
+			ElseIf opcion = 8 Then
+				returnName = "Planeacion PWO"
+			End If
+			Return returnName
+		End Get
+	End Property
 	Private Sub insertMLFNotification()
 		Try
 			Dim valor As Boolean = False
