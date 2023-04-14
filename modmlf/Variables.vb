@@ -1,5 +1,7 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.ComponentModel
+Imports System.Data.SqlClient
 Imports System.Globalization
+Imports System.Net.NetworkInformation
 Imports System.Threading
 
 Module Variables
@@ -33,6 +35,7 @@ Module Variables
 	Public opcionesDeExportacion As Integer
 	Public nsemana As Integer = GetWeek()
 	Public MultiDepart As Boolean = False, LogOut As Boolean = False
+	Private bgWorker As New BackgroundWorker
 	Public Function GetWeek()
 		Return CultureInfo.CurrentUICulture.Calendar.GetWeekOfYear(Date.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday) 'DateDiff(DateInterval.WeekOfYear, New DateTime(Date.Now.Year, 1, 1), Date.Now) Comentado por bug sem 0
 	End Function
@@ -50,5 +53,27 @@ Module Variables
 		End If
 		cnn.Close()
 		Return False
+	End Function
+	Public Sub Emergency_CloseApp()
+		If Not LogOut Then
+			bgWorker.Dispose()
+			With Principal.NotifyIcon1
+				.Visible = False
+				.Dispose()
+			End With
+			Application.Exit()
+			End
+		End If
+	End Sub
+	Public Function CheckInternet()
+		Dim response As Boolean = False
+		Dim myPing As New Ping()
+		Dim host As String = "10.17.182.12"
+		Dim buffer As Byte() = New Byte(31) {}
+		Dim timeout As Integer = &B101110111000
+		Dim pingOptions As New PingOptions()
+		Dim reply As PingReply = myPing.Send(host, timeout, buffer, pingOptions)
+		response = reply.Status = IPStatus.Success
+		Return response
 	End Function
 End Module

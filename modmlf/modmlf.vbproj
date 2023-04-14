@@ -28,7 +28,7 @@
     <ProductName>MLF</ProductName>
     <PublisherName>SEA</PublisherName>
     <MinimumRequiredVersion>2.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>19</ApplicationRevision>
+    <ApplicationRevision>22</ApplicationRevision>
     <ApplicationVersion>4.6.10.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -194,6 +194,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox1.Designer.vb">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AboutBox1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ActualizacionRequerida.Designer.vb">
       <DependentUpon>ActualizacionRequerida.vb</DependentUpon>
     </Compile>
@@ -221,6 +227,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ChargeInfo.vb" />
+    <Compile Include="CloseCWO.Designer.vb">
+      <DependentUpon>CloseCWO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CloseCWO.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="cnnACS.vb" />
     <Compile Include="CorreoFalla.vb" />
     <Compile Include="CreatePWO.Designer.vb">
@@ -343,6 +355,9 @@
     <Compile Include="Variables.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ActualizacionRequerida.resx">
       <DependentUpon>ActualizacionRequerida.vb</DependentUpon>
     </EmbeddedResource>
@@ -354,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CambioMaquina.resx">
       <DependentUpon>CambioMaquina.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CloseCWO.resx">
+      <DependentUpon>CloseCWO.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreatePWO.resx">
       <DependentUpon>CreatePWO.vb</DependentUpon>
@@ -502,62 +520,62 @@
   <ItemGroup>
     <PublishFile Include="Marcas, Listos, Fuera.pdb">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="Marcas, Listos, Fuera.xml">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="Telerik.WinControls">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Telerik.WinControls.GridView">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="Telerik.WinControls.UI">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="TelerikCommon">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>
