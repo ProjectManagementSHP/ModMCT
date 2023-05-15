@@ -1927,7 +1927,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                         End If
                     End If
-                    ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                    ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" Or IsAdmin 'AndAlso (sort = 3 Or sort = 20)
                     CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                 ElseIf opcion = 6 Or opcion = 7 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -2015,7 +2015,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             End If
                         End If
                         ImprimirReporteToolStripMenuItem.Visible = False
-                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
                         CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                     End If
                 ElseIf opcion = 2 Then
@@ -2083,7 +2083,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             DesviarTerminalToolStripMenuItem.Visible = False
                         End If
                     End If
-                    ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                    ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
                 ElseIf opcion = 3 And sort <> 27 Then
                     If (rbListosParaEntrar.Checked Or rbYaempezados.Checked Or RdbSearch.Checked) And dgv.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -2106,7 +2106,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
-                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
                         End If
                     End If
                 ElseIf opcion = 5 Then
@@ -2124,7 +2124,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
-                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
                         End If
                     End If
                 ElseIf opcion = 8 Then
@@ -2218,7 +2218,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                                 ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                             End If
                         End If
-                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso (sort = 3 Or sort = 20)
+                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
                     End If
                 End If
             End If
@@ -4516,29 +4516,38 @@ and a.Balance > 0)"
                                                              cnn.Open()
                                                              Return ocmd
                                                          End Function
-            Dim res = MessageBox.Show("Asegurate de que este CWO no este en corte para poder realizar la eliminacion de los travelers para re-imprimirlos.", "Re-imprimir Travelers", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            Dim res = MessageBox.Show("Estas seguro de re-imprimir los Travelers para este CWO?.", "Re-imprimir Travelers", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
             If res = 6 Then
                 cnn.Close()
                 Dim query As String = $"Begin
                                           declare @filasAfectadas int = 0;
                                           UPDATE tblCWO SET PrintedSNCWO = 0 where CWO = '{CWO}'
                                           SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT
-                                          update tblWipDet set Printed = null where CWO = '{CWO}'
-                                          SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT
-                                          delete from tblCwoSerialNumbers where cwo = '{CWO}'
-                                          SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT
+                                          /*update tblWipDet set Printed = null where CWO = '{CWO}'*/
+                                          /*SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT*/
+                                          /*delete from tblCwoSerialNumbers where cwo = '{CWO}'*/
+                                          /*SET @filasAfectadas = @filasAfectadas + @@ROWCOUNT*/
                                           SELECT @filasAfectadas
                                         end"
                 Dim oCount = CInt(execNow(query).ExecuteScalar())
                 cnn.Close()
+                query = $"insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values ('{CWO}','{UserName}','{lbldept.Text}','Se re-imprimen travelers',GETDATE(),'MLF')"
+                oCount += CInt(execNow(query).ExecuteScalar())
+                cnn.Close()
+                query = $"insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values ('{WIP}','{UserName}','{lbldept.Text}','Se re-imprimen travelers para CWO= {CWO}',GETDATE(),'MLF')"
+                oCount += CInt(execNow(query).ExecuteScalar())
+                cnn.Close()
                 If oCount > 0 Then
-                    MessageBox.Show("Se actualizo con exito.")
+                    MessageBox.Show("Listo para re imprimir este CWO.", "Re-imprimir Travelers")
                 Else
-                    MessageBox.Show("Revisa este CWO.")
+                    MessageBox.Show("Revisa este CWO.", "Re-imprimir Travelers")
                 End If
             End If
         Catch ex As Exception
-            MessageBox.Show("Revisa este CWO, error " + ex.ToString)
+            If Not ex.Message Like "*was not closed*" Then
+                MessageBox.Show("Revisa este CWO, error " + ex.ToString)
+                EnviaCorreoFalla($"ReImprimirTravelers {ex}", host, UserName)
+            End If
             cnn.Close()
         End Try
     End Sub

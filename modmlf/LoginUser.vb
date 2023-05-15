@@ -5,6 +5,7 @@ Public Class LoginUser
     Public password As String
     Public aModule As String
     Public Dept As String
+    Public SuperAdmin As Boolean
     Public Sub New(Optional username As String = "", Optional password As String = "", Optional aModule As String = "MLF")
         Me.username = username
         Me.password = password
@@ -32,7 +33,7 @@ Public Class LoginUser
     End Property
     Public Function GetUserAuthorization() As Boolean
         Dim Resp As Boolean
-        Dim Query As String = "SELECT UserID,Department FROM tblItemsPOUserIDAuthorizations WHERE UserID=@UserID AND Module=@Module and Active=1"
+        Dim Query As String = "SELECT UserID,Department,IsNull(Menu,'0') FROM tblItemsPOUserIDAuthorizations WHERE UserID=@UserID AND Module=@Module and Active=1"
         Try
             Dim cmd As SqlCommand = New SqlCommand(Query, cnn)
             Dim DR As SqlDataReader
@@ -45,6 +46,7 @@ Public Class LoginUser
                 While DR.Read
                     Me.Dept = DR.GetValue(1).ToString
                     Me.username = DR.GetValue(0).ToString
+                    SuperAdmin = CBool(DR.GetValue(2).ToString)
                     Resp = True
                 End While
             Else

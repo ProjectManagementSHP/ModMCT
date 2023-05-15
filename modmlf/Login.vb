@@ -66,6 +66,7 @@ Public Class Login
 					If User.GetUserAuthorization() Then
 						dep = User.AuthorizedDept
 						UserName = User.AuthorizedName
+						IsAdmin = User.SuperAdmin
 						If CbRecordarUser.Checked Then
 							RecordarUsuario()
 						End If

@@ -23,6 +23,7 @@ Module Variables
 	Public edo As String
 	Public query As String = ""
 	Public opcion As Integer
+	Public IsAdmin As Boolean
 	Public UserName As String = Environment.UserName
 	Public campocortesolicitud As String
 	Public CWO As String, ver As String, Cell As String

@@ -14,7 +14,7 @@ Public Class Usuarios
 	Private Sub LoadUsers()
 		Dim read As SqlDataReader
 		Dim tb As New DataTable
-		read = execQuery("SELECT IDUsuario,UserID,Position,Active,Module,Department FROM tblItemsPOUserIDAuthorizations WHERE Module='MLF' and Active=1").ExecuteReader
+		read = execQuery("SELECT IDUsuario,UserID,Position,Active,Module,Department,IsNull(Menu,'0') [Admin Planeacion] FROM tblItemsPOUserIDAuthorizations WHERE Module='MLF' and Active=1").ExecuteReader
 		tb.Load(read)
 		With dgvUsers
 			.DataSource = tb
@@ -29,6 +29,8 @@ Public Class Usuarios
 			TextBox1.Text = $"{dgvUsers.Rows(e.RowIndex).Cells("UserID").Value}"
 			TextBox2.Text = $"{dgvUsers.Rows(e.RowIndex).Cells("Position").Value}"
 			CheckBox8.Checked = CBool(dgvUsers.Rows(e.RowIndex).Cells("Active").Value)
+			CheckBox9.Checked = CBool(dgvUsers.Rows(e.RowIndex).Cells("Admin Planeacion").Value)
+			CheckBox9.Visible = CheckBox9.Checked
 			iduser = CInt(dgvUsers.Rows(e.RowIndex).Cells("IDUsuario").Value)
 			Dim dept As String = $"{dgvUsers.Rows(e.RowIndex).Cells("Department").Value}"
 
@@ -105,10 +107,10 @@ Public Class Usuarios
 		Try
 			Dim query As String = ""
 			If Button1.Text = "Actualizar" Then
-				query = $"update tblItemsPOUserIDAuthorizations set UserID='{TextBox1.Text}',Position='{TextBox2.Text}',Active='{CheckBox8.Checked}',Department='{GetDepts()}' where IDUsuario={iduser}"
+				query = $"update tblItemsPOUserIDAuthorizations set UserID='{TextBox1.Text}',Position='{TextBox2.Text}',Active='{CheckBox8.Checked}',Department='{GetDepts()}',Menu='{If(CheckBox9.Checked, 1, 0)}' where IDUsuario={iduser}"
 			ElseIf Button1.Text = "Agregar" Then
-				query = $"insert into tblItemsPOUserIDAuthorizations (UserID,Position,Active,Department,Module,Form)
-                         values ('{TextBox1.Text}','{TextBox2.Text}','{CheckBox8.Checked}','{GetDepts()}','MLF','modmlf')
+				query = $"insert into tblItemsPOUserIDAuthorizations (UserID,Position,Active,Department,Module,Form,Menu)
+                         values ('{TextBox1.Text}','{TextBox2.Text}','{CheckBox8.Checked}','{GetDepts()}','MLF','modmlf','{If(CheckBox9.Checked, 1, 0)}')
                          "
 			End If
 			If query <> "" Then
@@ -137,6 +139,7 @@ Public Class Usuarios
 									   CheckBox3.Checked = False
 									   CheckBox2.Checked = False
 									   CheckBox1.Checked = False
+									   CheckBox9.Checked = False
 									   Return Nothing
 								   End Function
 	Private ChangeCaption As Action(Of Boolean) = Function(resp)
@@ -183,5 +186,11 @@ Public Class Usuarios
 			CheckBox2.Checked = False
 			CheckBox1.Checked = False
 		End If
+	End Sub
+	Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+		CheckBox9.Visible = CheckBox1.Checked
+	End Sub
+	Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+		CheckBox9.Visible = CheckBox2.Checked
 	End Sub
 End Class
