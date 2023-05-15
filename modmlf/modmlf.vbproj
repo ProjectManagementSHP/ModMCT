@@ -28,7 +28,7 @@
     <ProductName>MLF</ProductName>
     <PublisherName>SEA</PublisherName>
     <MinimumRequiredVersion>2.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>22</ApplicationRevision>
+    <ApplicationRevision>23</ApplicationRevision>
     <ApplicationVersion>4.6.10.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
