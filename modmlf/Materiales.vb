@@ -567,10 +567,10 @@ where det.CWO='" + lblcwomat.Text + "' and (Cutting is not null or det.WireBalan
         Catch ex As Exception
             cnn.Close()
             MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla("DisponibilidadApl", host, UserName)
+            EnviaCorreoFalla($"DisponibilidadApl {ex}", host, UserName)
             Return Nothing
         Finally
-            conexion.Close()
+            cnn.Close()
         End Try
     End Function
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked

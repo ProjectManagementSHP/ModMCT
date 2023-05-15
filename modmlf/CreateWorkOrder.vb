@@ -407,7 +407,7 @@ Public Class CreateWorkOrder
                 CellMaxCurrent = "PUR"
             End If
             'CellMaxCurrent = Regex.Replace(CellMaxCurrent, "[aeiouAEIOU]", "")
-            Dim Sort As AutomaticSort = New AutomaticSort(CellMaxCurrent.Trim().ToUpper())
+            Dim Sort As New AutomaticSort(CellMaxCurrent.Trim().ToUpper())
             Dim dtDemon As New DataTable
             dtDemon = (DirectCast(GridDemon.DataSource, DataTable))
             Dim NumTravelers = (From row In dtDemon.AsEnumerable() Select row("WireID")).ToList().Count
