@@ -2219,6 +2219,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             End If
                         End If
                         ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
+                        CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                     End If
                 End If
             End If
@@ -2468,7 +2469,7 @@ else 25 end where WIP = @WIP")
             cmd.ExecuteNonQuery()
             cnn.Close()
         End If
-        FilterInfo()
+        'FilterInfo()
     End Sub
     Private Sub WSortWIPAndACorte(wip As String)
         Dim count As Integer = 0, t As New DataTable
