@@ -1697,7 +1697,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                 End Try
             End Using
             If opcion = 8 Or opcion = 2 Or opcion = 3 Or opcion = 5 Then
-                Dim queryCell As String = "select distinct Cell,0 [Proceso de confirmacion],0 [Listos para entrar], 0 [En MP] from tblPWO"
+                Dim queryCell As String = "select distinct Cell,0 [Proceso de confirmacion],0 [Listos para entrar], 0 [En MP] from tblPWO where Cell <> '' and Cell is not null"
                 Dim cmdo2 As SqlCommand = New SqlCommand(queryCell, conex)
                 cmdo2.CommandType = CommandType.Text
                 cmdo2.CommandTimeout = 120000

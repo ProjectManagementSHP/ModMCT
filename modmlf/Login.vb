@@ -187,6 +187,7 @@ Public Class Login
 			If User.GetUserAuthorization() Then
 				dep = User.AuthorizedDept
 				UserName = User.AuthorizedName
+				IsAdmin = User.SuperAdmin
 				If dep = "Desarrollo" Then
 					With OpcionesLog
 						.AllVisible()
