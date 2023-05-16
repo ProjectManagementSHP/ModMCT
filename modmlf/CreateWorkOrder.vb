@@ -8,6 +8,14 @@ Public Class CreateWorkOrder
     Private FlagSort As Boolean
     Private GridDemon As DataGridView
     Public Sub New(IGrid As DataGridView, ListOfTerm As List(Of ChargeInfo))
+        If IGrid Is Nothing Then
+            Throw New ArgumentNullException(NameOf(IGrid))
+        End If
+
+        If ListOfTerm Is Nothing Then
+            Throw New ArgumentNullException(NameOf(ListOfTerm))
+        End If
+
         NoDemon = IGrid
         ListForProcess = ListOfTerm
     End Sub
@@ -58,6 +66,11 @@ Public Class CreateWorkOrder
             Return _ListForProcess
         End Get
         Set(value As List(Of ChargeInfo))
+
+            If value Is Nothing Then
+                Throw New ArgumentNullException(NameOf(value))
+            End If
+
             _ListForProcess = value
         End Set
     End Property

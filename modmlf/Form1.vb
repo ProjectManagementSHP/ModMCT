@@ -1713,8 +1713,8 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
 
                     For rows = 0 To tbMP.Rows.Count - 1
                         tbMP.Rows(rows).Item(1) = AllocatedAQty(BuildQuery(tbMP.Rows(rows).Item(0).ToString, 1)) ' 'Carga de Celda proceso de confirmacion
-                        tbMP.Rows(rows).Item(2) = AllocatedAQty(BuildQuery(tbMP.Rows(rows).Item(0).ToString, 2)) ' 'Carga de Celda proceso de Troquelado
-                        tbMP.Rows(rows).Item(3) = AllocatedAQty(BuildQuery(tbMP.Rows(rows).Item(0).ToString, 3)) ' 'Carga de Celda por entrar
+                        tbMP.Rows(rows).Item(2) = AllocatedAQty(BuildQuery(tbMP.Rows(rows).Item(0).ToString, 3)) ' 'Carga de Celda proceso de Troquelado
+                        tbMP.Rows(rows).Item(3) = AllocatedAQty(BuildQuery(tbMP.Rows(rows).Item(0).ToString, 2)) ' 'Carga de Celda por entrar
                     Next
 
                 End If
@@ -1927,7 +1927,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                         End If
                     End If
-                    ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" Or IsAdmin 'AndAlso (sort = 3 Or sort = 20)
+                    ReImprimirTravelersToolStripMenuItem.Visible = (Text = "Desarrollo" Or IsAdmin) AndAlso CWO.Substring(0, 1) = "C" 'AndAlso (sort = 3 Or sort = 20)
                     CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                 ElseIf opcion = 6 Or opcion = 7 Then
                     If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -2015,7 +2015,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             End If
                         End If
                         ImprimirReporteToolStripMenuItem.Visible = False
-                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
+                        ReImprimirTravelersToolStripMenuItem.Visible = (Text = "Desarrollo" Or IsAdmin) AndAlso CWO.Substring(0, 1) = "C" ' AndAlso (sort = 3 Or sort = 20)
                         CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                     End If
                 ElseIf opcion = 2 Then
@@ -2083,7 +2083,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             DesviarTerminalToolStripMenuItem.Visible = False
                         End If
                     End If
-                    ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
+                    ReImprimirTravelersToolStripMenuItem1.Visible = (Text = "Desarrollo" Or IsAdmin) AndAlso CWO.Substring(0, 1) = "C" ' AndAlso (sort = 3 Or sort = 20)
                 ElseIf opcion = 3 And sort <> 27 Then
                     If (rbListosParaEntrar.Checked Or rbYaempezados.Checked Or RdbSearch.Checked) And dgv.Rows.Count > 0 Then
                         If e.Button = System.Windows.Forms.MouseButtons.Right Then
@@ -2106,7 +2106,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
-                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
+                            ReImprimirTravelersToolStripMenuItem1.Visible = (Text = "Desarrollo" Or IsAdmin) AndAlso CWO.Substring(0, 1) = "C" ' AndAlso (sort = 3 Or sort = 20)
                         End If
                     End If
                 ElseIf opcion = 5 Then
@@ -2124,7 +2124,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                             ToolStripMenuItem15.Visible = False
                             DesviarTerminalToolStripMenuItem.Visible = True
                             ImprimirReporteToolStripMenuItem.Visible = False
-                            ReImprimirTravelersToolStripMenuItem1.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
+                            ReImprimirTravelersToolStripMenuItem1.Visible = (Text = "Desarrollo" Or IsAdmin) AndAlso CWO.Substring(0, 1) = "C" ' AndAlso (sort = 3 Or sort = 20)
                         End If
                     End If
                 ElseIf opcion = 8 Then
@@ -2218,7 +2218,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
                                 ImprimirReporteToolStripMenuItem.Visible = opcion = 8
                             End If
                         End If
-                        ReImprimirTravelersToolStripMenuItem.Visible = Text = "Desarrollo" Or IsAdmin ' AndAlso (sort = 3 Or sort = 20)
+                        ReImprimirTravelersToolStripMenuItem.Visible = (Text = "Desarrollo" Or IsAdmin) AndAlso CWO.Substring(0, 1) = "C" ' AndAlso (sort = 3 Or sort = 20)
                         CerrarCWOToolStripMenuItem.Visible = Text = "Desarrollo" AndAlso CWO.Substring(0, 1) = "C"
                     End If
                 End If
@@ -2386,7 +2386,7 @@ WHERE E.Maq = MR.Maq AND E.CloseDate IS NULL AND WP.Status = 'Open' AND C.WireBa
         End Try
         '*********
         Poneokalm_apl(CWO, WIP)
-        Filtros(1)
+        'Filtros(1)
     End Sub
     Public Sub Poneokalm_apl(cwo As String, wip As String)
         If opcion = 1 Or opcion = 4 Or opcion = 6 Or opcion = 7 Or opcion = 8 Then
@@ -2789,7 +2789,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then 'Solicitar Mat/Apl XP and KoA normal
                 cmd = " where (((w.WSort in (3,12,20,27,25)) and (c.Wsort in (3,27))) or (w.wSort = 12 and c.WSort=12)) and c.Status = 'OPEN' and c.Id is null and c.dateSolicitud is null order by c.Maq desc,c.Id asc,w.WIP"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort = '3' and c.dateSolicitud is null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) /*and a.Status = 'OPEN'*/ and c.Status = 'OPEN' and (a.MP > 0 or a.SA > 0) and a.Corte = 0 and c.wSort = '3' and c.dateSolicitud is null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 3 Then 'Listos Para Entrar
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null and (w.KindOfAU not like '[XP]%') and c.Maq > 0 order by c.Maq desc,c.Id asc"
@@ -2798,7 +2798,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where c.Wsort in (20,12,14) and c.Wsort in (20,12,14) and c.Status = 'OPEN' and c.dateSolicitud is not null order by c.CWO /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (20,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) /*and a.Status = 'OPEN'*/ and c.Status = 'OPEN' and (a.MP > 0 or a.SA > 0) and a.Corte = 0 and c.wSort in (20,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 4 Then 'Ya empezados
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' and (w.KindOfAU not like '[XP]%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
@@ -2807,7 +2807,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort in (3,20,25,29,12)) and c.wsort = 25 and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (25,12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort = 25)))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (25,12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort = 25)))) /*and a.Status = 'OPEN'*/ and c.Status = 'OPEN' and (a.MP > 0 or a.SA > 0) and a.Corte = 0 and c.wSort in (25,12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 5 Then 'Empezados y Detenidos
             If opcion = 1 Or opcion = 6 Then
                 cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' and (w.KindOfAU not like '[XP]%') and c.Maq > 0 order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
@@ -2816,7 +2816,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             ElseIf opcion = 2 Or opcion = 3 Or opcion = 5 Or opcion = 8 Then
                 cmd = " where (w.WSort = 3 or w.WSort = 20 or w.WSort = 25 or w.WSort = 3) And (c.Wsort = 22 Or c.Wsort = 24) and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (22,24) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and a.wSort > 30) or (KindOfAU not like '[XP%]' and a.wSort > 29)) and a.Status = 'OPEN' /*and c.Status = 'OPEN'*/ and (a.MP > 0 or a.SA > 0) and a.Corte = 0 and c.wSort in (22,24) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         ElseIf a = 6 Then 'On Hold
             If opcion = 5 Then
                 cmd = " where (c.Wsort in (3,27,12,14,20,25)) And (c.Wsort in (27,11,12,13,14,20)) and (ConfirmacionAlm='OnHold') and w.WIP in (select distinct WIP from tblItemsQB as q inner join tblBOMCWO as bc on q.PN=bc.PN where WIP in (select distinct w.WIP from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO where (c.Wsort in (3,27,12,14,20)) And (c.Wsort in (27,11,12,13,14,20)) and (ConfirmacionAlm='OnHold')) and (q.QtyOnHand = 0 or bc.Balance > q.QtyOnHand or bc.Hold=1)) order by c.Maq desc,c.Id asc"
@@ -2827,7 +2827,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             Else
                 cmd = " where (w.WSort = 3 or w.wSort = 27 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort = 27 Or c.Wsort = 12 or c.WSort = 14) and c.Status = 'OPEN' order by c.Maq desc,c.Id asc /*w.CreatedDate*/"
             End If
-            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) and a.Status = 'OPEN' and c.Status = 'OPEN' and a.MP > 0 and a.Corte = 0 and c.wSort in (12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
+            wherePWO = " Where ((KindOfAU like '[XP]%' and (a.wSort > 30 or a.wSort in (12,14)) or (KindOfAU not like '[XP%]' and (a.wSort > 29 or a.wSort in (12,14))))) /*and a.Status = 'OPEN'*/ and c.Status = 'OPEN' and (a.MP > 0 or a.SA > 0) and a.Corte = 0 and c.wSort in (12,14) and c.dateSolicitud is not null order by c.Cell desc,c.Id asc,a.WIP"
         End If
         If opcion = 5 Then
             query = "select distinct w.WIP,c.CWO,c.Id [Orden Corte],c.Maq,w.AU,w.Rev,w.wSort [wSort WIP],c.WSort [wSort CWO],w.Qty,w.KindOfAU,w.Customer, [100SU] + [100RT] [100TL],w.IT,w.PR,FORMAT(w.DueDateProcess, 'dd-MMM-yy', 'en-US' ) [DueDateProcess],FORMAT(w.CreatedDate, 'dd-MMM-yy', 'en-US' ) [DateCreatedWIP],Sem,FORMAT(ProcFDispMat, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales],ProcNotas [Notas Compras],FORMAT(ProcFDispMat2, 'dd-MMM-yy', 'en-US' ) [Fecha Materiales despues de Hold],case when w.ExCs is not null and w.ExMateriales is not null then 1 else 0 end [CheckExp] from tblCWO as c inner join tblWipDet as d on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO"
