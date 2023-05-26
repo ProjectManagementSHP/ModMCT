@@ -4562,7 +4562,7 @@ and a.Balance > 0)"
                                                              cnn.Open()
                                                              Return ocmd
                                                          End Function
-            Dim MaqUsed = CInt(execNow($"select Maq from tblCWO where CWO = '{CWO}'").ExecuteScalar()), OldIdSort = CInt(execNow($"select Id from tblCWO where CWO = '{CWO}'").ExecuteScalar())
+            Dim MaqUsed = CInt(execNow($"select Maq from tblCWO where CWO = '{CWO}'").ExecuteScalar()), OldIdSort = CInt(execNow($"select IsNull(Id,0) from tblCWO where CWO = '{CWO}'").ExecuteScalar())
             Dim countInt = 0
             Dim query() As String = {$"UPDATE tblWipDet SET WireBalance= 0 WHERE CWO = '{CWO}'", $"UPDATE tblWipDet SET TABalance= case when MaqA='MA' then 0 else TABalance end WHERE CWO = '{CWO}'", $"UPDATE tblWipDet SET TBBalance= case when MaqB='MA' then 0 else TBBalance end WHERE CWO = '{CWO}'", $"UPDATE tblCWO SET Status= 'CLOSE', CloseDate= GETDATE(),Notes='{Note_Closing}', WSort= 30,id=null WHERE CWO = '{CWO}'", $"UPDATE tblCWOSerialNumbers SET Cutting=GETDATE(), UserCutting='0000'  WHERE CWO='{CWO}' AND Cutting IS NULL", $"UPDATE tblBOMCWO SET Hold=0 WHERE CWO='{CWO}' AND Hold=1"}
             For Each q In query
@@ -4570,7 +4570,7 @@ and a.Balance > 0)"
                 cnn.Close()
                 countInt += 1
             Next
-            If countInt > 0 Then
+            If countInt > 0 And OldIdSort > 0 Then
                 Dim iSortCWO As New AutomaticSort(MaqUsed, OldIdSort)
                 With iSortCWO
                     .ReOrderSort()
@@ -4588,17 +4588,84 @@ and a.Balance > 0)"
         End Try
         Return True
     End Function
+    Public Function CancelCWO(Note_Cancel As String)
+        Try
+            If CWO = "" Then Return False
+            Dim execNow As Func(Of String, SqlCommand) = Function(q)
+                                                             cnn.Close()
+                                                             Dim ocmd As New SqlCommand(q, cnn)
+                                                             ocmd.CommandType = CommandType.Text
+                                                             cnn.Open()
+                                                             Return ocmd
+                                                         End Function
+
+            Dim MaqUsed = CInt(execNow($"select Maq from tblCWO where CWO = '{CWO}'").ExecuteScalar()), OldIdSort = CInt(execNow($"select IsNull(Id,0) from tblCWO where CWO = '{CWO}'").ExecuteScalar())
+            Dim countInt = 0
+
+            Dim tb As New DataTable
+            Dim dr As SqlDataReader
+            dr = execNow($"select distinct a.WIP from tblWIP a inner join tblWipDet b on a.WIP=b.WIP where CWO = '{CWO}'").ExecuteReader()
+            tb.Load(dr)
+            Dim Wips = (From row In tb.AsEnumerable() Select row.Item("WIP")).Distinct.ToList()
+
+            Dim query() As String = {$"DELETE FROM tblCWOSerialNumbers where CWO = '{CWO}'", $"update tblcwo set Status = 'CANCEL',WSort=30,CloseDate=getdate(),Notes='{Note_Cancel}' where CWO ='{CWO}'", $"delete from tblBOMCWO where CWO ='{CWO}'"}
+
+            For Each q In query
+                execNow(q).ExecuteNonQuery()
+                cnn.Close()
+                countInt += 1
+            Next
+
+            For Each oWIP In Wips
+                execNow($"UPDATE tblWipDet SET CWO= '0',CWOStatus='0',PWOStatus='0',WireBalance=Balance,TAbalance = TA,TBBalance = TB,Printed=null,MaqA=null,Maqb=null,MaqCategory=0,Category=0,AplicatorA=null,AplicatorB=null,
+IDKeyA=null,IDKeyB=null,TermAStatus=null,TermBStatus=null,TimeA=null,timeB=null,FirstPCOKCWO=null,inspectorCWO=null,firstPCOKCWODate=null,ordertoprint=null,MaqUsed=null,idsort=null,Tsetup=null,truntime=null,scaneoprocess=0 
+WHERE WIP= '{oWIP}' and CWO = '{CWO}'
+UPDATE tblWIP SET wSort= 2 WHERE WIP= '{oWIP}'
+update tblBOMwip set Balance= Qty where wip = '{oWIP}' and (pn like '[TW]%' or pn like 'C_[0-9]%')
+update tblcwo set Notes = Notes + ';' + '{oWIP}' where CWO = '{CWO}'
+").ExecuteNonQuery()
+            Next
+
+            cnn.Close()
+
+            If countInt > 0 And OldIdSort > 0 Then
+                Dim iSortCWO As New AutomaticSort(MaqUsed, OldIdSort)
+                With iSortCWO
+                    .ReOrderSort()
+                    If Not .CheckZeros() Then
+                        .RemoveZeros()
+                    End If
+                End With
+            End If
+
+        Catch ex As Exception
+            If Not ex.Message Like "*was not closed*" Then
+                MsgBox(ex.Message + vbNewLine + ex.ToString)
+            End If
+            cnn.Close()
+            Return False
+        End Try
+        Return True
+    End Function
     Private Sub ReImprimirTravelersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReImprimirTravelersToolStripMenuItem.Click
         ReImprimirTravelers()
     End Sub
     Private Sub ReImprimirTravelersToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ReImprimirTravelersToolStripMenuItem1.Click
         ReImprimirTravelers()
     End Sub
-    Private Sub CerrarCWOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarCWOToolStripMenuItem.Click
+    Private Sub CerrarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarToolStripMenuItem.Click
         Dim res = MessageBox.Show("Asegurate de que este CWO no este en corte para poder cerrarlo.", "Cerrar CWO", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
         If res = 6 Then
-            Dim Close_CWO As New CloseCWO
+            Dim Close_CWO As New CloseCWO(True)
             Close_CWO.ShowDialog()
+        End If
+    End Sub
+    Private Sub CancelarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelarToolStripMenuItem.Click
+        If sort = 3 Or sort = 20 Then
+            Dim Cancel_CWO As New CloseCWO(False)
+            Cancel_CWO.ShowDialog()
+        Else
+            MessageBox.Show("Este CWO no se puede cancelar debido a que ya se empezo a procesar.", "Cancelar CWO.")
         End If
     End Sub
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
