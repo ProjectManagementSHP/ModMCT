@@ -482,7 +482,7 @@ Public Class HoraXHora
             MsgBox(ex.ToString)
         End Try
     End Sub
-    Function CargaTable(ByVal consulta As String)
+    Function CargaTable(consulta As String)
         Try
             tabla.Clear()
             cnn.Open()
@@ -2015,14 +2015,14 @@ Public Class HoraXHora
     End Sub
     Private Sub btnRefrescarMaqPN_Click(sender As Object, e As EventArgs) Handles btnRefrescarMaqPN.Click
         ' Evento creado para salir del modo de busqueda por hora x hora seleccionada en el maskedbox, y ver todo en general
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         LlenaGridPnInCWO()
         llenaGridMatInProd()
         LlenaGridSimilitud()
         btnRefrescarMaqPN.Visible = False
         TabPage1.Parent = Nothing
         txtBuscador.Clear()
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Sub CalculateCompare(PN As String, QtyInProd As Integer)
         ' En este metodo, invocado por el evento dgvPNinProdd_CellDoubleClick_1(), buscamos el numero de parte seleccionado para asi, si existe en
@@ -2097,7 +2097,7 @@ Public Class HoraXHora
     End Sub
     Private Sub btnRefrescaGridCut_Click(sender As Object, e As EventArgs) Handles btnRefrescaGridCut.Click
         ' Evento creado para refrescar toda la vista del usuario y estar actualizado
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Dim clear As New DataTable()
         clear.Rows.Add(clear.NewRow)
         DataGridView1.DataSource = clear
@@ -2116,7 +2116,7 @@ Public Class HoraXHora
         lblHrsConsultadas.Text = " Horas consultadas."
         lblHrsConsultadas.Visible = False
         dgvWipCutCard.DataSource = Nothing
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Sub llenaGridMatInProd()
         Try
@@ -2422,7 +2422,7 @@ Public Class HoraXHora
         Principal.Show()
     End Sub
     Private Sub mtbxProxHrs_KeyPress_1(sender As Object, e As KeyPressEventArgs) Handles mtbxProxHrs.KeyPress
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Try
             If e.KeyChar = Chr(13) And IsNumeric(mtbxProxHrs.Text) And mtbxProxHrs.Text.Length <= 2 Then
                 If mtbxProxHrs.Text < 18 Then
@@ -2450,10 +2450,10 @@ Public Class HoraXHora
         Catch ex As Exception
             MsgBox(ex.ToString)
         End Try
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         Dim clear As New DataTable()
         clear.Rows.Add(clear.NewRow)
         DataGridView1.DataSource = clear
@@ -2472,7 +2472,7 @@ Public Class HoraXHora
         lblHrsConsultadas.Text = " Horas consultadas."
         lblHrsConsultadas.Visible = False
         dgvWipCutCard.DataSource = Nothing
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
         Dim respuesta As String
@@ -2500,7 +2500,7 @@ Public Class HoraXHora
         End If
     End Sub
     Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
-        Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
+        Cursor.Current = Cursors.WaitCursor
         If CWO <> "" Then
             Dim ver As Char = CWO(0)
             If ver = "C" Then
@@ -2513,7 +2513,7 @@ Public Class HoraXHora
             End If
         End If
         ContextMenuAsignar.Close()
-        Cursor.Current = System.Windows.Forms.Cursors.Default
+        Cursor.Current = Cursors.Default
     End Sub
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
 
@@ -2618,7 +2618,7 @@ Public Class HoraXHora
         End If
         Cursor.Current = Cursors.Default
     End Sub
-    Public Sub filtrarDatos(ByVal buscar As String)
+    Public Sub filtrarDatos(buscar As String)
         Try
             Dim da1 As New SqlDataAdapter, da2 As New SqlDataAdapter, da3 As New SqlDataAdapter, da4 As New SqlDataAdapter, da5 As New SqlDataAdapter, da6 As New SqlDataAdapter, da7 As New SqlDataAdapter, da8 As New SqlDataAdapter, da9 As New SqlDataAdapter, da10 As New SqlDataAdapter, da11 As New SqlDataAdapter, da12 As New SqlDataAdapter, da13 As New SqlDataAdapter, da14 As New SqlDataAdapter
             query = "select PN, CONVERT(int,SUM(balance)) [Qty],CONVERT(int,SUM(ISNULL(TagAsignado,0))) [Tag Asignado],Hold from tblBOMCWO where CWO in (select CWO from tblCWO where WSort in (20,25,29) and Status='OPEN' and (Id is not null or Id > 0) and Maq = 1) and CONVERT(int,Balance) > 0 and PN not like 'S%' and PN like @filtro group by PN,Hold"

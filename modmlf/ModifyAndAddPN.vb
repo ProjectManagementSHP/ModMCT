@@ -21,9 +21,9 @@ Public Class ModifyAndAddPN
                     tb = IDemonChanges.GetTable($"select distinct WIP from tblBOMWIP cw where cw.PN = '{Me.PN}' and (cw.WIP in 
 (select distinct w.WIP from tblCWO as c inner join tblWipDet as d 
 on c.CWO=d.CWO inner join tblWIP as w on w.WIP=d.WIP inner join tblTiemposEstCWO as t on t.CWO=c.CWO 
-where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25) And (c.Wsort in (12,13,14)) 
+where (w.WSort = 3 or w.WSort=12 or w.WSort=14 or w.WSort=25 or w.Recortes = 1) And (c.Wsort in (12,13,14)) 
 and (ConfirmacionAlm='OnHold')) or cw.WIP in (select distinct w.WIP from tblPWO as c inner join tblWipDet as d on c.PWO=d.PWOA OR c.PWO=d.PWOB inner join tblWIP as w on w.WIP=d.WIP 
-where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort > 30 or w.wSort in (12,14)))) And (c.Wsort in (12,14)) and (ConfirmacionAlm='OnHold')))) or Wip in (select WIP from tblWipCortosPN where PN='{Me.PN}')) ")
+where (((KindOfAU like '[XP]%' and (w.wSort > 32 or w.wSort in (12,14)) or (KindOfAU not like '[XP]%' and (w.wSort > 30 or w.wSort in (12,14) or w.Recortes = 1))) And (c.Wsort in (12,14)) and (ConfirmacionAlm='OnHold')))) or Wip in (select WIP from tblWipCortosPN where PN='{Me.PN}')) ")
                     If tb.Rows.Count > 0 Then
                         For Each wip As DataRow In tb.Rows
                             IDemonChanges.NotesInWIP(wip.Item("WIP").ToString, txbNotasModify.Text + " " + txbNotas.Text, dtpFProm.Value.ToString)

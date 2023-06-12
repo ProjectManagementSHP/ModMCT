@@ -30,23 +30,23 @@ Public Class Graficas
             ElseIf filtroPrincipal = "Wips Planeados Sin CWO" And dept = "Zona 0" Then
                 where = " WHERE Sem <= DATEPART(ISO_WEEK,GETDATE()) + 2 and DATEPART(year,CONVERT(date,DayOfSem)) <= DATEPART(year,CONVERT(date,GETDATE())) AND CWO='0' AND ti.Rev=w.Rev AND Status='OPEN' AND w.KindOfAU LIKE 'XP%'"
             ElseIf filtroPrincipal = "CWO Nuevos" And dept = "Todos" Then
-                where = "  inner join tblCWO c on c.CWO=d.CWO where (W.wSort IN (3,27)) and (C.WSort IN (3,27)) and c.FechaSolicitudMat is null"
+                where = "  inner join tblCWO c on c.CWO=d.CWO where (W.wSort IN (3,27) or w.Recortes = 1) and (C.WSort IN (3,27)) and c.FechaSolicitudMat is null"
             ElseIf filtroPrincipal = "CWO Nuevos" And dept = "Produccion" Then
                 where = "  inner join tblCWO c on c.CWO=d.CWO where (W.wSort IN (3,27)) and (C.WSort IN (3,27)) and c.FechaSolicitudMat is null and w.KindOfAU not like 'XP%'"
             ElseIf filtroPrincipal = "CWO Nuevos" And dept = "Zona 0" Then
-                where = "  inner join tblCWO c on c.CWO=d.CWO where (W.wSort IN (3,27)) and (C.WSort IN (3,27)) and c.FechaSolicitudMat is null and w.KindOfAU like 'XP%'"
+                where = "  inner join tblCWO c on c.CWO=d.CWO where (W.wSort IN (3,27) or w.Recortes = 1) and (C.WSort IN (3,27)) and c.FechaSolicitudMat is null and w.KindOfAU like 'XP%'"
             ElseIf filtroPrincipal = "CWO Solicitados" And dept = "Todos" Then
-                where = "  inner join tblCWO c on c.CWO=d.CWO where (w.wSort in (3,27,12,14,25)) and (c.Wsort in (9,11,13,14,12,27)) and c.FechaSolicitudMat is not null"
+                where = "  inner join tblCWO c on c.CWO=d.CWO where (w.wSort in (3,27,12,14,25) or w.Recortes = 1) and (c.Wsort in (9,11,13,14,12,27)) and c.FechaSolicitudMat is not null"
             ElseIf filtroPrincipal = "CWO Solicitados" And dept = "Produccion" Then
                 where = "  inner join tblCWO c on c.CWO=d.CWO where (w.wSort in (3,27,12,14,25)) and (c.Wsort in (9,11,13,14,12,27)) and c.FechaSolicitudMat is not null and w.KindOfAU not like 'XP%'"
             ElseIf filtroPrincipal = "CWO Solicitados" And dept = "Zona 0" Then
-                where = "  inner join tblCWO c on c.CWO=d.CWO where (w.wSort in (3,27,12,14,25)) and (c.Wsort in (9,11,13,14,12,27)) and c.FechaSolicitudMat is not null and w.KindOfAU like 'XP%'"
+                where = "  inner join tblCWO c on c.CWO=d.CWO where (w.wSort in (3,27,12,14,25) or w.Recortes = 1) and (c.Wsort in (9,11,13,14,12,27)) and c.FechaSolicitudMat is not null and w.KindOfAU like 'XP%'"
             ElseIf filtroPrincipal = "CWO En Corte" And dept = "Todos" Then
-                where = " inner join tblCWO c on c.CWO=d.CWO where (w.WSort in (3,20,25,29)) and c.wsort = 25"
+                where = " inner join tblCWO c on c.CWO=d.CWO where (w.WSort in (3,20,25,29) or w.Recortes = 1) and c.wsort = 25"
             ElseIf filtroPrincipal = "CWO En Corte" And dept = "Produccion" Then
                 where = " inner join tblCWO c on c.CWO=d.CWO where (w.WSort in (3,20,25,29)) and c.wsort = 25 and w.KindOfAU not like 'XP%'"
             ElseIf filtroPrincipal = "CWO En Corte" And dept = "Zona 0" Then
-                where = "  inner join tblCWO c on c.CWO=d.CWO where (w.WSort in (3,20,25,29)) and c.wsort = 25 and w.KindOfAU like 'XP%'"
+                where = "  inner join tblCWO c on c.CWO=d.CWO where (w.WSort in (3,20,25,29) or w.Recortes = 1) and c.wsort = 25 and w.KindOfAU like 'XP%'"
             End If
             consulta += where
             tabla.Clear()
