@@ -543,7 +543,7 @@ Public Class Principal
                     If CInt(rows.Item(1).ToString) < 30 Then
                         Materiales.UpdateHoldPN(rows.Item(0).ToString, oPn)
 
-                        execUpdate($"update tblWIP set wSort=case when Recortes is null or Recortes = 0 then wSort else 12 end where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(rows.Item(0), 1) = "C", $"CWO='{rows.Item(0)}'", $"PWOA='{rows.Item(0)}' or PWOB='{rows.Item(0)}'")} )")
+                        execUpdate($"update tblWIP set wSort=case when Recortes = 1 then wSort else 12 end where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(rows.Item(0), 1) = "C", $"CWO='{rows.Item(0)}'", $"PWOA='{rows.Item(0)}' or PWOB='{rows.Item(0)}'")} )")
 
                         execUpdate($"update tbl{Microsoft.VisualBasic.Left(rows.Item(0), 1)}WO set wSort= 12,ConfirmacionAlm='OnHold', dateConfirmaAlm=GETDATE() where {Microsoft.VisualBasic.Left(rows.Item(0), 1)}WO='{rows.Item(0)}'")
                     End If
@@ -618,7 +618,7 @@ Public Class Principal
     End Property
     Public Function FiltraPNMaterialGroup(SearchPn As String) As Boolean
         Try
-            Dim query As String = $"select case when MaterialGroup = 'MG01' then 'True' else 'False' end from tblItemsMaterialGroup where MaterialGroup = (select distinct MaterialGroup from tblitemsqb where pn = '{SearchPn}')"
+            Dim query As String = $"select case when MaterialGroup in ('MG01','MG05') then 'True' else 'False' end from tblItemsMaterialGroup where MaterialGroup = (select distinct MaterialGroup from tblitemsqb where pn = '{SearchPn}')"
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
             cnn.Open()
@@ -2456,7 +2456,7 @@ where PWO = @CWO")
                 )
             End If
             'Cambio de recortes, si es recorte no cambia wsort
-            Dim queryUpdate As String = If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "update tblWIP set WSort = case when Recortes is null or Recortes = 0 then WSort when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort >= 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 25 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort < 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 20 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 12) >= 1 then 12 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 14) >= 1 then 14 else 25 end where WIP =@WIP",
+            Dim queryUpdate As String = If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "update tblWIP set WSort = case when Recortes = 1 then WSort when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort >= 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 25 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort < 25) = (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP)) then 20 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 12) >= 1 then 12 when (select COUNT(WSort) from tblCWO where CWO in (select distinct CWO from tblWipDet where WIP=@WIP) and WSort = 14) >= 1 then 14 else 25 end where WIP =@WIP",
                 "update tblWIP set WSort = case when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 14) > 0 then 14 
 when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 12) > 0 then 12 
 when KindOfAU like '[XP]%' and MP = 0 and IEns > 0 then 75
@@ -2487,7 +2487,7 @@ else 25 end where WIP = @WIP")
             edo = cnn.State.ToString
             cnn.Close()
             Dim wSort = (From row In t.AsEnumerable() Select row("wsort")).Where(Function(d) d >= 20).ToList().Count()
-            queru = If(opcion = 8, "update tblWIP set Wsort = case when Recortes is null or Recortes = 0 then WSort when Wsort=12 or wSort=14 then Wsort when KindOfAU like '[XP%]' and MP = 0 and IEns > 0 then 75 when KindOfAU not like '[XP%]' and MP = 0 and Ens > 0 then 30 else wSort end where WIP = @wip", If(wSort > 0, "update tblWIP set Wsort = case when Recortes is null or Recortes = 0 then WSort when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 when Wsort=20 then Wsort when Wsort=3 then 20 when wsort=25 then wsort when wsort=29 then wsort else 20 end, [A.Corte] = case when Recortes = 1 then [A.Corte] when [A.Corte] is null then Balance else [A.Corte] end where WIP= @wip", "update tblWIP set Wsort = case when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 else 20 end, [A.Corte] = case when Recortes = 1 then [A.Corte] when [A.Corte] is null and (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) < Qty then Qty - (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) else [A.Corte] end where WIP= @wip")) 'Cambio en agregar cantidades en a.corte si no es un recorte
+            queru = If(opcion = 8, "update tblWIP set Wsort = case when Recortes = 1 then WSort when Wsort=12 or wSort=14 then Wsort when KindOfAU like '[XP%]' and MP = 0 and IEns > 0 then 75 when KindOfAU not like '[XP%]' and MP = 0 and Ens > 0 then 30 else wSort end where WIP = @wip", If(wSort > 0, "update tblWIP set Wsort = case when Recortes = 1 then WSort when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 when Wsort=20 then Wsort when Wsort=3 then 20 when wsort=25 then wsort when wsort=29 then wsort else 20 end, [A.Corte] = case when Recortes = 1 then [A.Corte] when [A.Corte] is null then Balance else [A.Corte] end where WIP= @wip", "update tblWIP set Wsort = case when Wsort=12 then 12 when Wsort=14 then 14 when (select Count(CWO) from tblWipDet where WIP=@wip and CWO = '0') > 0 then 3 else 20 end, [A.Corte] = case when Recortes = 1 then [A.Corte] when [A.Corte] is null and (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) < Qty then Qty - (Corte + MP + Ens + IEns + Shipping + FGSHP + FGSHPEP) else [A.Corte] end where WIP= @wip")) 'Cambio en agregar cantidades en a.corte si no es un recorte
             Try
                 cmd = New SqlCommand(queru, cnn)
                 cmd.CommandType = CommandType.Text
@@ -2711,7 +2711,7 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
                     cmd.ExecuteNonQuery()
                     cnn.Close()
                 ElseIf RevWO = "WIP" Then
-                    update = "update tblWIP set WSort = case when Recortes is null or Recortes = 0 then wSort when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or 
+                    update = "update tblWIP set WSort = case when Recortes = 1 then wSort when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or 
                               PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 14) > 0 then 14 
                               when (select COUNT(WSort) from tblPWO where (PWO in (select distinct PWOA from tblWipDet where WIP=@WIP) or 
                               PWO in (select distinct PWOB from tblWipDet where WIP=@WIP)) and WSort = 12) > 0 then 12 
@@ -2934,51 +2934,51 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
     '        cnn.Close()
     '    End Try
     'End Function
-    Public Sub notesWIPandCWOquitaOnHoldde26(notes As String, cwo As String, wip As String)
-        Try
-            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@note,GETDATE(),'MLF')"
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
-            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
-            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
-            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
-            cnn.Open()
-            cmd.ExecuteNonQuery()
-            cnn.Close()
-            query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@note,GETDATE(),'MLF')"
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = wip
-            cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
-            cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
-            cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes + " CWO: " + cwo
-            cnn.Open()
-            cmd.ExecuteNonQuery()
-            cnn.Close()
-            NotesInWIP(wip, notes + " CWO: " + cwo, "")
-            query = "update tblCWO set wSort = 3 where CWO=@wo"
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add("@wo", SqlDbType.NVarChar).Value = cwo
-            cnn.Open()
-            cmd.ExecuteNonQuery()
-            cnn.Close()
+    'Public Sub notesWIPandCWOquitaOnHoldde26(notes As String, cwo As String, wip As String)
+    '    Try
+    '        query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@note,GETDATE(),'MLF')"
+    '        cmd = New SqlCommand(query, cnn)
+    '        cmd.CommandType = CommandType.Text
+    '        cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = cwo
+    '        cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+    '        cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+    '        cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes
+    '        cnn.Open()
+    '        cmd.ExecuteNonQuery()
+    '        cnn.Close()
+    '        query = "insert into tblXpHist (WIP,Uname,AreaCreacion,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@note,GETDATE(),'MLF')"
+    '        cmd = New SqlCommand(query, cnn)
+    '        cmd.CommandType = CommandType.Text
+    '        cmd.Parameters.Add("@CWO", SqlDbType.NVarChar).Value = wip
+    '        cmd.Parameters.Add("@User", SqlDbType.NVarChar).Value = UserName
+    '        cmd.Parameters.Add("@Department", SqlDbType.NVarChar).Value = lbldept.Text
+    '        cmd.Parameters.Add("@note", SqlDbType.NVarChar).Value = notes + " CWO: " + cwo
+    '        cnn.Open()
+    '        cmd.ExecuteNonQuery()
+    '        cnn.Close()
+    '        NotesInWIP(wip, notes + " CWO: " + cwo, "")
+    '        query = "update tblCWO set wSort = 3 where CWO=@wo"
+    '        cmd = New SqlCommand(query, cnn)
+    '        cmd.CommandType = CommandType.Text
+    '        cmd.Parameters.Add("@wo", SqlDbType.NVarChar).Value = cwo
+    '        cnn.Open()
+    '        cmd.ExecuteNonQuery()
+    '        cnn.Close()
 
-            query = "update tblWIP set wSort= case when Recortes is null or Recortes = 0 then wSort else 3 end where WIP=@wip"
-            cmd = New SqlCommand(query, cnn)
-            cmd.CommandType = CommandType.Text
-            cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
-            cnn.Open()
-            cmd.ExecuteNonQuery()
-            cnn.Close()
+    '        query = "update tblWIP set wSort= case when Recortes = 1 then wSort else 3 end where WIP=@wip"
+    '        cmd = New SqlCommand(query, cnn)
+    '        cmd.CommandType = CommandType.Text
+    '        cmd.Parameters.Add("@wip", SqlDbType.NVarChar).Value = wip
+    '        cnn.Open()
+    '        cmd.ExecuteNonQuery()
+    '        cnn.Close()
 
-            Filtros(2)
-        Catch ex As Exception
-            MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
-            EnviaCorreoFalla($"notesWIPandCWOquitaOnHoldde26 {ex}", host, UserName)
-        End Try
-    End Sub
+    '        Filtros(2)
+    '    Catch ex As Exception
+    '        MsgBox("Ha ocurrido un problema, ya se a reportado a departamento de IT, gracias")
+    '        EnviaCorreoFalla($"notesWIPandCWOquitaOnHoldde26 {ex}", host, UserName)
+    '    End Try
+    'End Sub
     Public Sub NotesWIPandCWOOnHold(cwo As String, fecha As String, notes As String)
         Try
             query = "insert into tblXpHist (WIP,Uname,AreaCreacion,FPromBeforeChange,NotasBeforeChange,Fecha,DetPor) values (@CWO,@User,@Department,@FProm,@note,GETDATE(),'MLF')"
@@ -3037,9 +3037,9 @@ GROUP BY TAG, PN, Location, SubPN, Qty, ID, PO, Unit, Status, CreatedDate, Conta
             cnn.Close()
             'Cambios en wSort si es recorte no cambia
             If opcion = 2 Then
-                query = $"update tblWIP set wSort= case when Recortes is null or Recortes = 0 then wSort else 12 end where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "CWO=@wo", "PWOA=@wo or PWOB=@wo")})"
+                query = $"update tblWIP set wSort= case when Recortes = 1 then wSort else 12 end where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "CWO=@wo", "PWOA=@wo or PWOB=@wo")})"
             ElseIf opcion = 3 Then
-                query = $"update tblWIP set wSort=case when Recortes is null or Recortes = 0 then wSort else 14 end where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "CWO=@wo", "PWOA=@wo or PWOB=@wo")})"
+                query = $"update tblWIP set wSort=case when Recortes = 1 then wSort else 14 end where WIP in (select distinct WIP from tblWipDet where {If(Microsoft.VisualBasic.Left(cwo, 1) = "C", "CWO=@wo", "PWOA=@wo or PWOB=@wo")})"
             End If
             cmd = New SqlCommand(query, cnn)
             cmd.CommandType = CommandType.Text
@@ -4673,6 +4673,11 @@ update tblcwo set Notes = Notes + ';' + '{oWIP}' where CWO = '{CWO}'
             MessageBox.Show("Este CWO no se puede cancelar debido a que ya se empezo a procesar.", "Cancelar CWO.")
         End If
     End Sub
+
+    Private Sub ToolStripTextBox7_Click(sender As Object, e As EventArgs) Handles ToolStripTextBox7.Click
+
+    End Sub
+
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         AboutBox1.ShowDialog()
     End Sub

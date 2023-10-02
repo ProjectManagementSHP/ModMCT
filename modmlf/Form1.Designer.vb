@@ -339,13 +339,13 @@ Partial Class Principal
 		'CerrarToolStripMenuItem
 		'
 		Me.CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
-		Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+		Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(120, 22)
 		Me.CerrarToolStripMenuItem.Text = "Cerrar"
 		'
 		'CancelarToolStripMenuItem
 		'
 		Me.CancelarToolStripMenuItem.Name = "CancelarToolStripMenuItem"
-		Me.CancelarToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+		Me.CancelarToolStripMenuItem.Size = New System.Drawing.Size(120, 22)
 		Me.CancelarToolStripMenuItem.Text = "Cancelar"
 		'
 		'pnluserandtitle
@@ -465,7 +465,7 @@ Partial Class Principal
 		Me.ContextMenuVerMW.ImageScalingSize = New System.Drawing.Size(20, 20)
 		Me.ContextMenuVerMW.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem12, Me.ToolStripMenuItem13, Me.ToolStripTextBox5, Me.ToolStripTextBox6, Me.ToolStripTextBox7, Me.AsignarMaterialToolStripMenuItem, Me.ToolStripMenuItem14, Me.DesviarTerminalToolStripMenuItem, Me.ReImprimirTravelersToolStripMenuItem1})
 		Me.ContextMenuVerMW.Name = "ContextMenuDesviacion"
-		Me.ContextMenuVerMW.Size = New System.Drawing.Size(187, 211)
+		Me.ContextMenuVerMW.Size = New System.Drawing.Size(187, 233)
 		'
 		'ToolStripMenuItem12
 		'

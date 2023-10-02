@@ -91,7 +91,7 @@ Partial Class CreatePWO
 		Me.dgvTerminalesXProcesar.DefaultCellStyle = DataGridViewCellStyle2
 		Me.dgvTerminalesXProcesar.EnableHeadersVisualStyles = False
 		Me.dgvTerminalesXProcesar.GridColor = System.Drawing.SystemColors.ButtonHighlight
-		Me.dgvTerminalesXProcesar.Location = New System.Drawing.Point(8, 66)
+		Me.dgvTerminalesXProcesar.Location = New System.Drawing.Point(12, 99)
 		Me.dgvTerminalesXProcesar.Margin = New System.Windows.Forms.Padding(2)
 		Me.dgvTerminalesXProcesar.Name = "dgvTerminalesXProcesar"
 		Me.dgvTerminalesXProcesar.ReadOnly = True
@@ -106,7 +106,7 @@ Partial Class CreatePWO
 		Me.dgvTerminalesXProcesar.RowHeadersVisible = False
 		Me.dgvTerminalesXProcesar.RowHeadersWidth = 51
 		Me.dgvTerminalesXProcesar.RowTemplate.Height = 24
-		Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(509, 223)
+		Me.dgvTerminalesXProcesar.Size = New System.Drawing.Size(764, 335)
 		Me.dgvTerminalesXProcesar.TabIndex = 5436
 		'
 		'dgvDetalleTerminales
@@ -150,17 +150,17 @@ Partial Class CreatePWO
 		Me.dgvDetalleTerminales.RowHeadersVisible = False
 		Me.dgvDetalleTerminales.RowHeadersWidth = 51
 		Me.dgvDetalleTerminales.RowTemplate.Height = 24
-		Me.dgvDetalleTerminales.Size = New System.Drawing.Size(591, 253)
+		Me.dgvDetalleTerminales.Size = New System.Drawing.Size(599, 169)
 		Me.dgvDetalleTerminales.TabIndex = 5437
 		'
 		'Button1
 		'
 		Me.Button1.BackColor = System.Drawing.Color.LightBlue
 		Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.Button1.Location = New System.Drawing.Point(17, 27)
+		Me.Button1.Location = New System.Drawing.Point(26, 41)
 		Me.Button1.Margin = New System.Windows.Forms.Padding(2)
 		Me.Button1.Name = "Button1"
-		Me.Button1.Size = New System.Drawing.Size(81, 20)
+		Me.Button1.Size = New System.Drawing.Size(122, 30)
 		Me.Button1.TabIndex = 5438
 		Me.Button1.Text = "OO MP"
 		Me.Button1.UseVisualStyleBackColor = False
@@ -245,29 +245,29 @@ Partial Class CreatePWO
 		'Label6
 		'
 		Me.Label6.AutoSize = True
-		Me.Label6.Location = New System.Drawing.Point(357, 45)
+		Me.Label6.Location = New System.Drawing.Point(238, 30)
 		Me.Label6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
 		Me.Label6.Name = "Label6"
-		Me.Label6.Size = New System.Drawing.Size(50, 13)
+		Me.Label6.Size = New System.Drawing.Size(33, 9)
 		Me.Label6.TabIndex = 5443
 		Me.Label6.Text = "Records:"
 		'
 		'Label7
 		'
 		Me.Label7.AutoSize = True
-		Me.Label7.Location = New System.Drawing.Point(116, 32)
+		Me.Label7.Location = New System.Drawing.Point(77, 21)
 		Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
 		Me.Label7.Name = "Label7"
-		Me.Label7.Size = New System.Drawing.Size(25, 13)
+		Me.Label7.Size = New System.Drawing.Size(17, 9)
 		Me.Label7.TabIndex = 5444
 		Me.Label7.Text = "AU:"
 		'
 		'TextBox1
 		'
-		Me.TextBox1.Location = New System.Drawing.Point(144, 30)
+		Me.TextBox1.Location = New System.Drawing.Point(216, 45)
 		Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
 		Me.TextBox1.Name = "TextBox1"
-		Me.TextBox1.Size = New System.Drawing.Size(62, 20)
+		Me.TextBox1.Size = New System.Drawing.Size(93, 30)
 		Me.TextBox1.TabIndex = 5445
 		'
 		'Label5
@@ -300,11 +300,11 @@ Partial Class CreatePWO
 		Me.GroupBox2.Controls.Add(Me.Button2)
 		Me.GroupBox2.Controls.Add(Me.ChPushToFirstPlace)
 		Me.GroupBox2.Controls.Add(Me.GroupBox1)
-		Me.GroupBox2.Location = New System.Drawing.Point(828, 480)
+		Me.GroupBox2.Location = New System.Drawing.Point(1242, 720)
 		Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2)
 		Me.GroupBox2.Name = "GroupBox2"
 		Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2)
-		Me.GroupBox2.Size = New System.Drawing.Size(311, 101)
+		Me.GroupBox2.Size = New System.Drawing.Size(467, 152)
 		Me.GroupBox2.TabIndex = 5448
 		Me.GroupBox2.TabStop = False
 		'
@@ -316,11 +316,11 @@ Partial Class CreatePWO
 		Me.GroupBox3.Controls.Add(Me.dgvDetalleTerminales)
 		Me.GroupBox3.Controls.Add(Me.Label5)
 		Me.GroupBox3.Controls.Add(Me.Button3)
-		Me.GroupBox3.Location = New System.Drawing.Point(525, 8)
+		Me.GroupBox3.Location = New System.Drawing.Point(788, 12)
 		Me.GroupBox3.Margin = New System.Windows.Forms.Padding(2)
 		Me.GroupBox3.Name = "GroupBox3"
 		Me.GroupBox3.Padding = New System.Windows.Forms.Padding(2)
-		Me.GroupBox3.Size = New System.Drawing.Size(615, 468)
+		Me.GroupBox3.Size = New System.Drawing.Size(923, 702)
 		Me.GroupBox3.TabIndex = 5449
 		Me.GroupBox3.TabStop = False
 		Me.GroupBox3.Text = "Details:"
@@ -433,10 +433,10 @@ Partial Class CreatePWO
 		'
 		'TextBox2
 		'
-		Me.TextBox2.Location = New System.Drawing.Point(217, 415)
+		Me.TextBox2.Location = New System.Drawing.Point(326, 623)
 		Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
 		Me.TextBox2.Name = "TextBox2"
-		Me.TextBox2.Size = New System.Drawing.Size(226, 20)
+		Me.TextBox2.Size = New System.Drawing.Size(339, 30)
 		Me.TextBox2.TabIndex = 5450
 		Me.TextBox2.Visible = False
 		'
@@ -444,10 +444,10 @@ Partial Class CreatePWO
 		'
 		Me.Button4.BackColor = System.Drawing.Color.LightBlue
 		Me.Button4.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.Button4.Location = New System.Drawing.Point(125, 399)
+		Me.Button4.Location = New System.Drawing.Point(188, 599)
 		Me.Button4.Margin = New System.Windows.Forms.Padding(2)
 		Me.Button4.Name = "Button4"
-		Me.Button4.Size = New System.Drawing.Size(81, 73)
+		Me.Button4.Size = New System.Drawing.Size(122, 110)
 		Me.Button4.TabIndex = 5451
 		Me.Button4.Text = "Reimprimir PWO"
 		Me.Button4.UseVisualStyleBackColor = False
