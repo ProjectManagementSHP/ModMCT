@@ -1338,6 +1338,7 @@ Public Class Principal
             cmd = New SqlCommand(Query, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@TermA", SqlDbType.NVarChar).Value = TermA
+            cmd.CommandTimeout = 120000
             cnn.Open()
             Qty = If(IsDBNull(cmd.ExecuteScalar()), 0, CInt(Val(cmd.ExecuteScalar())))
             cnn.Close()
@@ -1364,6 +1365,7 @@ Public Class Principal
             cmd = New SqlCommand(Query, cnn)
             cmd.CommandType = CommandType.Text
             cmd.Parameters.Add("@TermB", SqlDbType.NVarChar).Value = TermB
+            cmd.CommandTimeout = 120000
             cnn.Open()
             Qty = If(IsDBNull(cmd.ExecuteScalar()), 0, CInt(Val(cmd.ExecuteScalar())))
             cnn.Close()
