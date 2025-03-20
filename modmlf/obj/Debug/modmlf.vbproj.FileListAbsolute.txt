@@ -147,16 +147,6 @@ C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF Software\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
-C:\bin\debug\app.publish\SqlServerTypes\x64\msvcr120.dll
-C:\bin\debug\app.publish\SqlServerTypes\x64\SqlServerSpatial140.dll
-C:\bin\debug\app.publish\SqlServerTypes\x86\msvcr120.dll
-C:\bin\debug\app.publish\SqlServerTypes\x86\SqlServerSpatial140.dll
-C:\bin\debug\app.publish\Marcas, Listos, Fuera.exe.config
-C:\bin\debug\app.publish\Marcas, Listos, Fuera.exe.manifest
-C:\bin\debug\app.publish\Marcas, Listos, Fuera.application
-C:\bin\debug\app.publish\Marcas, Listos, Fuera.exe
-C:\bin\debug\app.publish\Marcas, Listos, Fuera.pdb
-C:\bin\debug\app.publish\Marcas, Listos, Fuera.xml
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.config
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
@@ -192,3 +182,75 @@ C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\D
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.CloseCWO.resources
 C:\Users\samuel.gomez\Desktop\Sam\Codigos\MLF - Version nueva\Files\modmlf\obj\Debug\modmlf.AboutBox1.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.vbprojAssemblyReference.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.config
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.AboutBox1.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.ActualizacionRequerida.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Asignar.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Atados.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.CambioMaquina.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.CloseCWO.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.CreatePWO.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.DesviacionesTerm.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Principal.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Graficas.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Hold.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.HoraXHora.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Login.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Materiales.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.MensajePN.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.ModifyAndAddPN.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Resources.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.OpcionesLog.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.ReportePWO.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.SplashWindow.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.Usuarios.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\RdlCompile.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\RdlCompile.compiled
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\Marcas, Listos, Fuera.TrustInfo.xml
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\Marcas, Listos, Fuera.exe.manifest
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\Marcas, Listos, Fuera.application
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\modmlf.vbproj.CopyComplete
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\Marcas, Listos, Fuera.exe
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\Marcas, Listos, Fuera.xml
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\MLF\modmlf\obj\Debug\Marcas, Listos, Fuera.pdb
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\MasterCircuitTracker.exe.config
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modmlf.vbproj.ResolveComReference.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.Atados.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.CambioMaquina.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.CreatePWO.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.Login.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.Resources.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.ReportePWO.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modmlf.vbproj.GenerateResource.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modmlf.vbproj.CoreCompileInputs.cache
+C:\bin\debug\app.publish\SqlServerTypes\x64\msvcr120.dll
+C:\bin\debug\app.publish\SqlServerTypes\x64\SqlServerSpatial140.dll
+C:\bin\debug\app.publish\SqlServerTypes\x86\msvcr120.dll
+C:\bin\debug\app.publish\SqlServerTypes\x86\SqlServerSpatial140.dll
+C:\bin\debug\app.publish\MasterCircuitTracker.exe.config
+C:\bin\debug\app.publish\MasterCircuitTracker.exe.manifest
+C:\bin\debug\app.publish\MasterCircuitTracker.application
+C:\bin\debug\app.publish\MasterCircuitTracker.exe
+C:\bin\debug\app.publish\MasterCircuitTracker.pdb
+C:\bin\debug\app.publish\MasterCircuitTracker.xml
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\MasterCircuitTracker.TrustInfo.xml
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\MasterCircuitTracker.exe.manifest
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\MasterCircuitTracker.application
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\MasterCircuitTracker.exe
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\MasterCircuitTracker.xml
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\MasterCircuitTracker.pdb
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.frmCircuitosLoc.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.frmInicioBase.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.frmRecibirCircuitos.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.RecibirCircuitosSplices.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.SplicePlanning.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.Splices.resources
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modmlf.vbproj.CopyComplete
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\RdlCompile.cache
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\RdlCompile.compiled
+C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.LocalizacionAtado.resources

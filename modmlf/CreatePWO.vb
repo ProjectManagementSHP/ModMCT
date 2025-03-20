@@ -4,11 +4,7 @@ Public Class CreatePWO
     Dim AU As Integer = 0
     Dim InfoTablas As New List(Of ChargeInfo)
     Dim PartNumber As String = ""
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Cursor.Current = Cursors.WaitCursor
-        GetDataByUser()
-        Cursor.Current = Cursors.Default
-    End Sub
+
     Private Sub GetDataByUser()
         Try
             AU = 0
@@ -555,10 +551,10 @@ selected: " + InfoTablas.Count.ToString
     Private Sub Button3_MouseLeave(sender As Object, e As EventArgs) Handles Button3.MouseLeave
         Cursor.Current = Cursors.Default
     End Sub
-    Private Sub Button1_MouseHover(sender As Object, e As EventArgs) Handles Button1.MouseHover
+    Private Sub Button1_MouseHover(sender As Object, e As EventArgs)
         Cursor.Current = Cursors.Hand
     End Sub
-    Private Sub Button1_MouseLeave(sender As Object, e As EventArgs) Handles Button1.MouseLeave
+    Private Sub Button1_MouseLeave(sender As Object, e As EventArgs)
         Cursor.Current = Cursors.Default
     End Sub
     Private Sub dgvDetalleTerminales_ColumnAdded(sender As Object, e As DataGridViewColumnEventArgs) Handles dgvDetalleTerminales.ColumnAdded
@@ -606,5 +602,11 @@ selected: " + InfoTablas.Count.ToString
             dgvPNTermsProcess.Rows(e.RowIndex).Selected = True
             Button3.Visible = True
         End If
+    End Sub
+
+    Private Sub CreatePWO_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Cursor.Current = Cursors.WaitCursor
+        GetDataByUser()
+        Cursor.Current = Cursors.Default
     End Sub
 End Class

@@ -6,10 +6,12 @@ Imports System.Threading
 
 Module Variables
 
-	Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
-	'Public strconexion As String = "Server=10.17.182.36\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
+	' Public strconexion As String = "Server=10.17.182.12\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
+
+	Public strconexion As String = "Server=10.17.182.36\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
 	'Private strconexion As String = "Server=10.17.182.255\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
 	'Public strconexion As String = "Server=SHPLAPSIS01\SQLEXPRESS2012;Database=SEA;User ID=sa;Password=SHPadmin14%"
+	' Public strconexion As String = "Server=SHPLAPSIS14;Database=SEA;Trusted_Connection=True;"
 	Public cnn As New SqlConnection(strconexion) 'Conexion Principal
 	Public conex As New SqlConnection(strconexion) 'Graficas de MLF 
 	Public conexOne As New SqlConnection(strconexion) 'Graficas de Planeacion
@@ -55,18 +57,18 @@ Module Variables
 		cnn.Close()
 		Return False
 	End Function
-	Public Sub Emergency_CloseApp()
-		If Not LogOut Then
-			bgWorker.Dispose()
-			With Principal.NotifyIcon1
-				.Visible = False
-				.Dispose()
-			End With
-			Application.Exit()
-			End
-		End If
-	End Sub
-	Public Function CheckInternet()
+    'Public Sub Emergency_CloseApp()
+    '	If Not LogOut Then
+    '		bgWorker.Dispose()
+    '		With Principal.NotifyIcon1
+    '			.Visible = False
+    '			.Dispose()
+    '		End With
+    '		Application.Exit()
+    '		End
+    '	End If
+    'End Sub
+    Public Function CheckInternet()
 		Dim response As Boolean = False
 		Dim myPing As New Ping()
 		Dim host As String = "10.17.182.12"

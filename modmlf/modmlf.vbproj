@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2304299A-68A0-4714-B9A0-50B569CE79C3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>modmlf.My.MyApplication</StartupObject>
-    <RootNamespace>modmlf</RootNamespace>
-    <AssemblyName>Marcas, Listos, Fuera</AssemblyName>
+    <StartupObject>modMCT.My.MyApplication</StartupObject>
+    <RootNamespace>modMCT</RootNamespace>
+    <AssemblyName>MasterCircuitTracker</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -28,7 +28,7 @@
     <ProductName>MLF</ProductName>
     <PublisherName>SEA</PublisherName>
     <MinimumRequiredVersion>2.0.0.0</MinimumRequiredVersion>
-    <ApplicationRevision>33</ApplicationRevision>
+    <ApplicationRevision>34</ApplicationRevision>
     <ApplicationVersion>4.6.10.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -42,7 +42,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\..\..\bin\debug\app.publish\</OutputPath>
-    <DocumentationFile>Marcas, Listos, Fuera.xml</DocumentationFile>
+    <DocumentationFile>MasterCircuitTracker.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -53,7 +53,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Marcas, Listos, Fuera.xml</DocumentationFile>
+    <DocumentationFile>MasterCircuitTracker.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,7 +69,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>42571verticaltrafficlight_99064.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>A387CF6D014806B431670803046A8C08716C7A68</ManifestCertificateThumbprint>
@@ -195,25 +196,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutBox1.Designer.vb">
-      <DependentUpon>AboutBox1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="AboutBox1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ActualizacionRequerida.Designer.vb">
-      <DependentUpon>ActualizacionRequerida.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ActualizacionRequerida.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Asignar.Designer.vb">
-      <DependentUpon>Asignar.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Asignar.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Atados.Designer.vb">
       <DependentUpon>Atados.vb</DependentUpon>
     </Compile>
@@ -228,12 +211,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ChargeInfo.vb" />
-    <Compile Include="CloseCWO.Designer.vb">
-      <DependentUpon>CloseCWO.vb</DependentUpon>
-    </Compile>
-    <Compile Include="CloseCWO.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="cnnACS.vb" />
     <Compile Include="CorreoFalla.vb" />
     <Compile Include="CreatePWO.Designer.vb">
@@ -243,11 +220,47 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CreateWorkOrder.vb" />
+    <Compile Include="frmCircuitosLoc.designer.vb">
+      <DependentUpon>frmCircuitosLoc.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCircuitosLoc.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInicioBase.designer.vb">
+      <DependentUpon>frmInicioBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmInicioBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRecibirCircuitos.designer.vb">
+      <DependentUpon>frmRecibirCircuitos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmRecibirCircuitos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="IChargeInfo.vb" />
+    <Compile Include="LocalizacionAtado.Designer.vb">
+      <DependentUpon>LocalizacionAtado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LocalizacionAtado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.designer.vb">
+      <DependentUpon>Login.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Login.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\DataSet2.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SplicePlanning.Designer.vb">
+      <DependentUpon>SplicePlanning.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplicePlanning.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="PWOWorkDataSet1.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -256,62 +269,6 @@
     </Compile>
     <Compile Include="PWOWorkDataSet1.vb">
       <DependentUpon>PWOWorkDataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DesviacionesTerm.Designer.vb">
-      <DependentUpon>DesviacionesTerm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="DesviacionesTerm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graficas.Designer.vb">
-      <DependentUpon>Graficas.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Graficas.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Hold.Designer.vb">
-      <DependentUpon>Hold.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Hold.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HoraXHora.Designer.vb">
-      <DependentUpon>HoraXHora.vb</DependentUpon>
-    </Compile>
-    <Compile Include="HoraXHora.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Login.Designer.vb">
-      <DependentUpon>Login.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Login.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LoginUser.vb" />
-    <Compile Include="Materiales.Designer.vb">
-      <DependentUpon>Materiales.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Materiales.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MensajePN.Designer.vb">
-      <DependentUpon>MensajePN.vb</DependentUpon>
-    </Compile>
-    <Compile Include="MensajePN.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ModifyAndAddPN.Designer.vb">
-      <DependentUpon>ModifyAndAddPN.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ModifyAndAddPN.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -329,80 +286,50 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="OpcionesLog.Designer.vb">
-      <DependentUpon>OpcionesLog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="OpcionesLog.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ReportePWO.Designer.vb">
       <DependentUpon>ReportePWO.vb</DependentUpon>
     </Compile>
     <Compile Include="ReportePWO.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SplashWindow.Designer.vb">
-      <DependentUpon>SplashWindow.vb</DependentUpon>
+    <Compile Include="RecibirCircuitosSplices.Designer.vb">
+      <DependentUpon>RecibirCircuitosSplices.vb</DependentUpon>
     </Compile>
-    <Compile Include="SplashWindow.vb">
+    <Compile Include="RecibirCircuitosSplices.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Usuarios.Designer.vb">
-      <DependentUpon>Usuarios.vb</DependentUpon>
+    <Compile Include="Splices.Designer.vb">
+      <DependentUpon>Splices.vb</DependentUpon>
     </Compile>
-    <Compile Include="Usuarios.vb">
+    <Compile Include="Splices.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Variables.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AboutBox1.resx">
-      <DependentUpon>AboutBox1.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ActualizacionRequerida.resx">
-      <DependentUpon>ActualizacionRequerida.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Asignar.resx">
-      <DependentUpon>Asignar.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Atados.resx">
       <DependentUpon>Atados.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CambioMaquina.resx">
       <DependentUpon>CambioMaquina.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CloseCWO.resx">
-      <DependentUpon>CloseCWO.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CreatePWO.resx">
       <DependentUpon>CreatePWO.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DesviacionesTerm.resx">
-      <DependentUpon>DesviacionesTerm.vb</DependentUpon>
+    <EmbeddedResource Include="frmCircuitosLoc.resx">
+      <DependentUpon>frmCircuitosLoc.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <EmbeddedResource Include="frmInicioBase.resx">
+      <DependentUpon>frmInicioBase.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Graficas.resx">
-      <DependentUpon>Graficas.vb</DependentUpon>
+    <EmbeddedResource Include="frmRecibirCircuitos.resx">
+      <DependentUpon>frmRecibirCircuitos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Hold.resx">
-      <DependentUpon>Hold.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HoraXHora.resx">
-      <DependentUpon>HoraXHora.vb</DependentUpon>
+    <EmbeddedResource Include="LocalizacionAtado.resx">
+      <DependentUpon>LocalizacionAtado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Materiales.resx">
-      <DependentUpon>Materiales.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MensajePN.resx">
-      <DependentUpon>MensajePN.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ModifyAndAddPN.resx">
-      <DependentUpon>ModifyAndAddPN.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -410,18 +337,18 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="OpcionesLog.resx">
-      <DependentUpon>OpcionesLog.vb</DependentUpon>
+    <EmbeddedResource Include="SplicePlanning.resx">
+      <DependentUpon>SplicePlanning.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PWONew.rdlc" />
     <EmbeddedResource Include="ReportePWO.resx">
       <DependentUpon>ReportePWO.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SplashWindow.resx">
-      <DependentUpon>SplashWindow.vb</DependentUpon>
+    <EmbeddedResource Include="RecibirCircuitosSplices.resx">
+      <DependentUpon>RecibirCircuitosSplices.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Usuarios.resx">
-      <DependentUpon>Usuarios.vb</DependentUpon>
+    <EmbeddedResource Include="Splices.resx">
+      <DependentUpon>Splices.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

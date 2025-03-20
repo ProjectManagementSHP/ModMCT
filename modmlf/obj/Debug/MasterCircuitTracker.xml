@@ -1,0 +1,241 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+MasterCircuitTracker
+</name>
+</assembly>
+<members>
+<member name="T:modMCT.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources._1486505265_document_file_export_sending_exit_send_81434">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources._42571verticaltrafficlight_99064">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.BotonCorto2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.botonexport">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.delete_unapprove_discard_remove_x_red_icon_icons_com_55984">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.save_icon_icons_com_53618_1_">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.SHP_Gray_Large_Logo">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.SHP_Gray_Large_Logo1">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:modMCT.My.Resources.Resources.SHP_Logo">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="T:modMCT.DataSet2">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblBOMPWODataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblPWODataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblWIPDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblWipDetDataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblPWO1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblBOMPWORow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblPWORow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblWIPRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblWipDetRow">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblPWO1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblBOMPWORowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblPWORowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblWIPRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblWipDetRowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:modMCT.DataSet1.tblPWO1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.tblBOMPWOTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.tblPWOTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.DataTable1TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.tblWIPTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.tblWipDetTableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.tblPWO1TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:modMCT.DataSet1TableAdapters.TableAdapterManager.UpdateUpdatedRows(modMCT.DataSet1,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:modMCT.DataSet1TableAdapters.TableAdapterManager.UpdateInsertedRows(modMCT.DataSet1,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:modMCT.DataSet1TableAdapters.TableAdapterManager.UpdateDeletedRows(modMCT.DataSet1,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:modMCT.DataSet1TableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:modMCT.DataSet1TableAdapters.TableAdapterManager.UpdateAll(modMCT.DataSet1)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:modMCT.DataSet1TableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+</members>
+</doc>

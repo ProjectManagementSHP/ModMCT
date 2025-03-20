@@ -1,0 +1,119 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|c:\\users\\andres.duarte\\documents\\desarrollo\\desarrollo\\modmastercircuittracker\\modmlf\\frminiciobase.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|solutionrelative:modmlf\\frminiciobase.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|c:\\users\\andres.duarte\\documents\\desarrollo\\desarrollo\\modmastercircuittracker\\modmlf\\frminiciobase.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|solutionrelative:modmlf\\frminiciobase.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|c:\\users\\andres.duarte\\documents\\desarrollo\\desarrollo\\modmastercircuittracker\\modmlf\\splices.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|solutionrelative:modmlf\\splices.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|c:\\users\\andres.duarte\\documents\\desarrollo\\desarrollo\\modmastercircuittracker\\modmlf\\splices.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|solutionrelative:modmlf\\splices.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|c:\\users\\andres.duarte\\documents\\desarrollo\\desarrollo\\modmastercircuittracker\\modmlf\\frmcircuitosloc.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|solutionrelative:modmlf\\frmcircuitosloc.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|c:\\users\\andres.duarte\\documents\\desarrollo\\desarrollo\\modmastercircuittracker\\modmlf\\frmcircuitosloc.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "RelativeMoniker": "D:0:0:{2304299A-68A0-4714-B9A0-50B569CE79C3}|modmlf\\modmlf.vbproj|solutionrelative:modmlf\\frmcircuitosloc.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "frmInicioBase.vb",
+              "DocumentMoniker": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmInicioBase.vb",
+              "RelativeDocumentMoniker": "modmlf\\frmInicioBase.vb",
+              "ToolTip": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmInicioBase.vb",
+              "RelativeToolTip": "modmlf\\frmInicioBase.vb",
+              "ViewState": "AQIAAGIAAAAAAAAAAADwv3cAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-04-26T18:22:21.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "frmInicioBase.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmInicioBase.vb",
+              "RelativeDocumentMoniker": "modmlf\\frmInicioBase.vb",
+              "ToolTip": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmInicioBase.vb [Design]",
+              "RelativeToolTip": "modmlf\\frmInicioBase.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-04-26T18:21:13.581Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Splices.vb",
+              "DocumentMoniker": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\Splices.vb",
+              "RelativeDocumentMoniker": "modmlf\\Splices.vb",
+              "ToolTip": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\Splices.vb",
+              "RelativeToolTip": "modmlf\\Splices.vb",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-04-26T18:08:36.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "frmCircuitosLoc.vb",
+              "DocumentMoniker": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmCircuitosLoc.vb",
+              "RelativeDocumentMoniker": "modmlf\\frmCircuitosLoc.vb",
+              "ToolTip": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmCircuitosLoc.vb",
+              "RelativeToolTip": "modmlf\\frmCircuitosLoc.vb",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAIwEkAAAALAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-04-26T18:08:12.395Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "frmCircuitosLoc.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmCircuitosLoc.vb",
+              "RelativeDocumentMoniker": "modmlf\\frmCircuitosLoc.vb",
+              "ToolTip": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\frmCircuitosLoc.vb [Design]",
+              "RelativeToolTip": "modmlf\\frmCircuitosLoc.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-04-26T18:08:06.428Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Splices.vb [Design]",
+              "DocumentMoniker": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\Splices.vb",
+              "RelativeDocumentMoniker": "modmlf\\Splices.vb",
+              "ToolTip": "C:\\Users\\andres.duarte\\Documents\\desarrollo\\desarrollo\\ModMasterCircuitTracker\\modmlf\\Splices.vb [Design]",
+              "RelativeToolTip": "modmlf\\Splices.vb [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-04-25T22:36:48.078Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
