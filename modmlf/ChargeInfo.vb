@@ -4,6 +4,8 @@
     Private _Rows As Integer
     Private _PN As String
     Private _Cell As String
+    Private _WIP As String
+    Private _AU As String
     Private _Balance As Integer
     Private _RunTime As Integer
 
@@ -46,6 +48,22 @@
         End Get
         Set
             _RunTime = Value
+        End Set
+    End Property
+    Public Property WIP As String Implements IChargeInfo.WIP
+        Get
+            Return _WIP
+        End Get
+        Set
+            _WIP = Value
+        End Set
+    End Property
+    Public Property AU As String Implements IChargeInfo.AU
+        Get
+            Return _AU
+        End Get
+        Set
+            _AU = Value
         End Set
     End Property
 End Class

@@ -31,6 +31,9 @@ Partial Class CreatePWO
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CreatePWO))
         Me.dgvTerminalesXProcesar = New System.Windows.Forms.DataGridView()
         Me.dgvDetalleTerminales = New System.Windows.Forms.DataGridView()
@@ -42,11 +45,12 @@ Partial Class CreatePWO
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.dgvPWOActivos = New System.Windows.Forms.DataGridView()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -57,10 +61,13 @@ Partial Class CreatePWO
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Button4 = New System.Windows.Forms.Button()
+        Me.rbnCorte = New System.Windows.Forms.RadioButton()
+        Me.rbnAU = New System.Windows.Forms.RadioButton()
         CType(Me.dgvTerminalesXProcesar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetalleTerminales, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        CType(Me.dgvPWOActivos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgvPNTermsProcess, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,7 +160,7 @@ Partial Class CreatePWO
         'ChPushToFirstPlace
         '
         Me.ChPushToFirstPlace.AutoSize = True
-        Me.ChPushToFirstPlace.Location = New System.Drawing.Point(181, 61)
+        Me.ChPushToFirstPlace.Location = New System.Drawing.Point(238, 224)
         Me.ChPushToFirstPlace.Margin = New System.Windows.Forms.Padding(2)
         Me.ChPushToFirstPlace.Name = "ChPushToFirstPlace"
         Me.ChPushToFirstPlace.Size = New System.Drawing.Size(110, 17)
@@ -165,7 +172,7 @@ Partial Class CreatePWO
         '
         Me.Button2.BackColor = System.Drawing.Color.LightBlue
         Me.Button2.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Button2.Location = New System.Drawing.Point(194, 26)
+        Me.Button2.Location = New System.Drawing.Point(251, 189)
         Me.Button2.Margin = New System.Windows.Forms.Padding(2)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(81, 21)
@@ -179,7 +186,7 @@ Partial Class CreatePWO
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Location = New System.Drawing.Point(313, 17)
+        Me.GroupBox1.Location = New System.Drawing.Point(370, 180)
         Me.GroupBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
@@ -237,20 +244,9 @@ Partial Class CreatePWO
         Me.Label6.TabIndex = 5443
         Me.Label6.Text = "Records:"
         '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(77, 21)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(25, 13)
-        Me.Label7.TabIndex = 5444
-        Me.Label7.Text = "AU:"
-        Me.Label7.Visible = False
-        '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(120, 14)
+        Me.TextBox1.Location = New System.Drawing.Point(147, 28)
         Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(93, 20)
@@ -284,28 +280,87 @@ Partial Class CreatePWO
         '
         'GroupBox2
         '
-        Me.GroupBox2.Controls.Add(Me.Button2)
-        Me.GroupBox2.Controls.Add(Me.ChPushToFirstPlace)
-        Me.GroupBox2.Controls.Add(Me.GroupBox1)
-        Me.GroupBox2.Location = New System.Drawing.Point(678, 325)
+        Me.GroupBox2.Controls.Add(Me.Button1)
+        Me.GroupBox2.Controls.Add(Me.dgvPWOActivos)
+        Me.GroupBox2.Location = New System.Drawing.Point(678, 334)
         Me.GroupBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox2.Size = New System.Drawing.Size(468, 152)
+        Me.GroupBox2.Size = New System.Drawing.Size(722, 225)
         Me.GroupBox2.TabIndex = 5448
         Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "PWO Activos"
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.SeaGreen
+        Me.Button1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Button1.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.Button1.Location = New System.Drawing.Point(17, 37)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(79, 62)
+        Me.Button1.TabIndex = 5452
+        Me.Button1.Text = "Agregar a PWO"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'dgvPWOActivos
+        '
+        Me.dgvPWOActivos.AllowUserToAddRows = False
+        Me.dgvPWOActivos.AllowUserToDeleteRows = False
+        Me.dgvPWOActivos.BackgroundColor = System.Drawing.Color.WhiteSmoke
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.LightSteelBlue
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvPWOActivos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        Me.dgvPWOActivos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPWOActivos.DefaultCellStyle = DataGridViewCellStyle8
+        Me.dgvPWOActivos.EnableHeadersVisualStyles = False
+        Me.dgvPWOActivos.GridColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.dgvPWOActivos.Location = New System.Drawing.Point(121, 37)
+        Me.dgvPWOActivos.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvPWOActivos.Name = "dgvPWOActivos"
+        Me.dgvPWOActivos.ReadOnly = True
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvPWOActivos.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.dgvPWOActivos.RowHeadersVisible = False
+        Me.dgvPWOActivos.RowHeadersWidth = 51
+        Me.dgvPWOActivos.RowTemplate.Height = 24
+        Me.dgvPWOActivos.Size = New System.Drawing.Size(578, 137)
+        Me.dgvPWOActivos.TabIndex = 5451
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Button2)
         Me.GroupBox3.Controls.Add(Me.GroupBox4)
+        Me.GroupBox3.Controls.Add(Me.ChPushToFirstPlace)
         Me.GroupBox3.Controls.Add(Me.dgvPNTermsProcess)
+        Me.GroupBox3.Controls.Add(Me.GroupBox1)
         Me.GroupBox3.Controls.Add(Me.Label8)
         Me.GroupBox3.Controls.Add(Me.Button3)
         Me.GroupBox3.Location = New System.Drawing.Point(678, 51)
         Me.GroupBox3.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Padding = New System.Windows.Forms.Padding(2)
-        Me.GroupBox3.Size = New System.Drawing.Size(653, 250)
+        Me.GroupBox3.Size = New System.Drawing.Size(722, 270)
         Me.GroupBox3.TabIndex = 5449
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Details:"
@@ -316,7 +371,7 @@ Partial Class CreatePWO
         Me.GroupBox4.Controls.Add(Me.Label10)
         Me.GroupBox4.Controls.Add(Me.Label11)
         Me.GroupBox4.Controls.Add(Me.Label12)
-        Me.GroupBox4.Location = New System.Drawing.Point(463, 141)
+        Me.GroupBox4.Location = New System.Drawing.Point(548, 180)
         Me.GroupBox4.Margin = New System.Windows.Forms.Padding(2)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Padding = New System.Windows.Forms.Padding(2)
@@ -369,41 +424,41 @@ Partial Class CreatePWO
         Me.dgvPNTermsProcess.AllowUserToAddRows = False
         Me.dgvPNTermsProcess.AllowUserToDeleteRows = False
         Me.dgvPNTermsProcess.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.LightSteelBlue
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvPNTermsProcess.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.LightSteelBlue
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvPNTermsProcess.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.dgvPNTermsProcess.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvPNTermsProcess.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Arial", 10.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPNTermsProcess.DefaultCellStyle = DataGridViewCellStyle11
         Me.dgvPNTermsProcess.EnableHeadersVisualStyles = False
         Me.dgvPNTermsProcess.GridColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvPNTermsProcess.Location = New System.Drawing.Point(121, 39)
         Me.dgvPNTermsProcess.Margin = New System.Windows.Forms.Padding(2)
         Me.dgvPNTermsProcess.Name = "dgvPNTermsProcess"
         Me.dgvPNTermsProcess.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvPNTermsProcess.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.ActiveCaption
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvPNTermsProcess.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.dgvPNTermsProcess.RowHeadersVisible = False
         Me.dgvPNTermsProcess.RowHeadersWidth = 51
         Me.dgvPNTermsProcess.RowTemplate.Height = 24
-        Me.dgvPNTermsProcess.Size = New System.Drawing.Size(492, 97)
+        Me.dgvPNTermsProcess.Size = New System.Drawing.Size(578, 137)
         Me.dgvPNTermsProcess.TabIndex = 5450
         '
         'Label8
@@ -438,12 +493,36 @@ Partial Class CreatePWO
         Me.Button4.UseVisualStyleBackColor = False
         Me.Button4.Visible = False
         '
+        'rbnCorte
+        '
+        Me.rbnCorte.AutoSize = True
+        Me.rbnCorte.Checked = True
+        Me.rbnCorte.Location = New System.Drawing.Point(32, 31)
+        Me.rbnCorte.Name = "rbnCorte"
+        Me.rbnCorte.Size = New System.Drawing.Size(64, 17)
+        Me.rbnCorte.TabIndex = 5452
+        Me.rbnCorte.TabStop = True
+        Me.rbnCorte.Text = "All Corte"
+        Me.rbnCorte.UseVisualStyleBackColor = True
+        '
+        'rbnAU
+        '
+        Me.rbnAU.AutoSize = True
+        Me.rbnAU.Location = New System.Drawing.Point(102, 31)
+        Me.rbnAU.Name = "rbnAU"
+        Me.rbnAU.Size = New System.Drawing.Size(40, 17)
+        Me.rbnAU.TabIndex = 5453
+        Me.rbnAU.Text = "AU"
+        Me.rbnAU.UseVisualStyleBackColor = True
+        '
         'CreatePWO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.ClientSize = New System.Drawing.Size(1448, 570)
+        Me.ClientSize = New System.Drawing.Size(1448, 593)
+        Me.Controls.Add(Me.rbnAU)
+        Me.Controls.Add(Me.rbnCorte)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.GroupBox3)
@@ -451,7 +530,6 @@ Partial Class CreatePWO
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.dgvTerminalesXProcesar)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -467,7 +545,7 @@ Partial Class CreatePWO
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        CType(Me.dgvPWOActivos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -488,7 +566,6 @@ Partial Class CreatePWO
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents Label7 As Label
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Label5 As Label
     Friend WithEvents Button3 As Button
@@ -503,4 +580,8 @@ Partial Class CreatePWO
     Friend WithEvents dgvPNTermsProcess As DataGridView
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents Button4 As Button
+    Friend WithEvents rbnCorte As RadioButton
+    Friend WithEvents rbnAU As RadioButton
+    Friend WithEvents Button1 As Button
+    Friend WithEvents dgvPWOActivos As DataGridView
 End Class

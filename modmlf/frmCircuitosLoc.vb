@@ -5,6 +5,7 @@ Public Class frmCircuitosLoc
     Private Sub frmCircuitosLoc_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim nsemana As Integer = CultureInfo.CurrentUICulture.Calendar.GetWeekOfYear(Date.Now, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday)
         Label8.Text = "Semana Actual: " & nsemana
+        LoadTermsData()
     End Sub
 
 
@@ -29,6 +30,7 @@ Public Class frmCircuitosLoc
         If cmbSelector.Text = "PRESS" Then
             cmbCelda.Visible = True
             ObtenerCeldas()
+            LoadTermsData()
         ElseIf cmbSelector.Text = "SPLICE" Then
             cmbCelda.Visible = True
         End If
@@ -93,9 +95,9 @@ Public Class frmCircuitosLoc
 
     Private Sub cmbCelda_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCelda.SelectedIndexChanged
         If cmbCelda.Text <> "" And cmbSelector.Text = "PRESS" Then
-            LlenarDataGridTerms(cmbCelda.Text)
+            '  LlenarDataGridTerms(cmbCelda.Text)
         ElseIf cmbCelda.Text <> "" And cmbSelector.Text = "SPLICE" Then
-            LlenarDataGridSplice(cmbCelda.Text)
+            '  LlenarDataGridSplice(cmbCelda.Text)
         End If
     End Sub
 
@@ -131,5 +133,119 @@ Public Class frmCircuitosLoc
 
             dgvTerms.DataSource = dataTable
         End Using
+
+
     End Sub
+
+
+
+
+
+    Public Sub LoadTermsData()
+        Dim query As String = "
+        SELECT 
+            term, 
+            '' AS QtyMP,
+            SUM(qty) AS EnCorte,
+            SUM(qty) AS Total,
+            '' AS Celda,
+            '' AS PWO,
+            '' AS FechaPWO,
+            '' AS QtyInicio,
+            '' AS BalXcortadora,
+            '' AS HraProgramada,
+            '' AS Dado,
+            '' AS Term
+        FROM (
+            SELECT 
+                termA AS term, 
+                tblwip.qty
+            FROM 
+                tblwip 
+            INNER JOIN 
+                tblwipdet 
+            ON 
+                tblwip.wip = tblwipdet.wip
+            WHERE 
+                wsort >= 20 AND tblwipdet.MaqA = 'MM' AND (pwoA IS NULL OR pwoA = '') AND tblWIP.Status = 'Open'
+
+            UNION ALL
+
+            SELECT 
+                termB AS term, 
+                tblwip.qty
+            FROM 
+                tblwip 
+            INNER JOIN 
+                tblwipdet 
+            ON 
+                tblwip.wip = tblwipdet.wip
+            WHERE 
+                wsort >= 20 AND tblwipdet.MaqB = 'MM' AND (pwoB IS NULL OR pwoB = '') AND tblWIP.Status = 'Open'
+        ) AS combined
+        GROUP BY 
+            term
+        ORDER BY 
+            SUM(qty) DESC"
+
+        Try
+            Using conn As New SqlConnection(strconexion)
+                conn.Open()
+                Using cmd As New SqlCommand(query, conn)
+                    Using adapter As New SqlDataAdapter(cmd)
+                        Dim dt As New DataTable()
+                        adapter.Fill(dt)
+
+                        ' Asigna los datos al DataGridView antes de agregar botones
+                        dgvTerms.DataSource = dt
+                    End Using
+                End Using
+            End Using
+
+            ' Eliminar botones si ya existen (para evitar duplicados)
+            RemoveButtonIfExists("btnCrearPWO")
+            RemoveButtonIfExists("btnSolicitarMasTerm")
+            RemoveButtonIfExists("btnCerrarPWO")
+
+            ' Guardar el índice de la última columna de datos
+            Dim lastColumnIndex As Integer = dgvTerms.Columns.Count
+
+            ' Agregar botones al final del DataGridView
+            AddButtonToDataGridView("btnCrearPWO", "Acción", "Crear PWO")
+            AddButtonToDataGridView("btnSolicitarMasTerm", "Solicitar", "Solicitar Más Term")
+            AddButtonToDataGridView("btnCerrarPWO", "Cerrar", "Cerrar PWO")
+
+            ' Recalcular los índices de las columnas de botones
+            If dgvTerms.Columns.Contains("btnCrearPWO") Then dgvTerms.Columns("btnCrearPWO").DisplayIndex = lastColumnIndex
+            If dgvTerms.Columns.Contains("btnSolicitarMasTerm") Then dgvTerms.Columns("btnSolicitarMasTerm").DisplayIndex = lastColumnIndex + 1
+            If dgvTerms.Columns.Contains("btnCerrarPWO") Then dgvTerms.Columns("btnCerrarPWO").DisplayIndex = lastColumnIndex + 2
+
+        Catch ex As Exception
+            MessageBox.Show("Error al cargar datos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Función para agregar botones dinámicamente al final del DataGridView
+    Private Sub AddButtonToDataGridView(buttonName As String, headerText As String, buttonText As String)
+        If Not dgvTerms.Columns.Contains(buttonName) Then
+            Dim btnColumn As New DataGridViewButtonColumn()
+            btnColumn.Name = buttonName
+            btnColumn.HeaderText = headerText
+            btnColumn.Text = buttonText
+            btnColumn.UseColumnTextForButtonValue = True
+            dgvTerms.Columns.Add(btnColumn)
+        End If
+    End Sub
+
+    ' Función para eliminar botones si ya existen
+    Private Sub RemoveButtonIfExists(columnName As String)
+        If dgvTerms.Columns.Contains(columnName) Then
+            dgvTerms.Columns.Remove(columnName)
+        End If
+    End Sub
+
+
+
+
+
 End Class
