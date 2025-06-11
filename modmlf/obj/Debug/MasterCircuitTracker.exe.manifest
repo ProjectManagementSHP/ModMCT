@@ -90,14 +90,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MasterCircuitTracker.exe" size="745984">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MasterCircuitTracker.exe" size="737792">
       <assemblyIdentity name="MasterCircuitTracker" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0qIu2Uu85hs+EJaVWbgS/i3g7PmXdGuXuRQm9wuxwRo=</dsig:DigestValue>
+        <dsig:DigestValue>IgpEcoVZ+JyQ99uMHXbECojbdaWyhYE9OwMKb4MYuB8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

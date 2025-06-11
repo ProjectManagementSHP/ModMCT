@@ -247,7 +247,6 @@ C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\m
 C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.frmInicioBase.resources
 C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.frmRecibirCircuitos.resources
 C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.RecibirCircuitosSplices.resources
-C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.SplicePlanning.resources
 C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modmlf.vbproj.AssemblyReference.cache
 C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modMCT.Splices.resources
 C:\Users\andres.duarte\Documents\desarrollo\desarrollo\ModMasterCircuitTracker\modmlf\obj\Debug\modmlf.vbproj.CopyComplete

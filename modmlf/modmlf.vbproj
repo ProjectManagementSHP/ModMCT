@@ -197,33 +197,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Atados.Designer.vb">
+    <Compile Include="OldProject\Atados.Designer.vb">
       <DependentUpon>Atados.vb</DependentUpon>
     </Compile>
-    <Compile Include="Atados.vb">
+    <Compile Include="OldProject\Atados.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AutomaticSort.vb" />
-    <Compile Include="CambioMaquina.Designer.vb">
+    <Compile Include="OldProject\AutomaticSort.vb" />
+    <Compile Include="OldProject\CambioMaquina.Designer.vb">
       <DependentUpon>CambioMaquina.vb</DependentUpon>
     </Compile>
-    <Compile Include="CambioMaquina.vb">
+    <Compile Include="OldProject\CambioMaquina.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChargeInfo.vb" />
-    <Compile Include="cnnACS.vb" />
-    <Compile Include="CorreoFalla.vb" />
-    <Compile Include="CreatePWO.Designer.vb">
+    <Compile Include="OldProject\ChargeInfo.vb" />
+    <Compile Include="OldProject\cnnACS.vb" />
+    <Compile Include="OldProject\CorreoFalla.vb" />
+    <Compile Include="PWO\CreatePWO.Designer.vb">
       <DependentUpon>CreatePWO.vb</DependentUpon>
     </Compile>
-    <Compile Include="CreatePWO.vb">
+    <Compile Include="PWO\CreatePWO.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateWorkOrder.vb" />
-    <Compile Include="frmCircuitosLoc.designer.vb">
+    <Compile Include="OldProject\CreateWorkOrder.vb" />
+    <Compile Include="MCT\frmCircuitosLoc.designer.vb">
       <DependentUpon>frmCircuitosLoc.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmCircuitosLoc.vb">
+    <Compile Include="MCT\frmCircuitosLoc.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmInicioBase.designer.vb">
@@ -238,11 +238,11 @@
     <Compile Include="frmRecibirCircuitos.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IChargeInfo.vb" />
-    <Compile Include="LocalizacionAtado.Designer.vb">
+    <Compile Include="OldProject\IChargeInfo.vb" />
+    <Compile Include="MCT\LocalizacionAtado.Designer.vb">
       <DependentUpon>LocalizacionAtado.vb</DependentUpon>
     </Compile>
-    <Compile Include="LocalizacionAtado.vb">
+    <Compile Include="MCT\LocalizacionAtado.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Login.designer.vb">
@@ -255,12 +255,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet2.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="SplicePlanning.Designer.vb">
-      <DependentUpon>SplicePlanning.vb</DependentUpon>
-    </Compile>
-    <Compile Include="SplicePlanning.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="PWOWorkDataSet1.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -286,37 +280,37 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ReportePWO.Designer.vb">
+    <Compile Include="PWO\ReportePWO.Designer.vb">
       <DependentUpon>ReportePWO.vb</DependentUpon>
     </Compile>
-    <Compile Include="ReportePWO.vb">
+    <Compile Include="PWO\ReportePWO.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RecibirCircuitosSplices.Designer.vb">
+    <Compile Include="Splices\RecibirCircuitosSplices.Designer.vb">
       <DependentUpon>RecibirCircuitosSplices.vb</DependentUpon>
     </Compile>
-    <Compile Include="RecibirCircuitosSplices.vb">
+    <Compile Include="Splices\RecibirCircuitosSplices.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Splices.Designer.vb">
+    <Compile Include="Splices\Splices.Designer.vb">
       <DependentUpon>Splices.vb</DependentUpon>
     </Compile>
-    <Compile Include="Splices.vb">
+    <Compile Include="Splices\Splices.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Variables.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Atados.resx">
+    <EmbeddedResource Include="OldProject\Atados.resx">
       <DependentUpon>Atados.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CambioMaquina.resx">
+    <EmbeddedResource Include="OldProject\CambioMaquina.resx">
       <DependentUpon>CambioMaquina.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreatePWO.resx">
+    <EmbeddedResource Include="PWO\CreatePWO.resx">
       <DependentUpon>CreatePWO.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmCircuitosLoc.resx">
+    <EmbeddedResource Include="MCT\frmCircuitosLoc.resx">
       <DependentUpon>frmCircuitosLoc.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmInicioBase.resx">
@@ -325,7 +319,7 @@
     <EmbeddedResource Include="frmRecibirCircuitos.resx">
       <DependentUpon>frmRecibirCircuitos.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LocalizacionAtado.resx">
+    <EmbeddedResource Include="MCT\LocalizacionAtado.resx">
       <DependentUpon>LocalizacionAtado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
@@ -337,17 +331,14 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SplicePlanning.resx">
-      <DependentUpon>SplicePlanning.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PWONew.rdlc" />
-    <EmbeddedResource Include="ReportePWO.resx">
+    <EmbeddedResource Include="PWO\PWONew.rdlc" />
+    <EmbeddedResource Include="PWO\ReportePWO.resx">
       <DependentUpon>ReportePWO.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RecibirCircuitosSplices.resx">
+    <EmbeddedResource Include="Splices\RecibirCircuitosSplices.resx">
       <DependentUpon>RecibirCircuitosSplices.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Splices.resx">
+    <EmbeddedResource Include="Splices\Splices.resx">
       <DependentUpon>Splices.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -507,6 +498,7 @@
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
